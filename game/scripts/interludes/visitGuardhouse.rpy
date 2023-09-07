@@ -1,5 +1,5 @@
 label visitGuardhouseReminder:
-    $ random = renpy.random.randint(1, 5)
+    $ random = renpy.random.randint(1, 6)
     scene expression ("bg/bg street0[random].png")
     if messenger.alreadyMet == False:
         call visitGuardhouseReminderFirst

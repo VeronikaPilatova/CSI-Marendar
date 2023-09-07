@@ -1,6 +1,9 @@
-errors.txt
+
+*.rpyb
+game/cache/shaders.txt
+*.save
+game/saves/persistent
+game/saves/navigation.json
+*.rpyc
 log.txt
 traceback.txt
-project.json
-saves/*
-cache/*

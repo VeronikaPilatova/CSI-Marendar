@@ -138,6 +138,10 @@ label erleOptions:
             $ erle.say("Je hezký den a já měla k snídani moc dobrou teplou polívku. Nic mi nechybí a nic mi nepřebývá.", "happy")
             $ mc.say("Co střecha nad hlavou, ta ti opravdu nechybí?")
             $ erle.say("Aspoň se nemusím bát, že o ni zase přijdu. K čemu je pachtit se za věcmi, které ti potom stejně nezůstanou?")
+        "Mohla bys mě naučit, jak být spokojený v bídě?" if "teach me" not in erle.asked and gender == "M":
+            call erleTeachMe
+        "Mohla bys mě naučit, jak být spokojená v bídě?" if "teach me" not in erle.asked and gender == "F":
+            call erleTeachMe
         "Myslíš, že takhle na tebe můžou být tví předkové hrdí?" if race == "dwarf" and "ancestors" not in erle.asked:
             hide mcPic
             $ erle.asked.append("ancestors")
@@ -173,6 +177,28 @@ label leavingErle:
 
 ###
 
+label erleTeachMe:
+    hide mcPic
+    $ erle.asked.append("teach me")
+    if time.hours > 17:
+        $ erle.say("Vidíš, jak krásně svítí hvězdy? Stačí si prostě říct, že víc k dobrému životu nepotřebuješ.")
+    else:
+        $ erle.say("Vidíš, jak krásně svítí slunce? Stačí si prostě říct, že víc k dobrému životu nepotřebuješ.")
+    show mcPic at menuImage
+    menu:
+        "Mít hezký dům a spoustu dobrého jídla by mi přišlo mnohem lepší.":
+            hide mcPic
+            if gender == "M":
+                $ erle.say("Dokud bys o to nepřišel. Pak by to bylo mnohem horší, než nemít nic od začátku.", "sad")
+            else:
+                $ erle.say("Dokud bys o to nepřišla. Pak by to bylo mnohem horší, než nemít nic od začátku.", "sad")
+        "Na tom možná něco bude.":
+            hide mcPic
+            "Erle jen přikývne a víc se k tématu nevrací."
+        "Co bys dělala, kdyby pršelo?":
+            hide mcPic
+            $ erle.say("Schovala se pod most, poslouchala zvuk deště a užívala si, že kolem nikdo není a já mám klid.")
+    return
 
 ###
 
@@ -197,5 +223,7 @@ label erleOptionsRemainingCheck:
     if "Sabri" in erle.asked and "satisfied" not in erle.asked:
         $ optionsRemaining += 1
     if race == "dwarf" and "ancestors" not in erle.asked:
+        $ optionsRemaining += 1
+    if "teach me" not in erle.asked:
         $ optionsRemaining += 1
     return

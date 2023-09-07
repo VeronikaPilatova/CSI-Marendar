@@ -58,10 +58,32 @@ menu:
         $ skill = "diplomacy"
 hide mcPic
 "Hayfa a Rauvin se na sebe krátce podívají, pak obrátí pozornost zpět k tobě a krátce přikývnou."
-$ rauvin.say("Co tě vlastně přimělo hledat štěstí v hlídce?")
+if gender == "M":
+    $ hayfa.say("Dobrá. Kde bydlíš a čím ses zatím živil?")
+else:
+    $ hayfa.say("Dobrá. Kde bydlíš a čím ses zatím živila?")
+$ mc.say("Bydlím na půdě u vdovy Gertrudy a živím se porůznu, čím se zrovna naskytne.")
 show mcPic at menuImage
 menu:
-    "Chci hlavně pomoct městu...":
+    "Chtěl bych něco, kde můžu udělat něco dobrého." if gender == "M":
+        hide mcPic
+        $ personality.append("motivation: positive change")
+        $ rauvin.say("Toho se jistě dá dosáhnout i jinak. Co tě přimělo hledat štěstí právě v hlídce?")
+    "Chtěla bych něco, kde můžu udělat něco dobrého." if gender == "F":
+        hide mcPic
+        $ personality.append("motivation: positive change")
+        $ rauvin.say("Toho se jistě dá dosáhnout i jinak. Co tě přimělo hledat štěstí právě v hlídce?")
+    "Myslím, že mám na víc.":
+        hide mcPic
+        $ personality.append("motivation: ambition")
+        $ rauvin.say("Jistě se můžeš prokázat i jinak. Co tě přimělo hledat štěstí právě v hlídce?")
+    "Líbilo by se mi něco jistějšího.":
+        hide mcPic
+        $ personality.append("motivation: money")
+        $ rauvin.say("Jistě si lze vydělávat i jinak. Co tě přimělo hledat štěstí právě v hlídce?")
+show mcPic at menuImage
+menu:
+    "Chci pomoct městu.":
         $ reasons = "altruist"
         hide mcPic
         $ hayfa.say("Takových bychom potřebovali co nejvíc. Tohle město už toho zažilo až moc.", "happy")
@@ -77,8 +99,12 @@ menu:
         $ reasons = "personal"
         hide mcPic
         $ hayfa.say("Dobře, nebudu naléhat. Ale nezapomeň, že ti tady potřebujeme důvěřovat.")
+    "Jestli jsou i lepší možnosti, tak já o nich nevím, zatímco tady prý máte podstav. Tak jsem tady.":
+        $ reasons = "none special"
+        hide mcPic
+        $ rauvin.say("Tomu rozumím, ale pracovat v hlídce bez nadšení pro tu práci jako takovou by nemuselo dopadnout dobře.")
 "Najednou se rozrazí dveře a vstoupí očividně rozrušený muž, podle oděvu nejspíš bohatší obchodník nebo řemeslník."
-$ victim.say("Okradli mě! Musíte to okamžitě vyšetřit! Okamžitě! Jestli můj výrobek nebude zpátky do dvou dnů…", "angry")
+$ victim.say("Okradli mě! Musíte to okamžitě vyšetřit! Okamžitě! Jestli můj výrobek nebude zpátky do tří dnů...", "angry")
 $ rauvin.say("Uklidněte se, mistře Heinrichu. Co přesně se vám ztratilo?")
 $ victim.say("Můj mistrovský kus! Na Einionovy slavnosti! Včera večer jsem se o něm zmínil před mistrem Rumelinem, nejspíš se bojí o svou židli v čele cechu.", "angry")
 "Hayfa mírně podezřívavě zvedne obočí."

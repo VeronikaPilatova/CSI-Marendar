@@ -525,7 +525,7 @@ label zairisGuiltyOptions:
     call zairisGuiltyOptionsRemainingCheck
     if zairisGuiltyOptionsRemaining == 0:
         $ mc.say("To je všechno, co mám.")
-        $ victim.trust -= 2
+        $ victim.trust -= 1
         if gender == "M":
             $ victim.say("To jsi mě tedy nepřesvědčil. Doufal bych, že když už do mě chceš hučet, budeš aspoň mít něco v rukávu. Ale to bych asi od hlídky čekal moc.", "angry")
             $ victim.say("Pořád jsi mi nenašel moje boty. Zkus zase chvíli dělat svoji skutečnou práci. A lépe, než ti šlo orodování za toho všiváka.", "angry")
@@ -583,7 +583,7 @@ label zairisGuiltyOptions:
             $ victim.say("Ten kašpar mohl ten papír ukradnout, nepotřeboval ho tolik. Ani to nemuselo být od Zairise, tolik druhů zdobeného papíru se přece ve městě sehnat nedá.", "angry")
         "To je všechno, co mám.":
             hide mcPic
-            $ victim.trust -= 2
+            $ victim.trust -= 1
             if gender == "M":
                 $ victim.say("To jsi mě tedy nepřesvědčil. Doufal bych, že když už do mě chceš hučet, budeš aspoň mít něco v rukávu. Ale to bych asi od hlídky čekal moc.", "angry")
                 if "case solved" not in status:
@@ -611,7 +611,14 @@ label zairisGuiltyOptions:
         $ status.append("zairis dealt with")
         jump victimEnd
     elif patience < 1:
-        "TODO"
+        $ victim.say("Upřímně, mám dojem, že jsme těmi dopisy už ztratili až moc času.", "angry")
+        if zeran.cluesAgainst == 2:
+            $ victim.say("Něco, co říkáš, by možná znělo rozumně, ale zapomínáš, že tady se bavíme o Zeranovi. Ten je schopný každé podlosti.", "angry")
+        else:
+            $ victim.trust -= 1
+            $ victim.say("A tedy doufal jsem, že když už mě nutíš se bavit o tom špinavci Zeranovi, budeš mít aspoň připravené nějaké rozumné důvody, ale těch jsem tedy moc neslyšel.", "angry")
+        $ victim.say("Takže mě ušetři toho utrpení v tomhle dál pokračovat a jdi zase chvíli dělat něco, za co tě město platí. Jako třeba věnovat se té zatracené krádeži.", "angry")
+        $ victim.say("Slavnosti budou brzy.", "angry")
 
     jump zairisGuiltyOptions
 

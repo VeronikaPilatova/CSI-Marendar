@@ -138,6 +138,7 @@ label adaOptions:
     call adaOptionsRemainingCheck
     if adaOptionsRemaining == 0:
         $ mc.say("To je všechno, můžeš zase jít.")
+        "Dívka pokrčí rameny a odejde."
         return
 
     show mcPic at menuImage
@@ -285,6 +286,7 @@ label adaOptions:
                     $ ada.say("Táta je hulvát a surovec a pokusil se ho zmlátit. Na ulici před domem, před všemi sousedy. Naštěstí ho zastavili dřív, než Zairisovi stihl opravdu ublížit, ale stejně.", "angry")
         "To je všechno, můžeš zase jít.":
             hide mcPic
+            "Dívka pokrčí rameny a odejde."
             return
     jump adaOptions
 

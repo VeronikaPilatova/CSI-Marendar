@@ -19,7 +19,8 @@ label victimHouseholdController:
             return
     elif chosenChar == "son":
         call boysOptionsRemainingCheck
-        if boysOptionsRemaining == 0:
+        call aachimAloneOptionsRemainingCheck
+        if boysOptionsRemaining == 0 and aachimOptionsRemaining == 0:
             "Nenapadá tě, na co dalšího se Aachima ještě ptát."
             return
     elif chosenChar == "ada":
@@ -136,6 +137,7 @@ label victimHouseholdOptions:
     call victimOptionsRemainingCheck
     call lisbethOptionsRemainingCheck
     call boysOptionsRemainingCheck
+    call aachimAloneOptionsRemainingCheck
     call adaOptionsRemainingCheck
     call workshopOptionsRemainingCheck
 
@@ -172,7 +174,7 @@ label victimHouseholdOptions:
         "Chtěla bych si promluvit s učedníky." if boysOptionsRemaining != 0 and (apprentice1Note.isActive == True or apprentice2Note.isActive == True) and lastSpokenWith != "boys" and gender == "F":
             hide mcPic
             jump apprenticesIntro
-        "Můžu mluvit s vaším synem?" if boysOptionsRemaining != 0 and sonNote.isActive == True and lastSpokenWith != "boys":
+        "Můžu mluvit s vaším synem?" if boysOptionsRemaining != 0 and aachimOptionsRemaining != 0 and sonNote.isActive == True and aachim not in cells and lastSpokenWith != "boys" and and lastSpokenWith != "aachim":
             hide mcPic
             jump sonIntro
         "Můžu mluvit s vaší dcerou?" if adaOptionsRemaining != 0 and adaNote.isActive == True and lastSpokenWith != "ada":

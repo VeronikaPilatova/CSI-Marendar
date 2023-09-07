@@ -89,7 +89,7 @@ label zairisOptions:
             $ zairis.asked.append("Amadis grave")
             $ zairis.say("Jednou jsem měl to štěstí. Je to úžasné místo.", "smile")
             $ zairis.say("Tedy, byl jsem u hrobu toho Amadise, který se vrátil, aby nás zachránil před krvavou lázní, kterou chtěl rozpoutat Hans z Dlouhopolska a jeho povstalecká chátra.")
-            $ zairis.say("“Chtěl bych se někdy dostat i ke hrobu prvního Amadise, ale tak daleko zatím můj otec necestoval.")
+            $ zairis.say("Chtěl bych se někdy dostat i ke hrobu prvního Amadise, ale tak daleko zatím můj otec necestoval.")
         "Mohl bys mi něco napsat, jen jako ukázku, jak píšeš?" if "letters for Ada seen" in status and "Zairis writing sample" not in status:
             hide mcPic
             $ zairis.say("Ehm… myslíte báseň na zakázku? To by asi chvíli trvalo.", "surprised")
@@ -106,6 +106,7 @@ label zairisOptions:
             $ status.append("Zairis writing sample")
         "Jak vlastně dopadlo tvoje čekání na Jarní madrigaly?" if "book" in zairis.asked and "Rovien house visited" in status and "book 2" not in zairis.asked:
             hide mcPic
+            $ zairis.asked.append("book 2")
             $ zairis.trust += 1
             $ zairis.say("Poslíček nakonec dorazil. Prý se u brány jeden kupec před ním snad půl dne dohadoval o výšce cla. Nakonec ho prý zaplatil, ale prohlašoval u toho, že to tak nenechá a bude si stěžovat.")
         "Mohl bych si ještě promluvit s tvým otcem?" if gender == "M":
@@ -175,6 +176,7 @@ label poetry:
                 "Zatím píšu hodně špatně, styděla bych se to komukoli ukázat..." if gender == "F":
                     call mcBadPoet
                 "Jistě, ale nemám teď nic u sebe.":
+                    hide mcPic
                     $ zairis.say("Jistě, to je v pořádku. Přineste něco prosím, jakmile budete moct.", "happy")
                     $ zairis.say("Marendarskou knihovnu se po požáru ještě bohužel nepodařilo vybavit tak, jak by si zasloužila. Bude skvělé dostat se k básním, které jsem ještě nečetl.", "happy")
             $ status.append("promised poetry")
@@ -214,6 +216,13 @@ label mcBadPoet:
     $ zairis.say("To je ale jediný způsob, jak se to naučit. Buďte bez obav, jsme ve stejné situaci, přece se nebudeme navzájem shazovat.", "happy")
     $ zairis.say("Navíc marendarskou knihovnu se po požáru ještě bohužel nepodařilo vybavit tak, jak by si zasloužila. Bude skvělé dostat se k básním, které jsem ještě nečetl.", "happy")
     $ mc.say("Zamyslím se nad tím, ale nic neslibuji.")
+    return
+
+label mcPoemReaction:
+    "Podáš Zairisovi list papíru a ten se dychtivě pustí do čtení."
+    if "poem stolen" in status:
+        "Skoro okamžitě se ale jeho výraz změní."
+        $ zairis.say("To je Théodore de Banville. Jeho básně znám velmi dobře.", "angry")
     return
 
 ###

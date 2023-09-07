@@ -1,5 +1,6 @@
 label rovienController:
     $ origAsked = rovien.asked.copy()
+    call rovienHouseInside
     if rovien.alreadyMet == False:
         call rovienFirst
     else:

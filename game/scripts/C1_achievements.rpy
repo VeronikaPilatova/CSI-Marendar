@@ -8,6 +8,9 @@ init python:
         "blackmail": Achievement(name=_("Vyděrač"), message=_("Pohybuješ se ve stínech bez povšimnutí."), image="images/achievements/trophy blackmail.png", priority=None),
         "burglar": Achievement(name=_("Křivolaké cesty práva"), message=_("Podařilo se ti vloupat do Heinrichovy dílny a získat tam cenné stopy."), image="images/achievements/trophy key.png", priority=None),
         "arrestedEveryone": Achievement(name=_("Na každého něco"), message=_("Marendarská věznice je velká a ty ji plně využíváš."), image="images/achievements/trophy cell.png", priority=None),
+        "heinrichGuildmaster": Achievement(name=_("Heinrich cechmistrem"), message=_("Radši mluvit zpříma, než se všemi vyjít."), image="images/achievements/trophy guildmaster.png", priority=None),
+        "rumelinGuildmaster": Achievement(name=_("Rumelin cechmistrem"), message=_("Někdy je nejlepší nedělat zbytečné změny."), image="images/achievements/trophy guildmaster.png", priority=None),
+        "kasparGuildmaster": Achievement(name=_("Kaspar cechmistrem"), message=_("Když se dva perou, třetí je zvolen."), image="images/achievements/trophy guildmaster.png", priority=None),
 
         "fired": Achievement(name=_("Vyhozen z hlídky"), message=_("Ne každý příběh končí šťastně."), image="", priority="hidden"),
         "blackmailFailed": Achievement(name=_("Neúspěšný vyděrač"), message=_("Zločin se ne vždy vyplácí."), image="images/achievements/trophy handcuffs.png", priority="hidden"),

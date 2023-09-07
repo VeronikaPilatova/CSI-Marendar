@@ -116,7 +116,14 @@ label workshopNightIntruder:
         "{i}(Schovat se){/i}":
             "Napůl po paměti skočíš do úkrytu, zaboříš hlavu do nějakého kusu kůže a doufáš, že to bude stačit."
             "Kůže štiplavě páchne a ty se snažíš moc nedýchat, ale zatím nic nespadlo ani nikdo nespustil poplach. Po chvilce se odvážíš otevřít oči a zjistíš, že příhodnou skulinou vidíš, co se v dílně děje."
-            "Ze své skrýše pozoruješ, jak do dílny vejde Aachim a potichu za sebou zavře dveře. Jde ke koši se zbytky, chvíli se v něm přehrabuje a pak vyndá neforemný kus materiálu. Až když ho začne upevňovat do čelistí na dřevěné stolici blízko stolku s nástroji, rozpoznáš, že se jedná o rozdělané boty."
+            "Ze své skrýše pozoruješ, jak do dílny vejde Aachim a potichu za sebou zavře dveře. Jde ke koši se zbytky, chvíli se v něm přehrabuje a pak vyndá neforemný kus materiálu. Až když ho začne upevňovat do čelistí na dřevěné stolici blízko stolku s nástroji, rozpoznáš, že se jedná o rozdělanou botu."
+            if "rubbish" in workshop.checked:
+                "Právě tu, která tě před chvílí zaujala."
+            elif "WIP shoes seen" in status:
+                if gender == "M":
+                    "Tvar té boty ti připadá povědomý a po chvíli přemýšlení si vzpomeneš, kde jsi takovou viděl naposledy. Ta Aachimova má sice jinou barvu a je mnohem méně precizní, ale tvarem se nápadně podobá tomu, na čem pracuje mistr Njal."
+                else:
+                    "Tvar té boty ti připadá povědomý a po chvíli přemýšlení si vzpomeneš, kde jsi takovou viděla naposledy. Ta Aachimova má sice jinou barvu a je mnohem méně precizní, ale tvarem se nápadně podobá tomu, na čem pracuje mistr Njal."
             menu:
                 "{i}(Promluvit si s Aachimem){/i}":
                     "Pomalu vylezeš z úkrytu."

@@ -31,7 +31,9 @@ label stealPoetry:
     else:
         "Dnes jsi ale přišla za konkrétním účelem a po chvilce se zastavíš u regálu s poezií."
         "Po chvíli hledání vezmeš do ruky útlou knihu básní. Se jménem autora ses ještě nesetkala, ale většina básní uvnitř mluví o citech nebo pracuje s přírodními motivy. Opíšeš si náhodnou z nich a doufáš, že na Zairise udělá dostatečně dobrý dojem."
-    show expression ("stolen poem [race].png") at truecenter
+    scene bg library
+    show expression ("sh stolen poem [race].png") at truecenter
     pause
-    hide expression ("stolen poem [race].png") at truecenter
+    hide expression ("sh stolen poem [race].png") at truecenter
+    $ status.append("poem stolen")
     return

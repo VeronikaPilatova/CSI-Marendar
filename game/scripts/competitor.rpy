@@ -21,7 +21,8 @@ label kasparController:
     else:
         call kasparAgain
     call kasparOptions
-    call leavingKaspar
+    if "arrest in progress" not in status:
+        call leavingKaspar
 
     # adjust time spent and status
     $ time.addMinutes((len(kaspar.asked) - len(origAsked)) * 3)
@@ -43,24 +44,29 @@ label kasparFirst:
     menu:
         "Omlouvám se, ve službě nepiju.":
             hide mcPic
+            $ kaspar.asked.append("no drink")
             $ rauvin.trust += 1
             $ kaspar.say("To samozřejmě chápu. Obdivuhodná zodpovědnost, opravdu.", "happy")
         "Dám si rád, díky. {i}(pořádně si přihnout){/i}" if gender == "M":
             hide mcPic
+            $ kaspar.asked.append("drink accepted")
             $ rauvin.trust -= 1
             $ hayfa.trust -= 1
             $ kaspar.say("Je skvělé potkat hlídkaře, který není tak formální.", "happy")
         "Dám si ráda, díky. {i}(pořádně si přihnout){/i}" if gender == "F":
             hide mcPic
+            $ kaspar.asked.append("drink accepted")
             $ rauvin.trust -= 1
             $ hayfa.trust -= 1
             $ kaspar.say("Je skvělé potkat hlídkaře, který není tak formální.", "happy")
         "Dám si rád, díky. {i}(předstírat pití){/i}" if gender == "M":
             hide mcPic
+            $ kaspar.asked.append("drink accepted")
             $ hayfa.trust += 1
             $ kaspar.say("Je skvělé potkat hlídkaře, který není tak formální.", "happy")
         "Dám si ráda, díky. {i}(předstírat pití){/i}" if gender == "F":
             hide mcPic
+            $ kaspar.asked.append("drink accepted")
             $ hayfa.trust += 1
             $ kaspar.say("Je skvělé potkat hlídkaře, který není tak formální.", "happy")
     $ kaspar.say("S čím vám vlastně můžu pomoci?")
@@ -78,7 +84,11 @@ label kasparFirst:
     return
 
 label kasparAgain:
-    "Mistr Kaspar tě pozve dál téměř jako starého přítele, medovinu tentokrát bez ptaní rovnou nalije a přisune ti jeden pohár."
+    "Mistr Kaspar tě pozve dál téměř jako starého přítele a tentokrát ti bez ptaní rovnou podá plný pohár."
+    if "drink accepted" in kaspar.asked:
+        $ kaspar.say("Na posilněnou. Stejná lahev jako minule, zdálo se mi, že vám chutnala.", "happy")
+    else:
+        $ kaspar.say("Na osvěžení. Bezová šťáva, protože vím, že vaše práce je náročná a potřebujete si zachovat čistou hlavu.", "happy")
     $ kaspar.say("Nějaké pokroky ve vyšetřování?")
     $ mc.say("Sleduji teď jednu stopu, můžu se vás ještě na pár věcí zeptat?")
     $ kaspar.say("Ale samozřejmě, rád pomůžu.")
@@ -152,6 +162,34 @@ label kasparOptions:
             else:
                 $ mc.say("Nevím, jestli to skutečně mají v úmyslu. Někdo podobný nápad zmínil a já chtěla zjistit od někoho znalého věci, co by to znamenalo.")
             $ kaspar.say("Jistě, rozumím. Jsem hlídce samozřejmě kdykoli k službám.")
+        "Jste zatčen za krádež výrobku mistra Heinricha." (badge="handcuffs") if "confession" in kaspar.asked and kaspar not in arrested:
+            hide mcPic
+            $ kaspar.say("Vždyť jsem jasně řekl, že jsem v dílně ty boty ani nenašel.", "angry")
+            $ mc.say("To je ale přesně to, co by řekl zloděj.")
+            $ kaspar.say("Zloděj by se hlavně nepřiznal, že v té dílně vůbec byl. Koho to dnes do té hlídky berou?", "angry")
+            $ mc.say("Půjdete se mnou.")
+            $ kaspar.arrestReason.append("stolen shoes")
+            $ arrested.append(kaspar)
+            $ status.append("arrest in progress")
+            return
+        "Jste zatčen za zničení výrobku mistra Heinricha." (badge="handcuffs") if "confession" in kaspar.asked and kaspar not in arrested:
+            hide mcPic
+            $ kaspar.say("Vždyť jsem jasně řekl, že jsem v dílně ty boty ani nenašel.", "angry")
+            $ mc.say("To je ale přesně to, co by řekl pachatel.")
+            $ kaspar.say("Ten by se hlavně nepřiznal, že v té dílně vůbec byl. Koho to dnes do té hlídky berou?", "angry")
+            $ mc.say("Půjdete se mnou.")
+            $ kaspar.arrestReason.append("destroyed shoes")
+            $ arrested.append(kaspar)
+            $ status.append("arrest in progress")
+            return
+        "Jste zatčen za úmysl poškodit výrobek mistra Heinricha." (badge="handcuffs") if "confession" in kaspar.asked and kaspar not in arrested:
+            hide mcPic
+            $ kaspar.say("Vždyť jsem jasně řekl, že... cože? Zatčen za úmysl? Co je zase tohle za pitomost?", "surprised")
+            $ mc.say("Půjdete se mnou.")
+            $ kaspar.arrestReason.append("destroyed shoes")
+            $ arrested.append(kaspar)
+            $ status.append("arrest in progress")
+            return
         "Děkuji vám za pomoc.":
             hide mcPic
             $ kaspar.say("Rádo se stalo. Pomáhat hlídce je přece naše povinnost.", "happy")

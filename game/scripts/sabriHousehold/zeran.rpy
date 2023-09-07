@@ -257,10 +257,21 @@ label zeranOptions:
                     hide expression "sh zeran sample [gender].png"
                     $ status.append("Zeran writing sample")
                 "Jsem původně písař a baví mě sbírat rukopisy.":
+                    $ zeran.asked.append("writing sample refused")
                     hide mcpic
                     $ zeran.trust -= 1
                     $ zeran.say("To se mi snažíš vysmívat, nebo co? Nemáš náhodou spoustu nesmírně důležité práce?", "angry")
                     $ zeran.say("Jestli potřebuješ vědět něco souvisejícího s vyšetřováním, tak to vyklop. Jinak nás oba prosím přestaň zdržovat.", "angry")
+        "Potřebuji ověřit, jestli jsi autorem nějakých textů." if "writing sample refused" in zeran.asked and "Zeran writing sample" not in status:
+            hide mcPic
+            $ zeran.say("Jenom podle písma? Tomu někdo uvěří?", "surprised")
+            $ zeran.say("Nebo chceš to písmo napodobit a pak na mě něco hodit?", "angry")
+            $ zeran.say("Ale pro mě za mě... Těžko tím můžu něco ztratit.")
+            "Zeran si nechá podat psací potřeby, napíše pár slov a vše ti opět vrátí."
+            show expression "sh zeran sample [gender].png"
+            pause
+            hide expression "sh zeran sample [gender].png"
+            $ status.append("Zeran writing sample")
         "Myslím, že bys měl dobrý důvod chtít mistra Heinricha na slavnostech znemožnit." if "motive" not in zeran.asked:
             hide mcPic
             $ zeran.asked.append("motive")
@@ -585,5 +596,7 @@ label zeranOptionsRemainingCheck:
     if "join forces njal pending" in status and "stolen idea" not in zeran.arrestReason:
         $ zeranOptionsRemaining += 1
     if "letters for Ada seen" in status and "Zeran writing sample" not in status and "writing sample" not in zeran.asked:
+        $ zeranOptionsRemaining += 1
+    if "writing sample refused" in zeran.asked and "Zeran writing sample" not in status:
         $ zeranOptionsRemaining += 1
     return

@@ -24,9 +24,9 @@ label mcArrested:
                 $ rauvin.say("Jelikož rozumím, že jsi mistra Heinricha a jeho syna ohrožovala na zdraví, budeš nakonec ráda, když vyvázneš živá.")
         else:
             if gender == "M":
-                $ rauvin.say("Když ti bude soud nakloněný, můžeš vyváznout jen s pranýřem. Pokud se ale zjistí, že si zneužil důvěry mistra Heinricha, když tě vpustil do svého domu, nebo že jsi jeho nebo jeho rodinu ohrožoval na zdraví, budeš nakonec rád, když vyvázneš živý.")
+                $ rauvin.say("Když ti bude soud nakloněný, můžeš vyváznout jen s pranýřem. Pokud se ale zjistí, že jsi zneužil důvěry mistra Heinricha, když tě vpustil do svého domu, nebo že jsi jeho nebo jeho rodinu ohrožoval na zdraví, budeš nakonec rád, když vyvázneš živý.")
             else:
-                $ rauvin.say("Když ti bude soud nakloněný, můžeš vyváznout jen s pranýřem. Pokud se ale zjistí, že si zneužila důvěry mistra Heinricha, když tě vpustil do svého domu, nebo že jsi jeho nebo jeho rodinu ohrožovala na zdraví, budeš nakonec ráda, když vyvázneš živá.")
+                $ rauvin.say("Když ti bude soud nakloněný, můžeš vyváznout jen s pranýřem. Pokud se ale zjistí, že jsi zneužila důvěry mistra Heinricha, když tě vpustil do svého domu, nebo že jsi jeho nebo jeho rodinu ohrožovala na zdraví, budeš nakonec ráda, když vyvázneš živá.")
     if time.hours > 21:
         $ rauvin.say("S vyšetřováním začneme zítra.")
         "S těmito slovy tě opustí a zanechá tě v cele bez možnosti výrazně ovlivnit svůj osud."
@@ -58,6 +58,7 @@ label workshopNightArrestAfter:
         "Ano, ale jen jako součást vyšetřování.":
             hide mcPic
             $ status.append("confessed to break-in")
+            $ runa.say("Co že jsi?", "surprised")
             $ rauvin.say("Tohle ale není způsob, jak by hlídka měla vyšetřovat. Pořád se jedná o neoprávněné vniknutí.")
         "Ne, co to je za nesmysl?":
             hide mcPic

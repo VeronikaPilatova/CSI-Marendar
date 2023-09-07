@@ -233,7 +233,10 @@ label pubNotes:
 label sonNotes:
     $ noteInformation = "Heinrichův patnáctiletý syn se učí řemeslo a jednou po otci převezme dílnu."
 
-    $ chosenLocation = "victimHouseholdController"
+    if son in cells:
+        $ chosenLocation = "aachimMain"
+    else:
+        $ chosenLocation = "victimHouseholdController"
     return
 
 label victimNotes:

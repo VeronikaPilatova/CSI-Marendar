@@ -121,7 +121,44 @@ label rovienHouseFirst:
     return
 
 label rovienHouseAgain:
-    "Znovu ti otevře Zairis a zdvořile se na tebe usměje."
+    if "promised poetry" in status:
+        "Znovu ti otevře Zairis a když tě uvidí, rozzáří se mu oči."
+        $ zairis.say("Máte s sebou nějakou vlastní báseň?", "happy")
+        if any("poem" in str for str in status):
+            show mcPic at menuImage
+            menu:
+                "Bohužel, jdu si jen krátce promluvit s tvým otcem." if chosenChar == "rovien":
+                    hide mcPic
+                    $ mc.say("Mé vyšetřování musí mít bohužel přednost před mými zájmy.")
+                    $ zairis.say("To je škoda, ale chápu to.", "sad")
+                    $ zairis.say("Dojdu tvás u otce ohlásit, ale doufám, že se si na mne s poezií někdy uděláte čas. Opravdu velmi rád bych si nějakou vaši báseň přečetl.")
+                    "Zairis na chvíli zmizí v domě a pak tě pozve dál."
+                    jump rovienController
+                "Samozřejmě, tady je.":
+                    hide mcPic
+                    call mcPoemReaction
+                "Ještě jsem nestihl žádnou vhodnou vybrat." if gender == "M":
+                    hide mcPic
+                    $ zairis.say("Škoda, opravdu velmi rád bych si nějakou přečetl.", "sad")
+                "Ještě jsem nestihla žádnou vhodnou vybrat." if gender == "F":
+                    hide mcPic
+                    $ zairis.say("Škoda, opravdu velmi rád bych si nějakou přečetl.", "sad")
+        elif chosenChar == "rovien":
+            $ mc.say("Bohužel, jdu si jen krátce promluvit s tvým otcem.")
+            $ mc.say("Mé vyšetřování musí mít bohužel přednost před mými zájmy.")
+            $ zairis.say("To je škoda, ale chápu to.", "sad")
+            $ zairis.say("Dojdu tvás u otce ohlásit, ale doufám, že se si na mne s poezií někdy uděláte čas. Opravdu velmi rád bych si nějakou vaši báseň přečetl.")
+            "Zairis na chvíli zmizí v domě a pak tě pozve dál."
+            jump rovienController
+        else:
+            if gender == "M":
+                $ mc.say("Ještě jsem nestihl žádnou vhodnou vybrat.")
+            else:
+                $ mc.say("Ještě jsem nestihla žádnou vhodnou vybrat.")
+            $ zairis.say("Škoda, opravdu velmi rád bych si nějakou přečetl.", "sad")
+    else:
+        "Znovu ti otevře Zairis a zdvořile se na tebe usměje."
+
     $ zairis.say("Můžeme ještě nějak pomoct s vaším vyšetřováním?")
     if chosenChar == "rovien":
         if rovien.alreadyMet:
@@ -173,7 +210,8 @@ label rovienHouseInside:
     return
 
 label leavingRovienHouse:
-    if "promised poetry" in status:
+    scene bg rovien outside
+    if "promised poetry" in status and not any("poem" in str for str in status):
         menu:
             "{i}(Napsat vlastní báseň){/i}":
                 call writingComparisonZairis
@@ -186,8 +224,9 @@ label leavingRovienHouse:
     return
 
 label writingComparisonZairis:
+    scene bg street02
     if "Zairis writing sample" in status and "letters for Ada seen" in status:
-        if "(all love letters kept" in status or "one love letter kept" in status) and :
+        if ("all love letters kept" in status or "one love letter kept" in status):
             if "book title" in zairis.asked or "writing sample" in zairis.asked:
                 "Cestou z Rovienova domu vytáhneš jeden z dopisů pro Adu a porovnáš písmo na něm s lístkem od Zairise."
                 "Zairisova poznámka je psaná viditelně ve spěchu. Přesto se podle tvaru písmen a způsobu vedení jednotlivých tahů zdá, aspoň co dokážeš posoudit, že oba texty psala stejná ruka."
@@ -225,8 +264,10 @@ label writePoetry:
     "Na strážnici najdeš klidný kout, vytáhneš pár papírů a inkoust a zamyslíš se, jak začít."
     menu:
         "Zločinče, třes se, neb jsem teď v městské stráži!":
+            $ status.append("poem watch")
             show expression "sh poem watch [race].png"
         "Hle, z včerejší naděje se rodí světlý zítřek!":
+            $ status.append("poem hope")
             show expression "sh poem hope [race].png"
     pause
     if not achievement.has(achievement_name['poet'].name):

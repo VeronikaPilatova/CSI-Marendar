@@ -1,5 +1,5 @@
 label endOfDay:
-    $ random = renpy.random.randint(1, 5)
+    $ random = renpy.random.randint(1, 6)
     scene expression ("bg/bg street0[random] night.png")
     "Vyjdeš na ulici a uvědomíš si, že lidí podstatně ubylo. Spatříš jediného osamělého chodce spěchajícího z poslední pochůzky a zdáli zaslechneš opilecké halekání. Dost možná už je příliš pozdě na to, aby bylo vhodné klepat na dveře domů a klást otázky."
     "I tobě se mezi úvahy o případu stále častěji vkrádá myšlenka na měkkou deku a suché klidné místo, kde si ji můžeš rozložit. Možná je čas jít spát a v pátrání pokračovat zítra."
