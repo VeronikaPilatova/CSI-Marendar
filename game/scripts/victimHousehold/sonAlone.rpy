@@ -18,6 +18,7 @@ label aachimMain:
     return
 
 label aachimCellsIntro:
+    scene bg cell
     "Aachima najdeš, jak sedí na jednoduché pryčně se sklopenou hlavou a koleny přitaženými skoro pod bradu. Vypadá takhle ještě mladší, než na svých asi patnáct let."
     "Když přijdeš k jeho cele, zvedne hlavu a podívá se na tebe."
     return

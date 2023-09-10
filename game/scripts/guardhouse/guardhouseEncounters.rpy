@@ -59,7 +59,7 @@ label kilianEncounter:
     $ rauvin.say("Nošení otevřeného ohně na ulici je v Marendaru zakázané.")
     $ hayfa.say("A žháře tu nikdo nestrpí.", "angry")
     $ kilian.say("To přece nebylo... my jsme jen chtěli potěšit publikum, my jsme nevěděli, že vám oheň tak vadí.", "surprised")
-    $ rauvin.say("Jsem si jistý, že to soudce zohlední.")
+    $ rauvin.say("Jsem si jistý, že to městská rada zohlední.")
     $ rauvin.say("Ale pořád ještě jsi nepřednesl svou žádost nebo stížnost.")
     $ kilian.say("Já... nemůžete nás nechat prostě vypadnout z tohohle města a celého vévodství a už nikdy se nevracet?", "sad")
     $ hayfa.say("To má být vtip?", "angry")

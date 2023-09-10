@@ -175,6 +175,7 @@ label preparation:
     default personality = []
     # variables - investigation progress
     default clues = []
+    default globalClues = []
     default status = []
     default dailyStatus = []
     default cluesReported = []

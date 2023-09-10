@@ -1,9 +1,10 @@
-
 *.rpyb
-game/cache/shaders.txt
 *.save
-game/saves/persistent
-game/saves/navigation.json
 *.rpyc
 log.txt
 traceback.txt
+game/cache/shaders.txt
+game/cache/bytecode-39.rpyb
+game/cache/screens.rpyb
+game/saves/navigation.json
+game/saves/persistent

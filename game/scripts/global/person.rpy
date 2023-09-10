@@ -24,8 +24,8 @@ init python:
                     image = "mcPic"
             else:
                 image = "npc " + self.code
-                #if self.imageParameter != "" and renpy.can_show(image + " " + self.imageParameter):
-                #    image += " " + self.imageParameter
+                if self.imageParameter != "" and renpy.can_show(image + " " + self.imageParameter):
+                    image += " " + self.imageParameter
                 if mood != "" and renpy.can_show(image + " " + mood):
                     image += " " + mood
 

@@ -54,6 +54,7 @@ label dinnerWithColleaguesOptions:
         "Rauvine, jestli jsi sloužil v Eichenau, co tě přimělo se vrátit do Marendaru?" if ("reasons" in colleaguesAsked or "origin" in mcAsked) and "Rauvin's return" not in colleaguesAsked:
             hide mcPic
             $ colleaguesAsked.append("Rauvin's return")
+            $ globalClues.append("Luisa arsonist")
             if gender == "M":
                 "Rauvin viditelně znejistí způsobem, který jsi u něj ještě nepozoroval."
             else:

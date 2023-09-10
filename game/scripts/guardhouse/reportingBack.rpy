@@ -13,6 +13,7 @@ label reportingBack:
 
     show mcPic at menuImage
     menu:
+        # workshop
         "Dílna mistra Heinricha byla zřejmě celou noc odemčená." if "workshop unlocked" in clues and "workshop unlocked" not in cluesReported:
             hide mcPic
             $ rauvin.asked.append("workshop unlocked")
@@ -56,6 +57,37 @@ label reportingBack:
             $ rauvin.trust += 1
             $ hayfa.trust += 1
 
+        # Heinrich household
+
+        # neighbours
+        "Paní Lisbeth má pravděpodobně milence." if lotte.alreadyMet == True and "confession" not in kaspar.asked and "confession" not in lisbeth.asked and "possible lover" not in cluesReported:
+            hide mcPic
+            "Rauvin se zamračí."
+            $ rauvin.say("A jak to souvisí s tvým případem? Hlídka tady není od špehování záletníků nebo řešení manželských problémů.")
+            $ mc.say("Ten milenec byl včera v noci u ní doma, zatímco mistr Heinrich pil U Salmy. Mohl mít přístup i do jeho dílny.")
+            $ rauvin.say("Ale jistě to nevíš. Víš aspoň, kdo to je, nebo to jsou jenom nepodložené drby?")
+            if "secret lover" in nirevia.asked:
+                $ mc.say("Mohl by to být mistr Kaspar, podle Nirevie si s paní Lisbeth velmi dobře rozumí.")
+                if "ambitions" in kaspar.asked:
+                    $ mc.say("Mistr Kaspar navíc také usiluje o pozici cechmistra, mohl by chtít mistra Heinricha zdiskreditovat.")
+                $ rauvin.say("Pak možná dává smysl si s ním promluvit. Ale buď diskrétní a nedělej žádné ukvapené kroky, všechno to jsou vážení lidé.")
+            else:
+                $ mc.say("Zatím se mi ho nepodařilo najít.")
+                $ rauvin.say("Hlavně v tom směru nedělej žádné ukvapené kroky. Mistr Heinrich i jeho žena jsou vážení lidé.")
+        "Myslím, že za těmi podezřelými obchody by mohl stát cechmistr Rumelin." if "AML" in rauvin.asked and "AML" in lotte.asked and "confession" not in rumelin.asked and "AML" not in cluesReported:
+            hide mcPic
+            $ mc.say("Podle Karstenovy manželky Lotte se jednalo o jeho instrukce.")
+            $ rauvin.say("Jaké by k tomu měl důvody?")
+            if gender == "M":
+                $ mc.say("To nevím, zatím jsem s ním nemluvil.")
+            else:
+                $ mc.say("To nevím, zatím jsem s ním nemluvila.")
+        "Za podezřelými obchody stojí cechmistr Rumelin, dokonce se mi i přiznal." if "AML" in rauvin.asked and "confession" in rumelin.asked and "AML solved" not in cluesReported:
+            hide mcPic
+            $ mc.say("Cechmistr chtěl zabránit mistru Njalovi, aby dokončil své dílo na Einionovy slavnosti. Celé to souviselo s ukradeným střihem, podle kterého šil svoje boty mistr Heinrich.")
+            $ rauvin.say("K tomu budu později chtít podrobné hlášení se všemi souvislostmi.")
+
+        # Rumelin
         "Mistr Heinrich se rozhádal s polovinou cechu a většinou obchodníků, od kterých bere materiál." if "enemies" in rumelin.asked and "enemies everywhere" not in cluesReported:
             hide mcPic
             $ rauvin.asked.append("enemies everywhere")
@@ -83,6 +115,7 @@ label reportingBack:
             $ rauvin.trust -= 1
             $ hayfa.trust -= 1
 
+        # Kaspar
         "Mistr Heinrich má problémy s alkoholem." if kaspar.alreadyMet == True and "alcoholic" not in cluesReported:
             hide mcPic
             $ rauvin.asked.append("alcoholic")
@@ -95,6 +128,7 @@ label reportingBack:
             $ rauvin.say("Zajímavé. Bylo to jen lichocení, nebo se ti snažil něco podsunout?")
             $ mc.say("Říkal, že mistr Heinrich pije tak moc a je tak vzteklý, že ty boty klidně mohl zničit sám. A naznačoval, že cechmistr by ho právě kvůli tomu mohl chtít znemožnit.")
 
+        # Salma's pub
         "Cechmistr Rumelin včera mistru Heinrichovi vyhrožoval." if "pub fight" in salma.asked and "pub fight" not in cluesReported:
             hide mcPic
             $ rauvin.asked.append("pub fight")
@@ -124,7 +158,98 @@ label reportingBack:
             "Rauvin se zamračí a zamyslí."
             $ rauvin.say("To opravdu zní trochu zvláštně. Možná to nic neznamená, ale pro jistotu nechám někoho zjistit, jestli se jen nepřesunuli do jiné hospody. A jestli cechmistr pořád prodává zboží, které drahý materiál potřebuje.")
             $ status.append("add investigating less deals")
+        "Žebračka Erle dnes ráno donesla do hospody lahve se stejným popisem, jaké se ztratily z domu mistra Heinricha." if "lost bottles" in clues and "lost bottles" not in cluesReported:
+            hide mcPic
+            $ rauvin.say("Hm. Předpokládám, že to jsou nějaké drahé lahve, které jdou snadno poznat?")
+            $ mc.say("Ano, je to drahé pití, které si mistr Heinrich schovává pro dobré přátele nebo vážené hosty.")
+            $ rauvin.say("A kde je získala?")
+            show mcPic at menuImage
+            menu:
+                "To nevím, Salma se jí neptala a já s ní ještě nemluvil." if erle.alreadyMet == False and gender == "M":
+                    hide mcPic
+                    $ rauvin.say("Tak se jí zeptej. Nevím, jestli to s krádeží bot souvisí, ale jestli chceš tuhle stopu sledovat, je to přirozený krok.")
+                "To nevím, Salma se jí neptala a já s ní ještě nemluvila." if erle.alreadyMet == False and gender == "M":
+                    hide mcPic
+                    $ rauvin.say("Tak se jí zeptej. Nevím, jestli to s krádeží bot souvisí, ale jestli chceš tuhle stopu sledovat, je to přirozený krok.")
+                "Tvrdí, že je našla v blátě u řeky." if "bottles 2" in erle.asked:
+                    hide mcPic
+                    $ rauvin.say("To se takhle v blátě u řeky přehrabuje často?")
+                    if gender == "M":
+                        $ mc.say("Mluvil jsem s ní pod mostem, kde asi tráví většinu času. Tak bych se vlastně nedivil.")
+                    else:
+                        $ mc.say("Mluvila jsem s ní pod mostem, kde asi tráví většinu času. Tak bych se vlastně nedivila.")
+                    $ rauvin.say("Potom potřebujeme zjistit, jestli si vymýšlí, nebo jakou zvláštní cestou se lahve mistra Heinricha do té řeky dostaly.")
+                    $ mc.say("To mám přesně v úmyslu.")
+                "Kde jinde, než v té dílně?":
+                    hide mcPic
+                    $ rauvin.trust -= 1
+                    $ hayfa.trust -= 1
+                    $ rauvin.say("Takže tvoje domněnka je, že se Erle vloupala do Heinrichovy dílny, ukradla tam lahve, přes noc je vypila, ráno je donesla Salmě a doufala, že si to nikdo nespojí dohromady?")
+                    $ mc.say("Vypít je mohl i někdo spolu s ní. Nebo mohla obsah někam přelít.")
+                    $ rauvin.say("Pořád by to pro ni byl dost nebezpečný podnik. A neříká Erle, že je jako žebračka spokojená? Prý občas dokonce odmítá almužny, že má v danou chvíli dost. Aspoň myslím, že to je ona.")
+                    $ mc.say("To možná říká, ale buď lže a pak klidně mohla krást, nebo říká pravdu a pak to nemá v hlavě v pořádku a kdo ví, co všechno mohla udělat.")
+                    $ rauvin.say("Možná. Kde tvrdí ona sama, že ty lahve našla?")
+                    if "bottles 2" in erle.asked:
+                        $ mc.say("Prý v blátě u řeky, ale to nedává smysl. Jak by se tam dostaly?")
+                        $ rauvin.say("Jak by se Erle dostala do dílny a kam zmizel obsah těch lahví? Nemyslím, že v tuto chvíli můžeme dělat jakékoli závěry.")
+                    else:
+                        if gender == "M":
+                            $ mc.say("Na to jsem se ještě nestihl zeptat.")
+                        else:
+                            $ mc.say("Na to jsem se ještě nestihla zeptat.")
+                        $ rauvin.say("Tak to udělej, třeba nás to na něco navede.")
+                "Asi někde na smetišti?":
+                    hide mcPic
+                    $ rauvin.say("A proč to považuješ za zajímavou stopu?")
+                    $ mc.say("Zloděj je zřejmě neprodal, ale rovnou vypil.")
+                    show mcPic at menuImage
+                    menu:
+                        "A protože těch lahví je víc, asi na to nebyl sám.":
+                            hide mcPic
+                            $ rauvin.say("To ale nemusí znamenat, že měl komplice přímo při krádeži. Mohl prostě nabídnout pití nějakému kamarádovi, který netušil, odkud to je.")
+                            $ rauvin.say("Jak s tím chceš pracovat? Nemůžeme přece chodit od domu k domu a všech se ptát, jestli náhodou nepili z těchto lahví.")
+                            $ mc.say("Tohle je drahé pití. Někdo bohatý by ho nekradl, ten by si ho sám koupil, a pro někoho chudého by to byla moc velká vzácnost na to, aby ji vypil jen tak s někým.")
+                            $ mc.say("Myslím, že zloděj byl spíš chudší, a že jestli neměl komplice, přinesl to někomu, kdo je mu blízký nebo na koho chtěl udělat dojem.")
+                            $ rauvin.say("“Dobře, to asi ano. Pořád mi není jasné, jestli nás to někam posouvá, ale ve spojitosti s něčím dalším to možná může být užitečné.")
+                        "To mu muselo způsobit dost ošklivou kocovinu, to by ho mohlo pomoct prozradit.":
+                            hide mcPic
+                            $ rauvin.say("Dobře, to asi může být nějaká stopa.")
+                            $ rauvin.say("Ale spousta lidí se týž večer opila jinde, na někom kocovina nemusí být poznat a mistru Heinrichovi pořád jde hlavně o ty boty. Na tuhle stopu bych se nesoustředil až příliš.")
+                        "Možná potom v opilosti ukradl ty boty.":
+                            hide mcPic
+                            $ rauvin.say("Nemusel by potom pít přímo v dílně?")
+                            $ mc.say("Přesně. Takže jestli ten zloděj nebyl obzvlášť drzý, musel to být někdo z Heinrichovy rodiny.")
+                            $ rauvin.say("Kdo z Heinrichovy rodiny by měl zájem na tom krást Heinrichův mistrovský výrobek? Není přirozenější předpokládat, že spolu ty dvě krádeže nesouvisí?")
+                            $ mc.say("Dvě nesouvisející krádeže v jeden den, to by také byla velká náhoda.")
+                            $ rauvin.say("Nebo tam může být souvislost, kterou teď nevidíme.")
+                            $ rauvin.say("Jen chci říct, neupínej se na to, že se někdo opil v dílně a poté ukradl boty. Je to určitě možné, ale není to jediné možné vysvětlení.")
+                        "Těžko se mi představuje, že by někdo kradl jen kvůli tomu, aby se mohl rovnou zpít. Myslím, že to vypil přímo mistr Heinrich.":
+                            hide mcPic
+                            $ rauvin.trust -= 1
+                            $ rauvin.say("A kdo potom donesl ty lahve na smetiště?")
+                            $ mc.say("Možná on, aby mu na to nepřišla manželka?")
+                            $ rauvin.say("Záleží mu na tom? Na mě tak nepůsobí.")
+                            $ rauvin.say("Asi bych se zkusil zamyslet ještě nad jiným vysvětlením.")
 
+        # Zeran
+        "Myslím, že mistr Heinrich vyhodil jednoho ze svých učedníků neprávem." if "Zeran innocent" in clues and "Zeran innocent" not in cluesReported:
+            hide mcPic
+            $ rauvin.say("A myslíš, že to nějak souvisí s tvým současným případem?")
+            $ mc.say("Nejspíš ne, ale chci jeho nevinu dokázat.")
+            show mcPic at menuImage
+            menu:
+                "Spravedlnost je přece to, od čeho tady hlídka je.":
+                    hide mcPic
+                    $ rauvin.say("Především je tady hlídka od udržování pořádku a vynucování zákonů.")
+                "Hlídka je tady přece od toho, aby chránila lidi.":
+                    hide mcPic
+                    $ hayfa.trust += 1
+                    $ rauvin.say("Zníš jako Hayfa.")
+            $ rauvin.say("Ne, že bych tě nechápal nebo s tebou vlastně nesouhlasil, ale před jakou dobou byl ten učedník vyhozený?")
+            $ mc.say("Asi před dvěma měsíci, nevím úplně přesně.")
+            $ rauvin.say("Pak může určitě na očištění počkat ještě týden. Střevíce mistra Heinricha nebo aspoň zloděje je nutné najít do začátku Einionových slavností.")
+
+        # nothing
         "Raději bych si to nechal pro sebe." if "provisional watchman" not in status and gender == "M":
             hide mcPic
             $ rauvin.trust -= 2
@@ -227,4 +352,19 @@ label cluesOptionsRemainingCheck:
     if "less deals" in salma.asked and "less deals" not in cluesReported:
         $ optionsRemaining += 1
         $ cluesAvailable.append("less deals")
+    if "lost bottles" in clues and "lost bottles" not in cluesReported:
+        $ optionsRemaining += 1
+        $ cluesAvailable.append("lost bottles")
+    if lotte.alreadyMet == True and "confession" not in kaspar.asked and "confession" not in lisbeth.asked and "possible lover" not in cluesReported:
+        $ optionsRemaining += 1
+        $ cluesAvailable.append("possible lover")
+    if "AML" in rauvin.asked and "AML" in lotte.asked and "confession" not in rumelin.asked and "AML" not in cluesReported:
+        $ optionsRemaining += 1
+        $ cluesAvailable.append("AML")
+    if "AML" in rauvin.asked and "confession" in rumelin.asked and "AML solved" not in cluesReported:
+        $ optionsRemaining += 1
+        $ cluesAvailable.append("AML solved")
+    if "Zeran innocent" in clues and "Zeran innocent" not in cluesReported:
+        $ optionsRemaining += 1
+        $ cluesAvailable.append("Zeran innocent")
     return
