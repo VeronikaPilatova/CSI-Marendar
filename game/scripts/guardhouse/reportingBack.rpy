@@ -58,6 +58,9 @@ label reportingBack:
             $ hayfa.trust += 1
 
         # Heinrich household
+        "Myslím, že učedníci mistra Heinricha něco skrývají." if "boys met" in status and "boys" not in cluesReported:
+            hide mcPic
+            $ rauvin.say("To bych se vůbec nedivil, ale snadno to může být i úplná drobnost. Mistr Heinrich je prý náročný člověk, můžou z něj prostě mít strach.")
 
         # neighbours
         "Paní Lisbeth má pravděpodobně milence." if lotte.alreadyMet == True and "confession" not in kaspar.asked and "confession" not in lisbeth.asked and "possible lover" not in cluesReported:
@@ -74,6 +77,7 @@ label reportingBack:
             else:
                 $ mc.say("Zatím se mi ho nepodařilo najít.")
                 $ rauvin.say("Hlavně v tom směru nedělej žádné ukvapené kroky. Mistr Heinrich i jeho žena jsou vážení lidé.")
+            $ rauvin.asked.append("careful of the rich - lover")
         "Myslím, že za těmi podezřelými obchody by mohl stát cechmistr Rumelin." if "AML" in rauvin.asked and "AML" in lotte.asked and "confession" not in rumelin.asked and "AML" not in cluesReported:
             hide mcPic
             $ mc.say("Podle Karstenovy manželky Lotte se jednalo o jeho instrukce.")
@@ -365,6 +369,9 @@ label cluesOptionsRemainingCheck:
         $ optionsRemaining += 1
         $ cluesAvailable.append("AML solved")
     if "Zeran innocent" in clues and "Zeran innocent" not in cluesReported:
+        $ optionsRemaining += 1
+        $ cluesAvailable.append("Zeran innocent")
+    if "boys met" in status and "boys" not in cluesReported:
         $ optionsRemaining += 1
         $ cluesAvailable.append("Zeran innocent")
     return

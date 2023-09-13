@@ -51,7 +51,7 @@ label dinnerWithColleaguesOptions:
             $ hayfa.say("Šest.")
             $ mc.say("Tak krátce?")
             $ solian.say("Služebně starší bys spočítal na prstech jedné ruky. Většina staré gardy byla až moc spojená s Velinem na to, aby mohla zůstat. Já nastoupil jako jeden z prvních poté, co Velin padl.")
-        "Rauvine, jestli jsi sloužil v Eichenau, co tě přimělo se vrátit do Marendaru?" if ("reasons" in colleaguesAsked or "origin" in mcAsked) and "Rauvin's return" not in colleaguesAsked:
+        "Rauvine, jestli jsi sloužil v Eichenau, co tě přimělo se vrátit do Marendaru?" if ("reasons" in colleaguesAsked or "origin" in mc.asked) and "Rauvin's return" not in colleaguesAsked:
             hide mcPic
             $ colleaguesAsked.append("Rauvin's return")
             $ globalClues.append("Luisa arsonist")
@@ -115,14 +115,39 @@ label dinnerWithColleaguesOptions:
                 $ mc.say("Je normální, že jsem ho ještě nepotkala?")
             $ rauvin.say("Ano, velitel Galar celé dny řeší nutnou administrativu a na moc jiného mu nezbývá čas.")
             $ rauvin.say("Musíme vést podrobné záznamy o výběru cla u bran a o všem ostatním, co má hlídka na starosti. Především pro případ, že by vzniklo jakékoli podezření na nerovné jednání nebo zneužití moci. Na to jsou tady v Marendaru všichni citliví.")
-
-
+        "Jaký trest toho zloděje čeká, až ho dopadneme?" if "thief punishment" not in colleaguesAsked:
+            hide mcPic
+            $ colleaguesAsked.append("thief punishment")
+            $ solian.say("To záleží na tom, kdo by to byl.")
+            $ hayfa.say("Samozřejmě.", "angry")
+            $ mc.say("Tak se to liší všude, ale jaký trest hrozí tady v Marendaru?")
+            $ rauvin.say("Ještě potom záleží, s jakým úmyslem ten čin byl provedený. Soudci se k tomu teď snaží přihlížet.")
+            $ solian.say("Jestli to udělal nějaký špinavý nuzák, protože prostě nezná žádnou slušnost, může ho klidně čekat cejch nebo může přijít o ruku.")
+            $ rauvin.say("Jestli ten důvod je nějak omluvitelný, možná by mohl stačit pranýř a povinnost to odpracovat. Když bude soudce mírný.")
+            $ solian.say("Ale přiznejme si, tahle lůza se dá omluvit jen málokdy.", "angry")
+            $ hayfa.say("Nejsi ty náhodou také špinavá lůza, když ses neuchytil ani jako tovaryš?", "angry")
+            $ solian.say("Já jsem v hlídce! A nepáchám zločiny!", "angry")
+            $ rauvin.say("No a jestli to udělal třeba nějaký řemeslník, nejspíš bude mít možnost zaplatit odškodné. Ačkoli očekávám, že když jde o výrobek na Einionovy slavnosti, bude ta částka patřičně navýšená.")
+            show mcPic at menuImage
+            menu:
+                "Stejně se mi nelíbí, jak moc záleží na něčím původu.":
+                    hide mcPic
+                    if gender == "M":
+                        $ hayfa.say("To nejsi sám.")
+                    else:
+                        $ hayfa.say("To nejsi sama.")
+                "To zkoumání důvodů se mi nezdá. Potom může někomu spousta věcí projít jen proto, že umí na soudce udělat nevinné oči.":
+                    hide mcPic
+                    $ hayfa.say("To i teď. A když někde soudí osobně místní šlechtic, tak obzvlášť.")
+                "Tenhle přístup se mi líbí. Je nejpřísnější na ty, kdo mají nejvíc důvodů je porušovat, ale umožní odlišit pachatele, kteří se můžou napravit.":
+                    hide mcPic
+                    $ solian.say("Nebo si to od něj aspoň všichni slibují.")
 
     jump dinnerWithColleaguesOptions
 
 label askMc:
-    if "origin" not in mcAsked:
-        $ mcAsked.append("origin")
+    if "origin" not in mc.asked:
+        $ mc.asked.append("origin")
         $ solian.say("Odkud vlastně jsi?")
         if origin == "born here":
             if gender == "M":
@@ -183,6 +208,74 @@ label askMc:
                 $ mc.say("Protože nejsem plně vyučená. U Anselma jsem dělala spíš pomocníka a poslíčka a snažila se toho naučit co nejvíc, ale nikdo mi to nepotvrdí.")
             $ mc.say("Na nic jiného jsem neměla dost peněz. Možná jednou... jestli někdo bude chtít tak starého učedníka.")
         $ solian.say("Učení taky nikam nevede. Aspoň pokud nechceš zůstat jako věčný tovaryš bez naděje na cokoliv lepšího.", "angry")
+
+    if "Heinrich" not in mc.asked:
+        $ mc.asked.append("Heinrich")
+        $ solian.say("Co si zatím myslíš o mistru Heinrichovi?")
+        label askMcHeinrich:
+        show mcPic at menuImage
+        menu:
+            "Po jednom dni moc nemám, jak soudit." if "Heinrich - too soon to judge" not in mc.asked:
+                hide mcPic
+                $ mc.asked.append("Heinrich - too soon to judge")
+                $ solian.say("To po tobě ani nechci. Jen to je člověk, se kterým bychom měli vycházet, tak mě zajímá tvůj názor.")
+                jump askMcHeinrich
+            "Připadá mi, že je hodně náročný a vždycky musí být po jeho.":
+                hide mcPic
+                $ hayfa.say("To určitě je. Proto také nemá žádné tovaryše a ani učedníci u něj často nezůstanou dlouho.")
+                $ rauvin.say("Nevím, proč je vůbec nabírá, když je potom stejně hned zase vyhodí.")
+                $ solian.say("Aby mu v dílně někdo uklízel a podával věci, samozřejmě. To je úloha učedníků.")
+                $ solian.say("Tovaryš, to je něco jiného. Ten už umí pracovat samostatně a měl by mít v dílně svoje slovo. Ale učedník by měl znát svoje místo.")
+                $ hayfa.say("I když mu mistr neumožňuje se pořádně učit?")
+                $ rauvin.say("I když si na něm mistr vylévá zlost?")
+                $ solian.say("Učedník si něco takového velmi často myslí, ale málokdy to je pravda. Většinou ten učedník prostě ještě není dost zkušený.")
+                show mcPic at menuImage
+                menu:
+                    "Špatného učitele, co si jen vylévá zlost, určitě pozná každý.":
+                        hide mcPic
+                    "To je pravda, bez přísnosti se nikdo nic nenaučí.":
+                        hide mcPic
+                    "Mistr by měl učedníkovi hlavně dát druhou rodinu. Vždyť u něj ty děti bydlí spoustu let.":
+                        hide mcPic
+            "Je hodně hrdý na svou práci, a jestli to chápu správně, tak právem." if "Heinrich - justly proud" not in mc.asked:
+                hide mcPic
+                $ mc.asked.append("Heinrich - justly proud")
+                $ solian.say("To rozhodně. Takhle schopného mistra nám závidí i v mnohem větších městech.")
+                $ hayfa.say("Ale to jsme všichni věděli dávno před tím, než k té krádeži došlo. Co tam máš dalšího?")
+                jump askMcHeinrich
+            "Moc nerozumím tomu, proč usiluje o místo cechmistra. Vždyť by mu to jen bralo čas na práci.":
+                hide mcPic
+                $ hayfa.say("Možná zjistil, že nejlepší švec ve městě už je a tohle je něco dalšího, o co usilovat.")
+                $ hayfa.say("Kdyby chtěl být ještě lepší řemeslník, asi by se musel přestěhovat do většího města. Ale to by znamenalo opustit Marendar.")
+                $ rauvin.say("Pro něj i celou jeho rodinu.")
+                show mcPic at menuImage
+                menu:
+                    "Podle mě by měl být spokojený s tím, co má.":
+                        hide mcPic
+                    "Tak ať si najde něco jiného než cechmistrování, když na něj nemá předpoklady.":
+                        hide mcPic
+                    "Dobře, asi rozumím, že nechce ustrnout na místě.":
+                        hide mcPic
+            "Divím se, že se uchází o místo cechmistra. Připadá mi jako hodně vznětlivý člověk, pro kterého bude obtížné se s někým dohodnout. Proč by ho někdo volil?":
+                hide mcPic
+                $ solian.say("To je také to hlavní, co proti němu současný cechmistr vytahuje. Určitě je nebezpečí, že s Heinrichem v čele by si ševci leckoho znepřátelili.")
+                $ rauvin.say("Mistr Heinrich má ale zároveň pověst přímého a čestného muže, který nestrpí žádnou nepravost.")
+                $ rauvin.say("Občas se někdo může bát, že současný cechmistr se stará především o vlastní zájmy a až potom o dobro cechu jako celku. Potom je Heinrich zajímavá volba.")
+                $ hayfa.say("A důvody podezřívat Rumelina by byly. Byl cechmistrem už za Velina, zůstal jím i po něm a celou dobu se měl výborně.")
+                $ hayfa.say("To se rozhodně o všech ostatních ševcích říct nedá. Těžko říct, jestli pro ně nemohl nic udělat, nebo je obětoval pro vlastní prospěch. To už se asi nedozvíme.")
+                show mcPic at menuImage
+                menu:
+                    "Mistr Heinrich by se rozhodně postavil za každého, kdo je v právu. Z těch dvou bych volil jeho." if gender == "M":
+                        hide mcPic
+                    "Mistr Heinrich by se rozhodně postavil za každého, kdo je v právu. Z těch dvou bych volila jeho." if gender == "F":
+                        hide mcPic
+                    "Mistr Heinrich by to svou vznětlivostí jen zhoršil pro všechny. Já bych vybral Rumelina." if gender == "M":
+                        hide mcPic
+                    "Mistr Heinrich by to svou vznětlivostí jen zhoršil pro všechny. Já bych vybrala Rumelina." if gender == "F":
+                        hide mcPic
+                    "Jestli je jeden nebezpečně vznětlivý a druhému se nedá věřit, tak ševcům jejich výběr vůbec nezávidím.":
+                        hide mcPic
+                $ solian.say("Není to snadná volba. Oba mají značné přednosti. Vlastně mě těší, že to nemusím řešit.")
 
     return
 

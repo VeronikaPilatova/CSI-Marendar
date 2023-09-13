@@ -337,7 +337,7 @@ label workshopVisitNjal:
         $ mc.say("Co tam dělal?")
         $ njal.say("Vyzvedával tam můj majetek, který mi byl ukraden.")
         $ mc.say("Můžete to nějak vysvětlit?")
-        $ njal.say("Asi před dvěma měsíci jsem dokončil střih na dámské boty, které by byly zároveň velmi jemné a vzdušné a zároveň pohodlné a dostatečně pevné. Propracovaný způsob šněrování… strávil jsem na tom hodně času a spotřeboval množství materiálu, než jsem vše dovedl k dokonalosti.")
+        $ njal.say("Asi před dvěma měsíci jsem dokončil střih na dámské boty, které by byly zároveň velmi jemné a vzdušné a zároveň pohodlné a dostatečně pevné. Propracovaný způsob šněrování... strávil jsem na tom hodně času a spotřeboval množství materiálu, než jsem vše dovedl k dokonalosti.")
         $ njal.say("Pak se ten střih ztratil z mé dílny a před dvěma týdny jsem se od Gerda dozvěděl, že Heinrich přesně na těchto botách pracuje a chce je představit na Einionových slavnostech.")
     else:
         $ njal.say("Bohužel jsem v tu chvíli neviděl jinou možnost, jak bezpečně získat zpátky svůj majetek ještě před Einionovými slavnostmi.")

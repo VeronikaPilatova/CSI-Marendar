@@ -769,7 +769,13 @@ label arrestZeranStolenNjalInsists:
             else:
                 $ mc.say("Tomu nerozumím. Všimla jsem si, jak moc je pro vás důležité dobré jméno u vážených osob. Už jenom ten rozdíl, jak jste hned první den mluvil se mnou a potom s mistrem Heinrichem, byl opravdu výrazný.")
             $ rauvin.say("Ctít něčí společenské postavení přece neznamená ohýbat kvůli nim zákony!", "angry")
-            # opodmínkovaná sekce
+
+            if any("careful of the rich" in str for str in status):
+                if "careful of the rich - lover" in status:
+                    $ mc.say("Když jsme ale mluvili o možném milenci paní Lisbeth, kladl jste mi na srdce, že mám na jejich postavení brát ohled. U nikoho jiného jste po mně takovou opatrnost nechtěl.")
+                $ mc.say("Jestli mám někoho vyšetřovat obzvlášť opatrně a u jiného to je jedno, tak to přece jasně říká, že na každého platí zákony jinak.")
+                $ rauvin.say("Neříká! Vždycky chceme případ pochopit tak do hloubky, jak to jen jde. Jediný rozdíl je v tom, že bohatší lidé mají víc možností, jak nám v tom překážet.", "angry")
+
             $ rauvin.say("Zatýkat lidi jen proto, že to klidně mohli udělat, to si nemůžeme dovolit. A nemůžeme si dovolit hlídkaře, kteří to navrhují.", "angry")
             $ rauvin.say("“Prosím, vrať svůj glejt.")
             $ rauvin.say("Zkus štěstí v nějaké práci, kde nerozhoduješ o ostatních.")
@@ -795,6 +801,140 @@ label goFindEvidence:
         $ rauvin.say("“Prosím, vrať svůj glejt.")
         $ rauvin.say("Hodně štěstí při hledání nové práce.")
         jump thrownOut
+    return
+
+label nervousSolian:
+    "Strážnicí prostupuje výrazný pocit nejistoty. Ačkoli se hlídkaři snaží plnit své každodenní povinnosti, často na sebe navzájem vrhají tázavé pohledy a pak je hned odvrací. Znepokojení je znát i z tichých rozhovorů, které občas zaslechneš."
+    "Jakmile tě spatří Solian, pokyne ti, abys ho následoval do jedné z menších místností."
+    scene bg interviewRoom
+    "Nesedne si, jen zavře a rovnou se začne vyptávat."
+    $ solian.say("Jak postupuje tvůj případ? Slavnosti jsou skoro tady, potřebujeme někoho zatknout nejpozději zítra v poledne. Máme někoho?")
+
+    label nervousSolianOptions:
+    show mcPic at menuImage
+    menu:
+        "Neměl by se mnou tohle řešit Rauvin?" if "nervous - Rauvin" not in solian.asked:
+            hide mcPic
+            $ solian.asked.append("nervous - Rauvin")
+            $ solian.say("Měl, ale ten tady není a kdo ví, kdy se zase vrátí. Já ti budu muset stačit.", "angry")
+            $ solian.say("Jestli se ti nelíbí, že mi všechno budeš muset vysvětlovat od začátku, můžeš si na něj stěžovat u velitele.", "angry")
+            jump nervousSolianOptions
+        "Co se stalo s Rauvinem?" if "nervous - Rauvin 2" not in solian.asked:
+            hide mcPic
+            $ solian.asked.append("nervous - Rauvin 2")
+            $ solian.say("To pořád ještě nikdo pořádně neví. Prostě tady není.", "angry")
+            $ solian.say("Starají se o něj v hospici a je u něj jeho sestra, takže my se můžeme soustředit na naši práci.")
+            jump nervousSolianOptions
+        "Kam vlastně jela Hayfa?" if "nervous - Hayfa" not in solian.asked:
+            hide mcPic
+            $ solian.asked.append("nervous - Hayfa")
+            $ solian.say("Nevím a nezajímá mě to. Pro mě je důležité zajistit, aby hlídka splnila svoje povinnosti, a to dokážeme i bez ní.", "angry")
+            jump nervousSolianOptions
+        "Proč to tak spěchá? Nemůžeme vyšetřovat ještě pár dní?" if "nervous - hurry" not in solian.asked:
+            hide mcPic
+            $ solian.asked.append("nervous - hurry")
+            $ solian.trust -= 2
+            $ rauvin.trust -= 1
+            $ hayfa.trust -= 1
+            $ solian.say("Proč asi. Jestli začnou slavnosti a mistr Heinrich ani nebude mít výrobek, ani nebude probíhat soud za jeho krádež nebo zničení, bude všem pro smích. A tomu chceme zabránit.", "angry")
+            jump nervousSolianOptions
+        "Pořád nemám dokonale přesvědčivé důkazy.":
+            hide mcpic
+            $ solian.asked.append("nervous - no proof")
+            $ soliansay("Na přesvědčivé důkazy už nemáme čas. Ty současné budou muset stačit.")
+            $ mc.say("Rauvin ale vždycky říkal...")
+            $ solian.say("Rauvin tady není. Jsme tady my a my s tím musíme něco provést. Takže koho můžeme zatknout?", "angry")
+            $ mc.say("No, jestli ti stačí i částečné důkazy...")
+        "Pachatele už naštěstí znám. Věřím, že mám dobré důkazy.":
+            hide mcPic
+            $ solian.say("No to je skvělá zpráva. Kdo to je?")
+
+    show mcPic at menuImage
+    menu:
+        "...tak mně tedy ne." if "nervous - no proof" in solian.asked:
+            hide mcPic
+            $ rauvin.trust += 3
+            $ hayfa.trust += 2
+            $ solian.trust -= 2
+            $ solian.say("A co tedy chceš dělat? Říct mistru Heinrichovi, že jsme to nezvládli?", "angry")
+            $ mc.say("Lepší než zatknout někoho, proti komu nemáme dostatečné důkazy.")
+            $ solian.say("V tom případě se běž vrátit k případu a koukej ty svoje dostatečné důkazy hodně rychle najít.", "angry")
+            if gender == "M":
+                $ solian.say("Jestli mi do zítřejšího poledne nedokážeš říct, koho můžeme zatknout, bude to znamenat, že ses neosvědčil. Určitě dokážeš domyslet, co to pro tvoje další působení v hlídce znamená.")
+            else:
+                $ solian.say("Jestli mi do zítřejšího poledne nedokážeš říct, koho můžeme zatknout, bude to znamenat, že ses neosvědčila. Určitě dokážeš domyslet, co to pro tvoje další působení v hlídce znamená.")
+            show mcPic at menuImage
+            menu:
+                "Vynasnažím se.":
+                    hide mcPic
+                    $ solian.say("To je dobře. A teď už se nenech zdržovat.")
+                "Co když se ty důkazy prostě nedají najít? Nemůžete mě přece vyhodit z hlídky kvůli jednomu případu.":
+                    hide mcPic
+                    $ solian.say("Věř tomu, že můžeme.", "angry")
+                    $ solian.say("A teď už se nenech zdržovat.", "angry")
+                "O tom, kdo zůstane v hlídce, ty přece nijak nerozhoduješ.":
+                    hide mcPic
+                    $ solian.trust -= 1
+                    $ solian.say("Já jsem v hlídce dva roky. Ty dva nebo tři dny. Troufám si tvrdit, že rozumím lépe než ty tomu, jak to tady chodí.", "angry")
+                    $ solian.say("Přijmi teď tedy mou dobrou radu a nenech se už zdržovat.", "angry")
+        "Můžeme zatknout mistra Kaspara." if "confession" in kaspar.asked:
+            hide mcPic
+            if gender == "M":
+                $ solian.say("Jseš si jistý? Je to vážený mistr a navíc se možná bude ucházet o místo cechmistra. Musíme si být opravdu jistí, než ho z čehokoli obviníme.")
+            else:
+                $ solian.say("Jseš si jistá? Je to vážený mistr a navíc se možná bude ucházet o místo cechmistra. Musíme si být opravdu jistí, než ho z čehokoli obviníme.")
+            $ mc.say("Sám se mi přiznal, že v dílně mistra Heinricha byl a že jeho boty zničit chtěl. Doufal, že ho tím znemožní právě před tou volbou cechmistra, do které se chtěli hlásit oba.")
+            $ solian.say("To ale před soudem nezopakuje. Vždyť tím by znemožnil hlavně sám sebe. Je proti němu i jiný důkaz?", "angry")
+            $ mc.say("Paní Lisbeth ho do té dílny sama pustila. Namluvil jí, že si boty chce jen prohlédnout.")
+            $ solian.say("Tohle ale nemůžeme vzít k soudu. Uvědomuješ si, co by z toho bylo za řeči? To by popudilo nejen Kaspara a Heinricha, ale ve výsledku možná i Rumelina, protože by celý cech byl městu pro smích.", "angry")
+            $ solian.say("Trochu času ještě zbývá. Najdi někoho jiného, na kom je dost silné podezření.")
+            $ solian.say("Mistra Kaspara zatknout nemůžeme. Ostatně to, že v dílně byl, ještě neznamená, že s botami opravdu něco určitě provedl.", "angry")
+        "Můžeme zatknout Gerda." if ("fired apprentices" in clues and "which apprentice" in liese.asked) or "workshop visit" in gerd.asked:
+            hide mcPic
+            $ mc.say("To je učedník mistra Njala, který byl dřív v učení u mistra Heinricha.")
+            if "workshop visit" in gerd.asked:
+                $ mc.say("Přiznal se, že v té dílně tu noc byl.")
+            else:
+                $ mc.say("Mám svědka, že byl tu noc v dílně.")
+            $ solian.say("To je dobré! Ale proč by to dělal?", "surprised")
+            $ mc.say("Protože ho Heinrich vyhodil. Sice mu k tomu dal na cestu zbytek peněz zaplacených za vyučení, ale stejně kolem toho určitě bylo hodně zlé krve.")
+            $ mc.say("Navíc je Gerd pořádný drzoun, který chce mít vždy poslední slovo.")
+            $ solian.say("Dobře, to by mělo obstát. Můžeš ho sebrat.", "happy")
+            $ solian.say("Mistr Njal se sice bude vztekat, ale všichni ostatní jen mávnou rukou, že to je stejně jen podivínský trpaslík. To nás nemusí trápit.")
+        "Můžeme zatknout mistra Njala s jeho učedníkem." if "workshop visit" in gerd.asked and "workshop visit" in njal.asked:
+            hide mcPic
+            $ solian.say("Mistra Njala? Je to sice podivínský trpaslík, ale na zatčení mistra potřebujeme hodně pádné důkazy.", "surprised")
+            $ mc.say("Oba přiznali, že Gerd tu noc šel do Heinrichovy dílny na Njalův příkaz. Tvrdí, že si hlavně chtěli vzít zpátky střih, podle kterého jsou ty kradené boty ušité a které jim mistr Heinrich prý ukradl.")
+            $ mc.say("Ale k čemu je brát mistru Heinrichovi střih, když už má hotové boty? Každý bude předpokládat, že ho má, a on ho podle nich může sestavit znovu.")
+            $ mc.say("Mysleli si, že si jen zjednávají spravedlnost, kterou jim městské zákony nikdy nedají.")
+            $ solian.say("A myslíš, že to samé budou říkat i před soudem?", "surprised")
+            $ mc.say("Myslím, že ano. Oba o tom vypadali hodně přesvědčení.")
+            $ solian.say("Nu dobrá. Je pravda, že mistru Heinricha to velmi potěší.")
+            $ solian.say("Jen ještě poslední otázka, ví o tom cechmistr Rumelin?")
+            if "police business" in njal.asked:
+                $ mc.say("Částečně. Njal s ním o ukradeném střihu mluvil, ale o vloupání do dílny už ne, pokud vím.")
+            else:
+                if gender == "M":
+                    $ mc.say("To nevím. Njal to neříkal a s Rumelinem jsem o tom nemluvil.")
+                else:
+                    $ mc.say("To nevím. Njal to neříkal a s Rumelinem jsem o tom nemluvila.")
+            $ solian.say("V tom případě za ním zajdu, aby z toho soudu nebyl překvapený. Mohlo by ho to ukázat ve špatném světle.")
+        "Můžeme zatknout Zerana." if zeranNote.isActive == True and zeran.status != "cleared":
+            hide mcPic
+            $ solian.say("To je kdo?")
+            $ mc.say("Bývalý učedník mistra Heinricha. Mistr ho před několika měsíci vyhodil, protože měl podezření, že mu chodí za dcerou.")
+            $ solian.say("Jo tenhle! O tom se ve městě hodně mluvilo. Takovéhle zneužití důvěry jsme tady už nějakou dobu neměli.")
+            $ solian.say("Ten se určitě chtěl pomstít. Už jednou mistru Heinrichovi zkusil ublížit, taková verbež jako on to ráda zkusí znovu.")
+            $ solian.say("To před soudem obstojí a mistr Heinrich bude spokojený.", "happy")
+            $ solian.say("Běž ho rovnou zatknout.")
+        "Můžeme zatknout žebračku Erle." if "stolen shoes found" in status:
+            hide mcPic
+            $ solian.say("A uvěří nám to někdo? Ta si nevezme víc peněz než na jídlo na den, i když jí je někdo dává. Proč by něco kradla?", "angry")
+            $ mc.say("To nevím, ale měla u sebe lahve s vínem a pálenkou, které se mistru Heinrichovi ztratily také. Možná chtěla ukrást něco k pití a boty vzala z okamžitého nápadu, protože se jí prostě líbily.")
+            $ mc.say("Krádež alkoholu si u ní představit dokážu. Co jiného by ji pořád drželo v tak povznesené náladě?")
+            $ mc.say("A hlavně věděla, kde ty boty jsou.")
+            $ solian.say("No, možná. Pořád se bojím, že by to u soudu mohlo vyvolat podezření. Ale jestli to nemohl udělat nikdo jiný, ona určitě ano.", "angry")
+            $ solian.say("Zkus se zamyslet, jestli nenarazíš ještě na něco užitečného. A jestli ne, tak ji zítra seber.")
     return
 
 ###

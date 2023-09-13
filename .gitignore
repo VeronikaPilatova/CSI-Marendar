@@ -9,3 +9,4 @@ game/cache/screens.rpyb
 game/saves/navigation.json
 game/saves/persistent
 .gitattributes
+errors.txt
