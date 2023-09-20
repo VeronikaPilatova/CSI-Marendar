@@ -15,6 +15,7 @@ label erleController:
     $ origAsked = erle.asked.copy()
 
     # visit itself
+    play music audio.erle fadeout 0.5 if_changed
     scene bg bridge
     if erle.alreadyMet == False:
         call erleFirst
@@ -27,6 +28,7 @@ label erleController:
     $ time.addMinutes((len(erle.asked) - len(origAsked)) * 3)
     if erle.alreadyMet == False:
         $ erle.alreadyMet = True
+    stop music fadeout 0.5
     return
 
 label erleFirst:

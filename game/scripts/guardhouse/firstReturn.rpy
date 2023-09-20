@@ -1,5 +1,5 @@
 label guardhouseFirst:
-    #play music audio.guardhouse fadeout 0.5 fadein 0.5
+    #play music audio.guardhouse
     $ time.addMinutes(15)
     $ currentLocation = "guardhouse"
 

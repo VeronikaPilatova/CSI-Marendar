@@ -1,8 +1,4 @@
 label evidenceWall:
-    #if "out of office" in rauvin.status:
-    #    play music audio.guardhouseEmpty fadeout 0.5 fadein 0.5 if_changed
-    #else:
-    #    play music audio.guardhouse fadeout 0.5 fadein 0.5 if_changed
     call seeMeNoteCheck
     scene bg evidencewall
     $ noteInformation = ""

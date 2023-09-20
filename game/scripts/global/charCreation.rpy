@@ -1,5 +1,5 @@
 label charCreation:
-play music "audio/adventure awaits.mp3" fadeout 0.5 fadein 0.5 if_changed
+play music "audio/music/adventure awaits.mp3" fadeout 0.5 if_changed
 scene bg intro
 show bg intro dark with dissolve
 

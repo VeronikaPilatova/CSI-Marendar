@@ -90,9 +90,11 @@ label workshopNightOptions:
             return
 
     if actionsTaken == 2:
+        play sound audio.footsteps1 fadeout 0.5
         "Někde v domě uslyšíš kroky a instinktivně ztuhneš. Tichou dílnou se zvláštně rozléhají a nedokážeš poznat, kam můžou mířit."
         "Po chvíli ale utichnou."
     elif actionsTaken == 3:
+        play sound audio.footstepsApproaching
         "Kroky se ozvou znovu a tentokrát se určitě přibližují. Rychle zhasneš lampu, ale to ti mohlo dát jen krátký okamžik na rozhodnutí."
         jump workshopNightIntruder
     jump workshopNightOptions
@@ -452,6 +454,7 @@ label workshopNightAachimConversation:
     call aachimAloneOptions
 
     label workshopNightConversationEnd:
+        queue sound [ audio.woodCreak, audio.doorSlam ]
         "Odněkud z domu se ozve zavrzání a pak bouchnutí dveří. Oba sebou s Aachimem trhnete."
         if actionsTaken == 4:
             if gender == "M":

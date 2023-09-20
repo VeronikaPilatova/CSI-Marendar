@@ -23,7 +23,7 @@ label njalHouseController:
         $ currentLocation = "njal house"
 
     # visit itself
-    # play music audio.njal fadeout 0.5 fadein 0.5 if_changed
+    play music audio.njal fadeout 0.5 if_changed
     scene bg njal outside
     if "njal house visited" not in status:
         call njalHouseFirst
@@ -35,7 +35,7 @@ label njalHouseController:
     $ gerdNote.isActive = True
     if "njal house visited" not in status:
         $ status.append("njal house visited")
-    # stop music fadeout 0.5
+    stop music fadeout 0.5
     return
 
 label njalHouseFirst:

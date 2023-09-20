@@ -58,9 +58,11 @@ label victimHouseholdController:
     if "kaspar and lisbeth ratted out" in status and kaspar.imageParameter != "beaten":
         $ kaspar.imageParameter = "beaten"
         $ lisbeth.imageParameter = "beaten"
+    stop music fadeout 0.5
     return
 
 label victimHouseIntro:
+    play music audio.heinrich fadeout 0.5 if_changed
     scene bg heinrich outside
     if "victim house visited" not in status:
         "Dům mistra Heinricha najdeš snadno. Je to jeden z nejvýstavnějších v ulici a přiléhá k němu prostorná dílna."
@@ -174,7 +176,7 @@ label victimHouseholdOptions:
         "Chtěla bych si promluvit s učedníky." if boysOptionsRemaining != 0 and (apprentice1Note.isActive == True or apprentice2Note.isActive == True) and lastSpokenWith != "boys" and gender == "F":
             hide mcPic
             jump apprenticesIntro
-        "Můžu mluvit s vaším synem?" if boysOptionsRemaining != 0 and aachimOptionsRemaining != 0 and sonNote.isActive == True and aachim not in cells and lastSpokenWith != "boys" and and lastSpokenWith != "aachim":
+        "Můžu mluvit s vaším synem?" if boysOptionsRemaining != 0 and aachimOptionsRemaining != 0 and sonNote.isActive == True and aachim not in cells and lastSpokenWith != "boys" and lastSpokenWith != "aachim":
             hide mcPic
             jump sonIntro
         "Můžu mluvit s vaší dcerou?" if adaOptionsRemaining != 0 and adaNote.isActive == True and lastSpokenWith != "ada":

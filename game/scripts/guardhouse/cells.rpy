@@ -1,4 +1,5 @@
 label cellsController:
+    play music audio.cells fadeout 0.5 if_changed
     scene bg cells entrance
     $ currentLocation = "cells"
     if "cells visited" not in status:
@@ -9,6 +10,7 @@ label cellsController:
     if not cells:
         call cellsEmpty
         call leavingCells
+        stop music
         return
 
     # choose prisoner to visit, load controller and call it
@@ -24,6 +26,8 @@ label cellsController:
                 $ chosenChar = "rumelin"
             "Promluvit si s Erle" if erle in cells:
                 $ chosenChar = "erle"
+            "Promluvit si s Aachimem" if son in cells:
+                $ chosenChar = "son"
             "Vrátit se zpět":
                 call leavingCells
                 return
@@ -32,6 +36,7 @@ label cellsController:
     call expression chosenLocation
 
     call leavingCells
+    stop music
     return
 
 label cellsFirst:

@@ -164,7 +164,9 @@ label preparation:
     default workshopNote = Note(workshop, 970, 400, True)
     default zeranNote = Note(zeran, 1650, 60, False)
     default sabriNote = Note(sabri, 1730, 270, False)
-    default notes = [workshopNote, apprentice1Note, apprentice2Note, erleNote, kasparNote, adaNote, gerdNote, zeranNote, eckhardNote, rumelinNote, rovienNote, zairisNote, nireviaNote, njalNote, lotteNote, merchantNote, pubNote, sonNote, victimNote, lisbethNote, sabriNote]
+    default library = Location("Knihovna", "library")
+    default libraryNote = Note(library, 1250, 750, False)
+    default notes = [workshopNote, apprentice1Note, apprentice2Note, erleNote, kasparNote, adaNote, gerdNote, zeranNote, eckhardNote, rumelinNote, rovienNote, zairisNote, nireviaNote, njalNote, lotteNote, merchantNote, pubNote, sonNote, victimNote, lisbethNote, sabriNote, libraryNote]
 
     # variables - mc
     default race = "" # human / elf / hobbit / dwarf
