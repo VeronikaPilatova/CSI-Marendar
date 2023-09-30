@@ -129,6 +129,7 @@ label preparation:
     default katrin = Person("Tanečnice", "katrin")
     default kilian = Person("Hráč na lyru", "kilian")
     default runa = Person("Runa", "runa")
+    default assistant = Person("Pomocník v knihovně", "assistant")
 
     default anon1 = Person("Měšťan", "anon1")
     default anon2 = Person("Mešťan", "anon2")
@@ -188,7 +189,9 @@ label preparation:
     default arrested = []
     default cells = []
     # variables - gameplay helpers
+    call libraryPreparation
     default chosenChar = ""
+    default chosenTopic = ""
     default currentLocation = ""
     default lastSpokenWith = ""
     default refusedBy = ""

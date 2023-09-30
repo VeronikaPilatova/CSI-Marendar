@@ -293,6 +293,12 @@ label sabriNotes:
     $ chosenLocation = "sabriHouseholdController"
     return
 
+label libraryNotes:
+    $ noteInformation = "Městská knihovna, spravovaná Luisou de Vito."
+
+    $ chosenLocation = "libraryController"
+    return
+
 ###
 
 label notFinished:

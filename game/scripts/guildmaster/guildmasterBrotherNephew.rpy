@@ -212,13 +212,15 @@ label rovienHouseInside:
 label leavingRovienHouse:
     scene bg rovien outside
     if "promised poetry" in status and not any("poem" in str for str in status):
+        $ libraryNote.isActive = True
         menu:
             "{i}(Napsat vlastní báseň){/i}":
                 call writingComparisonZairis
                 call writePoetry
             "{i}(“Půjčit” si vhodnou báseň v knihovně){/i}":
                 call writingComparisonZairis
-                call stealPoetry
+                $ chosenTopic = "stealPoetry"
+                call libraryController
             "{i}(Vrátit se na strážnici){i}":
                 call writingComparisonZairis
     return

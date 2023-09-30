@@ -11,12 +11,13 @@ init python:
         "heinrichGuildmaster": Achievement(name=_("Heinrich cechmistrem"), message=_("Radši mluvit zpříma, než se všemi vyjít."), image="images/achievements/trophy guildmaster.png", priority=None),
         "rumelinGuildmaster": Achievement(name=_("Rumelin cechmistrem"), message=_("Někdy je nejlepší nedělat zbytečné změny."), image="images/achievements/trophy guildmaster.png", priority=None),
         "kasparGuildmaster": Achievement(name=_("Kaspar cechmistrem"), message=_("Když se dva perou, třetí je zvolen."), image="images/achievements/trophy guildmaster.png", priority=None),
+        "firefighter": Achievement(name=_("Ochránce Marendaru"), message=_("Jeden požár stačil."), image="images/achievements/trophy bucket.png", priority=None),
 
         "fired": Achievement(name=_("Vyhozen z hlídky"), message=_("Ne každý příběh končí šťastně."), image="", priority="hidden"),
         "blackmailFailed": Achievement(name=_("Neúspěšný vyděrač"), message=_("Zločin se ne vždy vyplácí."), image="images/achievements/trophy handcuffs.png", priority="hidden"),
         "universalCulprit": Achievement(name=_("Univerzální viník"), message=_("Zeran byl zatčen ze tří různých důvodů."), image="images/achievements/trophy handcuffs.png", priority="hidden"),
         "fistfight": Achievement(name=_("Rváč"), message=_("Někdy pouhá slova nestačí a musí přijít ke slovu pěsti."), image="images/achievements/trophy fistfight.png", priority="hidden"),
-        "heinrichTools": Achievement(name=_("Heinrichovi navzdory"), message=_("Na jeho nástroje prý nesmí nikdo jiný sahat. No to určitě."), image="", priority="hidden"),
+        "heinrichTools": Achievement(name=_("Heinrichovi navzdory"), message=_("Na jeho nástroje prý nesmí nikdo jiný sahat. No to určitě."), image="images/achievements/trophy tools.png", priority="hidden"),
     }
 
     ## Here we are simply registering the achievements.

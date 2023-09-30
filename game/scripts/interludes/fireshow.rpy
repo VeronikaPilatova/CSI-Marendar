@@ -129,6 +129,8 @@ label fireshow:
                 "Z místa se rozejdete až poté, co přestane doutnat poslední uhlík. Jsi unavený a rozbolavělý, ale zároveň máš pocit, jako by mezi vámi během té doby vznikla jistá sounáležitost - jako bys získal právo obyvatele Marendaru nazývat svými sousedy."
             else:
                 "Z místa se rozejdete až poté, co přestane doutnat poslední uhlík. Jsi unavená a rozbolavělá, ale zároveň máš pocit, jako by mezi vámi během té doby vznikla jistá sounáležitost - jako bys získala právo obyvatele Marendaru nazývat svými sousedy."
+            if not achievement.has(achievement_name['firefighter'].name):
+                $ Achievement.add(achievement_name['firefighter'])
         "{i}(Jít spát){/i}":
             pass
     $ status.append("fireshow")
