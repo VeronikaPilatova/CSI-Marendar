@@ -8,7 +8,7 @@ label supperInvitation:
     return
 
 label interludeController:
-    if time.hours > 21:
+    if time.hours > 20:
         call endOfDay
         return
 
