@@ -48,6 +48,8 @@ label victimHouseholdController:
     $ lastSpokenWith = ""
     $ refusedBy = ""
     call victimHouseIntro
+    # actual visit and conversation happens via jump from intro options
+    stop music fadeout 0.5
 
     # adjust time and status
     if "victim house visited" not in status:
@@ -58,11 +60,9 @@ label victimHouseholdController:
     if "kaspar and lisbeth ratted out" in status and kaspar.imageParameter != "beaten":
         $ kaspar.imageParameter = "beaten"
         $ lisbeth.imageParameter = "beaten"
-    stop music fadeout 0.5
     return
 
 label victimHouseIntro:
-    play music audio.heinrich fadeout 0.5 if_changed
     scene bg heinrich outside
     if "victim house visited" not in status:
         "Dům mistra Heinricha najdeš snadno. Je to jeden z nejvýstavnějších v ulici a přiléhá k němu prostorná dílna."
@@ -129,6 +129,7 @@ label victimHouseIntro:
     return
 
 label victimHouseInterior:
+    play music audio.heinrich fadeout 0.5 if_changed
     if "fresh flowers" in status or "flowers" in status:
         scene bg heinrich flowers
     else:

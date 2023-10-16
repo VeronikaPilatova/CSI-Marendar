@@ -89,6 +89,10 @@ label guardhouseHelpMenu:
             hide mcPic
             call helpWithZeranWitnesses
             $ helpAsked += 1
+        "Vyzná se tu někdo v poezii?" if "letters for Ada seen" in status and "asked for literature help" not in status and "poetry style" not in assistant.asked:
+            hide mcPic
+            call helpWithLiteratureStyle
+            $ helpAsked += 1
         "Vlastně si to ještě nechám projít hlavou." if helpAsked == 0:
             hide mcPic
             return
@@ -535,7 +539,6 @@ label helpWithAml:
     else: # asking Solian
         $ solian.say("O jaké obchody jde a jak souvisí se ztracenými botami mistra Heinricha?", "angry")
 
-
         if "less deals" in njal.asked:
             $ mc.say("Mistr Njal má v posledních dvou týdnech problém uzavřít obchod na nákup materiálu, který potřebuje na výrobu vlastního díla na Einionovy slavnosti. Několik obchodníků mu potřebné věci odmítlo prodat dost náhle, po slibně působícím rozhovoru.")
             show mcPic at menuImage
@@ -627,6 +630,19 @@ label helpWithZeranWitnesses:
         $ solian.say("To nebude problém ověřit, zařídím to.")
     $ status.append("add zeran witnesses")
     $ time.addMinutes(3)
+    return
+
+label helpWithLiteratureStyle:
+    $ status.append("asked for literature help")
+    if "out of office" not in rauvin.status:
+        $ rauvin.say("Proč zrovna v poezii? Je to důležité pro případ?", "angry")
+        $ mc.say("Je to možné. Při vyšetřování se mi na nějaké básně podařilo narazit a hodil by se mi názor znalce.")
+        $ rauvin.say("To jsem zvědavý, ale dobrá.")
+        $ rauvin.say("Z hlídky asi Valeran, ale ten má hodně jiné práce. Jestli je to opravdu důležité, zajdi do knihovny, Luisa její obnovou tráví hodně času a prý tam má některé zajímavé kousky.")
+    else:
+        $ solian.say("To už se s lidmi z města bavíš o poezii? To se asi dá počítat jako pokrok!", "happy")
+        $ solian.say("Něco by měl znát Rauvin, ale ten na hovory o umění nebude mít moc čas. Jeho sestra ale obnovuje knihovnu, zkus zajít tam. Buď ti pomůže ona, nebo někdo, kdo si tam zrovna bude číst.")
+    $ libraryNote.isActive = True
     return
 
 label industrialEspionage:
@@ -944,6 +960,8 @@ label guardhouseHelpOptionsAvailable:
     if "less deals" in salma.asked and not any("investigating less deals" in str for str in status) and "less deals checked" not in status:
         $ helpOptionsAvailable += 1
     if "alibi witnesses" in zeran.asked and not any("zeran witnesses" in str for str in status):
+        $ helpOptionsAvailable += 1
+    if "letters for Ada seen" in status and "asked for literature help" not in status and "poetry style" not in assistant.asked:
         $ helpOptionsAvailable += 1
     return
 

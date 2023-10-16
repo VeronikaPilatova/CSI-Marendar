@@ -150,7 +150,7 @@ if "Eckhard" not in clues:
 
 label firstInterview2:
 $ victim.say("Dnes ráno jsem šel zkontrolovat dílnu a kluky. Byl tam hrozný svinčík a moje nové střevíce byly pryč.", "angry")
-$ victim.say("Kluky jsem seřval ať to tam rychle uklidí, ale ty střevíce musíte najít. Jinak nebudu mít co ukázat na slavnostech, navíc teď, když se budu ucházet o vedení cechu…")
+$ victim.say("Kluky jsem seřval, ať to tam rychle uklidí, ale ty střevíce musíte najít. Jinak nebudu mít co ukázat na slavnostech, navíc teď, když se budu ucházet o vedení cechu…")
 
 $ flag = True
 label firstInterviewReaction:
@@ -167,7 +167,7 @@ menu:
         $ flag = False
         $ victim.say("Můj syn a učedníci. Jsou to všechno líná nemehla, jeden horší než druhý.")
         $ mc.say("I váš syn?")
-        $ victim.say("Ten je ze všech nejhorší, ti dva odvedou nějakou rozumnou práci aspoň když nad nima člověk stojí s bičem, ale Aachim… Vážně nevím, komu tu dílnu jednou předám.")
+        $ victim.say("Ten je ze všech nejhorší. Ti dva odvedou nějakou rozumnou práci, aspoň když nad nima člověk stojí s bičem, ale Aachim… Vážně nevím, komu tu dílnu jednou předám.")
         $ victim.asked.append("boys")
         $ sonNote.isActive = True
         $ apprentice1Note.isActive = True

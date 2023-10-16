@@ -6,15 +6,16 @@ label libraryPreparation:
 
 label libraryController:
     call libraryIntro
-    elif chosenTopic != "":
+    if chosenTopic != "":
         if gender == "M":
             "Dnes jsi ale přišel za konkrétním účelem."
         else:
             "Dnes jsi ale přišla za konkrétním účelem."
     else:
         call libraryOptions
-    call expression chosenTopic
-    call libraryRepeat
+    if chosenTopic != "leave":
+        call expression chosenTopic
+        call libraryRepeat
 
     $ chosenTopic = ""
     return
@@ -49,17 +50,22 @@ label libraryOptions:
     menu:
         "{i}(“Půjčit” si vhodnou báseň pro Zairise){/i}" if "promised poetry" in status and not any("poem" in str for str in status):
             $ chosenTopic = "stealPoetry"
-        "{i}(Zkonzultovat styl básní pro Adu){/i}" if "letters for Ada seen" in status and "poetry style" in assistant.asked:
+        "{i}(Zkonzultovat styl básní pro Adu){/i}" if "letters for Ada seen" in status and "poetry style" not in assistant.asked:
             $ chosenTopic = "libraryConsultLettersForAda"
         "{i}(Odpočinout si při čtení krásné literatury){/i}" if literatureTopics != []:
             $ chosenTopic = renpy.random.choice(literatureTopics)
+            $ library.checked.append("literature " + chosenTopic)
             $ literatureTopics.remove(chosenTopic)
         "{i}(Nastudovat si právo a místní zákony){/i}" if lawTopics != []:
             $ chosenTopic = renpy.random.choice(lawTopics)
+            $ library.checked.append("law " + chosenTopic)
             $ lawTopics.remove(chosenTopic)
         "{i}(Nastudovat si městskou historii){/i}" if historyTopics != []:
             $ chosenTopic = renpy.random.choice(historyTopics)
+            $ library.checked.append("history " + chosenTopic)
             $ historyTopics.remove(chosenTopic)
+        "{i}(Vrátit se na strážnici){/i}":
+            $ chosenTopic = "leave"
 
     return
 
@@ -73,8 +79,11 @@ label libraryRepeat:
         "Vše přečteno"
         return
     call libraryOptions
-    call expression chosenTopic
-    jump libraryRepeat
+    if chosenTopic = "leave":
+        return
+    else:
+        call expression chosenTopic
+        jump libraryRepeat
 
 ###
 
@@ -115,7 +124,7 @@ label libraryOptionsRemaining:
     $ optionsRemaining = 0
     if "promised poetry" in status and not any("poem" in str for str in status):
         $ optionsRemaining += 1
-    if "letters for Ada seen" in status and "poetry style" in assistant.asked:
+    if "letters for Ada seen" in status and "poetry style" not in assistant.asked:
         $ optionsRemaining += 1
     if literatureTopics != []:
         $ optionsRemaining += 1
