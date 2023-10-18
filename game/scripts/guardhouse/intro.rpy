@@ -54,7 +54,7 @@ menu:
         $ skill = "combat"
     "Není těžké si všímat věcí, když člověk ví, kam se dívat.":
         $ skill = "observation"
-    "Lidé mi většinou mají sklony mi důvěřovat.":
+    "Lidé mi většinou mají sklony důvěřovat.":
         $ skill = "diplomacy"
 hide mcPic
 "Hayfa a Rauvin se na sebe krátce podívají, pak obrátí pozornost zpět k tobě a krátce přikývnou."
