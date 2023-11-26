@@ -23,10 +23,7 @@ label lisbethOptions:
         "Všimla jste si včera v noci něčeho nebo někoho podezřelého?" if "anything suspicious" not in lisbeth.asked:
             hide mcPic
             $ lisbeth.asked.append("anything suspicious")
-            if gender == "M":
-                "Lisbeth se nadechne a pak se rozohní víc, než jsi ji měl zatím možnost vidět."
-            else:
-                "Lisbeth se nadechne a pak se rozohní víc, než jsi ji měla zatím možnost vidět."
+            "Lisbeth se nadechne a pak se rozohní víc, než jsi ji měl[a] zatím možnost vidět."
             $ lisbeth.say("Jediné podezřelé individuum, kterého jsem si všimla, byl manžel.", "angry")
             $ lisbeth.say("Že se z hospody vrátí až někdy nad ránem a vzbudí mě hlukem, jako kdyby boural dílnu, to je jedna věc. Ale že mu to nestačí, vypije potom ještě v noci víc než půlku domácího baru, včetně těch opravdu dobrých lahví pro návštěvy, a ještě ty prázdné lahve někam zašantročí, to už je moc.", "angry")
             $ lisbeth.say("A navíc dělá, že si nic nepamatuje, a popírá to, prase jedno.", "angry")
@@ -139,10 +136,7 @@ label lisbethOptions:
             $ lisbeth.asked.append("relationship")
             $ lisbeth.trust -= 1
             $ lisbeth.say("Co je tohle za otázky? Přísahali jsme si společnou cestu životem, dokud nepřejdeme přes poslední práh. A po té cestě šťastně jdeme už přes patnáct let.")
-            if gender == "M":
-                $ mc.say("Omlouvám se, nechtěl jsem vás urazit.")
-            else:
-                $ mc.say("Omlouvám se, nechtěla jsem vás urazit.")
+            $ mc.say("Omlouvám se, nechtěl[a] jsem vás urazit.")
             $ lisbeth.say("Potřebujete ještě něco?")
         "Můžete se u svého muže přimluvit za Aachima a učedníky?" if "confession" in boysAsked and "defend boys" not in lisbeth.asked:
             hide mcPic
@@ -155,18 +149,12 @@ label lisbethOptions:
                 $ lisbeth.say("Když se Heinrich pro něco rozhodne, mění názor velmi těžko. Musel by mít opravdu silný důvod.", "sad")
             elif "lost bottles solved boys" in victim.asked:
                 $ lisbeth.say("Za ten vypitý alkohol? To už jsem zkoušela.")
-                if gender == "M":
-                    $ lisbeth.say("Vypadal trochu na vážkách, myslím, že hodně pomohlo, jak jste ho hned na začátku zastavil před tím prvním návalem vzteku. Ale jestli to bude stačit, to nevím.")
-                else:
-                    $ lisbeth.say("Vypadal trochu na vážkách, myslím, že hodně pomohlo, jak jste ho hned na začátku zastavila před tím prvním návalem vzteku. Ale jestli to bude stačit, to nevím.")
+                $ lisbeth.say("Vypadal trochu na vážkách, myslím, že hodně pomohlo, jak jste ho hned na začátku zastavil[a] před tím prvním návalem vzteku. Ale jestli to bude stačit, to nevím.")
                 $ mc.say("Nedalo by se tomu ještě nějak pomoct? Nemohl by se přimluvit ještě někdo další?")
                 $ lisbeth.say("Možná zkuste mistra Eckharda. S Heinrichem jsou přátelé už od učňovských dob a jen bohové vědí, kolik toho už spolu vypili. Jestli v něm někdo dokáže vyvolat pochopení pro pitky, co dopadnou špatně, tak on.")
                 $ lisbeth.say("Zašla bych za ním sama, ale nikdy jsme si s ním nerozuměli. Bála bych se, abych to tím jen nezhoršila.", "sad")
                 if "defend boys" in eckhard.asked:
-                    if gender == "M":
-                        $ mc.say("Ve skutečnosti jsem už za ním byl. Slíbil, že se za Heinrichem staví.")
-                    else:
-                        $ mc.say("Ve skutečnosti jsem už za ním byla. Slíbil, že se za Heinrichem staví.")
+                    $ mc.say("Ve skutečnosti jsem už za ním byl[a]. Slíbil, že se za Heinrichem staví.")
                     $ lisbeth.say("To byla skvělá myšlenka, děkuji!", "happy")
                     $ lisbeth.say("V tom případě už asi nemůžeme udělat nic víc.")
                     $ lisbeth.say("Doufám, že se zase neopijí pod obraz… i když tentokrát by to možná vlastně pomohlo věci.")
@@ -177,12 +165,9 @@ label lisbethOptions:
             else:
                 $ lisbeth.say("Přimluvit? Kvůli čemu?", "surprised")
                 $ mc.say("Ty ztracené lahve z vašich domácích zásob opravdu nevypil váš muž. Vypili to Aachim a učedníci.")
-                if gender == "M":
-                    $ lisbeth.say("Prosím? Všechno? Jste si jistý?", "surprised")
-                else:
-                    $ lisbeth.say("Prosím? Všechno? Jste si jistá?", "surprised")
+                $ lisbeth.say("Prosím? Všechno? Jste si jist[y]?", "surprised")
                 $ mc.say("Přiznali se a do všeho to zapadá.")
-                $ lisbeth.say("To je… to je ale dost velká drzost. Není to ve skutečnosti dokonce porušení zákona pohostinství? Nebo úcty k rodičům? Jedno z toho určitě a to jsou oba velmi těžké hříchy.", "surprised")
+                $ lisbeth.say("To je... to je ale dost velká drzost. Není to ve skutečnosti dokonce porušení zákona pohostinství? Nebo úcty k rodičům? Jedno z toho určitě a to jsou oba velmi těžké hříchy.", "surprised")
                 $ lisbeth.say("Manžel je za to bude muset přísně potrestat.", "angry")
                 $ mc.say("Myslíte, že je opravdu bude chtít vyhodit?")
                 $ lisbeth.say("No rozhodně si to kluci zaslouží. Taková...", "angry")
@@ -193,12 +178,9 @@ label lisbethOptions:
                 $ lisbeth.say("Možná zkuste mistra Eckharda.")
                 $ lisbeth.say("S Heinrichem jsou přátelé už od učňovských dob a jen bohové vědí, kolik toho už spolu vypili. Jestli v něm někdo dokáže vyvolat pochopení pro pitky, co dopadnou špatně, tak on.")
                 if "defend boys" in eckhard.asked:
-                    if gender == "M":
-                        $ mc.say("Ve skutečnosti jsem už za ním byl. Slíbil, že se za Heinrichem staví.")
-                    else:
-                        $ mc.say("Ve skutečnosti jsem už za ním byla. Slíbil, že se za Heinrichem staví.")
+                    $ mc.say("Ve skutečnosti jsem už za ním byl[a]. Slíbil, že se za Heinrichem staví.")
                     $ lisbeth.say("V tom případě už mě nenapadá nikdo jiný.")
-                    $ lisbeth.say("Doufám, že se zase neopijí pod obraz… i když tentokrát by to možná vlastně pomohlo věci.")
+                    $ lisbeth.say("Doufám, že se zase neopijí pod obraz... i když tentokrát by to možná vlastně pomohlo věci.")
                     $ lisbeth.trust += 1
                 else:
                     $ mc.say("Děkuji za radu, zkusím se za ním co nejdřív zastavit.")
@@ -208,10 +190,7 @@ label lisbethOptions:
             "Lisbeth se na moment zatváří poplašeně, pak se ale ovládne."
             $ lisbeth.say("To byl mistr Kaspar. Nesl mi vrátit jednu knihu, kterou si předtím půjčil. Olwenovu cestu.")
             if "lisbeth friends" in ada.asked:
-                if gender == "M":
-                    $ mc.say("Já myslel, že pro tu jste si včera poslala Adu. Nebo ji nepřinesla?")
-                else:
-                    $ mc.say("Já myslela, že pro tu jste si včera poslala Adu. Nebo ji nepřinesla?")
+                $ mc.say("Já myslel[a], že pro tu jste si včera poslala Adu. Nebo ji nepřinesla?")
                 "Lisbeth nasucho polkne a na chvili uhne očima."
                 $ lisbeth.say("Vlastně máte pravdu. Musela jsem se splést. Kaspar měl knih půjčených několik, muselo to být něco jiného.")
                 $ lisbeth.cluesAgainst += 1
@@ -232,9 +211,7 @@ label lisbethOptions:
             menu:
                 "Děkuji vám za radu, zajdu za ní.":
                     hide mcPic
-                "Za ní bych s tím radši nechodil." if gender == "M":
-                    call joinForcesAskSalma
-                "Za ní bych s tím radši nechodila." if gender == "F":
+                "Za ní bych s tím radši nechodil[a].":
                     call joinForcesAskSalma
         "Nechci zbytečně plašit, ale je možné, že střevíce vašeho manžela nenajdeme neporušené." if time.days > 1 and "plan B" not in lisbeth.asked:
             hide mcPic
@@ -288,10 +265,7 @@ label victimComingToBed:
 
 label joinForcesAskSalma:
     hide mcPic
-    if gender == "M":
-        $ mc.say("Váš muž přímo ohrožuje pozici toho jejího, nemůžu si být jistý, jestli by paní Nirevia poradila správně.")
-    else:
-        $ mc.say("Váš muž přímo ohrožuje pozici toho jejího, nemůžu si být jistá, jestli by paní Nirevia poradila správně.")
+    $ mc.say("Váš muž přímo ohrožuje pozici toho jejího, nemůžu si být jist[y], jestli by paní Nirevia poradila správně.")
     $ lisbeth.say("Na tom asi něco bude, to mě nenapadlo...")
     $ lisbeth.say("Tak… možná hostinská Salma? Ta není ani v cechu, ale se všemi jeho členy se dobře zná?")
     $ mc.say("To je zajímavý nápad. Děkuji za radu.")

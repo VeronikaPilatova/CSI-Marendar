@@ -34,10 +34,7 @@ label boysFirst:
 
 label boysAgain:
     $ optimist.say("Máte něco nového? Pokrok v pátrání?")
-    if gender == "M":
-        $ mc.say("Chtěl jsem se vás ještě zeptat na pár věcí.")
-    else:
-        $ mc.say("Chtěla jsem se vás ještě zeptat na pár věcí.")
+    $ mc.say("Chtěl[a] jsem se vás ještě zeptat na pár věcí.")
     $ son.say("Ale my už jsme vám řekli všechno, co víme.")
     if "no privacy" in status:
         "Heinrich Aachima zpraží pohledem a ten nervózně uhne očima."
@@ -172,15 +169,9 @@ label boysOptions:
                 $ optimist.say("To vypadá...", "surprised")
                 $ yesman.say("...to fakt vypadá jako kus těch bot...", "surprised")
                 $ optimist.say("...ale jak? To přece nedává smysl...", "surprised")
-                if gender == "M":
-                    $ son.say("Kde jste to našel?", "surprised")
-                else:
-                    $ son.say("Kde jste to našla?", "surprised")
+                $ son.say("Kde jste to na[sel]?", "surprised")
                 $ optimist.say("Vždyť ty boty byly tady na stole, úplně v pořádku.", "surprised")
-                if gender == "M":
-                    $ mc.say("Našel jsem to v krbu tady v dílně. A doufal jsem, že co se tomu stalo, mi řeknete vy.")
-                else:
-                    $ mc.say("Našla jsem to v krbu tady v dílně. A doufala jsem, že co se tomu stalo, mi řeknete vy.")
+                $ mc.say("Na[sel] jsem to v krbu tady v dílně. A doufal[a] jsem, že co se tomu stalo, mi řeknete vy.")
                 $ victim.say("Víte o tom něco?", "angry")
                 "Všichni tři kluci s vyděšeným výrazem zavrtí hlavou."
                 $ son.say("Ne... ne, opravdu.", "surprised")
@@ -291,10 +282,7 @@ label boysOptions:
                     $ son.trust += 1
                     $ optimist.trust += 1
                     $ yesman.trust += 1
-                    if gender == "M":
-                        $ optimist.say("Opravdu? To jste úžasný!", "surprised")
-                    else:
-                        $ optimist.say("Opravdu? To jste úžasná!", "surprised")
+                    $ optimist.say("Opravdu? To jste úžasn[y]!", "surprised")
                     if victim.trust < 4:
                         $ mc.say("Nemůžu slíbit, že se to podaří, mé slovo u mistra Heinricha nemá velkou váhu.")
                     else:
@@ -347,29 +335,18 @@ label boysOptions:
                                 $ victim.trust -= 1
                                 $ victim.say("To je pitomost. Kdyby někdo vylomil zámek, přece bych si toho všiml.")
                                 if "doors" in workshop.checked:
-                                    if gender == "M":
-                                        $ victim.say("A ty taky, viděl jsem, jak jsi dveře prohlížel.", "angry")
-                                    else:
-                                        $ victim.say("A ty taky, viděl jsem, jak jsi dveře prohlížela.", "angry")
+                                    $ victim.say("A ty taky, viděl jsem, jak jsi dveře prohlížel[a].", "angry")
                                 $ mc.say("Je možné, že se dostal do dílny, protože bylo odemčeno.")
                                 $ victim.say("To se mi hodně nezdá.", "angry")
                             "To bohužel nevím." if "part of investigation how" not in victim.asked:
                                 hide mcPic
                                 $ victim.trust -= 2
-                                if gender == "M":
-                                    $ victim.say("To ses ho ani nezeptal?", "angry")
-                                    $ mc.say("No...")
-                                    $ victim.say("Co je tohle za neschopnost?", "angry")
-                                    $ victim.say("A jak si můžeš být jistý, že moje střevíce nevzal on?", "angry")
-                                    $ mc.say("Nebojte se, pracuji se všemi variantami.")
-                                    $ victim.say("No jen jestli. Zatím jsi mě moc nepřesvědčil.")
-                                else:
-                                    $ victim.say("To ses ho ani nezeptala?", "angry")
-                                    $ mc.say("No...")
-                                    $ victim.say("Co je tohle za neschopnost?", "angry")
-                                    $ victim.say("A jak si můžeš být jistá, že moje střevíce nevzal on?", "angry")
-                                    $ mc.say("Nebojte se, pracuji se všemi variantami.")
-                                    $ victim.say("No jen jestli. Zatím jsi mě moc nepřesvědčila.")
+                                $ victim.say("To ses ho ani nezeptal[a]?", "angry")
+                                $ mc.say("No...")
+                                $ victim.say("Co je tohle za neschopnost?", "angry")
+                                $ victim.say("A jak si můžeš být jist[y], že moje střevíce nevzal on?", "angry")
+                                $ mc.say("Nebojte se, pracuji se všemi variantami.")
+                                $ victim.say("No jen jestli. Zatím jsi mě moc nepřesvědčil[a].")
                             "To je součást vyšetřování a nemůžu vám to nyní říct." if not any("part of investigation" in str for str in victim.asked):
                                 hide mcPic
                                 $ victim.asked.append("part of investigation how")
@@ -424,21 +401,12 @@ label burnedEvidenceSeenBoys:
     $ optimist.say("To vypadá...", "surprised")
     $ yesman.say("...to fakt vypadá jako kus těch bot...", "surprised")
     $ optimist.say("...ale jak? To přece nedává smysl...", "surprised")
-    if gender == "M":
-        $ son.say("Kde jste to našel?", "surprised")
-    else:
-        $ son.say("Kde jste to našla?", "surprised")
+    $ son.say("Kde jste to na[sel]?", "surprised")
     $ optimist.say("Vždyť ty boty byly tady na stole, úplně v pořádku.", "surprised")
     if currentLocation == "workshop":
-        if gender == "M":
-            $ mc.say("Našel jsem to v krbu tady v dílně. A doufal jsem, že co se tomu stalo, mi řeknete vy.")
-        else:
-            $ mc.say("Našla jsem to v krbu tady v dílně. A doufala jsem, že co se tomu stalo, mi řeknete vy.")
+        $ mc.say("Na[sel] jsem to v krbu tady v dílně. A doufal[a] jsem, že co se tomu stalo, mi řeknete vy.")
     else:
-        if gender == "M":
-            $ mc.say("Našel jsem to v krbu v mistrově dílně. A doufal jsem, že co se tomu stalo, mi řeknete vy.")
-        else:
-            $ mc.say("Našla jsem to v krbu v mistrově dílně. A doufala jsem, že co se tomu stalo, mi řeknete vy.")
+        $ mc.say("Na[sel] jsem to v krbu v mistrově dílně. A doufal[a] jsem, že co se tomu stalo, mi řeknete vy.")
     $ optimist.say("Asi to bude nějaký odstřižek nebo zbytek z výroby, ale jak se dostal do krbu?", "surprised")
     $ son.say("Viděl to táta?", "surprised")
     if "burned evidence seen" in victim.asked:
@@ -453,12 +421,8 @@ label burnedEvidenceSeenBoys:
         $ son.say("Nemůžete mu říct, že to byl omyl?", "sad")
         $ optimist.say("Nebo že to vůbec nesouvisí s jeho botami? Vážně to bude jenom nějaký odstřižek.")
     else:
-        if gender == "M":
-            $ mc.say("Zatím ne, ale asi bych měl.")
-            $ son.say("Nemohla byste s tím počkat? Aspoň než zjistíte, co přesně se stalo?")
-        else:
-            $ mc.say("Zatím ne, ale asi bych měla.")
-            $ son.say("Nemohla byste s tím počkat? Aspoň než zjistíte, co přesně se stalo?")
+        $ mc.say("Zatím ne, ale asi bych měl[a].")
+        $ son.say("Nemohl[a] byste s tím počkat? Aspoň než zjistíte, co přesně se stalo?")
         $ yesman.say("Jestli se těm botám fakt něco stalo, tak nás mistr zabije!", "surprised")
         $ optimist.say("To přece s tou krádeží nemůže nijak souviset. Vážně to bude jenom nějaký odstřižek.")
     $ yesman.say("Takových je tady vždycky spousta a vyklízíme je odevšad.")
@@ -501,10 +465,7 @@ label boysTired:
     $ mc.say("To vypadáte každé ráno takhle?")
     $ yesman.say("No to ne...")
     $ optimist.say("Asi jsme včera pracovali obzvlášť příkladně.")
-    if gender == "M":
-        $ mc.say("A nepili jste náhodou? Už jsem viděl dost lidí s kocovinou, abych poznal, jak to vypadá.")
-    else:
-        $ mc.say("A nepili jste náhodou? Už jsem viděla dost lidí s kocovinou, abych poznala, jak to vypadá.")
+    $ mc.say("A nepili jste náhodou? Už jsem viděl[a] dost lidí s kocovinou, abych poznal[a], jak to vypadá.")
     $ yesman.say("No, trochu.")
     $ optimist.say("Ale až potom, co jsme uklidili.")
     $ son.say("No, možná jsme něco málo přehlédli.")
@@ -521,10 +482,7 @@ label boysReleased:
     else:
         $ son.say("Máme ještě práci.")
         $ yesman.say("Snad jsme pomohli.")
-        if gender == "M":
-            $ optimist.say("Kdybyste potřeboval ještě něco...")
-        else:
-            $ optimist.say("Kdybyste potřebovala ještě něco...")
+        $ optimist.say("Kdybyste potřeboval[a] ještě něco...")
         $ son.say("Snad nebudete...")
         "Kluci zmizí mírně nejistě, ale o to rychleji."
         if currentLocation == "workshop":

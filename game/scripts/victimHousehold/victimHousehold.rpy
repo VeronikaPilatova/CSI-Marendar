@@ -86,20 +86,13 @@ label victimHouseIntro:
     if lisbethNote.isActive == False:
         call victimHouseholdOptions
     elif chosenChar == "workshop":
-        if "workshop visited" in status and gender == "M":
-            $ mc.say("Mohl bych se ještě jednou podívat do dílny?")
-        elif "workshop visited" in status and gender == "F":
-            $ mc.say("Mohla bych se ještě jednou podívat do dílny?")
-        elif gender == "M":
-            $ mc.say("Mohl bych se podívat do dílny?")
+        if "workshop visited" in status:
+            $ mc.say("Mohl[a] bych se ještě jednou podívat do dílny?")
         else:
-            $ mc.say("Mohla bych sepodívat do dílny?")
+            $ mc.say("Mohl[a] bych sepodívat do dílny?")
         jump workshopIntro
     elif chosenChar == "victim":
-        if gender == "M":
-            $ mc.say("Rád bych ještě jednou mluvil s vaším mužem.")
-        else:
-            $ mc.say("Ráda bych ještě jednou mluvila s vaším mužem.")
+        $ mc.say("Rád[a] bych ještě jednou mluvil[a] s vaším mužem.")
         jump victimMain
     elif chosenChar == "lisbeth":
         $ mc.say("Můžu vám položit pár otázek?")
@@ -118,10 +111,7 @@ label victimHouseIntro:
         jump apprenticesIntro
     elif "carrying key" in status:
         $ mc.say("Nesu vašemu muži klíč od jeho dílny.")
-        if gender == "M":
-            $ lisbeth.say("To jste hodný. Dojdu pro něj, pojďte zatím dál.", "happy")
-        else:
-            $ lisbeth.say("To jste hodná. Dojdu pro něj, pojďte zatím dál.", "happy")
+        $ lisbeth.say("To jste hodn[y]. Dojdu pro něj, pojďte zatím dál.", "happy")
         call victimHouseInterior
         jump returningKey
     else:
@@ -148,10 +138,7 @@ label victimHouseholdOptions:
     menu:
         "Nesu vašemu muži klíč od jeho dílny." if "carrying key" in status and lastSpokenWith == "":
             hide mcPic
-            if gender == "M":
-                $ lisbeth.say("To jste hodný. Dojdu pro něj, pojďte zatím dál.", "happy")
-            else:
-                $ lisbeth.say("To jste hodná. Dojdu pro něj, pojďte zatím dál.", "happy")
+            $ lisbeth.say("To jste hodn[y]. Dojdu pro něj, pojďte zatím dál.", "happy")
             call victimHouseInterior
             jump returningKey
         "Rád bych ještě jednou mluvil s vaším mužem." if victimOptionsRemaining != 0 and lastSpokenWith != "victim" and gender == "M":

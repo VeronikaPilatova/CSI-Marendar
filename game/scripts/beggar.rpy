@@ -68,10 +68,7 @@ label erleAgain:
 label erleOptions:
     call erleOptionsRemainingCheck
     if optionsRemaining == 0:
-        if gender == "M":
-            $ mc.say("To je všechno, na co jsem se chtěl zeptat.")
-        else:
-            $ mc.say("To je všechno, na co jsem se chtěla zeptat.")
+        $ mc.say("To je všechno, na co jsem se chtěl[a] zeptat.")
         return
 
     show mcPic at menuImage
@@ -190,10 +187,7 @@ label erleTeachMe:
     menu:
         "Mít hezký dům a spoustu dobrého jídla by mi přišlo mnohem lepší.":
             hide mcPic
-            if gender == "M":
-                $ erle.say("Dokud bys o to nepřišel. Pak by to bylo mnohem horší, než nemít nic od začátku.", "sad")
-            else:
-                $ erle.say("Dokud bys o to nepřišla. Pak by to bylo mnohem horší, než nemít nic od začátku.", "sad")
+            $ erle.say("Dokud bys o to nepři[sel]. Pak by to bylo mnohem horší, než nemít nic od začátku.", "sad")
         "Na tom možná něco bude.":
             hide mcPic
             "Erle jen přikývne a víc se k tématu nevrací."

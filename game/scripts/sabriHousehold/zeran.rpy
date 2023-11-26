@@ -30,16 +30,12 @@ label zeranFirst:
             $ zeran.say("Ne. Ani pořádně nevím, o co jde. Záleží na tom?")
             $ zeran.say("Můžete mě rovnou sebrat, Heinrich si určitě vzpomene, že mě tam vlastně viděl, a ty budeš mít padla.")
             call zeranMistrust
-        "Ne, proč bych tě měl hned zatýkat? Zatím probíhá vyšetřování." if gender == "M":
-            call zeranTooSoonToArrest
-        "Ne, proč bych tě měla hned zatýkat? Zatím probíhá vyšetřování." if gender == "F":
+        "Ne, proč bych tě měl[a] hned zatýkat? Zatím probíhá vyšetřování.":
             call zeranTooSoonToArrest
         "Co kdybys mé úmysly začal soudit po víc než pár větách?":
             hide mcPic
             $ zeran.say("Se spravedlností v tomhle městě mám nějaké zkušenosti. Ale dobře, třeba jsi černá ovce, bílá vrána a člověk bez předsudků. Tak se ptej.")
-        "Naopak, doufal jsem, že v tobě najdu korunního svědka proti Heinrichovi." if gender == "M":
-            call zeranWitnessAgainstHeinrich
-        "Naopak, doufala jsem, že v tobě najdu korunního svědka proti Heinrichovi." if gender == "F":
+        "Naopak, doufal[a] jsem, že v tobě najdu korunního svědka proti Heinrichovi." :
             call zeranWitnessAgainstHeinrich
     return
 
@@ -55,24 +51,16 @@ label zeranCellsIntro:
     if "Zeran seen in cells" in status:
         $ zeran.say("Tak co zásadního neseš tentokrát?", "angry")
     else:
-        if gender == "M":
-            $ zeran.say("Tak co, přišel jsi mě pustit, nebo to chceš dotáhnout až k soudu?")
-        else:
-            $ zeran.say("Tak co, přišla jsi mě pustit, nebo to chceš dotáhnout až k soudu?")
+        $ zeran.say("Tak co, při[sel] jsi mě pustit, nebo to chceš dotáhnout až k soudu?")
         $ status.append("Zeran seen in cells")
 
         show mcPic at menuImage
         menu:
             "Tou drzostí si to děláš jenom horší." if currentOffense == "vagrancy":
                 hide mcPic
-                if gender == "M":
-                    $ zeran.say("Jaká drzost? Řekl jsem, co si o hlídce myslím, a ty jsi v zápětí dokázal, že jsem měl pravdu.")
-                    $ mc.say("Kdybys měl trochu úcty, nic se ti nestalo.")
-                    $ zeran.say("Kdyby ses choval jinak, možná bych měl důvod pro trochu úcty.")
-                else:
-                    $ zeran.say("Jaká drzost? Řekl jsem, co si o hlídce myslím, a ty jsi v zápětí dokázala, že jsem měl pravdu.")
-                    $ mc.say("Kdybys měl trochu úcty, nic se ti nestalo.")
-                    $ zeran.say("Kdyby ses chovala jinak, možná bych měl důvod pro trochu úcty.")
+                $ zeran.say("Jaká drzost? Řekl jsem, co si o hlídce myslím, a ty jsi v zápětí dokázal[a], že jsem měl pravdu.")
+                $ mc.say("Kdybys měl trochu úcty, nic se ti nestalo.")
+                $ zeran.say("Kdyby ses choval[a] jinak, možná bych měl důvod pro trochu úcty.")
             "Co uděláš, aby ses dostal ven?":
                 hide mcPic
                 $ zeran.say("No ty se překonáváš. A co si myslíš, že nuzák jako já může mít užitečného?")
@@ -91,12 +79,9 @@ label zeranCellsIntro:
                         $ zeran.say("Poníženě se omlouvám, že jsem hned nepoznal, jaký jste arogantní pitomec. Chápu, že muset to každému dokazovat je pro vás obrovská námaha a oběť.")
                         $ zeran.say("Mohl byste mi prokázat tu obrovskou laskavost a vypadnout?")
                 $ leaveOption = "none"
-            "Přišel jsem ti pomoct." if gender == "M":
+            "Při[sel] jsem ti pomoct.":
                 hide mcPic
-                $ zeran.say("A to mi tvrdíš poté, co jsi mě zatkl bez pořádného důvodu? Nebuď směšný.")
-            "Přišla jsem ti pomoct." if gender == "F":
-                hide mcPic
-                $ zeran.say("A to mi tvrdíš poté, co jsi mě zatkla bez pořádného důvodu? Nebuď směšná.")
+                $ zeran.say("A to mi tvrdíš poté, co jsi mě zatkl[a] bez pořádného důvodu? Nebuď směšn[y].")
             "Chci se jen na pár věcí zeptat.":
                 hide mcPic
                 $ zeran.say("Jsem teď velmi zaměstnaný, ale když to musí být, sem s tím.")
@@ -107,10 +92,7 @@ label zeranOptions:
     if zeranOptionsRemaining == 0:
         $ mc.say("To jsou všechny moje otázky.")
         if zeran.status == "got money":
-            if gender == "M":
-                $ zeran.say("V tom případě hodně štěstí v pátrání. Kdybys mě tu příště nenašel, nejspíš jsem na cestě do Eppenhahnu. Nebo do Seewachtu. Prostě někam daleko.", "happy")
-            else:
-                $ zeran.say("V tom případě hodně štěstí v pátrání. Kdybys mě tu příště nenašla, nejspíš jsem na cestě do Eppenhahnu. Nebo do Seewachtu. Prostě někam daleko.", "happy")
+            $ zeran.say("V tom případě hodně štěstí v pátrání. Kdybys mě tu příště nena[sel], nejspíš jsem na cestě do Eppenhahnu. Nebo do Seewachtu. Prostě někam daleko.", "happy")
         else:
             $ zeran.say("V tom případě přeji hodně štěstí ve tvém náročném pátrání. Jestli budeš mít štěstí, možná s tebou Heinrich ani nevytře podlahu, jak má ve zvyku.")
         return
@@ -137,10 +119,7 @@ label zeranOptions:
                     $ mc.say("A k čemu podle tebe dojdou?")
                     $ mc.say("Máš důvod se Heinrichovi mstít, znáš jeho dílnu, klíč jsi klidně mohl sebrat už dávno, potřebuješ peníze a tyhle boty půjdou dobře prodat.")
                     $ zeran.say("... neříkej, že si vážně myslíš, že jsem to udělal.", "surprised")
-                    if gender == "M":
-                        $ mc.say("Proč bych si to neměl myslet?")
-                    else:
-                        $ mc.say("Proč bych si to neměla myslet?")
+                    $ mc.say("Proč bych si to neměl[a] myslet?")
                     $ zeran.say("Protože jsem byl celou noc úplně jinde? Vydělával jsem si aspoň na placku k obědu.")
                     if "alibi" in zeran.asked:
                         $ zeran.say("Jak už jsem ti říkal.", "angry")
@@ -230,10 +209,7 @@ label zeranOptions:
             $ zeran.asked.append("theft mention")
         "Napsal bys mi jména těch, za kým můžu dojít?" if "alibi witnesses" in zeran.asked and "letters for Ada seen" in status and "Zeran writing sample" not in status:
             hide mcPic
-            if gender == "M":
-                $ zeran.say("To si nezvládnete zapamatovat tři jména? Vlastně dvě, Sabriho si asi pamatovat musíte, když jste sem zvládl dojít.")
-            else:
-                $ zeran.say("To si nezvládnete zapamatovat tři jména? Vlastně dvě, Sabriho si asi pamatovat musíte, když jste sem zvládla dojít.")
+            $ zeran.say("To si nezvládnete zapamatovat tři jména? Vlastně dvě, Sabriho si asi pamatovat musíte, když jste sem zvládl[a] dojít.")
             $ mc.say("Nejsi jediný, s kým mluvím. Podobných ověřování mám spoustu.")
             "Zeran pokrčí rameny, nechá si podat psací potřeby a napíše na něj dvě jména."
             show sh zeran note at truecenter
@@ -294,10 +270,7 @@ label zeranOptions:
         "Jak to vypadá v Heinrichově domácnosti?" if "Heinrich household" not in zeran.asked:
             hide mcPic
             $ zeran.asked.append("Heinrich household")
-            if gender == "M":
-                $ zeran.say("Proč se na tohle ptáte mě? Jestli jsme si nevšiml, já v tom domě už měsíc nežiju.")
-            else:
-                $ zeran.say("Proč se na tohle ptáte mě? Jestli jsme si nevšimla, já v tom domě už měsíc nežiju.")
+            $ zeran.say("Proč se na tohle ptáte mě? Jestli jsme si nevšiml[a], já v tom domě už měsíc nežiju.")
             $ mc.say("Právě proto. Můžeš mi říct skutečné dojmy a nebát se, že někoho urazíš.")
             "Zeran pokrčí rameny."
             $ zeran.say("To je pravda. Co mi teď ještě může Heinrich udělat?")
@@ -331,38 +304,26 @@ label zeranOptions:
             $ zeran.say("Takže asi jo. Proč? To mi chcete nějaké dát, nebo se jenom ptáte, aby řeč nestála?", "angry")
         "Tohle by ti mohlo s novým začátkem pomoct. {i}(Dát mu část peněz od Rumelina){/i}" if "money" in zeran.asked and "Rumelin's money" in status and zeran.status != "got money" and "false offer" not in zeran.asked:
             hide mcPic
-            if gender == "M":
-                $ zeran.say("... kde jsi tolik peněz vzal? Nejsou doufám kradené?", "surprised")
-            else:
-                $ zeran.say("... kde jsi tolik peněz vzala? Nejsou doufám kradené?", "surprised")
+            $ zeran.say("... kde jsi tolik peněz vzal[a]? Nejsou doufám kradené?", "surprised")
             show mcPic at menuImage
             menu:
                 "Nejsou, neboj se.":
                     hide mcPic
                     $ zeran.asked.append("money safe")
-                    if gender == "M":
-                        $ zeran.say("A kde jsi je tedy vzal?")
-                    else:
-                        $ zeran.say("A kde jsi je tedy vzala?")
+                    $ zeran.say("A kde jsi je tedy vzal[a]?")
                     $ mc.say("Znám ve městě pár lidí.")
                     $ zeran.say("Nevypadáš jako někdo, kdo zná bohaté lidi. Proč ti dávno nesehnali lepší boty?")
                     $ mc.say("Snažím se je žádat o laskavosti, jen když na tom opravdu záleží.")
                 "Ne, Rumelin mi je dal naprosto dobrovolně.":
                     hide mcPic
                     $ zeran.asked.append("Rumelin's money")
-                    if gender == "M":
-                        $ zeran.say("Vážně? To jsi musel být hodně přesvědčivý.", "surprised")
-                    else:
-                        $ zeran.say("Vážně? To jsi musela být hodně přesvědčivá.", "surprised")
+                    $ zeran.say("Vážně? To jsi musel[a] být hodně přesvědčiv[y].", "surprised")
                     $ mc.say("Stačilo na něj vyhrabat dost velkou špínu.")
                 "Záleží na tom?":
                     hide mcPic
                     $ zeran.asked.append("money doesn't matter")
                     $ zeran.say("Jestli hrozí, že je u mě někdo najde, bude mě kvůli tomu považovat za zloděje a já zase schytám trest za cizí průšvih, tak docela jo.", "angry")
-                    if gender == "M":
-                        $ mc.say("Jsem si dost jistý, že je nikdo hledat nebude. Pak by se mohly roznést po městě zprávy, které by se podle mínění některých bohatých osob roznést neměly.")
-                    else:
-                        $ mc.say("Jsem si dost jistý/á, že je nikdo hledat nebude. Pak by se mohly roznést po městě zprávy, které by se podle mínění některých bohatých osob roznést neměly.")
+                    $ mc.say("Jsem si dost jist[y], že je nikdo hledat nebude. Pak by se mohly roznést po městě zprávy, které by se podle mínění některých bohatých osob roznést neměly.")
             $ zeran.say("Dobře... dejme tomu, že z těch peněz nekouká okamžitá cesta do šatlavy.")
             $ zeran.say("Pořád ale nechápu, co tě vede k tomu mi takovou fůru peněz jen tak dát. To je nedokážeš využít nijak jinak?")
 
@@ -376,9 +337,7 @@ label zeranOptions:
                     $ zeran.say("Díky. To budu moct hned zmizet z města a přesunout se někam, kde mě ještě žádný Heinrich nepomluvil.", "happy")
                     $ zeran.say("Takže jestli ode mě potřebuješ ještě něco, radši se ptej hned. Nevím, kdy přesně budu odcházet, ale bude to brzy.")
                     $ zeran.status = "got money"
-                "Vlastně jsem si to rozmyslel." if gender == "M":
-                    call zeranFalseOffer
-                "Vlastně jsem si to rozmyslela." if gender == "F":
+                "Vlastně jsem si to rozmyslel[a].":
                     call zeranFalseOffer
         "Byl jsi někdy u Amadisova hrobu?" if ("letters for Ada seen" in status or "letters topic" in ada.asked) and "Amadis grave" not in zeran.asked:
             hide mcPic
@@ -430,10 +389,7 @@ label zeranOptions:
         "To jsou všechny moje otázky.":
             hide mcPic
             if zeran.status == "got money":
-                if gender == "M":
-                    $ zeran.say("V tom případě hodně štěstí v pátrání. Kdybys mě tu příště nenašel, nejspíš jsem na cestě do Eppenhahnu. Nebo do Seewachtu. Prostě někam daleko.", "happy")
-                else:
-                    $ zeran.say("V tom případě hodně štěstí v pátrání. Kdybys mě tu příště nenašla, nejspíš jsem na cestě do Eppenhahnu. Nebo do Seewachtu. Prostě někam daleko.", "happy")
+                $ zeran.say("V tom případě hodně štěstí v pátrání. Kdybys mě tu příště nena[sel], nejspíš jsem na cestě do Eppenhahnu. Nebo do Seewachtu. Prostě někam daleko.", "happy")
             else:
                 $ zeran.say("V tom případě přeji hodně štěstí ve tvém náročném pátrání. Jestli budeš mít štěstí, možná s tebou Heinrich ani nevytře podlahu, jak má ve zvyku.")
             return

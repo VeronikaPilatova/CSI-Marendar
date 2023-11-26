@@ -27,20 +27,11 @@ label victimIntro:
     if "firefighter" in status and "firefighter" not in victim.asked:
         $ victim.asked.append("firefighter")
         "Když tě ale uvidí, jeho výraz se trochu projasní."
-        if gender == "M":
-            $ victim.say("Včera jsi kolem toho ohně udělal spoustu dobré práce. Kdyby byla hlídka vždycky takhle užitečná, možná bychom si tu na ni zvykli.", "happy")
-            $ victim.say("Ale nepřišel jsi, abych ti mazal med kolem huby.")
-        else:
-            $ victim.say("Včera jsi kolem toho ohně udělala spoustu dobré práce. Kdyby byla hlídka vždycky takhle užitečná, možná bychom si tu na ni zvykli.", "happy")
-            $ victim.say("Ale nepřišla jsi, abych ti mazal med kolem huby.")
+        $ victim.say("Včera jsi kolem toho ohně udělal[a] spoustu dobré práce. Kdyby byla hlídka vždycky takhle užitečná, možná bychom si tu na ni zvykli.", "happy")
+        $ victim.say("Ale nepři[sel] jsi, abych ti mazal med kolem huby.")
         show mcPic at menuImage
         menu:
-            "Ve skutečnosti bych si s vámi o tom ohni rád promluvil." if gender == "M":
-                hide mcPic
-                $ victim.asked.append("fireshow")
-                $ victim.say("No dobře, o co jde?")
-                call heinrichFireshow
-            "Ve skutečnosti bych si s vámi o tom ohni ráda promluvila." if gender == "F":
+            "Ve skutečnosti bych si s vámi o tom ohni rád[a] promluvil[a].":
                 hide mcPic
                 $ victim.asked.append("fireshow")
                 $ victim.say("No dobře, o co jde?")
@@ -70,61 +61,32 @@ label victimIntro:
             call returningKey
         elif "victim expects apology" in status:
             $ status.remove("victim expects apology")
-            if gender == "M":
-                $ mc.say("Zatím ne, ale dělám vše pro to, abych ho našel.")
-                show mcPic at menuImage
-                menu:
-                    "Jdu se vám omluvit, pokud jsem vás nějak urazil.":
-                        hide mcPic
-                        $ victim.trust += 1
-                        if "burned evidence seen" in victim.asked:
-                            $ victim.say("No co si budeme povídat, choval ses jako hulvát. Chci jenom základní respekt a aby sis hleděl své práce. Tak hlavně najdi toho zatraceného vandala.")
-                        else:
-                            $ victim.say("No co si budeme povídat, choval ses jako hulvát. Chci jenom základní respekt a aby sis hleděl své práce. Tak hlavně najdi můj mistrovský výrobek.")
-                        show mcPic at menuImage
-                        call afterApologyReaction
-                    "Můžu vám ještě položit pár otázek?":
-                        hide mcPic
-                        if victim.trust > -2:
-                            $ victim.say("Když to musí být... tak se ptej.")
-                        else:
-                            $ victim.say("Mám sto chutí tě rovnou vyhodit... ale ptej se.", "angry")
-            else:
-                $ mc.say("Zatím ne, ale dělám vše pro to, abych ho našla.")
-                show mcPic at menuImage
-                menu:
-                    "Jdu se vám omluvit, pokud jsem vás nějak urazila.":
-                        hide mcPic
-                        $ victim.trust += 1
-                        if "burned evidence seen" in victim.asked:
-                            $ victim.say("No co si budeme povídat, chovala ses jako hulvát. Chci jenom základní respekt a aby sis hleděla své práce. Tak hlavně najdi toho zatraceného vandala.", "angry")
-                        else:
-                            $ victim.say("No co si budeme povídat, chovala ses jako hulvát.  Chci jenom základní respekt a aby sis hleděla své práce. Tak hlavně najdi můj mistrovský výrobek.", "angry")
-                        call afterApologyReaction
-                    "Můžu vám ještě položit pár otázek?":
-                        hide mcPic
-                        if victim.trust > -2:
-                            $ victim.say("Když to musí být... tak se ptej.")
-                        else:
-                            $ victim.say("Mám sto chutí tě rovnou vyhodit... ale ptej se.", "angry")
+            $ mc.say("Zatím ne, ale dělám vše pro to, abych ho na[sel].")
+            show mcPic at menuImage
+            menu:
+                "Jdu se vám omluvit, pokud jsem vás nějak urazil[a].":
+                    hide mcPic
+                    $ victim.trust += 1
+                    if "burned evidence seen" in victim.asked:
+                        $ victim.say("No co si budeme povídat, choval[a] ses jako hulvát. Chci jenom základní respekt a aby sis hleděl[a] své práce. Tak hlavně najdi toho zatraceného vandala.")
+                    else:
+                        $ victim.say("No co si budeme povídat, choval[a] ses jako hulvát. Chci jenom základní respekt a aby sis hleděl[a] své práce. Tak hlavně najdi můj mistrovský výrobek.")
+                    show mcPic at menuImage
+                    call afterApologyReaction
+                "Můžu vám ještě položit pár otázek?":
+                    hide mcPic
+                    if victim.trust > -2:
+                        $ victim.say("Když to musí být... tak se ptej.")
+                    else:
+                        $ victim.say("Mám sto chutí tě rovnou vyhodit... ale ptej se.", "angry")
         else:
-            if gender == "M":
-                $ mc.say("Zatím ne, ale dělám vše pro to, abych ho našel. Můžu vám ještě položit pár otázek?")
-            else:
-                $ mc.say("Zatím ne, ale dělám vše pro to, abych ho našla. Můžu vám ještě položit pár otázek?")
-
+            $ mc.say("Zatím ne, ale dělám vše pro to, abych ho na[sel]. Můžu vám ještě položit pár otázek?")
 
         if "retrieving workshop key" in status:
             $ victim.say("A co ten klíč, který jsi slíbil donést?")
-            if gender == "M":
-                $ mc.say("Ještě jsem se pro něj nedostal…")
-            else:
-                $ mc.say("Ještě jsem se pro něj nedostala…")
+            $ mc.say("Ještě jsem se pro něj nedostal[a]...")
             if time.isBefore(keyVeryLateAfter):
-                if gender == "M":
-                    $ victim.say("A to si myslíš, že můžu nechat svou dílnu odemčenou celý den, nebo co? Kdybys to nesliboval, mohl jsem si za Eckhardem dojít sám.", "angry")
-                else:
-                    $ victim.say("A to si myslíš, že můžu nechat svou dílnu odemčenou celý den, nebo co? Kdybys to neslibovala, mohl jsem si za Eckhardem dojít sám.", "angry")
+                $ victim.say("A to si myslíš, že můžu nechat svou dílnu odemčenou celý den, nebo co? Kdybys to nesliboval[a], mohl jsem si za Eckhardem dojít sám.", "angry")
                 $ victim.trust -= 1
             else:
                 $ victim.say("Tak už se neobtěžuj. Už jsem si za Eckhardem došel sám a vyzvedl si ho osobně.", "angry")
@@ -167,22 +129,15 @@ label returningKey:
 
             $ victim.trust -= 3
             "Když vidí klíč v tvé ruce, mistr Heinrich se zamračí ještě víc než předtím."
-            if gender == "M":
-                $ victim.say("Kde všude ses s klíčem od mé dílny poflakoval? Když jsem tě pro něj poslal, myslel jsem, že mi ho opravdu přineseš.", "angry")
-                $ victim.say("Dokonce jsem za Eckhardem zašel sám, ale ten mi řekl, že už jsi tam byl. A jenom ses neobtěžoval dojít až za mnou. To si myslíš, že můžu nechat svou dílnu odemčenou celý den, nebo co?", "angry")
-            else:
-                $ victim.say("Kde všude ses s klíčem od mé dílny poflakovala? Když jsem tě pro něj poslal, myslel jsem, že mi ho opravdu přineseš.", "angry")
-                $ victim.say("Dokonce jsem za Eckhardem zašel sám, ale ten mi řekl, že už jsi tam byla. A jenom ses neobtěžovala dojít až za mnou. To si myslíš, že můžu nechat svou dílnu odemčenou celý den, nebo co?", "angry")
+            $ victim.say("Kde všude ses s klíčem od mé dílny poflakoval[a]? Když jsem tě pro něj poslal, myslel jsem, že mi ho opravdu přineseš.", "angry")
+            $ victim.say("Dokonce jsem za Eckhardem zašel sám, ale ten mi řekl, že už jsi tam byl[a]. A jenom ses neobtěžoval[a] dojít až za mnou. To si myslíš, že můžu nechat svou dílnu odemčenou celý den, nebo co?", "angry")
             call apologyForLateness from _call_apologyForLateness
     else:
 
         if time.isBefore(keyVeryLateAfter):
             $ victim.trust += 1
             "Mistr Heinrich vejde do místnosti s mírně zmateným výrazem, ale jakmile zahlédne klíč, téměř ti ho vytrhne z ruky."
-            if gender == "M":
-                $ victim.say("To je klíč od mé dílny! Jak ses k němu dostal?")
-            else:
-                $ victim.say("To je klíč od mé dílny! Jak ses k němu dostala?")
+            $ victim.say("To je klíč od mé dílny! Jak ses k němu dostal[a]?")
             $ mc.say("Posílá mě s ním Eckhard. Prý by přišel sám, ale je mu špatně.")
             if "burned evidence seen" in victim.asked:
                 $ victim.say("No dobře. Tak děkuju, ale teď se vrať ke své práci a přines mi toho vandala v zubech.", "happy")
@@ -336,11 +291,7 @@ label victimOptions:
             $ victim.say("Cože?! Co má tahle otázka znamenat? Proč by moje žena měla mít milence? Doufám, že máš opravdu dobrý důvod, proč o tom začínáš.", "angry")
             show mcPic at menuImage
             menu:
-                "Já se jen tak ptal..." if gender == "M":
-                    hide mcPic
-                    $ victim.trust -= 3
-                    $ victim.say("Tak se přestaň jen tak ptát a hleď si své opravdové práce.")
-                "Já se jen tak ptala..." if gender == "F":
+                "Já se jen tak ptal[a]...":
                     hide mcPic
                     $ victim.trust -= 3
                     $ victim.say("Tak se přestaň jen tak ptát a hleď si své opravdové práce.")
@@ -366,10 +317,7 @@ label victimOptions:
             hide mcPic
             $ victim.asked.append("conflict with Njal")
             $ victim.say("S Njalem? Ne, o ničem nevím. Proč bych měl mít spor zrovna s ním?", "angry")
-            if gender == "M":
-                $ mc.say("Mluvil jsem s ním o vás a působil vůči vám nepřátelsky.")
-            else:
-                $ mc.say("Mluvila jsem s ním o vás a působil vůči vám nepřátelsky.")
+            $ mc.say("Mluvil[a] jsem s ním o vás a působil vůči vám nepřátelsky.")
             $ victim.say("Co já vím, co se mu v té jeho trpasličí palici mohlo vylíhnout. Všichni ho mají za podivína z nějakého důvodu.", "angry")
             $ victim.say("Třeba o mně ten budižkničemu Gerd vykládal nějaké pomluvy. Nebo měl prostě zrovna špatnou náladu. Je to důležité?")
             $ mc.say("To zatím nevím. Dám vědět, jestli se to s něčím spojí.")
@@ -381,10 +329,7 @@ label victimOptions:
             $ optimist.trust += 1
             $ yesman.trust += 1
             $ ada.trust += 1
-            if gender == "M":
-                $ victim.say("Už jsi našel toho zmetka, co to má na svědomí?", "angry")
-            else:
-                $ victim.say("Už jsi našla toho zmetka, co to má na svědomí?", "angry")
+            $ victim.say("Už jsi na[sel] toho zmetka, co to má na svědomí?", "angry")
             show mcPic at menuImage
             menu:
                 "Nemohl by to být odstřižek nebo zbytek z výroby?":
@@ -526,12 +471,8 @@ label zairisGuiltyOptions:
     if zairisGuiltyOptionsRemaining == 0:
         $ mc.say("To je všechno, co mám.")
         $ victim.trust -= 1
-        if gender == "M":
-            $ victim.say("To jsi mě tedy nepřesvědčil. Doufal bych, že když už do mě chceš hučet, budeš aspoň mít něco v rukávu. Ale to bych asi od hlídky čekal moc.", "angry")
-            $ victim.say("Pořád jsi mi nenašel moje boty. Zkus zase chvíli dělat svoji skutečnou práci. A lépe, než ti šlo orodování za toho všiváka.", "angry")
-        else:
-            $ victim.say("To jsi mě tedy nepřesvědčila. Doufal bych, že když už do mě chceš hučet, budeš aspoň mít něco v rukávu. Ale to bych asi od hlídky čekal moc.", "angry")
-            $ victim.say("Pořád jsi mi nenašla moje boty. Zkus zase chvíli dělat svoji skutečnou práci. A lépe, než ti šlo orodování za toho všiváka.", "angry")
+        $ victim.say("To jsi mě tedy nepřesvědčil[a]. Doufal bych, že když už do mě chceš hučet, budeš aspoň mít něco v rukávu. Ale to bych asi od hlídky čekal moc.", "angry")
+        $ victim.say("Pořád jsi mi nena[sel] moje boty. Zkus zase chvíli dělat svoji skutečnou práci. A lépe, než ti šlo orodování za toho všiváka.", "angry")
         return
 
     show mcPic at menuImage
@@ -584,14 +525,9 @@ label zairisGuiltyOptions:
         "To je všechno, co mám.":
             hide mcPic
             $ victim.trust -= 1
-            if gender == "M":
-                $ victim.say("To jsi mě tedy nepřesvědčil. Doufal bych, že když už do mě chceš hučet, budeš aspoň mít něco v rukávu. Ale to bych asi od hlídky čekal moc.", "angry")
-                if "case solved" not in status:
-                    $ victim.say("Pořád jsi mi nenašel moje boty. Zkus zase chvíli dělat svoji skutečnou práci. A lépe, než ti šlo orodování za toho všiváka.", "angry")
-            else:
-                $ victim.say("To jsi mě tedy nepřesvědčila. Doufal bych, že když už do mě chceš hučet, budeš aspoň mít něco v rukávu. Ale to bych asi od hlídky čekal moc.", "angry")
-                if "case solved" not in status:
-                    $ victim.say("Pořád jsi mi nenašla moje boty. Zkus zase chvíli dělat svoji skutečnou práci. A lépe, než ti šlo orodování za toho všiváka.", "angry")
+            $ victim.say("To jsi mě tedy nepřesvědčil[a]. Doufal bych, že když už do mě chceš hučet, budeš aspoň mít něco v rukávu. Ale to bych asi od hlídky čekal moc.", "angry")
+            if "case solved" not in status:
+                $ victim.say("Pořád jsi mi nena[sel] moje boty. Zkus zase chvíli dělat svoji skutečnou práci. A lépe, než ti šlo orodování za toho všiváka.", "angry")
             return
 
     if zeran.cluesAgainst == 3:
@@ -674,10 +610,7 @@ label lettersForAdaSlipUp:
     $ victim.asked.append("letters for Ada slip up")
     $ victim.say("O jakých dopisech to vlastně mluvíš?", "angry")
     $ mc.say("O těch pro vaši dceru...")
-    if gender == "M":
-        $ victim.say("A ty jsi měl dopisy pro Adu někdy v ruce?", "angry")
-    else:
-        $ victim.say("A ty jsi měla dopisy pro Adu někdy v ruce?", "angry")
+    $ victim.say("A ty jsi měl[a] dopisy pro Adu někdy v ruce?", "angry")
     $ victim.say("Nebo se ze mě snažíš dělat vola?")
     return
 
@@ -712,10 +645,7 @@ label afterApologyReactionPositive:
     return
 
 label rumelinReminder:
-    if gender == "M":
-        $ victim.say("Už jsi vyslechl Rumelina?")
-    else:
-        $ victim.say("Už jsi vyslechla Rumelina?")
+    $ victim.say("Už jsi vyslechl[a] Rumelina?")
     if rumelin.alreadyMet == True:
         $ mc.say("Ano, ale sleduji všechny stopy, na které narazím.")
     else:
@@ -723,10 +653,7 @@ label rumelinReminder:
     return
 
 label apologyForLateness:
-    if gender == "M":
-        $ mc.say("Omlouvám se, zabral jsem se do vyšetřování…")
-    else:
-        $ mc.say("Omlouvám se, zabrala jsem se do vyšetřování…")
+    $ mc.say("Omlouvám se, zabral[a] jsem se do vyšetřování…")
     $ victim.say("Znamená to, že zloděje už máš?", "angry")
     $ mc.say("Ještě ne, ale…")
     $ victim.say("Tak se přestaň flákat a najdi ho.", "angry")
@@ -745,6 +672,15 @@ label zeranLettersResponse:
         call loveLetters
         $ status.append("letters for Ada seen")
         $ victim.asked.append("letters for Ada shown")
+        label loveLettersVictimMenu:
+        menu:
+            "{i}(Přečíst si dopisy znovu){i}":
+                call loveLetters
+                jump loveLettersVictimMenu
+            "{i}(Nechat si dopisy u sebe){i}":
+                pass
+            "{i}(Vrátit dopisy mistru Heinrichovi){i}":
+                pass
     return
 
 label heinrichMaritalRelationship:
@@ -753,19 +689,13 @@ label heinrichMaritalRelationship:
         $ victim.say("Navíc bez ní a toho, jak vede domácnost, bych možná nebyl nejlepší švec v celém Marendaru.")
         show mcPic at menuImage
         menu:
-            "Omlouvám se, nechtěl jsem vás urazit." if gender == "M":
-                hide mcPic
-                $ victim.say("Tak se koukej vrátit k vyšetřování a přestaň řešit moje soukromí.", "angry")
-            "Omlouvám se, nechtěla jsem vás urazit." if gender == "F":
+            "Omlouvám se, nechtěl[a] jsem vás urazit.":
                 hide mcPic
                 $ victim.say("Tak se koukej vrátit k vyšetřování a přestaň řešit moje soukromí.", "angry")
             "Jak často jí to říkáte?":
                 hide mcPic
                 if victim.trust < 5:
-                    if gender == "M":
-                        $ victim.say("Co je ti do toho? Jsi tady jenom od toho, abys našel můj ztracený výrobek, tak sebou pohni a nenavážej se do mého soukromí, nebo si budu stěžovat u tvého velitele.", "angry")
-                    else:
-                        $ victim.say("Co je ti do toho? Jsi tady jenom od toho, abys našla můj ztracený výrobek, tak sebou pohni a nenavážej se do mého soukromí, nebo si budu stěžovat u tvého velitele.", "angry")
+                    $ victim.say("Co je ti do toho? Jsi tady jenom od toho, abys na[sel] můj ztracený výrobek, tak sebou pohni a nenavážej se do mého soukromí, nebo si budu stěžovat u tvého velitele.", "angry")
                 else:
                     "Mistr Heinrich se zamračí a chvíli nad odpovědí přemýšlí."
                     $ victim.say("Možná…")
@@ -778,12 +708,8 @@ label heinrichMaritalRelationship:
                     $ status.append("fresh flowers")
                     $ status.append("flowers achievement")
     else:
-        if gender == "M":
-            $ mc.say("Omlouvám se, nechtěl jsem vás urazit.")
-            $ victim.say("Ale urazil, tak se koukej vrátit k vyšetřování a nenavážej se do mého soukromí.", "angry")
-        else:
-            $ mc.say("Omlouvám se, nechtěla jsem vás urazit.")
-            $ victim.say("Ale urazila, tak se koukej vrátit k vyšetřování a nenavážej se do mého soukromí.", "angry")
+        $ mc.say("Omlouvám se, nechtěl[a] jsem vás urazit.")
+        $ victim.say("Ale urazil[a], tak se koukej vrátit k vyšetřování a nenavážej se do mého soukromí.", "angry")
     return
 
 label rumelinExposedVictim:
@@ -820,10 +746,7 @@ label victimJoinForces:
     else:
         $ mc.say("Před slavnostmi už není moc času a oba na nich potřebujete něco představit...")
     $ victim.say("Takže bych za ním měl jít ze zoufalství, s prosbou o pomoc?", "angry")
-    if gender == "M":
-        $ mc.say("Tak jsem to nemyslel.")
-    else:
-        $ mc.say("Tak jsem to nemyslela.")
+    $ mc.say("Tak jsem to nemyslel[a].")
     if victim.trust > 4:
         $ victim.say("A jak tedy?", "angry")
         $ mc.say("Že by v této situaci mohlo být pro vás oba výhodnější spojit síly a vytvořit společně něco mimořádného.")
@@ -847,10 +770,7 @@ label joinForcesSurveyResults:
         "Nepřijali by to." if "join forces" in rumelin.asked or "join forces" in nirevia.asked or "join forces" in kaspar.asked:
             hide mcPic
             $ victim.say("Přesně to jsem čekal. Každý musí Einiona uctít sám svou vlastní prací, žádné zkratky a zjednodušení.")
-            if gender == "M":
-                $ victim.say("S kým jsi vlastně mluvil?")
-            else:
-                $ victim.say("S kým jsi vlastně mluvila?")
+            $ victim.say("S kým jsi vlastně mluvil[a]?")
             show mcPic at menuImage
             menu:
                 "Říkal to cechmistr Rumelin." if "join forces" in rumelin.asked:
@@ -956,10 +876,7 @@ label victimLostBottlesSolved:
         "Ano, byl to Rumelin.":
             hide mcPic
             $ victim.asked.append("lost bottles solved rumelin")
-            if gender == "M":
-                $ victim.say("A proč jsi to ještě nezatkl?", "angry")
-            else:
-                $ victim.say("A proč jsi to ještě nezatkla?", "angry")
+            $ victim.say("A proč jsi to ještě nezatkl[a]?", "angry")
             $ mc.say("Zatím proti němu sbírám důkazy.")
             $ victim.say("Tak s tím pohni, ať ho stihnou odsoudit ještě před slavnostmi.", "angry")
         "Byl to váš syn a učedníci.":
@@ -969,10 +886,7 @@ label victimLostBottlesSolved:
             $ victim.say("Tak já je vezmu pod svou střechu, chovám se k nim jako k vlastním a oni mě za tu dobrotu ještě okradou? Ti poletí z domu. A ještě předtím je přerazím. A Aachima dvojnásob, holomka nevděčného.", "angry")
             show mcPic at menuImage
             menu:
-                "To už je záležitost vaší domácnosti, ve které vám nechci nijak radit. Chtěl jsem jenom, abyste o tom věděl." if gender == "M":
-                    call victimPunishBoysForDrinking
-                    return
-                "To už je záležitost vaší domácnosti, ve které vám nechci nijak radit. Chtěla jsem jenom, abyste o tom věděl." if gender == "F":
+                "To už je záležitost vaší domácnosti, ve které vám nechci nijak radit. Chtěl[a] jsem jenom, abyste o tom věděl.":
                     call victimPunishBoysForDrinking
                     return
                 "Nemohl byste si to ještě rozmyslet?":
@@ -1023,10 +937,7 @@ label victimArrestEckhard:
             hide mcPic
             if victim.trust < 4:
                 $ victim.say("Dobrou vůli? A to má jako znamenat co? To mě ten trpaslík chce vydírat, nebo jak to mám chápat?", "angry")
-                if gender == "M":
-                    $ mc.say("Tak jsem to nemyslel...")
-                else:
-                    $ mc.say("Tak jsem to nemyslela...")
+                $ mc.say("Tak jsem to nemyslel[a]...")
                 $ victim.say("A jak tedy?", "angry")
                 $ victim.say("Nebo víš co? Radši přestaň myslet na blbosti a začni konečně dělat svou práci.", "angry")
                 $ victim.say("A to je hledání zloděje, ne zatýkání slušných lidí.", "angry")
@@ -1068,10 +979,7 @@ label victimArrestEckhard:
                     "Mohl byste například méně pít." if "confession" in boysAsked:
                         hide mcPic
                         $ victim.say("Co má moje pití s čím společného? To se mě snažíš urazit, nebo jak to mám brát?", "angry")
-                        if gender == "M":
-                            $ mc.say("To ne, jenom jsem si všiml, že...")
-                        else:
-                            $ mc.say("To ne, jenom jsem si všimla, že...")
+                        $ mc.say("To ne, jenom jsem si všiml[a], že...")
                         "Mistr Heinrich tě nechá mluvit, ale z jeho pohledu se dá jasně vyčíst varování."
                         show mcPic at menuImage
                         menu:
@@ -1122,37 +1030,24 @@ label victimArrestEckhard:
                                     $ victim.say("Ale do toho tobě nic není. Svého syna si srovnám sám.", "angry")
                                     $ mc.say("Na to nikdo nebude vhodnější. Ostatně zřejmě si z vás on a učedníci berou příklad i v tom, že chtějí pít jen ty nejlepší pálenky.")
                                     $ victim.say("No přece se Aachim nespokojí s kdejakou břečkou...")
-                                    if gender == "M":
-                                        $ victim.say("Počkej, ty jsi s nimi pil, nebo jak to víš? Nemáš pracovat na případu?", "angry")
-                                        $ mc.say("Během práce na případu jsem právě zjistil, že v domě nechybí jen boty. Ale není za tím žádný zlý úmysl, jen kluci také chtěli slavit.")
+                                    $ victim.say("Počkej, ty jsi s nimi pil[a], nebo jak to víš? Nemáš pracovat na případu?", "angry")
+                                    $ mc.say("Během práce na případu jsem právě zjistil[a], že ty ztracené lahve, o kterých jsme mluvili, vypil Aachim s učedníky. Ale není za tím žádný zlý úmysl, jen kluci také chtěli slavit.")
+                                    if "lost bottles solved rumelin" in victim.asked:
+                                        $ victim.trust -= 2
+                                        $ victim.say("Cože? Neříkal[a] jsi předtím, že mi je ukradl Rumelin?", "surprised")
+                                        call stupidExcuse
+                                        $ mc.say("Chtěl[a] jsem jenom, abyste je nepotrestal moc přísně")
+                                        $ victim.say("S kluky si ještě promluvím, a jestli to opravdu vypili oni, tak je potrestám po zásluze. Ale na tebe si budu stěžovat u tvých nadřízených.", "angry")
+                                        $ victim.say("A teď se mi kliď z očí.", "angry")
+                                        $ refusedBy = "victim"
                                     else:
-                                        $ victim.say("Počkej, ty jsi s nimi pila, nebo jak to víš? Nemáš pracovat na případu?")
-                                        if gender == "M":
-                                            $ mc.say("Během práce na případu jsem právě zjistil, že ty ztracené lahve, o kterých jsme mluvili, vypil Aachim s učedníky. Ale není za tím žádný zlý úmysl, jen kluci také chtěli slavit.")
-                                        else:
-                                            $ mc.say("Během práce na případu jsem právě zjistila, že ty ztracené lahve, o kterých jsme mluvili, vypil Aachim s učedníky. Ale není za tím žádný zlý úmysl, jen kluci také chtěli slavit.")
-                                        if "lost bottles solved rumelin" in victim.asked:
-                                            $ victim.trust -= 2
-                                            if gender == "M":
-                                                $ victim.say("Cože? Neříkal jsi předtím, že mi je ukradl Rumelin?", "surprised")
-                                            else:
-                                                $ victim.say("Cože? Neříkala jsi předtím, že mi je ukradl Rumelin?", "surprised")
-                                            call stupidExcuse
-                                            if gender == "M":
-                                                $ mc.say("Chtěl jsem jenom, abyste je nepotrestal moc přísně")
-                                            else:
-                                                $ mc.say("Chtěla jsem jenom, abyste je nepotrestal moc přísně")
-                                            $ victim.say("S kluky si ještě promluvím, a jestli to opravdu vypili oni, tak je potrestám po zásluze. Ale na tebe si budu stěžovat u tvých nadřízených.", "angry")
-                                            $ victim.say("A teď se mi kliď z očí.", "angry")
-                                            $ refusedBy = "victim"
-                                        else:
-                                            $ victim.say("Cože? Chceš říct...", "surprised")
-                                            $ mc.say("Že než někoho pozvete k sobě domů na pohárek, raději se podívejte, co mu můžete nabízet, aby to nevypadalo hloupě.")
-                                            $ victim.say("Oni vypili moje zásoby?! Já je přetrhnu, víš, kolik to stálo?", "angry")
-                                            $ mc.say("Tuším, že výrazně víc, než kdejaká břečka.")
-                                            "Mistr Heinrich se na několik okamžiků odmlčí. Působí rozhněvaně, ale ne natolik, aby mu jeho hněv ukázal směr."
-                                            $ victim.say("Tohle si budou muset odpracovat. A to při jejich šikovnosti znamená, že jako mí učedníci zešednou.", "angry")
-                                            $ status.append("apprentices saved")
+                                        $ victim.say("Cože? Chceš říct...", "surprised")
+                                        $ mc.say("Že než někoho pozvete k sobě domů na pohárek, raději se podívejte, co mu můžete nabízet, aby to nevypadalo hloupě.")
+                                        $ victim.say("Oni vypili moje zásoby?! Já je přetrhnu, víš, kolik to stálo?", "angry")
+                                        $ mc.say("Tuším, že výrazně víc, než kdejaká břečka.")
+                                        "Mistr Heinrich se na několik okamžiků odmlčí. Působí rozhněvaně, ale ne natolik, aby mu jeho hněv ukázal směr."
+                                        $ victim.say("Tohle si budou muset odpracovat. A to při jejich šikovnosti znamená, že jako mí učedníci zešednou.", "angry")
+                                        $ status.append("apprentices saved")
                     "Promluvím s Njalem, pokud napravíte tu křivdu, kterou jste udělal Zeranovi." if zeranNote.isActive:
                         hide mcPic
                         if "zeran's name cleared" in status:
@@ -1176,18 +1071,12 @@ label victimArrestEckhard:
                         $ mc.say("Co třeba cena jednoho páru bot, které byste podle něj vyrobil?")
                         "Mistr Heinrich se na chvíli zamyslí."
                         $ victim.say("Tohle si ještě budu muset promyslet a propočítat. Pošlu pak kdyžtak Aachima.")
-                        if gender == "M":
-                            $ mc.say("Když to tak zmiňujete, vlastně nevím, jakou cenu přesně mistr Njal myslel… možná bych se ho měl nejdřív zeptat...")
-                        else:
-                            $ mc.say("Když to tak zmiňujete, vlastně nevím, jakou cenu přesně mistr Njal myslel… možná bych se ho měla nejdřív zeptat...")
+                        $ mc.say("Když to tak zmiňujete, vlastně nevím, jakou cenu přesně mistr Njal myslel... možná bych se ho měl[a] nejdřív zeptat...")
                         $ mc.say("Rozhodně Aachima neposílejte dřív, než dám vědět.")
                         $ victim.say("Chápu. Možná bych se měl s Njalem domluvit napřímo.")
                         $ mc.say("Možná to ještě předtím zkusím nějak urovnat.")
                         $ victim.say("Tak ale pohni, slavnosti se blíží.", "angry")
-                    "To si ještě nejsem jistý, ale na něco přijdu." if gender == "M":
-                        hide mcPic
-                        "Heinrich se zamračí a pro sebe zavrčí něco o tom, proč s tím pak vůbec začínáš, ale víc nekomentuje."
-                    "To si ještě nejsem jistá, ale na něco přijdu." if gender == "F":
+                    "To si ještě nejsem jist[y], ale na něco přijdu.":
                         hide mcPic
                         "Heinrich se zamračí a pro sebe zavrčí něco o tom, proč s tím pak vůbec začínáš, ale víc nekomentuje."
     return
@@ -1195,16 +1084,10 @@ label victimArrestEckhard:
 label stupidExcuse:
     show mcPic at menuImage
     menu:
-        "To jsem neříkal." if gender == "M":
+        "To jsem neříkal[a].":
             hide mcPic
             $ victim.say("To mě máš za pitomce? Nenechám si lhát do očí.", "angry")
-        "To jsem neříkala." if gender == "F":
-            hide mcPic
-            $ victim.say("To mě máš za pitomce? Nenechám si lhát do očí.", "angry")
-        "Musel jsem se splést." if gender == "M":
-            hide mcPic
-            $ victim.say("Takže mi buď lžeš do očí, nebo jsi ještě hloupější než průměrný strážný.", "angry")
-        "Musela jsem se splést." if gender == "F":
+        "Musel[a] jsem se splést.":
             hide mcPic
             $ victim.say("Takže mi buď lžeš do očí, nebo jsi ještě hloupější než průměrný strážný.", "angry")
         "Vyšly najevo nové okolnosti.":
@@ -1229,14 +1112,9 @@ label heinrichDealMischief1:
                     $ victim.say("Říkáš, že mi ta holota učednická chodí na moje soukromé zásoby?", "angry")
                 if "lost bottles solved rumelin" in victim.asked:
                     $ victim.trust -= 2
-                    if gender == "M":
-                        $ victim.say("Neříkal jsi předtím, že mi ty lahve ukradl Rumelin?", "angry")
-                        call stupidExcuse
-                        $ mc.say("Chtěl jsem jen říct, co kdyby se z vašich soukromých zásob nic neztratilo, stejně jako mistru Njalovi nikdo neukradl jeho střih? Jestli si rozumíme.")
-                    else:
-                        $ victim.say("Neříkala jsi předtím, že mi ty lahve ukradl Rumelin?", "angry")
-                        call stupidExcuse
-                        $ mc.say("Chtěla jsem jen říct, co kdyby se z vašich soukromých zásob nic neztratilo, stejně jako mistru Njalovi nikdo neukradl jeho střih? Jestli si rozumíme.")
+                    $ victim.say("Neříkal[a] jsi předtím, že mi ty lahve ukradl Rumelin?", "angry")
+                    call stupidExcuse
+                    $ mc.say("Chtěl[a] jsem jen říct, co kdyby se z vašich soukromých zásob nic neztratilo, stejně jako mistru Njalovi nikdo neukradl jeho střih? Jestli si rozumíme.")
                     $ victim.say("Takže ty mi nejdřív lžeš a pak máš tu drzost za mnou chodit s takovouhle špinavostí? To si zkoušej u Rumelina, ale ne u mě.", "angry")
                     $ victim.say("Koukej se okamžitě vrátit k případu a vyřešit ho dřív, než si na tebe stihnu stěžovat u tvých nadřízených.", "angry")
                     $ victim.say("A moji domácnost nech mně. Do té ti nic není.", "angry")
@@ -1266,18 +1144,12 @@ label heinrichDealMischief1:
                         "Záleží na nich mně, jestli se jich nikdo jiný nezastane.":
                             hide mcPic
                             $ victim.trust -= 1
-                            if gender == "M":
-                                $ victim.say("A ty se jich chceš zastávat? Vždyť jsi právě řekl, že kradli pod mou střechou!", "angry")
-                            else:
-                                $ victim.say("A ty se jich chceš zastávat? Vždyť jsi právě řekla, že kradli pod mou střechou!", "angry")
+                            $ victim.say("A ty se jich chceš zastávat? Vždyť jsi právě řekl[a], že kradli pod mou střechou!", "angry")
                             $ mc.say("Nechci, aby měli zkažený celý život kvůli jedné nerozvážnosti.")
                             $ victim.say("Sahat do mých zásob není nerozvážnost, ale zlodějina. Museli dobře vědět, co dělají.", "angry")
                             $ mc.say("Jsou to mladí kluci, ti občas prostě nepřemýšlí. Já jen prosím, abyste vybral trest, který z nich neudělá věčné nádeníky, kteří ani nedokončili učení.")
                             $ victim.say("Hm. Milosrdnější než Heulwen. A Eckharda do toho taháš proč?", "angry")
-                            if gender == "M":
-                                $ mc.say("Chtěl jsem, abyste kromě velkorysosti měl ještě další důvod, proč nad tím celým přemýšlet.")
-                            else:
-                                $ mc.say("Chtěla jsem, abyste kromě velkorysosti měl ještě další důvod, proč nad tím celým přemýšlet.")
+                            $ mc.say("Chtěl[a] jsem, abyste kromě velkorysosti měl ještě další důvod, proč nad tím celým přemýšlet.")
                             $ victim.say("Takže mě opravdu máš za Rumelina. No, učedníci tu zůstanou a budou mi moci dokázat, že se polepšili. A jestli proti Eckhardovi uslyším křivé slovo, vyřídím si to ne s nimi, ale s tebou osobně.", "angry")
                             if "burned evidence seen" in victim.asked:
                                 $ victim.say("A teď se prosím přestaň zdržovat věcmi, do kterých ti nic není, a najdi konečně toho vandala.", "angry")
@@ -1292,12 +1164,7 @@ label heinrichDealMischief1:
                     $ victim.say("Jestli s mými botami něco provedla ta holota učednická, tak je chci vidět na pranýři, bez ohledu na to, že pak nebudou moci pracovat. A ještě předtím je vlastnoručně přetrhnu jak hada.")
                 show mcPic at menuImage
                 menu:
-                    "Vlastně si nejsem jistý..." if gender == "M":
-                        hide mcPic
-                        $ victim.trust -= 1
-                        $ victim.say("Tak proč tohle všechno? Nejdřív začneš o dobré vůli, pak chvíli chodíš kolem horké kaše a nakonec řekneš, že vlastně nic? To myslíš, že ani jeden z nás nemá nic lepšího na práci?", "angry")
-                        $ victim.say("Koukej se radši vrátit k vyšetřování. A až budeš něco opravdu chtít, řekni to rovnou.", "angry")
-                    "Vlastně si nejsem jistá..." if gender == "F":
+                    "Vlastně si nejsem jist[y]...":
                         hide mcPic
                         $ victim.trust -= 1
                         $ victim.say("Tak proč tohle všechno? Nejdřív začneš o dobré vůli, pak chvíli chodíš kolem horké kaše a nakonec řekneš, že vlastně nic? To myslíš, že ani jeden z nás nemá nic lepšího na práci?", "angry")
@@ -1306,10 +1173,7 @@ label heinrichDealMischief1:
                         hide mcPic
                         $ mc.say("Kluci zkazili nějaký materiál a báli se, co tomu řeknete.")
                         $ victim.say("To se jim stává běžně. Co to bylo zač, že jsou z toho tak vyděšení?", "angry")
-                        if gender == "M":
-                            $ mc.say("Já... si vlastně nejsem jistý. Pochopte, jak ševcovině nerozumím...")
-                        else:
-                            $ mc.say("Já... si vlastně nejsem jistá. Pochopte, jak ševcovině nerozumím...")
+                        $ mc.say("Já... si vlastně nejsem jist[y]. Pochopte, jak ševcovině nerozumím...")
                         $ victim.say("Chápu. V každém případě si s nimi o tom promluvím. Jestli sahali na něco drahého a ještě to zkazili, ať si mě nepřejí.")
                         $ mc.say("Jenom se snažili pracovat co nejlépe, abyste na ně mohl být hrdý.")
                         $ victim.say("Mají dělat, co se jim řekne. Nejvíc hrdý na ně budu, až konečně ušijí pořádnou pevnou botu.", "angry")
@@ -1317,16 +1181,10 @@ label heinrichDealMischief1:
                         $ victim.say("Asi uvidíme podle toho, o co přesně šlo.")
                     "Ano, za ztrátu vašich bot může Aachim." if "accusing son" in victim.asked:
                         hide mcPic
-                        if gender == "M":
-                            $ victim.asked("A proč jsi ho ještě nezatkl?")
-                        else:
-                            $ victim.asked("A proč jsi ho ještě nezatkla?")
+                        $ victim.asked("A proč jsi ho ještě nezatkl[a]?")
                     "Ano, za ztrátu vašich bot můžou učedníci." if "accusing apprentices" in victim.asked:
                         hide mcPic
-                        if gender == "M":
-                            $ victim.asked("A proč jsi je ještě nezatkl?")
-                        else:
-                            $ victim.asked("A proč jsi je ještě nezatkla?")
+                        $ victim.asked("A proč jsi je ještě nezatkl[a]?")
     return
 
 ###

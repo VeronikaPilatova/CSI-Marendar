@@ -30,8 +30,22 @@ label gender:
     menu:
         "Muž":
             $ gender = "M"
+            $ a = ""
+            $ e = ""
+            $ y = "ý"
+            $ pronoun4 = "ho"
+            $ pronoun7 = "ním"
+            $ sel = "šel"
+            $ sam = "sám"
         "Žena":
             $ gender = "F"
+            $ a = "a"
+            $ e = "e"
+            $ y = "á"
+            $ pronoun4 = "ji"
+            $ pronoun7 = "ní"
+            $ sel = "šla"
+            $ sam = "sama"
 
 $ pic = 1
 label looks:

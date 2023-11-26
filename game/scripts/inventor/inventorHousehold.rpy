@@ -63,9 +63,7 @@ label njalHouseFirst:
             $ njal.say("Pojďte dál, pokusím se vám odpovědět, na co budu moci.")
             call njalHouseInside
             jump njalController
-        "Jsem z městské hlídky a vyšetřuji krádež u mistra Heinricha. Rád bych mistrovi položil několik otázek." if gender == "M":
-            jump speakToNjal
-        "Jsem z městské hlídky a vyšetřuji krádež u mistra Heinricha. Ráda bych mistrovi položila několik otázek." if gender == "F":
+        "Jsem z městské hlídky a vyšetřuji krádež u mistra Heinricha. Rád[a] bych mistrovi položil[a] několik otázek.":
             jump speakToNjal
         "Ty jsi Gerd?" if "fired apprentices" in clues:
             $ gerd.say("Jo. Proč se ptáte?")
@@ -83,44 +81,25 @@ label speakToNjal:
 
 label njalHouseAgain:
     if time.hours < 18:
-        if gender == "M":
-            "Dům mistra Njala vypadá stejně, jako když jsi tu byl poprvé. Učedník Gerd sedí na trojnožce před domem a napíná na kopyto připravený základ budoucí boty. Z domu je i slyšet tlumené prozpěvování, ale konkrétní slova se ti nedaří zachytit."
-        else:
-            "Dům mistra Njala vypadá stejně, jako když jsi tu byla poprvé. Učedník Gerd sedí na trojnožce před domem a napíná na kopyto připravený základ budoucí boty. Z domu je i slyšet tlumené prozpěvování, ale konkrétní slova se ti nedaří zachytit."
+        "Dům mistra Njala vypadá stejně, jako když jsi tu byl[a] poprvé. Učedník Gerd sedí na trojnožce před domem a napíná na kopyto připravený základ budoucí boty. Z domu je slyšet tlumené prozpěvování, ale konkrétní slova se ti nedaří zachytit."
         "Gerd zvedne hlavu od práce."
     else:
-        if gender == "M":
-            "Dům mistra Njala vypadá stejně příjemně, jako když jsi tu byl poprvé. Okno je stále otevřené a když se zastavíš přede dveřmi, dolétne k tobě tlumený zvuk smíchu."
-        else:
-            "Dům mistra Njala vypadá stejně příjemně, jako když jsi tu byla poprvé. Okno je stále otevřené a když se zastavíš přede dveřmi, dolétne k tobě tlumený zvuk smíchu."
+        "Dům mistra Njala vypadá stejně příjemně, jako když jsi tu byl[a] poprvé. Okno je stále otevřené a když se zastavíš přede dveřmi, dolétne k tobě tlumený zvuk smíchu."
         "Zaklepeš a otevře ti Njalův učedník Gerd se svým typickým bezstarostným úsměvem."
     $ gerd.say("Potřebujete ještě něco?")
     if chosenChar == "gerd":
         if gerd.alreadyMet == False:
-            if gender == "M":
-                $ mc.say("Vlastně bych si chtěl promluvit s tebou.")
-            else:
-                $ mc.say("Vlastně bych si chtěla promluvit s tebou.")
+            $ mc.say("Vlastně bych si chtěl[a] promluvit s tebou.")
             $ gerd.say("Se mnou? Proč vlastně?")
         jump gerdController
     elif chosenChar == "njal":
-        if njal.alreadyMet == True and gender == "M":
-            $ mc.say("Chtěl bych ještě jednou mluvit s tvým mistrem.")
+        if njal.alreadyMet == True:
+            $ mc.say("Chtěl[a] bych ještě jednou mluvit s tvým mistrem.")
             "Gerd kývne a na chvíli zmizí v domě. Netrvá dlouho a jsi zase pozván dovnitř."
             call njalHouseInside
             jump njalController
-        elif njal.alreadyMet == True and gender == "F":
-            $ mc.say("Chtěla bych ještě jednou mluvit s tvým mistrem.")
-            "Gerd kývne a na chvíli zmizí v domě. Netrvá dlouho a jsi zase pozvána dovnitř."
-            call njalHouseInside
-            jump njalController
-        elif gender == "M":
-            $ mc.say("Chtěl bych si promluvit s tvým mistrem.")
-            "Gerd kývne a na chvíli zmizí v domě. Netrvá dlouho a jsi pozván dovnitř."
-            call njalHouseInside
-            jump njalController
         else:
-            $ mc.say("Chtěla bych si promluvit s tvým mistrem.")
+            $ mc.say("Chtěl[a] bych si promluvit s tvým mistrem.")
             "Gerd kývne a na chvíli zmizí v domě. Netrvá dlouho a jsi pozvána dovnitř."
             call njalHouseInside
             jump njalController

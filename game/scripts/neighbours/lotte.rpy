@@ -21,10 +21,7 @@ label lotteController:
             call lotteFirst
     else:
         if chosenChar == "merchant":
-            if gender == "M":
-                "Hledání Karstenova domu tě zavede do stejné ulice, kde žije mistr Heinrich, a pak ke dveřím, kde jsi mluvil s černovlasou sousedkou Lotte."
-            else:
-                "Hledání Karstenova domu tě zavede do stejné ulice, kde žije mistr Heinrich, a pak ke dveřím, kde jsi mluvila s černovlasou sousedkou Lotte."
+            "Hledání Karstenova domu tě zavede do stejné ulice, kde žije mistr Heinrich, a pak ke dveřím, kde jsi mluvil[a] s černovlasou sousedkou Lotte."
         call lotteAgain
     call lotteOptions
 
@@ -164,10 +161,7 @@ label lotteOptions:
             $ lotte.say("Před dvěma dny.")
             if "pub fight" not in lotte.asked:
                 $ lotte.say("Proč? Potřebujete od něj něco?")
-                if gender == "M":
-                    $ mc.say("Jen jsem se ho chtěl zeptat na mistra Heinricha.")
-                else:
-                    $ mc.say("Jen jsem se ho chtěla zeptat na mistra Heinricha.")
+                $ mc.say("Jen jsem se ho chtěl[a] zeptat na mistra Heinricha.")
                 $ lotte.say("O tom vám můžu dost říct i já.", "angry")
             $ clues.append("Karsten away")
         "Je pravda, že se váš muž s mistrem Heinrichem pohádal?" if "other fights" in salma.asked and (chosenChar == "merchant" or lotteNote.isActive == True) and "pub fight" not in lotte.asked:
@@ -189,10 +183,7 @@ label lotteOptions:
             hide mcPic
             $ lotte.asked.append("AML")
             $ lotte.say("Nevím o tom, proč se ptáte?")
-            if gender == "M":
-                $ mc.say("Slyšel jsem, že domlouvali nějaký obchod, ze kterého pak sešlo.")
-            else:
-                $ mc.say("Slyšela jsem, že domlouvali nějaký obchod, ze kterého pak sešlo.")
+            $ mc.say("Slyšel[a] jsem, že domlouvali nějaký obchod, ze kterého pak sešlo.")
             $ lotte.say("Můžu se asi podívat do účetní knihy nebo jiných poznámek, možná se manžel prostě v něčem spletl. Je nějaký důvod, proč jeden zrušený obchod řeší městská hlídka?")
             if "less deals checked" in status:
                 $ mc.say("Sledujeme cokoli neobvyklého pro případ, že by to souviselo s tou krádeží. Vypadá to, že podobných zrušených obchodů s Njalem bylo několik a cechmistr Rumelin některé ze svých nákupů materiálu přesunul mimo všechny hospody ve městě.")
@@ -404,42 +395,23 @@ label lotteRumelinReasons:
 label lottePoliceBusiness:
     $ lotte.asked.append("why not call police")
     $ lotte.say("Manžel rozhodně nemá takový vliv a bohatství, aby se mohl otevřeně postavit cechmistrovi. Bylo by to slovo proti slovu, navíc jsem si jistá, že mistr Rumelin má v městské hlídce přátele ještě z Velinových dob.")
-    if gender == "M":
-        $ lotte.say("Co byste na jeho místě dělal vy?")
-        show mcPic at menuImage
-        menu:
-            "Máte pravdu, asi bych neudělal nic. Bylo by to zbytečné nebezpečí.":
-                hide mcPic
-                $ rauvin.trust -= 1
-                $ hayfa.trust -= 1
-                $ lotte.say("Tak vidíte.")
-            "Rozhodně bych to nahlásil. Tvář hlídky určují hlavně Rauvin a Hayfa a ti by se nikým ovlivnit nenechali.":
-                hide mcPic
-                $ rauvin.trust += 1
-                $ lotte.say("Možná… ale vy asi nemáte rodinu.")
-            "Byl bych opatrný, ale zkusil bych zjistit, co za tím vězí, pro případ, že by to ohrožovalo i mě.":
-                hide mcPic
-                $ hayfa.trust += 1
-                $ mc.say("A až bych se ujistil, že to je dobrý nápad, nahlásil bych to.")
-                $ lotte.say("To jsme chtěli, ale nestihli jsme to.")
-    else:
-        $ lotte.say("Co byste na jeho místě dělala vy?")
-        show mcPic at menuImage
-        menu:
-            "Máte pravdu, asi bych neudělala nic. Bylo by to zbytečné nebezpečí.":
-                hide mcPic
-                $ rauvin.trust -= 1
-                $ hayfa.trust -= 1
-                $ lotte.say("Tak vidíte.")
-            "Rozhodně bych to nahlásila. Tvář hlídky určují hlavně Rauvin a Hayfa a ti by se nikým ovlivnit nenechali.":
-                hide mcPic
-                $ rauvin.trust += 1
-                $ lotte.say("Možná… ale vy asi nemáte rodinu.")
-            "Byla bych opatrná, ale zkusila bych zjistit, co za tím vězí, pro případ, že by to ohrožovalo i mě.":
-                hide mcPic
-                $ hayfa.trust += 1
-                $ mc.say("A až bych se ujistila, že to je dobrý nápad, nahlásila bych to.")
-                $ lotte.say("To jsme chtěli, ale nestihli jsme to.")
+    $ lotte.say("Co byste na jeho místě dělal[a] vy?")
+    show mcPic at menuImage
+    menu:
+        "Máte pravdu, asi bych neudělal[a] nic. Bylo by to zbytečné nebezpečí.":
+            hide mcPic
+            $ rauvin.trust -= 1
+            $ hayfa.trust -= 1
+            $ lotte.say("Tak vidíte.")
+        "Rozhodně bych to nahlásil[a]. Tvář hlídky určují hlavně Rauvin a Hayfa a ti by se nikým ovlivnit nenechali.":
+            hide mcPic
+            $ rauvin.trust += 1
+            $ lotte.say("Možná... ale vy asi nemáte rodinu.")
+        "Byl[a] bych opatrn[y], ale zkusil[a] bych zjistit, co za tím vězí, pro případ, že by to ohrožovalo i mě.":
+            hide mcPic
+            $ hayfa.trust += 1
+            $ mc.say("A až bych se ujistil[a], že to je dobrý nápad, nahlásil[a] bych to.")
+            $ lotte.say("To jsme chtěli, ale nestihli jsme to.")
     return
 
 label lotteDancerDealOptions:
@@ -469,12 +441,8 @@ label lotteDancerDealOptions:
             $ lotte.asked.append("offered favour")
             "Lotte povytáhne obočí."
             $ lotte.say("Nejdůležitější jsou známosti, ale těch předpokládám moc mít nebudete. Ne mezi obchodníky, se kterými bychom s manželem mohli spolupracovat.")
-            if gender == "M":
-                $ lotte.say("Pak se ale také hodí vědět, jaké známosti mají ostatní. Jaké zboží přesně kdo dováží z jiných měst a za jakou cenu. A to byste už možná zjistit mohl.")
-                $ lotte.say("Samozřejmě vás nenabádám, abyste pro mě opisoval záznamy o vybraných clech. To by byl zločin. Ale jestli mi informace sdělíte, protože jsme přátelé a protože je náhodou víte od svých známých mimo město, budu velmi ráda.")
-            else:
-                $ lotte.say("Pak se ale také hodí vědět, jaké známosti mají ostatní. Jaké zboží přesně kdo dováží z jiných měst a za jakou cenu. A to byste už možná zjistit mohla.")
-                $ lotte.say("Samozřejmě vás nenabádám, abyste pro mě opisovala záznamy o vybraných clech. To by byl zločin. Ale jestli mi informace sdělíte, protože jsme přátelé a protože je náhodou víte od svých známých mimo město, budu velmi ráda.")
+            $ lotte.say("Pak se ale také hodí vědět, jaké známosti mají ostatní. Jaké zboží přesně kdo dováží z jiných měst a za jakou cenu. A to byste už možná zjistit mohl[a].")
+            $ lotte.say("Samozřejmě vás nenabádám, abyste pro mě opisoval[a] záznamy o vybraných clech. To by byl zločin. Ale jestli mi informace sdělíte, protože jsme přátelé a protože je náhodou víte od svých známých mimo město, budu velmi ráda.")
             $ lotte.say("Chci říct, rád bude hlavně manžel. On je tady ten obchodník.")
 
             label lotteDancerFavourOptions:

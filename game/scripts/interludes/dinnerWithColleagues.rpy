@@ -24,10 +24,7 @@ label dinnerWithColleaguesOptions:
         "Jak jste se do hlídky vlastně dostali vy?" if "reasons" not in colleaguesAsked:
             hide mcPic
             $ colleaguesAsked.append("reasons")
-            if gender == "M":
-                $ hayfa.say("Část je nás tu z lásky k Marendaru a druhá proto, že prostě potřebovali práci. Rozlišit to jistě dokážeš sám, byť ne všichni ti to sami hned řeknou.")
-            else:
-                $ hayfa.say("Část je nás tu z lásky k Marendaru a druhá proto, že prostě potřebovali práci. Rozlišit to jistě dokážeš sama, byť ne všichni ti to sami hned řeknou.")
+            $ hayfa.say("Část je nás tu z lásky k Marendaru a druhá proto, že prostě potřebovali práci. Rozlišit to jistě dokážeš [sam], byť ne všichni ti to sami hned řeknou.")
             $ solian.say("Vynecháváš tu nejzajímavější část.")
             $ hayfa.say("Myslíš tu o zchudlém šlechtici, který potřeboval uplatnit vojenský výcvik v zemi, kde se těsně po jeho příchodu přestalo válčit?", "happy")
             $ rauvin.say("To není nic zvláštního, takových zchudlých zemanů a mladších synů je spousta. Jen v Eichenau nás takových byla celá jednotka.")
@@ -37,10 +34,7 @@ label dinnerWithColleaguesOptions:
             $ hayfa.say("Osobně nevidím rozdíl mezi hnusným sektářem a hnusným šlechticem. Oba ti budou tvrdit, že jsou něco lepšího, a když je neposlechneš, pošlou na tebe pohůnky.", "angry")
             $ hayfa.say("Rozdíl je jen v tom, jestli má moc ten nejschopnější, nebo ten, kdo se správně narodí.")
             $ rauvin.say("Dohodli jsme se přece, že o tomhle srovnání se nebudeme bavit.", "angry")
-            if gender == "M":
-                $ hayfa.say("Jen jsem nechtěla, aby %(mcName)s od Soliana získal špatný dojem. Když už tomu tady skoro velím.")
-            else:
-                $ hayfa.say("Jen jsem nechtěla, aby %(mcName)s od Soliana získala špatný dojem. Když už tomu tady skoro velím.")
+            $ hayfa.say("Jen jsem nechtěla, aby %(mcName)s od Soliana získal[a] špatný dojem. Když už tomu tady skoro velím.")
             $ rauvin.say("Řekl jsem, že se o tom nebudeme dál bavit.", "angry")
             $ rauvin.say("%(mcName)s se nemůže účastnit rozhovoru a to od nás není slušné.")
             call askMc
@@ -55,10 +49,7 @@ label dinnerWithColleaguesOptions:
             hide mcPic
             $ colleaguesAsked.append("Rauvin's return")
             $ globalClues.append("Luisa arsonist")
-            if gender == "M":
-                "Rauvin viditelně znejistí způsobem, který jsi u něj ještě nepozoroval."
-            else:
-                "Rauvin viditelně znejistí způsobem, který jsi u něj ještě nepozorovala."
+            "Rauvin viditelně znejistí způsobem, který jsi u něj ještě nepozoroval[a]."
             $ rauvin.say("To se těžko vysvětluje. Asi se mi začalo stýskat.")
             $ rauvin.say("Pořád jsem tady měl sestru a ani jsem nevěděl, jestli je po požáru v pořádku.")
             $ hayfa.say("Jistě že byla. Přece nebude zakládat požár, co jí samotné ublíží.", "angry")
@@ -109,10 +100,7 @@ label dinnerWithColleaguesOptions:
             $ rauvin.say("Zkušený. Zažil tady dva předchozí velitele, dva převraty ve městě, několik povstání...")
             $ hayfa.say("To všechno od stolu.")
             $ hayfa.say("Na můj vkus Galar řeší víc zákony než lidi, ale aspoň sám nemá ambice. Na rozdíl od obou předchozích velitelů. Mohlo by to být horší.")
-            if gender == "M":
-                $ mc.say("Je normální, že jsem ho ještě nepotkal?")
-            else:
-                $ mc.say("Je normální, že jsem ho ještě nepotkala?")
+            $ mc.say("Je normální, že jsem ho ještě nepotkal[a]?")
             $ rauvin.say("Ano, velitel Galar celé dny řeší nutnou administrativu a na moc jiného mu nezbývá čas.")
             $ rauvin.say("Musíme vést podrobné záznamy o výběru cla u bran a o všem ostatním, co má hlídka na starosti. Především pro případ, že by vzniklo jakékoli podezření na nerovné jednání nebo zneužití moci. Na to jsou tady v Marendaru všichni citliví.")
         "Jaký trest toho zloděje čeká, až ho dopadneme?" if "thief punishment" not in colleaguesAsked:
@@ -132,10 +120,7 @@ label dinnerWithColleaguesOptions:
             menu:
                 "Stejně se mi nelíbí, jak moc záleží na něčím původu.":
                     hide mcPic
-                    if gender == "M":
-                        $ hayfa.say("To nejsi sám.")
-                    else:
-                        $ hayfa.say("To nejsi sama.")
+                    $ hayfa.say("To nejsi [sam].")
                 "To zkoumání důvodů se mi nezdá. Potom může někomu spousta věcí projít jen proto, že umí na soudce udělat nevinné oči.":
                     hide mcPic
                     $ hayfa.say("To i teď. A když někde soudí osobně místní šlechtic, tak obzvlášť.")
@@ -150,18 +135,13 @@ label askMc:
         $ mc.asked.append("origin")
         $ solian.say("Odkud vlastně jsi?")
         if origin == "born here":
-            if gender == "M":
-                $ mc.say("Narodil jsem se tady v Marendaru, ale chtěl jsem jít do učení, a ne do války. Tak jsem nakonec skončil až v sousedním hrabství.")
-                $ rauvin.say("V Eichenau? Tam jsem strávil dost času také. Kde přesně a co ses učil?")
-                $ mc.say("V Sonnenstrahlen, chtěl jsem být písař.")
-            else:
-                $ mc.say("Narodila jsem se tady v Marendaru, ale chtěla jsem jít do učení, a ne do války. Tak jsem nakonec skončila až v sousedním hrabství.")
-                $ rauvin.say("V Eichenau? Tam jsem strávil dost času také. Kde přesně a co ses učila?")
-                $ mc.say("V Sonnenstrahlen, chtěla jsem být písař.")
+            $ mc.say("Narodil[a] jsem se tady v Marendaru, ale chtěl[a] jsem jít do učení, a ne do války. Tak jsem nakonec skončil[a] až v sousedním hrabství.")
+            $ rauvin.say("V Eichenau? Tam jsem strávil dost času také. Kde přesně a co ses učil[a]?")
+            $ mc.say("V Sonnenstrahlen, chtěl[a] jsem být písař.")
             $ rauvin.say("Církevní? Myslel jsem, že v Sonnenstrahlen je hlavně velký chrám Heulwen.")
             $ mc.say("Spíš to je první město v Eichenau, kam se mi podařilo se dostat.")
         else:
-            $ mc.say("Z Hirschendorfu. Ještě pod vládou Anselma jsem se učil na písaře, to by znamenalo dobré místo v jeho správě. Ale úplně do nevyšlo.")
+            $ mc.say("Z Hirschendorfu. Ještě pod vládou Anselma jsem se učil[a] na písaře, to by znamenalo dobré místo v jeho správě. Ale úplně do nevyšlo.")
             $ rauvin.say("Myslíš toho žoldáka, který okupoval panství rodu de Périgny?")
             show mcPic at menuImage
             menu:
@@ -174,39 +154,21 @@ label askMc:
                     $ hayfa.say("Mohli by. Záleží jen na tom, pro co se jeden rozhodne a co mu za to stojí.")
                     $ hayfa.say("Nebyli to zase jen vesničani, kdo potom Anselma porazil?")
                     $ mc.say("Pokud vím, to proti němu bojoval mnohem silnější protivník než jen pár vesničanů. Ale jinak máš pravdu.")
-                "Až tak vysoko jsem se nikdy nedíval." if gender == "M":
+                "Až tak vysoko jsem se nikdy nedíval[a].":
                     hide mcPic
-                    $ mc.say("Chtěl jsem jenom slušný život.")
+                    $ mc.say("Chtěl[a] jsem jenom slušný život.")
                     $ solian.trust += 1
-                "Až tak vysoko jsem se nikdy nedívala." if gender == "F":
-                    hide mcPic
-                    $ mc.say("Chtěla jsem jenom slušný život.")
-                    $ solian.trust += 1
-            if gender == "M":
-                $ mc.say("Anselma potom smetlo povstání a já přišel o učitele i všechny vyhlídky.")
-                if origin == "family":
-                    $ mc.say("V Marendaru měl žít můj strýček, ale než jsem se sem dostal, musel prodat dílnu a odejít z města.")
-                else:
-                    $ mc.say("Tak jsem zkusil nejbližší město.")
+            $ mc.say("Anselma potom smetlo povstání a já při[sel] o učitele i všechny vyhlídky.")
+            if origin == "family":
+                $ mc.say("V Marendaru měl žít můj strýček, ale než jsem se sem dostal[a], musel prodat dílnu a odejít z města.")
             else:
-                $ mc.say("Anselma potom smetlo povstání a já přišla o učitele i všechny vyhlídky.")
-                if origin == "family":
-                    $ mc.say("V Marendaru měl žít můj strýček, ale než jsem se sem dostala, musel prodat dílnu a odejít z města.")
-                else:
-                    $ mc.say("Tak jsem zkusila nejbližší město.")
+                $ mc.say("Tak jsem zkusil[a] nejbližší město.")
         $ hayfa.say("Proč vlastně neděláš někde toho písaře?")
-        if gender == "M":
-            if origin == "born here":
-                $ mc.say("Protože nejsem plně vyučený. V Sonnenstrahlen jsem dělal spíš pomocníka a poslíčka a snažil se toho naučit co nejvíc, ale nikdo mi to nepotvrdí.")
-            else:
-                $ mc.say("Protože nejsem plně vyučený. U Anselma jsem dělal spíš pomocníka a poslíčka a snažil se toho naučit co nejvíc, ale nikdo mi to nepotvrdí.")
-            $ mc.say("Na nic jiného jsem neměl dost peněz. Možná jednou... jestli někdo bude chtít tak starého učedníka.")
+        if origin == "born here":
+            $ mc.say("Protože nejsem plně vyučen[y]. V Sonnenstrahlen jsem dělal[a] spíš pomocníka a poslíčka a snažil[a] se toho naučit co nejvíc, ale nikdo mi to nepotvrdí.")
         else:
-            if origin == "born here":
-                $ mc.say("Protože nejsem plně vyučená. V Sonnenstrahlen jsem dělala spíš pomocníka a poslíčka a snažila se toho naučit co nejvíc, ale nikdo mi to nepotvrdí.")
-            else:
-                $ mc.say("Protože nejsem plně vyučená. U Anselma jsem dělala spíš pomocníka a poslíčka a snažila se toho naučit co nejvíc, ale nikdo mi to nepotvrdí.")
-            $ mc.say("Na nic jiného jsem neměla dost peněz. Možná jednou... jestli někdo bude chtít tak starého učedníka.")
+            $ mc.say("Protože nejsem plně vyučen[y]. U Anselma jsem dělal[a] spíš pomocníka a poslíčka a snažil[a] se toho naučit co nejvíc, ale nikdo mi to nepotvrdí.")
+        $ mc.say("Na nic jiného jsem neměl[a] dost peněz. Možná jednou... jestli někdo bude chtít tak starého učedníka.")
         $ solian.say("Učení taky nikam nevede. Aspoň pokud nechceš zůstat jako věčný tovaryš bez naděje na cokoliv lepšího.", "angry")
 
     if "Heinrich" not in mc.asked:
@@ -265,13 +227,9 @@ label askMc:
                 $ hayfa.say("To se rozhodně o všech ostatních ševcích říct nedá. Těžko říct, jestli pro ně nemohl nic udělat, nebo je obětoval pro vlastní prospěch. To už se asi nedozvíme.")
                 show mcPic at menuImage
                 menu:
-                    "Mistr Heinrich by se rozhodně postavil za každého, kdo je v právu. Z těch dvou bych volil jeho." if gender == "M":
+                    "Mistr Heinrich by se rozhodně postavil za každého, kdo je v právu. Z těch dvou bych volil[a] jeho.":
                         hide mcPic
-                    "Mistr Heinrich by se rozhodně postavil za každého, kdo je v právu. Z těch dvou bych volila jeho." if gender == "F":
-                        hide mcPic
-                    "Mistr Heinrich by to svou vznětlivostí jen zhoršil pro všechny. Já bych vybral Rumelina." if gender == "M":
-                        hide mcPic
-                    "Mistr Heinrich by to svou vznětlivostí jen zhoršil pro všechny. Já bych vybrala Rumelina." if gender == "F":
+                    "Mistr Heinrich by to svou vznětlivostí jen zhoršil pro všechny. Já bych vybral[a] Rumelina.":
                         hide mcPic
                     "Jestli je jeden nebezpečně vznětlivý a druhému se nedá věřit, tak ševcům jejich výběr vůbec nezávidím.":
                         hide mcPic

@@ -69,10 +69,7 @@ label fireshow:
                             hide mcPic
                             $ hayfa.trust -= 3
                             $ mc.say("Vždyť bylo vidět, že těmi mávátky nic zapálit nemůže. Není důvod ji trestat.")
-                            if gender == "M":
-                                $ hayfa.say("Tys nezažil požár Marendaru. Já ano.", "angry")
-                            else:
-                                $ hayfa.say("Tys nezažila požár Marendaru. Já ano.", "angry")
+                            $ hayfa.say("Tys nezažil[a] požár Marendaru. Já ano.", "angry")
                             $ hayfa.say("Oheň na ulici je zakázaný z dobrého důvodu.", "angry")
                             "Hayfa smýkne dívkou a opět vyrazí na cestu."
                         "Samozřejmě, že ne!":
@@ -118,17 +115,14 @@ label fireshow:
             $ status.append("firefighter")
             "Než se stihneš pořádně rozhlédnout, někdo ti vrazí vědro s vodou a pošle tě k nejbližší studně."
             "Brzy zjistíš, že hašení probíhá důkladněji a ve větším počtu lidí, než by nejspíš bylo třeba. Vůz je od domů dostatečně daleko, a když nějaká jiskra náhodou přeskočí, vyhasne sama dřív, než ji někdo stihne zadusit."
-            scene bg cart
+            scene bg destroyed cart
             "Místní však nenechávají nic náhodě a hasí s nejvyšší pozorností a úsilím. I poté, co největší zášlehy plamenů pohasnou a na místě zůstanou jen dohořívající zbytky, nedopřeje si nikdo odpočinku."
             if ada.status == "grounded":
                 "Ačkoli dům mistra Heinricha je ve vedlejší ulici, a není tedy přímo ohrožený, zahlédneš několik známých tváří - Aachim, Rudi a Ferdi pomáhají utloukat odletující jiskry, Lotte nosí džbány s pivem hasícím mužům a sám Heinrich střídavě nosí těžká vědra s vodou a volá na ostatní, kde budou nejužitečnější."
             else:
                 "Ačkoli dům mistra Heinricha je ve vedlejší ulici, a není tedy přímo ohrožený, zahlédneš několik známých tváří - Aachim, Rudi a Ferdi pomáhají utloukat odletující jiskry, Ada a Lotte nosí džbány s pivem hasícím mužům a sám Heinrich střídavě nosí těžká vědra s vodou a volá na ostatní, kde budou nejužitečnější."
             "Při hašení nedochází k velkým zmatkům a zdá se, že to je z velké části i jeho zásluha."
-            if gender == "M":
-                "Z místa se rozejdete až poté, co přestane doutnat poslední uhlík. Jsi unavený a rozbolavělý, ale zároveň máš pocit, jako by mezi vámi během té doby vznikla jistá sounáležitost - jako bys získal právo obyvatele Marendaru nazývat svými sousedy."
-            else:
-                "Z místa se rozejdete až poté, co přestane doutnat poslední uhlík. Jsi unavená a rozbolavělá, ale zároveň máš pocit, jako by mezi vámi během té doby vznikla jistá sounáležitost - jako bys získala právo obyvatele Marendaru nazývat svými sousedy."
+            "Z místa se rozejdete až poté, co přestane doutnat poslední uhlík. Jsi unaven[y] a rozbolavěl[y], ale zároveň máš pocit, jako by mezi vámi během té doby vznikla jistá sounáležitost - jako bys získal[a] právo obyvatele Marendaru nazývat svými sousedy."
             if not achievement.has(achievement_name['firefighter'].name):
                 $ Achievement.add(achievement_name['firefighter'])
         "{i}(Jít spát){/i}":

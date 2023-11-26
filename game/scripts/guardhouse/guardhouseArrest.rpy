@@ -1,3 +1,4 @@
+
 label guardhouseArrestMenu:
     show mcPic at menuImage
     menu:
@@ -5,34 +6,22 @@ label guardhouseArrestMenu:
             hide mcPic
             $ rauvin.asked.append("arrest Kaspar for theft")
             $ mc.say("Mistr Kaspar se přiznal, že byl v Heinrichově dílně, a naznačil, že ho chtěl znemožnit na slavnostech.")
-            if gender == "M":
-                $ mc.say("Tvrdí, že tam střevíce nenašel, ale jsem přesvědčený, že lže a buď je zničil, nebo odnesl a někde schoval.")
-            else:
-                $ mc.say("Tvrdí, že tam střevíce nenašel, ale jsem přesvědčená, že lže a buď je zničil, nebo odnesl a někde schoval.")
+            $ mc.say("Tvrdí, že tam střevíce nenašel, ale jsem přesvědčen[y], že lže a buď je zničil, nebo odnesl a někde schoval.")
             $ rauvin.say("Máš na to důkazy?")
             $ mc.say("Mistr Kaspar se v podstatě přiznal…")
             $ rauvin.say("Potřebujeme buď plné přiznání nebo nezvratný důkaz.")
             $ rauvin.say("Neříkám, že nemáš pravdu, ale pokračuj v pátrání, dokud toho nebudeš mít v rukou víc.")
-            if gender == "M":
-                $ rauvin.say("A buď prosím opatrný, aby se to podezření nedostalo nejen ke Kasparovi, ale ani k mistru Heinrichovi. Nechceme vztahy v cechu zhoršit ještě víc.")
-            else:
-                $ rauvin.say("A buď prosím opatrná, aby se to podezření nedostalo nejen ke Kasparovi, ale ani k mistru Heinrichovi. Nechceme vztahy v cechu zhoršit ještě víc.")
+            $ rauvin.say("A buď prosím opatrn[y], aby se to podezření nedostalo nejen ke Kasparovi, ale ani k mistru Heinrichovi. Nechceme vztahy v cechu zhoršit ještě víc.")
         "Chci zatknout mistra Kaspara, za zničení Heinrichova výrobku." if "confession" in kaspar.asked and kaspar not in arrested and "burned evidence" in clues:
             hide mcPic
             $ rauvin.asked.append("arrest Kaspar for sabotage")
             $ mc.say("Mistr Kaspar se přiznal, že byl v Heinrichově dílně, a naznačil, že ho chtěl znemožnit na slavnostech.")
-            if gender == "M":
-                $ mc.say("Tvrdí, že tam střevíce nenašel, ale jsem přesvědčený, že lže. Navíc mám důkaz, že se někdo pokusil Heinrichovy střevíce spálit v jeho vlastním krbu.")
-            else:
-                $ mc.say("Tvrdí, že tam střevíce nenašel, ale jsem přesvědčená, že lže. Navíc mám důkaz, že se někdo pokusil Heinrichovy střevíce spálit v jeho vlastním krbu.")
+            $ mc.say("Tvrdí, že tam střevíce nenašel, ale jsem přesvědčen[y], že lže. Navíc mám důkaz, že se někdo pokusil Heinrichovy střevíce spálit v jeho vlastním krbu.")
             $ rauvin.say("Máš na to důkaz, který by ukazoval přímo na mistra Kaspara?")
             $ mc.say("V podstatě se přiznal.")
             $ rauvin.say("Potřebujeme buď plné přiznání nebo nezvratný důkaz.")
             $ rauvin.say("Neříkám, že nemáš pravdu, ale pokračuj v pátrání, dokud toho nebudeš mít v rukou víc.")
-            if gender == "M":
-                $ rauvin.say("A buď prosím opatrný, aby se to podezření nedostalo nejen ke Kasparovi, ale ani k mistru Heinrichovi. Nechceme vztahy v cechu zhoršit ještě víc.")
-            else:
-                $ rauvin.say("A buď prosím opatrná, aby se to podezření nedostalo nejen ke Kasparovi, ale ani k mistru Heinrichovi. Nechceme vztahy v cechu zhoršit ještě víc.")
+            $ rauvin.say("A buď prosím opatrn[y], aby se to podezření nedostalo nejen ke Kasparovi, ale ani k mistru Heinrichovi. Nechceme vztahy v cechu zhoršit ještě víc.")
         "Chci zatknout mistra Kaspara, za úmysl poškodit Heinrichův výrobek." if "confession" in kaspar.asked and kaspar not in arrested and "burned evidence" in clues:
             hide mcPic
             $ rauvin.asked.append("arrest Kaspar for intentions")
@@ -43,10 +32,7 @@ label guardhouseArrestMenu:
             $ mc.say("Tvrdí, že ty střevíce nenašel, a já mu spíš věřím.")
             $ rauvin.say("Nemyslím si, že je možné zatknout váženého mistra jen za úmysl něco udělat, i kdybychom pro ten úmysl měli naprosto nezvratný důkaz. A já si moc nedokážu představit, jak by takový důkaz mohl vypadat, Kaspar může kdykoli všechno popřít.")
             $ rauvin.say("Kdyby něco skutečně udělal, třeba se do té dílny vloupal nebo si na to ničení aspoň přinesl nějaké nástroje, mělo by to větší pádnost, ale ani potom by se tím soudce nemusel chtít vůbec zabývat.")
-            if gender == "M":
-                $ rauvin.say("Pokračuj tedy prosím v pátrání, jestli najdeš něco dalšího, co proti mistru Kasparovi směřuje. A buď prosím opatrný, aby se to podezření nedostalo nejen ke Kasparovi, ale ani k mistru Heinrichovi. Nechceme vztahy v cechu zhoršit ještě víc.")
-            else:
-                $ rauvin.say("Pokračuj tedy prosím v pátrání, jestli najdeš něco dalšího, co proti mistru Kasparovi směřuje. A buď prosím opatrná, aby se to podezření nedostalo nejen ke Kasparovi, ale ani k mistru Heinrichovi. Nechceme vztahy v cechu zhoršit ještě víc.")
+            $ rauvin.say("Pokračuj tedy prosím v pátrání, jestli najdeš něco dalšího, co proti mistru Kasparovi směřuje. A buď prosím opatrn[y], aby se to podezření nedostalo nejen ke Kasparovi, ale ani k mistru Heinrichovi. Nechceme vztahy v cechu zhoršit ještě víc.")
         "Chci zatknout mistra Rumelina, za podvod a snahu poškodit jiného mistra jeho cechu." if "confession" in rumelin.asked and rumelin not in arrested:
             hide mcPic
             $ rauvin.asked.append("arrest Rumelin")
@@ -62,19 +48,14 @@ label guardhouseArrestMenu:
             $ rauvin.say("A máš na to důkazy?")
             show mcPic at menuImage
             menu:
-                "Ne, ale jsem si jistý, že to udělal." if gender == "M":
-                    call arrestZeranStolenIdeaConvinced
-                "Ne, ale jsem si jistá, že to udělal." if gender == "F":
+                "Ne, ale jsem si jist[y], že to udělal.":
                     call arrestZeranStolenIdeaConvinced
                 "Ne, ale Njal požaduje, abychom někoho zatkli.":
                     hide mcPic
                 "Ve skutečnosti ne, možná to není dobrý nápad.":
                     hide mcPic
                     $ rauvin.say("Zatýkat někoho bez důkazů rozhodně dobrý nápad není.")
-                    if gender == "M":
-                        $ rauvin.say("Vrať se k pátrání a stav se, kdybys potřeboval s něčím pomoct.")
-                    else:
-                        $ rauvin.say("Vrať se k pátrání a stav se, kdybys potřeboval s něčím pomoct.")
+                    $ rauvin.say("Vrať se k pátrání a stav se, kdybys potřeboval[a] s něčím pomoct.")
     return
 
 label arrestZeranStolenIdeaConvinced:
@@ -83,10 +64,7 @@ label arrestZeranStolenIdeaConvinced:
     $ mc.cluesAgainst += 1
     "Rauvin se zamračí."
     $ rauvin.say("A to ti připadá jako dostatečný důvod?", "angry")
-    if gender == "M":
-        $ rauvin.say("Jestli nemáš důkazy, proč si jsi tak jistý?")
-    else:
-        $ rauvin.say("Jestli nemáš důkazy, proč si jsi tak jistá?")
+    $ rauvin.say("Jestli nemáš důkazy, proč si jsi tak jist[y]?")
     $ mc.say("Kdo jiný by to udělal? Zeran měl důvod si Heinricha chtít udobřit a neměl moc jiných možností, jak to udělat.")
     $ mc.say("Navíc jeho noví kamarádi mu něco podobného klidně mohli vnuknout.")
     $ rauvin.say("Jací noví kamarádi?")
@@ -127,10 +105,7 @@ label arrestZeranStolenIdeaConvinced:
                     hide mcPic
                     $ rauvin.say("Dobrá, v tom případě prosím vrať glejt a já ti popřeji hodně štěstí při hledání jiné práce.")
                     jump thrownOut
-    if gender == "M":
-        $ rauvin.say("Samozřejmě ale oceňuji, že ses nejdřív přišel zeptat, jestli zatknout Zerana je dobrý nápad. To je správný postup.")
-    else:
-        $ rauvin.say("Samozřejmě ale oceňuji, že ses nejdřív přišla zeptat, jestli zatknout Zerana je dobrý nápad. To je správný postup.")
+    $ rauvin.say("Samozřejmě ale oceňuji, že ses nejdřív při[sel] zeptat, jestli zatknout Zerana je dobrý nápad. To je správný postup.")
     $ rauvin.say("Potřebujeme ještě něco probrat, nebo se teď vrátíš k případu?")
     return
 
@@ -147,10 +122,7 @@ label arrestZeranStolenNjalInsists:
         "Proč ne? Tak se to přece dělá všude.":
             hide mcPic
             $ rauvin.say("Ale ne tady! A jestli to tak bylo vždycky, tak teď už ne. Teď platí rovnost před zákonem!", "angry")
-            if gender == "M":
-                $ mc.say("Tomu nerozumím. Všiml jsem si, jak moc je pro vás důležité dobré jméno u vážených osob. Už jenom ten rozdíl, jak jste hned první den mluvil se mnou a potom s mistrem Heinrichem, byl opravdu výrazný.")
-            else:
-                $ mc.say("Tomu nerozumím. Všimla jsem si, jak moc je pro vás důležité dobré jméno u vážených osob. Už jenom ten rozdíl, jak jste hned první den mluvil se mnou a potom s mistrem Heinrichem, byl opravdu výrazný.")
+            $ mc.say("Tomu nerozumím. Všiml[a] jsem si, jak moc je pro vás důležité dobré jméno u vážených osob. Už jenom ten rozdíl, jak jste hned první den mluvil se mnou a potom s mistrem Heinrichem, byl opravdu výrazný.")
             $ rauvin.say("Ctít něčí společenské postavení přece neznamená ohýbat kvůli nim zákony!", "angry")
 
             if any("careful of the rich" in str for str in status):
@@ -163,9 +135,7 @@ label arrestZeranStolenNjalInsists:
             $ rauvin.say("“Prosím, vrať svůj glejt.")
             $ rauvin.say("Zkus štěstí v nějaké práci, kde nerozhoduješ o ostatních.")
             jump thrownOut
-        "Chápu. Asi bych měl jít hledat důkazy." if gender == "M":
-            call goFindEvidence
-        "Chápu. Asi bych měla jít hledat důkazy." if gender == "F":
+        "Chápu. Asi bych měl[a] jít hledat důkazy.":
             call goFindEvidence
 
     return
@@ -173,10 +143,7 @@ label arrestZeranStolenNjalInsists:
 label goFindEvidence:
     hide mcPic
     if mc.cluesAgainst < 2:
-        if gender == "M":
-            $ rauvin.say("To bys měl. Opravdové důkazy, ne to, že někdo nebude nikomu chybět nebo se ti nelíbí.", "angry")
-        else:
-            $ rauvin.say("To bys měla. Opravdové důkazy, ne to, že někdo nebude nikomu chybět nebo se ti nelíbí.", "angry")
+        $ rauvin.say("To bys měl[a]. Opravdové důkazy, ne to, že někdo nebude nikomu chybět nebo se ti nelíbí.", "angry")
         $ rauvin.say("A prosím, přemýšlej příště nad tím, jestli tvůj návrh nemůže ublížit někomu, kdo je možná nevinný. My nejsme utlačovatelská hlídka. A nemůžeme si tu dovolit nikoho, kdo jako utlačovatel přemýšlí.")
     else:
         $ rauvin.say("Ve skutečnosti ne.", "angry")

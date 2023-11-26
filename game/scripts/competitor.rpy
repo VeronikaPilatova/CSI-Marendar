@@ -47,34 +47,20 @@ label kasparFirst:
             $ kaspar.asked.append("no drink")
             $ rauvin.trust += 1
             $ kaspar.say("To samozřejmě chápu. Obdivuhodná zodpovědnost, opravdu.", "happy")
-        "Dám si rád, díky. {i}(pořádně si přihnout){/i}" if gender == "M":
+        "Dám si rád[a], díky. {i}(pořádně si přihnout){/i}":
             hide mcPic
             $ kaspar.asked.append("drink accepted")
             $ rauvin.trust -= 1
             $ hayfa.trust -= 1
             $ kaspar.say("Je skvělé potkat hlídkaře, který není tak formální.", "happy")
-        "Dám si ráda, díky. {i}(pořádně si přihnout){/i}" if gender == "F":
-            hide mcPic
-            $ kaspar.asked.append("drink accepted")
-            $ rauvin.trust -= 1
-            $ hayfa.trust -= 1
-            $ kaspar.say("Je skvělé potkat hlídkaře, který není tak formální.", "happy")
-        "Dám si rád, díky. {i}(předstírat pití){/i}" if gender == "M":
-            hide mcPic
-            $ kaspar.asked.append("drink accepted")
-            $ hayfa.trust += 1
-            $ kaspar.say("Je skvělé potkat hlídkaře, který není tak formální.", "happy")
-        "Dám si ráda, díky. {i}(předstírat pití){/i}" if gender == "F":
+        "Dám si rád[a], díky. {i}(předstírat pití){/i}":
             hide mcPic
             $ kaspar.asked.append("drink accepted")
             $ hayfa.trust += 1
             $ kaspar.say("Je skvělé potkat hlídkaře, který není tak formální.", "happy")
     $ kaspar.say("S čím vám vlastně můžu pomoci?")
     $ mc.say("Vyšetřuji ztrátu mistrovského výrobku z dílny mistra Heinricha.")
-    if gender == "M":
-        $ kaspar.say("A jste si jistý, že se jedná o krádež?")
-    else:
-        $ kaspar.say("A jste si jistá, že se jedná o krádež?")
+    $ kaspar.say("A jste si jist[y], že se jedná o krádež?")
     $ kaspar.say("Nechci roznášet drby nebo pomlouvat kolegu, ale… Heinrich má ve zvyku každý dokončený výrobek opravdu důkladně zapít u Salmy. A pak se může stát ledacos…")
     $ mc.say("Co například?")
     $ kaspar.say("Například bych se nedivil, kdyby Heinrich vzal svůj vzácný výtvor s sebou do hospody a zapomněl na to. Nebo ho třeba omylem nebo ve vzteku zničil. Zeptejte se u Salmy. Nebo ještě lépe jeho ženy, jaký je s ním život, ona ho zná nejlépe.")
@@ -129,10 +115,7 @@ label kasparOptions:
             $ kaspar.say("Doma. Sám. Můj vlastní výrobek ještě není dokončený, tak jsem pracoval dlouho do noci.")
             $ mc.say("Může vám to někdo dosvědčit?")
             $ kaspar.say("Obávám se, že jen můj pes. Toho asi vyslechnout nemůžete, předpokládám?")
-            if gender == "M":
-                $ mc.say("Nemáte žádné učedníky? Čekal bych, že mistr vašeho postavení nějaké mít bude.")
-            else:
-                $ mc.say("Nemáte žádné učedníky? Čekala bych, že mistr vašeho postavení nějaké mít bude.")
+            $ mc.say("Nemáte žádné učedníky? Čekal[a] bych, že mistr vašeho postavení nějaké mít bude.")
             $ kaspar.say("Ne, je pro mne příjemnější mít tu na výpomoc jen tovaryše, kteří už něco umí. Ti u mne samozřejmě nebydlí.")
             $ kaspar.say("Můžu vám ukázat svůj vlastní nedokončený pár bot, pokud by to něco znamenalo.")
             $ mc.say("To asi nebude nutné.")
@@ -146,10 +129,7 @@ label kasparOptions:
             hide mcPic
             $ kaspar.asked.append("join forces")
             $ status.append("join forces survey")
-            if gender == "M":
-                $ kaspar.say("To by byl velmi nezvyklý počin. Odvážný, chce se mi říct. Muselo by to mít velmi dobré zdůvodnění, většinou přece mistři pracují sami. Ostatně, vy také očividně na vyšetřování vašeho případu stačíte sám a nechodíte ve dvojici.")
-            else:
-                $ kaspar.say("To by byl velmi nezvyklý počin. Odvážný, chce se mi říct. Muselo by to mít velmi dobré zdůvodnění, většinou přece mistři pracují sami. Ostatně, vy také očividně na vyšetřování vašeho případu stačíte sama a nechodíte ve dvojici.")
+            $ kaspar.say("To by byl velmi nezvyklý počin. Odvážný, chce se mi říct. Muselo by to mít velmi dobré zdůvodnění, většinou přece mistři pracují sami. Ostatně, vy také očividně na vyšetřování vašeho případu stačíte [sam] a nechodíte ve dvojici.")
             $ mc.say("A kdyby to dobré zdůvodnění mělo?")
             $ kaspar.say("Pak by to mohlo být vnímáno dobře, ale těžko soudit takto obecně.")
             $ mc.say("Co kdyby se jednalo například o spojení mistra Heinricha a mistra Njala?")
@@ -157,10 +137,7 @@ label kasparOptions:
             $ kaspar.say("Bylo by zřejmé, že ten opilec svoje vlastní dílo ztratil nebo zkazil, a tak se chytil jakékoli záchrany. Proč by mu pomáhal zrovna Njal, to nevím, ale vůbec bych se nedivil, kdyby na ten svátek prostě zapomněl. Všichni víme, že trpaslíci pořád jen vypráví o svých pradědech a na opravdové bohy si nevzpomenou.")
             $ kaspar.say("Rozhodně by se jim městské klepny smály ještě dlouho.")
             $ kaspar.say("Mají snad něco podobného v úmyslu?")
-            if gender == "M":
-                $ mc.say("Nevím, jestli to skutečně mají v úmyslu. Někdo podobný nápad zmínil a já chtěl zjistit od někoho znalého věci, co by to znamenalo.")
-            else:
-                $ mc.say("Nevím, jestli to skutečně mají v úmyslu. Někdo podobný nápad zmínil a já chtěla zjistit od někoho znalého věci, co by to znamenalo.")
+            $ mc.say("Nevím, jestli to skutečně mají v úmyslu. Někdo podobný nápad zmínil a já chtěl[a] zjistit od někoho znalého věci, co by to znamenalo.")
             $ kaspar.say("Jistě, rozumím. Jsem hlídce samozřejmě kdykoli k službám.")
         "Jste zatčen za krádež výrobku mistra Heinricha." (badge="handcuffs") if "confession" in kaspar.asked and kaspar not in arrested:
             hide mcPic
@@ -219,18 +196,11 @@ label kasparLostShoesInPub:
             $ kaspar.say("Samozřejmě, hlídka má mou plnou důvěru. Jen mám strach o pověst mistra Heinricha, slavnosti začínají už za čtyři dny.")
         "Večer?":
             hide mcPic
-            if gender == "M":
-                if "workshop unlocked" in clues:
-                    $ mc.say("Myslel jsem, že ke krádeži došlo někdy během noci, kdy byla dílna odemčená. Víte něco, co jste zatím neřekl?")
-                else:
-                    $ mc.say("Myslel jsem, že ke krádeži došlo někdy během noci. Víte něco, co jste zatím neřekl?")
-                $ kaspar.say("Určitě jste mluvil o večeru. Jak bych mohl vědět něco, co mi nikdo neřekl?")
+            if "workshop unlocked" in clues:
+                $ mc.say("Myslel[a] jsem, že ke krádeži došlo někdy během noci, kdy byla dílna odemčená. Víte něco, co jste zatím neřekl?")
             else:
-                if "workshop unlocked" in clues:
-                    $ mc.say("Myslela jsem, že ke krádeži došlo někdy během noci, kdy byla dílna odemčená. Víte něco, co jste zatím neřekl?")
-                else:
-                    $ mc.say("Myslela jsem, že ke krádeži došlo někdy během noci. Víte něco, co jste zatím neřekl?")
-                $ kaspar.say("Určitě jste mluvila o večeru. Jak bych mohl vědět něco, co mi nikdo neřekl?")
+                $ mc.say("Myslel[a] jsem, že ke krádeži došlo někdy během noci. Víte něco, co jste zatím neřekl?")
+            $ kaspar.say("Určitě jste mluvil[a] o večeru. Jak bych mohl vědět něco, co mi nikdo neřekl?")
             $ mc.say("Byl jste včera v Heinrichově dílně?")
             $ kaspar.say("A jak bych se do té dílny měl dostat? Ani jsem nevěděl, že Heinrich šel zase pít.")
     return

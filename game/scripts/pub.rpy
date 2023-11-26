@@ -162,11 +162,7 @@ label salmaOptions:
             $ salma.say("Z ševcovského cechu co si vzpomínám nikdo další. Jinak jsme měli dost plno, byla tu spousta obchodníků a řemeslníků. Pokud potřebujete jejich jména, můžu se pokusit dát dohromady seznam, ale nějakou dobu mi to zabere.")
             show mcPic at menuImage
             menu:
-                "Budu vám vděčný." if gender == "M":
-                    hide mcPic
-                    $ status.append("add waiting for suspect list")
-                    $ salma.say("Pošlu pak ten seznam na strážnici hlídky.")
-                "Budu vám vděčná." if gender == "F":
+                "Budu vám vděčn[y].":
                     hide mcPic
                     $ status.append("add waiting for suspect list")
                     $ salma.say("Pošlu pak ten seznam na strážnici hlídky.")
@@ -178,10 +174,7 @@ label salmaOptions:
             if "alcoholic" not in lisbeth.asked and "alcoholic" not in eckhard.asked:
                 $ victim.trust -= 1
             $ salma.say("Tady problémy nedělá, včerejší hádka byla spíš výjimka. Je to cenný zákazník, který mi přináší velmi dobré tržby. A už proto by nebylo slušné říkat cokoli dalšího.", "angry")
-            if gender == "M":
-                $ mc.say("Chápu. Rozhodně jsem nechtěl drby.")
-            else:
-                $ mc.say("Chápu. Rozhodně jsem nechtěla drby.")
+            $ mc.say("Chápu. Rozhodně jsem nechtěl[a] drby.")
         "Měl mistr Heinrich svůj výrobek s sebou?" if kaspar.alreadyMet == True and "lost shoes in pub" not in salma.asked:
             hide mcPic
             $ salma.asked.append("lost shoes in pub")
@@ -244,12 +237,8 @@ label leavingPub:
         $ salma.say("Pořád si nic nedáte?")
         call pubOrder
     elif "ordered drink" in status:
-        if gender == "M":
-            $ salma.say("Kdybyste chtěl dolít, stačí říct.")
-            $ mc.say("Děkuji, ale měl bych se vrátit k případu.")
-        else:
-            $ salma.say("Kdybyste chtěla dolít, stačí říct.")
-            $ mc.say("Děkuji, ale měla bych se vrátit k případu.")
+        $ salma.say("Kdybyste chtěl[a] dolít, stačí říct.")
+        $ mc.say("Děkuji, ale měl[a] bych se vrátit k případu.")
         $ salma.say("Na shledanou a stavte se někdy na večeři.")
         $ status.remove("ordered drink")
     elif "ordered dinner" in status:

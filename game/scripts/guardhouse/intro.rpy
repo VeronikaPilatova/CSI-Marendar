@@ -10,10 +10,7 @@ show bg door01
 "Otevře ti mladá žena v jednoduchém nebarveném oblečení. Z jejího vzhledu nelze vyčíst, zda je členkou hlídky, nebo obyčejnou chudší měšťankou - pouze odhaduješ, že když někdo s tesákem u pasu otevírá dveře strážnice, nejspíš do hlídky patří."
 "Žena si tě rychle přeměří pohledem. Promluví věcně a trochu úsečně, ale ne nepřátelsky."
 $ hayfa.say("Myslím, že se ještě neznáme. Jsem Hayfa. S čím může být hlídka nápomocná?")
-if gender == "M":
-    $ mc.say("Hledám práci. Totiž... slyšel jsem, že městská hlídka shání nové členy? Jmenuji se %(mcName)s.")
-else:
-    $ mc.say("Hledám práci. Totiž... slyšela jsem, že městská hlídka shání nové členy? Jmenuji se %(mcName)s.")
+$ mc.say("Hledám práci. Totiž... slyšel[a] jsem, že městská hlídka shání nové členy? Jmenuji se [mcName].")
 if mcName == "Luisa" or mcName.startswith("Luisa "):
     "Může to být světlem, ale na moment se ti zdá, že se Hayfin výraz změní na téměř nepřátelský. Pak ale mrkneš a je to pryč."
 $ hayfa.say("Je to tak, schopné nové členy potřebujeme. Teď obzvlášť, když za pár dní budou Einionovy slavnosti, na které přijede spousta kupců a kejklířů. Velitel bude nadšený. Pojď dál.")
@@ -21,32 +18,21 @@ $ hayfa.say("Je to tak, schopné nové členy potřebujeme. Teď obzvlášť, kd
 scene bg guardhouse
 $ hayfa.say("Ale řekni mi nejdřív něco o sobě. Jsi z Marendaru?")
 show mcPic at menuImage
-if gender == "M":
-    menu:
-        "Původem ano, ale dlouho jsem tu nebyl.":
-            $ origin = "born here"
-        "Mám tady rodinu.":
-            $ origin = "family"
-        "Přistěhoval jsem se teprve nedávno.":
-            $ origin = "newcomer"
-else:
-    menu:
-        "Původem ano, ale dlouho jsem tu nebyla.":
-            $ origin = "born here"
-        "Mám tady rodinu.":
-            $ origin = "family"
-        "Přistěhovala jsem se teprve nedávno.":
-            $ origin = "newcomer"
+menu:
+    "Původem ano, ale dlouho jsem tu nebyl[a].":
+        $ origin = "born here"
+    "Mám tady rodinu.":
+        $ origin = "family"
+    "Přistěhoval[a] jsem se teprve nedávno.":
+        $ origin = "newcomer"
+
 hide mcPic
 "Než stihne Hayfa položit další otázku, do místnosti vejde vysoký, velmi dobře oblečený muž s listem papíru v ruce. Tázavě se na Hayfu podívá."
-$ hayfa.say("Rauvine, máme tu nového rekruta. %(callingMc)s, tohle je Rauvin, velitelova pravá ruka.")
+$ hayfa.say("Rauvine, máme tu nového rekruta. [callingMc], tohle je Rauvin, velitelova pravá ruka.")
 $ rauvin.say("Svobodný pán Rauvin de Vito, těší mne, že tě poznávám.")
 "Hayfa se otočí zpět k tobě."
 $ hayfa.say("Co zajímavého umíš? Mluvit s lidmi? Všímat si věcí? Bojovat?")
-if gender == "M":
-    $ mc.say("Mám úhledný rukopis a výbornou paměť. Doufal jsem, že ze mě jednou bude písař, ale neměl jsem peníze na dokončení učení.")
-else:
-    $ mc.say("Mám úhledný rukopis a výbornou paměť. Doufala jsem, že ze mě jednou bude písař, ale neměla jsem peníze na dokončení učení.")
+$ mc.say("Mám úhledný rukopis a výbornou paměť. Doufal[a] jsem, že ze mě jednou bude písař, ale neměl[a] jsem peníze na dokončení učení.")
 $ mc.say("Kromě toho...")
 show mcPic at menuImage
 menu:
@@ -58,18 +44,11 @@ menu:
         $ skill = "diplomacy"
 hide mcPic
 "Hayfa a Rauvin se na sebe krátce podívají, pak obrátí pozornost zpět k tobě a krátce přikývnou."
-if gender == "M":
-    $ hayfa.say("Dobrá. Kde bydlíš a čím ses zatím živil?")
-else:
-    $ hayfa.say("Dobrá. Kde bydlíš a čím ses zatím živila?")
+$ hayfa.say("Dobrá. Kde bydlíš a čím ses zatím živil[a]?")
 $ mc.say("Bydlím na půdě u vdovy Gertrudy a živím se porůznu, čím se zrovna naskytne.")
 show mcPic at menuImage
 menu:
-    "Chtěl bych něco, kde můžu udělat něco dobrého." if gender == "M":
-        hide mcPic
-        $ personality.append("motivation: positive change")
-        $ rauvin.say("Toho se jistě dá dosáhnout i jinak. Co tě přimělo hledat štěstí právě v hlídce?")
-    "Chtěla bych něco, kde můžu udělat něco dobrého." if gender == "F":
+    "Chtěl[a] bych něco, kde můžu udělat něco dobrého.":
         hide mcPic
         $ personality.append("motivation: positive change")
         $ rauvin.say("Toho se jistě dá dosáhnout i jinak. Co tě přimělo hledat štěstí právě v hlídce?")
@@ -112,14 +91,9 @@ $ hayfa.say("Při jaké příležitosti jste to zmínil?")
 $ victim.say("Slavil jsem včera dokončení díla U Salmy a Rumelin tam zrovna popíjel. Slovo dalo slovo…")
 $ hayfa.say("A kolik dalších lidí vědělo i předtím, co vyrábíte? Učedníci, manželka, dodavatelé materiálu…?")
 $ victim.say("Ti všichni, samozřejmě. Tak vyšetříte to?", "angry")
-if gender == "M":
-    $ hayfa.say("Máte štěstí. Toto je %(mcName)s. Přicestoval zdaleka, aby marendarské hlídce pomohl chránit bezpečí ve městě, a má přesně ty zkušenosti, jaké si váš případ zaslouží.", "happy")
-    "Rauvin po Hayfě střelí pohledem."
-    $ rauvin.say("Bude se tomu věnovat osobně a zbavíme ho všech ostatních povinností, aby vyšetřování nic nepřekáželo. Jestli je vaše dílo ještě ve městě, najdeme ho.")
-else:
-    $ hayfa.say("Máte štěstí. Toto je %(mcName)s. Přicestovala zdaleka, aby marendarské hlídce pomohla chránit bezpečí ve městě, a má přesně ty zkušenosti, jaké si váš případ zaslouží.", "happy")
-    "Rauvin po Hayfě střelí pohledem."
-    $ rauvin.say("Bude se tomu věnovat osobně a zbavíme ji všech ostatních povinností, aby vyšetřování nic nepřekáželo. Jestli je vaše dílo ještě ve městě, najdeme ho.")
+$ hayfa.say("Máte štěstí. Toto je [mcName]. Přicestoval[a] zdaleka, aby marendarské hlídce pomohl[a] chránit bezpečí ve městě, a má přesně ty zkušenosti, jaké si váš případ zaslouží.", "happy")
+"Rauvin po Hayfě střelí pohledem."
+$ rauvin.say("Bude se tomu věnovat osobně a zbavíme [pronoun4] všech ostatních povinností, aby vyšetřování nic nepřekáželo. Jestli je vaše dílo ještě ve městě, najdeme ho.")
 "Hayfa se usměje a ukáže na jedny z dveří."
 $ hayfa.say("Dejte se rovnou do toho. Támhleta místnost je volná, tam můžete, mistře Heinrichu, našemu vyšetřovateli říct vše důležité.")
 
@@ -185,11 +159,7 @@ $ flag = ""
 $ victim.say("Tak kde začnete?")
 show mcPic at menuImage
 menu:
-    "Mohl bych vidět vaši dílnu?" if gender == "M":
-        hide mcPic
-        $ status.append("straight to workshop")
-        jump workshopController
-    "Mohla bych vidět vaši dílnu?" if gender == "F":
+    "Mohl[a] bych vidět vaši dílnu?":
         hide mcPic
         $ status.append("straight to workshop")
         jump workshopController

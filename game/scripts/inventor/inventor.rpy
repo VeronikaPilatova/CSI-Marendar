@@ -32,10 +32,7 @@ label njalOptions:
     call gerdOptionsRemainingCheck
     call njalOptionsRemainingCheck
     if njalOptionsRemaining == 0 and gerdOptionsRemaining == 0:
-        if gender == "M":
-            $ mc.say("To je všechno, na co jsem se chtěl zeptat. Děkuji za váš čas.")
-        else:
-            $ mc.say("To je všechno, na co jsem se chtěla zeptat. Děkuji za váš čas.")
+        $ mc.say("To je všechno, na co jsem se chtěl[a] zeptat. Děkuji za váš čas.")
         $ njal.say("Jsem rád, že jsem mohl všechno uvést na pravou míru.")
         return
 
@@ -100,10 +97,7 @@ label njalOptions:
             hide mcPic
             $ njal.asked.append("apprentices")
             $ njal.say("Ještě tu je Knut, ten se mnou přišel už z Altenbüren, ale teď je tam právě na návštěvě za rodinou.")
-            if gender == "M":
-                $ mc.say("Zvláštní, čekal bych, že bude chtít pracovat na svém vlastním výrobku.")
-            else:
-                $ mc.say("Zvláštní, čekala bych, že bude chtít pracovat na svém vlastním výrobku.")
+            $ mc.say("Zvláštní, čekal[a] bych, že bude chtít pracovat na svém vlastním výrobku.")
             $ njal.say("To já také, ale tvrdil, že je se svou prací spokojený, tak jsem mu nechtěl bránit jen proto, že má na víc. Rodina je koneckonců důležitá.")
         "Je pravda, že máte v poslední době potíže s nákupem materiálu?" if "less deals" in salma.asked and "less deals" not in njal.asked:
             hide mcPic
@@ -188,10 +182,7 @@ label njalOptions:
         "Eckhard byl zatčený za krádež vašeho střihu a čeká na soud." if "join forces njal pending" in status and eckhard in cells and "stolen idea" in eckhard.arrestReason:
             hide mcPic
             if "Zeran accused" in njal.asked:
-                if gender == "M":
-                    $ njal.say("Neříkal jste předtím, že Zeran...")
-                else:
-                    $ njal.say("Neříkala jste předtím, že Zeran...")
+                $ njal.say("Neříkal[a] jste předtím, že Zeran...")
                 $ njal.say("Ale samozřejmě to velmi rád slyším, už jsem nečekal, že se jakékoliv spravedlnosti dočkám.", "happy")
                 $ njal.say("Samozřejmě pokud nezklame soudce.")
             else:
@@ -207,10 +198,7 @@ label njalOptions:
         "Zeran byl zatčený za krádež vašeho střihu a čeká na soud." if "join forces njal pending" in status and zeran in cells and "stolen idea" in zeran.arrestReason:
             hide mcPic
             if "Eckhard accused" in njal.asked:
-                if gender == "M":
-                    $ njal.say("Neříkal jste předtím, že Eckhard...")
-                else:
-                    $ njal.say("Neříkala jste předtím, že Zeran...")
+                $ njal.say("Neříkal[a] jste předtím, že Eckhard...")
                 $ njal.say("Ale samozřejmě to velmi rád slyším, už jsem nečekal, že se jakékoliv spravedlnosti dočkám.", "happy")
                 $ njal.say("Samozřejmě pokud nezklame soudce.")
             else:
@@ -240,15 +228,11 @@ label njalOptions:
             hide mcPic
             " Njal kývne na chlapce, který se celou dobu držel kus stranou a snažil se na sebe neupozorňovat."
             jump gerdController
-        "To je všechno, na co jsem se chtěl zeptat. Děkuji za váš čas." if gender == "M":
+        "To je všechno, na co jsem se chtěl[a] zeptat. Děkuji za váš čas.":
             hide mcPic
             $ njal.say("Jsem rád, že jsem mohl všechno uvést na pravou míru.")
             if "less deals" in njal.asked:
                 $ njal.say("A jestli zjistíte víc o těch mých obchodech, rozhodně mě to zajímá.")
-            return
-        "To je všechno, na co jsem se chtěla zeptat. Děkuji za váš čas." if gender == "F":
-            hide mcPic
-            $ njal.say("Jsem rád, že jsem mohl všechno uvést na pravou míru.")
             return
     jump njalOptions
 
@@ -265,10 +249,7 @@ label leavingNjal:
 
     show mcPic at menuImage
     menu:
-        "Velmi rád." if gender == "M":
-            hide mcPic
-            call njalDinnerAccepted
-        "Velmi ráda." if gender == "F":
+        "Velmi rád[a].":
             hide mcPic
             call njalDinnerAccepted
         "Bohužel už jsem jedl." if any("dinner with" in str for str in dailyStatus) and gender == "M":
@@ -482,14 +463,10 @@ label traditions:
         $ mc.say("Omlouvám se, asi to vyznělo špatně.")
         show mcPic at menuImage
         menu:
-            "Jenom mě to překvapilo, trpasličí úctu k tradicím jsem vždycky obdivoval." if gender == "M":
+            "Jenom mě to překvapilo, trpasličí úctu k tradicím jsem vždycky obdivoval[a].":
                 hide mcPic
                 $ personality.append("traditionalist")
-                $ njal.say("Já myslím, že by se nic nemělo obdivovat nekriticky. Ale je možné, že zvenku trpasličí tradice působí jinak, než když v nich člověk přímo žije.")
-            "Jenom mě to překvapilo, trpasličí úctu k tradicím jsem vždycky obdivovala." if gender == "F":
-                hide mcPic
-                $ personality.append("traditionalist")
-                $ njal.say("Já myslím, že by se nic nemělo obdivovat nekriticky. Ale je možné, že zvenku trpasličí tradice působí jinak, než když v nich člověk přímo žije.")
+                $ njal.say("Já myslím, že by se nic nemělo obdivovat nekriticky. Ale je možné, že zvenku trpasličí tradice působí jinak, než když v nich někdo přímo žije.")
             "Také chci spíš hledat nové cesty než chodit po těch nejvyšlapanějších.":
                 hide mcPic
                 $ njal.trust += 2
@@ -521,10 +498,7 @@ label traditions:
                         $ personality.append("traditionalist")
                         $ njal.say("Každému co jeho jest, to říkám já. Kdyby to tak chápali všichni...")
                         "Mistr Njal mávne rukou."
-    if gender == "M":
-        $ njal.say("Ale určitě ses sem nepřišel bavit o tomhle. Můžu pomoct ještě s něčím?")
-    else:
-        $ njal.say("Ale určitě ses sem nepřišla bavit o tomhle. Můžu pomoct ještě s něčím?")
+    $ njal.say("Ale určitě ses sem nepři[sel] bavit o tomhle. Můžu pomoct ještě s něčím?")
     return
 
 label njalOptionsRemainingCheck:

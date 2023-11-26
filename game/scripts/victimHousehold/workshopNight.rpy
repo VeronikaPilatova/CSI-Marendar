@@ -13,10 +13,7 @@ label workshopNightIntro:
     "Když dojdeš k domu mistra Heinricha, v jedné z místností se ještě svítí. Čekání, až celý dům ztichne a usne, nejspíš netrvá déle než půl hodiny, ale na prázdné ulici ti to připadá až příliš dlouho."
     scene bg heinrich outside dark
     "Naposled se rozhlédneš po okolních domech a neubráníš se krátké motlitbě, aby se zrovna nikdo nedíval z okna. Pak přejdeš ke dveřím do dílny a otočíš klíčem."
-    if gender == "M":
-        "Dveře otevřou, tišeji, než ses bál, a ty vklouzneš dovnitř."
-    else:
-        "Dveře otevřou, tišeji, než ses bála, a ty vklouzneš dovnitř."
+    "Dveře otevřou, tišeji, než ses bál[a], a ty vklouzneš dovnitř."
     scene bg workshop
     "Tvá lampa ozáří police, které sahají až téměř ke stropu. V nich jsou narovnané boty všech druhů a velikostí v různém stavu dokončení a pod nimi dřevěná kopyta různých tvarů."
     "U jedné stěny stojí stolek se dvěma zásuvkami plný všemožných nástrojů, vedle něj je trojnohé sedátko a o kus dál směrem ke dveřím zvláštní stolice s dřevěnými čelistmi na jednom konci."
@@ -39,10 +36,7 @@ label workshopNightOptions:
             $ actionsTaken += 1
             "Přejedeš pohledem po ševcovských nástrojích vyskládaných na stole, ale pak vytáhneš svůj vlastní nůž, od kterého přesně víš, co čekat."
             "Křupnutí, které se ozve, tě přiměje ztuhnout a chvíli nervózně čekat spuštění poplachu. Dům ale zůstává tichý a klidný."
-            if gender == "M":
-                "Zásuvka je plná papírů. Část z nich je zřejmě obchodní korespondence, v části po chvíli rozpoznáš zápisky o přesných mírách různých zákazníků. Nečekal bys, kolik lidí má každou nohu jinak velkou nebo potřebuje jiné zvláštní úpravy."
-            else:
-                "Zásuvka je plná papírů. Část z nich je zřejmě obchodní korespondence, v části po chvíli rozpoznáš zápisky o přesných mírách různých zákazníků. Nečekala bys, kolik lidí má každou nohu jinak velkou nebo potřebuje jiné zvláštní úpravy."
+            "Zásuvka je plná papírů. Část z nich je zřejmě obchodní korespondence, v části po chvíli rozpoznáš zápisky o přesných mírách různých zákazníků. Nečekal[a] bys, kolik lidí má každou nohu jinak velkou nebo potřebuje jiné zvláštní úpravy."
         "{i}(Opsat si míry a zvláštnosti nohou měšťanů){/i}" if "table forced" in workshop.checked and "notes taken" not in workshop.checked:
             $ workshop.checked.append("notes taken")
             $ actionsTaken += 1
@@ -68,7 +62,12 @@ label workshopNightOptions:
             call loveLetters
             if not achievement.has(achievement_name['burglar'].name):
                 $ Achievement.add(achievement_name['burglar'])
+            $ status.append("letters for Ada seen")
+            label loveLettersBurglaryMenu:
             menu:
+                "{i}(Přečíst si dopisy znovu){/i}":
+                    call loveLetters
+                    jump loveLettersBurglaryMenu
                 "{i}(Vzít s sebou jako důkaz všechny){/i}":
                     "Schováš si celý baliček do taštičky na opasku v přesvědčení, že nikomu nebude chybět."
                     $ status.append("all love letters kept")
@@ -77,7 +76,6 @@ label workshopNightOptions:
                     $ status.append("one love letter kept")
                 "{i}(Vrátit dopisy zpět do účetní knihy){/i}":
                     "Pečlivě všechno vrátíš zpět na původní místo."
-            $ status.append("letters for Ada seen")
         "{i}(Prohlédnout si Heinrichovy nástroje){/i}" if "tools" in workshop.checked and "tools touched" not in workshop.checked:
             $ workshop.checked.append("tools touched")
             $ actionsTaken += 1
@@ -104,15 +102,9 @@ label workshopNightIntruder:
         lastAction = workshop.checked[-1]
 
     if lastAction == "rubbish":
-        if gender == "M":
-            "Dveře ven z dílny máš na dosah, nemělo by tedy být těžké vyklouznout ven. Vzpomínáš si také, že pár kroků od tebe je dřevěná lavice, za kterou by ses snad dokázal schovat."
-        else:
-            "Dveře ven z dílny máš na dosah, nemělo by tedy být těžké vyklouznout ven. Vzpomínáš si také, že pár kroků od tebe je dřevěná lavice, za kterou by ses snad dokázala schovat."
+        "Dveře ven z dílny máš na dosah, nemělo by tedy být těžké vyklouznout ven. Vzpomínáš si také, že pár kroků od tebe je dřevěná lavice, za kterou by ses snad dokázal[a] schovat."
     else:
-        if gender == "M":
-            "Ke dveřím je to jen několik kroků, které ale v tmavé dílně plné náčiní nemusí být snadné udělat rychle a tiše. Kousek od sebe potom máš koš vrchovatě plný nejrůznějších kůži, za který by ses snad dokázal schovat."
-        else:
-            "Ke dveřím je to jen několik kroků, které ale v tmavé dílně plné náčiní nemusí být snadné udělat rychle a tiše. Kousek od sebe potom máš koš vrchovatě plný nejrůznějších kůži, za který by ses snad dokázala schovat."
+        "Ke dveřím je to jen několik kroků, které ale v tmavé dílně plné náčiní nemusí být snadné udělat rychle a tiše. Kousek od sebe potom máš koš vrchovatě plný nejrůznějších kůži, za který by ses snad dokázal[a] schovat."
 
     menu:
         "{i}(Schovat se){/i}":
@@ -122,40 +114,27 @@ label workshopNightIntruder:
             if "rubbish" in workshop.checked:
                 "Právě tu, která tě před chvílí zaujala."
             elif "WIP shoes seen" in status:
-                if gender == "M":
-                    "Tvar té boty ti připadá povědomý a po chvíli přemýšlení si vzpomeneš, kde jsi takovou viděl naposledy. Ta Aachimova má sice jinou barvu a je mnohem méně precizní, ale tvarem se nápadně podobá tomu, na čem pracuje mistr Njal."
-                else:
-                    "Tvar té boty ti připadá povědomý a po chvíli přemýšlení si vzpomeneš, kde jsi takovou viděla naposledy. Ta Aachimova má sice jinou barvu a je mnohem méně precizní, ale tvarem se nápadně podobá tomu, na čem pracuje mistr Njal."
+                "Tvar té boty ti připadá povědomý a po chvíli přemýšlení si vzpomeneš, kde jsi takovou viděl[a] naposledy. Ta Aachimova má sice jinou barvu a je mnohem méně precizní, ale tvarem se nápadně podobá tomu, na čem pracuje mistr Njal."
             menu:
                 "{i}(Promluvit si s Aachimem){/i}":
                     "Pomalu vylezeš z úkrytu."
                     "Při prvním zvuku z tvé strany sebou Aachim trhne a chvíli se zřejmě rozhoduje mezi útěkem a spuštěním poplachu."
                     jump workshopNightMeetingAachim
                 "{i}(Čekat na příležitost zmizet){/i}":
-                    if gender == "M":
-                        "Nějakou dobu pozoruješ Aachima při práci a téměř nedýcháš, aby ses náhodou neprozradil."
-                    else:
-                        "Nějakou dobu pozoruješ Aachima při práci a téměř nedýcháš, aby ses náhodou neprozradila."
+                    "Nějakou dobu pozoruješ Aachima při práci a téměř nedýcháš, aby ses náhodou neprozradil[a]."
                     "Aachim chvíli sešívá, pak zamumlá nadávku a část čerstvých stehů zas vytáhne. Přisune si lampu o něco blíž a pokračuje v práci. To se ještě několikrát opakuje."
                     "Už skoro nedoufáš, že Aachim vůbec někdy odejde, když se konečně zvedne a zamíří ke dveřím do domu. Rozdělanou botu nechá na místě."
                     "Na nic nečekáš, tiše vyklouzneš z dílny a zamkneš za sebou vchodové dveře. Pak zmizíš z místa tak rychlým krokem, jak se jen odvažuješ."
                     return
         "{i}(Utéct ven z dílny){/i}":
             if lastAction == "rubbish":
-                if gender == "M":
-                    "Vrhneš se ke dveřím, které máš naštěstí téměř za zády. Nahmatáš kliku, pootevřeš je na tak velkou skulinu, aby ses mohl protáhnout, a vyklouzneš ven."
-                else:
-                    "Vrhneš se ke dveřím, které máš naštěstí téměř za zády. Nahmatáš kliku, pootevřeš je na tak velkou skulinu, aby ses mohla protáhnout, a vyklouzneš ven."
+                "Vrhneš se ke dveřím, které máš naštěstí téměř za zády. Nahmatáš kliku, pootevřeš je na tak velkou skulinu, aby ses mohl[a] protáhnout, a vyklouzneš ven."
                 scene bg heinrich outside dark
                 "Zmizíš z místa tak rychlým krokem, jak se jen odvažuješ."
                 return
             else:
-                if gender == "M":
-                    "Vrhneš se ke dveřím. Sotva ale uděláš dva kroky a vrazíš do nějakého ostrého kusu dřeva ve výšce svého boku. Kousneš se do rtu, abys zastavil nadávku, ale pak se celá ta dřevěná věc překotí s rachotem, který by tvé klení stejně přehlušil."
-                    "V zápětí se z domu začnou ozývat nové zvuky: rozespalé klení mistra Heinricha, poplašené hlasy učedníků a šramot ještě z dalších míst. Kroky, před kterými jsi předtím prchal, se rychle a ostře ozvou naposled a vzápětí do dílny vrazí Aachim s lampou v ruce."
-                else:
-                    "Vrhneš se ke dveřím. Sotva ale uděláš dva kroky a vrazíš do nějakého ostrého kusu dřeva ve výšce svého boku. Kousneš se do rtu, abys zastavila nadávku, ale pak se celá ta dřevěná věc překotí s rachotem, který by tvé klení stejně přehlušil."
-                    "V zápětí se z domu začnou ozývat nové zvuky: rozespalé klení mistra Heinricha, poplašené hlasy učedníků a šramot ještě z dalších míst. Kroky, před kterými jsi předtím prchala, se rychle a ostře ozvou naposled a vzápětí do dílny vrazí Aachim s lampou v ruce."
+                "Vrhneš se ke dveřím. Sotva ale uděláš dva kroky a vrazíš do nějakého ostrého kusu dřeva ve výšce svého boku. Kousneš se do rtu, abys zastavil[a] nadávku, ale pak se celá ta dřevěná věc překotí s rachotem, který by tvé klení stejně přehlušil."
+                "V zápětí se z domu začnou ozývat nové zvuky: rozespalé klení mistra Heinricha, poplašené hlasy učedníků a šramot ještě z dalších míst. Kroky, před kterými jsi předtím prchal[a], se rychle a ostře ozvou naposled a vzápětí do dílny vrazí Aachim s lampou v ruce."
                 jump workshopNightAlarm
         "{i}(Promluvit si s příchozím){/i}":
             "Zůstaneš stát na místě a čekáš ten nekonečně dlouhý okamžik, než se pootevřou dveře vedoucí z domu a do dílny vklouzne Aachim s lampou v ruce."
@@ -178,51 +157,29 @@ label workshopNightAlarm:
             "Vrhneš se na Aachima a ten se sotva stihne připravit k obraně."
             if skill == "combat":
                 "Brzy zjistíš, že na rozdíl od tebe se tvůj soupeř moc neumí prát. Snadno ho strhneš pod sebe, uštědříš mu několik tvrdých ran a zaklekneš ho tak, aby nemohl uniknout."
-                if gender == "M":
-                    "Než ale stihneš udělat cokoli dalšího, vběhne do dílny mistr Heinrich a okamžitě se vrhne synovi na pomoc. Oproti Aachimovi je větší a nerozpakuje se ti ublížit a ty brzy zjistíš, že ti je vyrovnaným soupeřem. Když potom do dílny dorazí i zbylí dva učedníci, společnými silami tě přemůžou a ty krátce poté skončíš pevně svázaný."
-                else:
-                    "Než ale stihneš udělat cokoli dalšího, vběhne do dílny mistr Heinrich a okamžitě se vrhne synovi na pomoc. Oproti Aachimovi je větší a nerozpakuje se ti ublížit a ty brzy zjistíš, že ti je vyrovnaným soupeřem. Když potom do dílny dorazí i zbylí dva učedníci, společnými silami tě přemůžou a ty krátce poté skončíš pevně svázaná."
+                "Než ale stihneš udělat cokoli dalšího, vběhne do dílny mistr Heinrich a okamžitě se vrhne synovi na pomoc. Oproti Aachimovi je větší a nerozpakuje se ti ublížit a ty brzy zjistíš, že ti je vyrovnaným soupeřem. Když potom do dílny dorazí i zbylí dva učedníci, společnými silami tě přemůžou a ty krátce poté skončíš pevně svázan[y]."
             else:
                 "Nepovažuješ se zrovna za rváče, brzy ale zjistíš, že tvůj soupeř se moc neumí prát. Podaří se ti ho dostat na zem a zakleknout ho tak, aby pro něj bylo těžké uniknout."
-                if gender == "M":
-                    "Než ale stihneš udělat cokoli dalšího, vběhne do dílny mistr Heinrich a okamžitě se vrhne synovi na pomoc. Oproti Aachimovi je větší a nerozpakuje se ti ublížit a ty brzy zjistíš, že zápas s ním je nad tvé síly. Když potom do dílny dorazí i zbylí dva učedníci, snadno tě společnými silami udrží na zemi a ty brzy skončíš pevně svázaný."
-                else:
-                    "Než ale stihneš udělat cokoli dalšího, vběhne do dílny mistr Heinrich a okamžitě se vrhne synovi na pomoc. Oproti Aachimovi je větší a nerozpakuje se ti ublížit a ty brzy zjistíš, že zápas s ním je nad tvé síly. Když potom do dílny dorazí i zbylí dva učedníci, snadno tě společnými silami udrží na zemi a ty brzy skončíš pevně svázaná."
+                "Než ale stihneš udělat cokoli dalšího, vběhne do dílny mistr Heinrich a okamžitě se vrhne synovi na pomoc. Oproti Aachimovi je větší a nerozpakuje se ti ublížit a ty brzy zjistíš, že zápas s ním je nad tvé síly. Když potom do dílny dorazí i zbylí dva učedníci, snadno tě společnými silami udrží na zemi a ty brzy skončíš pevně svázan[y]."
             $ mc.imageParameter = "beaten"
             if not achievement.has(achievement_name['fistfight'].name):
                 $ Achievement.add(achievement_name['fistfight'])
             "Až poté mistr Heinrich zvedne Aachimovu lampu a pořádně se na tebe podívá."
-            if gender == "M":
-                $ victim.say("Ty! Říkal jsi, že jsi z hlídky!", "furious")
-            else:
-                $ victim.say("Ty! Říkala jsi, že jsi z hlídky!", "furious")
+            $ victim.say("Ty! Říkal[a] jsi, že jsi z hlídky!", "furious")
             $ mc.say("Já...")
             "Tvou odpověď přeruší tvrdý dopad mistrovy pěsti do tvé tváře."
-            if gender == "M":
-                $ victim.say("Tohle si s nimi vyřídím. Hlídejte ho!", "furious")
-            else:
-                $ victim.say("Tohle si s nimi vyřídím. Hlídejte ji!", "furious")
+            $ victim.say("Tohle si s nimi vyřídím. Hlídejte [pronoun4]!", "furious")
             jump workshopNightArrest
         "{i}(Zůstat stát){/i}":
-            if gender == "M":
-                "Sebevědomě zůstaneš stát na místě, přesvědčený, že až ostatní členové domácnosti dorazí, dokážeš vše vysvětlit."
-            else:
-                "Sebevědomě zůstaneš stát na místě, přesvědčená, že až ostatní členové domácnosti dorazí, dokážeš vše vysvětlit."
+            "Sebevědomě zůstaneš stát na místě, přesvědčen[y], že až ostatní členové domácnosti dorazí, dokážeš vše vysvětlit."
             "Netrvá dlouho a do dílny skutečně vrazí mistr Heinrich."
             $ victim.say("Ty! Co ty tady děláš?", "furious")
             $ mc.say("Pátrám po dalších stopách.")
-            if gender == "M":
-                $ victim.say("Takhle v noci? Tomu tak věřím. Aachime, pomož mi s ním!", "furious")
-                "Mistr Heinrich se několika rychlými kroky přesune k tobě, pevně tě chytí za nadloktí a škubne tebou, aby tě vyvedl z rovnováhy. Zpočátku se dokážeš bránit, do zápasu se ale vloží i Aachim a brzy jim přijdou na pomoc i zbylí dva učedníci a ty brzy skončíš pevně svázaný na podlaze dílny."
-            else:
-                $ victim.say("Takhle v noci? Tomu tak věřím. Aachime, pomož mi s ní!", "furious")
-                "Mistr Heinrich se několika rychlými kroky přesune k tobě, pevně tě chytí za nadloktí a škubne tebou, aby tě vyvedl z rovnováhy. Zpočátku se dokážeš bránit, do zápasu se ale vloží i Aachim a brzy jim přijdou na pomoc i zbylí dva učedníci a ty brzy skončíš pevně svázaná na podlaze dílny."
+            $ victim.say("Takhle v noci? Tomu tak věřím. Aachime, pomož mi s [pronoun7]!", "furious")
+            "Mistr Heinrich se několika rychlými kroky přesune k tobě, pevně tě chytí za nadloktí a škubne tebou, aby tě vyvedl z rovnováhy. Zpočátku se dokážeš bránit, do zápasu se ale vloží i Aachim a brzy jim přijdou na pomoc i zbylí dva učedníci a ty brzy skončíš pevně svázan[y] na podlaze dílny."
             "Když znovu pohlédneš do mistrovy tváře, zjistíš, že jeho vztek nijak neustoupil. "
             $ victim.say("A oni tvrdili, že mi pomůžeš. Že prý vše skvěle vyšetříš a nemám se ničeho obávat. To si s nimi vyřídím.", "furious")
-            if gender == "M":
-                $ victim.say("Hlídejte ho!", "furious")
-            else:
-                $ victim.say("Hlídejte ji!", "furious")
+            $ victim.say("Hlídejte [pronoun4]!", "furious")
             jump workshopNightArrest
     return
 
@@ -235,25 +192,15 @@ label workshopNightArrest:
         "Jediný z nich, v kom vzbudíš větší zájem, je Ada, která k tobě přejde a chvíli si tě měří nepřátelským pohledem. Zdá se, že váhá, jestli se do tebe pustit slovy, nebo jestli tě rovnou nakopnout."
         "Nakonec ti pouze věnuje opovržlivý pohled a beze slova opět odejde."
     if son.imageParameter == "beaten":
-        if gender == "M":
-            "Aachim se později nakrátko vzdálí, aby si ošetřil rány, které jsi mu během zápasu uštědřil, a opět se vrátí."
-        else:
-            "Aachim se později nakrátko vzdálí, aby si ošetřil rány, které jsi mu během zápasu uštědřila, a opět se vrátí."
+        "Aachim se později nakrátko vzdálí, aby si ošetřil rány, které jsi mu během zápasu uštědřil[a], a opět se vrátí."
     "Jinak okamžiky ubíhají v tichu a klidu. Učedníci zhasnou svítilnu a dílna zůstane ponořená do téměř úplné tmy, se kterou zápasí jen slabé světlo hvězd a pouličních lamp pronikající oknem, které předtím otevřeli."
     "Potom se zvenčí ozve dvojice odhodlaných kroků a dveře se rozrazí."
-    if gender == "M":
-        $ victim.say("Tak tady ho máte. A já doufám, že už ho uvidím jenom dvakrát, jednou u soudu a podruhé na popravišti.", "angry")
-    else:
-        $ victim.say("Tak tady ji máte. A já doufám, že už ji uvidím jenom dvakrát, jednou u soudu a podruhé na popravišti.", "angry")
+    $ victim.say("Tak tady [pronoun4] máte. A já doufám, že už [pronoun4] uvidím jenom dvakrát, jednou u soudu a podruhé na popravišti.", "angry")
     $ rauvin.say("Nejdřív všechno musíme prošetřit.")
     $ victim.say("Co prosím vás chcete prošetřovat? Chytili jsme zloděje přímo v mé dílně? Nechcete snad říct, že hlídka se teď vloupává slušným lidem do domů?", "furious")
-    $ rauvin.say("Ne, to rozhodně ne. %(mcName)s tady je bez mého vědomí a být tady nemá.")
-    if gender == "M":
-        $ rauvin.say("Pomožte mi s ním, ať to máme za sebou a můžeme jít spát.", "sad")
-        $ victim.say("S radostí. Stejně neusnu, dokud ho neuvidím bezpečně pod zámkem.", "angry")
-    else:
-        $ rauvin.say("Pomožte mi s ní, ať to máme za sebou a můžeme jít spát.", "sad")
-        $ victim.say("S radostí. Stejně neusnu, dokud ji neuvidím bezpečně pod zámkem.", "angry")
+    $ rauvin.say("Ne, to rozhodně ne. [mcName] tady je bez mého vědomí a být tady nemá.")
+    $ rauvin.say("Pomožte mi s [pronoun7], ať to máme za sebou a můžeme jít spát.", "sad")
+    $ victim.say("S radostí. Stejně neusnu, dokud [pronoun4] neuvidím bezpečně pod zámkem.", "angry")
     "Oba muži tě chytí každý z jedné strany, společně tě vytáhnou na nohy a začnou tě vést směrem ke dveřím. Rauvin ti připadá bledší než obvykle, ale možná to je jen světlem nebo tím, že musel vstát uprostřed noci."
     scene bg street05 dark
     "Během cesty sotva padne pár slov. Mistr Heinrich je celou dobu o půl kroku napřed a netrpělivě tě táhne kupředu. Rauvin tě drží o poznání méně pevně - skoro ti připadá, že kdyby tě vedl sám, byla by naděje na útěk."
@@ -287,10 +234,7 @@ label workshopNightMeetingAachim:
     # trust high enough for conversation
     else:
         "Pak si tě lépe prohlédne a trochu se uklidní."
-        if gender == "M":
-            $ son.say("Co tady... jak jste se sem vůbec dostal?")
-        else:
-            $ son.say("Co tady... jak jste se sem vůbec dostala?")
+        $ son.say("Co tady... jak jste se sem vůbec dostal[a]?")
         $ status.append("workshop night conversation start")
         label workshopNightAachimMeetingMenu:
         show mcPic at menuImage
@@ -342,10 +286,7 @@ label workshopNightMeetingAachim:
                     "Nikdo jiný se ho nezastane.":
                         hide mcPic
                         $ son.trust -= 1
-                        if gender == "M":
-                            $ son.say("A zkoušel jste se zamyslet nad tím, proč? Protože pak by vám bylo jasné, že ten had si žádné zastání nezaslouží.", "angry")
-                        else:
-                            $ son.say("A zkoušela jste se zamyslet nad tím, proč? Protože pak by vám bylo jasné, že ten had si žádné zastání nezaslouží.", "angry")
+                        $ son.say("A zkoušel[a] jste se zamyslet nad tím, proč? Protože pak by vám bylo jasné, že ten had si žádné zastání nezaslouží.", "angry")
                         $ son.say("O vlastní rodinu přišel, a tak se pokusil procpat do té naší. A zneužil k tomu naivní holku.", "angry")
                         jump workshopNightAachimNotConvinced
                     "Šlo to tehdy nějak moc rychle.":
@@ -373,10 +314,7 @@ label workshopNightMeetingAachim:
                         $ mc.say("Nebo které si sám neuvědomuje.")
                         $ son.say("Takoví možná nějací jsou, ale jak to chcete zjistit tady? To se radši zeptejte Salmy nebo Nirevie.")
                         $ mc.say("Cechmistrovi s ním mají spory, nemuseli by být upřímní, když jde o něj. A Salma nemůže vědět všechno.")
-                        if gender == "M":
-                            $ mc.say("Chtěl jsem jen krátce probrat účetní knihy, obchodní dopisy a jiné papíry, jestli nenarazím na něco podezřelého.")
-                        else:
-                            $ mc.say("Chtěla jsem jen krátce probrat účetní knihy, obchodní dopisy a jiné papíry, jestli nenarazím na něco podezřelého.")
+                        $ mc.say("Chtěl[a] jsem jen krátce probrat účetní knihy, obchodní dopisy a jiné papíry, jestli nenarazím na něco podezřelého.")
                         $ son.say("No dobře, to možná dává smysl... ale stejně se mi nelíbí představa, že by vás tu někdo viděl.")
                         jump workshopNightAachimConversation
                     "Napadlo mě, jestli si sem náhodou nevodí společnost.":
@@ -399,29 +337,19 @@ label workshopNightMeetingAachim:
             jump workshopNightAachimMeetingMenu
         else:
             label workshopNightAachimNotConvinced:
-            if gender == "M":
-                $ son.say("A vůbec, proč se tady s vámi bavím. Měl byste vypadnout.", "angry")
-            else:
-                $ son.say("A vůbec, proč se tady s vámi bavím. Měla byste vypadnout.", "angry")
-                "Aachim se významně podívá na dveře a pak zpět na tebe."
+            $ son.say("A vůbec, proč se tady s vámi bavím. Měl[a] byste vypadnout.", "angry")
+            "Aachim se významně podívá na dveře a pak zpět na tebe."
             label workshopNightAachimNotConvincedMenu:
             show mcPic at menuImage
             menu:
-                "Ale neřekneš nikomu, že jsem tu byl?" if "don't tell" not in son.asked and gender == "M":
-                    hide mcPic
-                    $ son.asked.append("don't tell")
-                    $ son.say("Když zmizíš rychle, tak ne.", "angry")
-                "Ale neřekneš nikomu, že jsem tu byla?" if "don't tell" not in son.asked and gender == "F":
+                "Ale neřekneš nikomu, že jsem tu byl[a]?" if "don't tell" not in son.asked:
                     hide mcPic
                     $ son.asked.append("don't tell")
                     $ son.say("Když zmizíš rychle, tak ne.", "angry")
                 "Potřebuju už jenom chvíli." if "just a moment" not in son.asked:
                     hide mcPic
                     $ son.asked.append("just a moment")
-                    if gender == "M":
-                        $ son.say("Chvíli už jste měl, to vám musí stačit.", "angry")
-                    else:
-                        $ son.say("Chvíli už jste měla, to vám musí stačit.", "angry")
+                    $ son.say("Chvíli už jste měl[a], to vám musí stačit.", "angry")
                 "Máš pravdu, půjdu.":
                     hide mcPic
                     "Aachim přikývne a zvedne lampu tak, aby ti dobře posvítil na cestu ke dveřím."
@@ -442,10 +370,7 @@ label workshopNightAachimConversation:
     "Na chvíli zavládne ticho. Aachim uhne pohledem a pak se na tebe opět nejistě podívá."
     $ mc.say("Co tady děláš ty?")
     $ son.say("Vyrábím. Nebo se o to aspoň snažím.")
-    if gender == "M":
-        $ mc.say("A to musíš pracovat po celém dni ještě tajně v noci? Čekal bych, že touhle dobou budeš chtít dělat cokoli jiného.")
-    else:
-        $ mc.say("A to musíš pracovat po celém dni ještě tajně v noci? Čekala bych, že touhle dobou budeš chtít dělat cokoli jiného.")
+    $ mc.say("A to musíš pracovat po celém dni ještě tajně v noci? Čekal[a] bych, že touhle dobou budeš chtít dělat cokoli jiného.")
     $ son.say("Přes den můžu dělat jenom to, co táta nařídí. Chtěl jsem… přinést na slavnosti vlastní výrobek.")
     $ son.say("To učedníci normálně nedělají, ale chtěl jsem to zkusit stejně. Možná jsem doufal, že to na tátu udělá dojem, nebo že mi potom dá aspoň na chvíli pokoj, nebo tak něco… zatracená práce.", "sad")
     if not achievement.has(achievement_name['burglar'].name):
@@ -457,23 +382,15 @@ label workshopNightAachimConversation:
         queue sound [ audio.woodCreak, audio.doorSlam ]
         "Odněkud z domu se ozve zavrzání a pak bouchnutí dveří. Oba sebou s Aachimem trhnete."
         if actionsTaken == 4:
-            if gender == "M":
-                $ son.say("Tím se to rozhoduje, vážně byste měl jít. Jestli nás tady někdo chytí, tak to oba šíleně schytáme.")
-            else:
-                $ son.say("Tím se to rozhoduje, vážně byste měla jít. Jestli nás tady někdo chytí, tak to oba šíleně schytáme.")
-        elif gender == "M":
-            $ son.say("Měl byste jít. Jestli nás tady někdo chytí, tak to oba šíleně schytáme.")
+            $ son.say("Tím se to rozhoduje, vážně byste měl[a] jít. Jestli nás tady někdo chytí, tak to oba šíleně schytáme.")
         else:
-            $ son.say("Měla byste jít. Jestli nás tady někdo chytí, tak to oba šíleně schytáme.")
+            $ son.say("Měl[a] byste jít. Jestli nás tady někdo chytí, tak to oba šíleně schytáme.")
         label workshopNightConversationEndMenu:
         show mcPic at menuImage
         menu:
             "Máš pravdu.":
                 hide mcPic
-                if gender == "M":
-                    "Aachim ti posvítí na cestu ke dveřím ven na ulici a zavře za tebou, spíš z nervozity než kvůli tomu, že bys to opravdu potřeboval."
-                else:
-                    "Aachim ti posvítí na cestu ke dveřím ven na ulici a zavře za tebou, spíš z nervozity než kvůli tomu, že bys to opravdu potřebovala."
+                "Aachim ti posvítí na cestu ke dveřím ven na ulici a zavře za tebou, spíš z nervozity než kvůli tomu, že bys to opravdu potřeboval[a]."
                 scene bg heinrich outside dark
                 "Zmizíš z místa tak rychlým krokem, jak se jen odvažuješ."
                 return
@@ -506,7 +423,16 @@ label loveLetters:
         scene bg workshop
     elif currentLocation == "victim house":
         call victimHouseInterior
-    show sh love letter
+    show sh love letter1
     pause
-    hide sh love letter
+    hide sh love letter1
+    show sh love letter2
+    pause
+    hide sh love letter2
+    show sh love letter3
+    pause
+    hide sh love letter3
+    show sh love letter4
+    pause
+    hide sh love letter4
     return

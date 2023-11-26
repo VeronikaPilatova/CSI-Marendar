@@ -1,10 +1,7 @@
 label guardhouseHelpMenu:
     call guardhouseHelpOptionsAvailable
     if helpOptionsAvailable == 0:
-        if gender == "M":
-            $ mc.say("Děkuji, to je všechno, co jsem chtěl.")
-        else:
-            $ mc.say("Děkuji, to je všechno, co jsem chtěla.")
+        $ mc.say("Děkuji, to je všechno, co jsem chtěl[a].")
         return
 
     show mcPic at menuImage
@@ -83,10 +80,7 @@ label helpWithAml:
             if "out of office" not in rauvin.status: # Rauvin
                 $ rauvin.say("Je pravda, že to by mohlo stát za prověření. Nechám někoho zjistit, jestli ti obchodníci odmítají prodávat materiál i jiným ševcovským mistrům. Víš, o které by mělo jít?")
                 if "awaiting AML merchant list" in status:
-                    if gender == "M":
-                        $ mc.say("Ano, požádal jsem mistra Njala o seznam.")
-                    else:
-                        $ mc.say("Ano, požádala jsem mistra Njala o seznam.")
+                    $ mc.say("Ano, požádal[a] jsem mistra Njala o seznam.")
                     $ rauvin.say("Výborně, někdo ty obchodníky prověří.")
                 else:
                     $ mc.say("Z hlavy si mistr Njal vzpomněl na Karstena a Roviena.")
@@ -184,12 +178,9 @@ label helpKasparBeating:
             "Chápu.":
                 hide mcPic
                 $ rauvin.say("Samozřejmě jiná věc je, jak se k tomu postaví lidé z města. Jestli Heinrichův čin neschválí, ublíží to jeho pověsti a to je víc, než kdyby musel platit odškodné.")
-            "Přesně to jsem si myslel" if gender == "M":
+            "Přesně to jsem si myslel[a]":
                 hide mcpic
-                $ rauvin.say("Přesto jsem rád, že sis to ověřil. Unáhlenost v podobných věcech by se nám mohla snadno vymstít.")
-            "Přesně to jsem si myslela." if gender == "F":
-                hide mcPic
-                $ rauvin.say("Přesto jsem rád, že sis to ověřil/a. Unáhlenost v podobných věcech by se nám mohla snadno vymstít.")
+                $ rauvin.say("Přesto jsem rád, že sis to ověřil[a]. Unáhlenost v podobných věcech by se nám mohla snadno vymstít.")
             "Mistr Kaspar ale o náš zásah velmi stojí.":
                 hide mcPic
                 $ rauvin.say("Tomu rozumím, ale kdybychom se do podobných záležitostí začali vkládat, lidé by nás mohli začít používat pro vyřizování osobních účtů. Ostatně nerad bych se pokoušel rozklíčovat, kdo z těch dvou je v tak osobním sporu v právu.")
@@ -201,10 +192,7 @@ label helpKasparBeating:
         $ solian.say("V žádném případě. To je osobní spor jich dvou.")
         show mcPic at menuImage
         menu:
-            "Přesně to jsem si myslel." if gender == "M":
-                hide mcPic
-                $ solian.say("Pak máš správný přístup a šanci to tady někam dotáhnout.", "happy")
-            "Přesně to jsem si myslela." if gender == "F":
+            "Přesně to jsem si myslel[a].":
                 hide mcPic
                 $ solian.say("Pak máš správný přístup a šanci to tady někam dotáhnout.", "happy")
             "Mistr Kaspar ale o náš zásah velmi stojí.":
@@ -222,9 +210,7 @@ label industrialEspionage:
     $ solian.say("Záznamy se pečlivě uchovávají. Ale není dovolené si je jen tak prohlížet, někomu by mohlo vadit, kdybychom jen tak pro zábavu štourali do jeho obchodů. Proč se o ně zajímáš?")
     show mcPic at menuImage
     menu:
-        "Kvůli dobrým vztahům s jednou osobou, se kterou jsem se seznámil." if gender == "M":
-            call industrialEspionageGoodRelations
-        "Kvůli dobrým vztahům s jednou osobou, se kterou jsem se seznámila." if gender == "F":
+        "Kvůli dobrým vztahům s jednou osobou, se kterou jsem se seznámil[a].":
             call industrialEspionageGoodRelations
         "Požádala mě o to Lotte, žena obchodníka Karstena.":
             hide mcPic
@@ -232,9 +218,7 @@ label industrialEspionage:
             $ solian.say("Ty se u ní klidně zastav také, až budeš mít chvíli. Jestli jste si naposled tak dobře popovídali, byla by škoda na to nenavázat.")
             $ katrin.cluesAgainst += 1
             $ status.append("industrial espionage")
-        "Potřebuji to, abych dokázal pomoct té tanečnici s ohněm." if gender == "M":
-            call industrialEspionageHelpKatrin
-        "Potřebuji to, abych dokázala pomoct té tanečnici s ohněm." if gender == "F":
+        "Potřebuji to, abych dokázal[a] pomoct té tanečnici s ohněm.":
             call industrialEspionageHelpKatrin
     $ time.addMinutes(10)
     return
@@ -250,10 +234,7 @@ label industrialEspionageGoodRelations:
             $ solian.say("Ty se u ní klidně zastav také, až budeš mít chvíli. Jestli jste si naposled tak dobře popovídali, byla by škoda na to nenavázat.")
             $ katrin.cluesAgainst += 1
             $ status.append("industrial espionage")
-        "To bych si radši nechal pro sebe." if gender == "M":
-            hide mcPic
-            $ solian.say("Jak myslíš. V tom případě ale nemám důvod ti s něčím takhle nebezpečným pomáhat.", "angry")
-        "To bych si radši nechala pro sebe." if gender == "F":
+        "To bych si radši nechal[a] pro sebe.":
             hide mcPic
             $ solian.say("Jak myslíš. V tom případě ale nemám důvod ti s něčím takhle nebezpečným pomáhat.", "angry")
     return

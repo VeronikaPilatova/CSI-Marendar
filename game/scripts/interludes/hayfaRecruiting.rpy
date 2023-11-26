@@ -1,9 +1,6 @@
 label hayfaRecruiting:
     scene bg people
-    if gender == "M":
-        "Na jedné z rušnějších ulic spatříš skupinu lidí zabraných do hovoru, podle oblečení zřejmě bohatších měšťanů. Zabraný do práce jim sotva věnuješ pozornost, když z jejich směru zahlédneš rychlý pohyb a všimneš si Hayfy, jak drží za ruku asi osmileté děvče."
-    else:
-        "Na jedné z rušnějších ulic spatříš skupinu lidí zabraných do hovoru, podle oblečení zřejmě bohatších měšťanů. Zabraná do práce jim sotva věnuješ pozornost, když z jejich směru zahlédneš rychlý pohyb a všimneš si Hayfy, jak drží za ruku asi osmileté děvče."
+    "Na jedné z rušnějších ulic spatříš skupinu lidí zabraných do hovoru, podle oblečení zřejmě bohatších měšťanů. Zabran[y] do práce jim sotva věnuješ pozornost, když z jejich směru zahlédneš rychlý pohyb a všimneš si Hayfy, jak drží za ruku asi osmileté děvče."
     "Měšťani se po nich ohlédnou a znepokojeně si ohledají kapsy, pak se ale uklidněni vrátí zpět k hovoru."
     "Hayfa zatím dítě táhne do postranní uličky. Zvědavě je následuješ."
     scene bg street03
@@ -57,10 +54,7 @@ label hayfaRecruiting:
                 "Rozhodně informace!":
                     hide mcPic
                     if "not sharing" not in status and "not sharing 2" not in status:
-                        if gender == "M":
-                            $ hayfa.say("Právě. Proto jsem ráda, že jsi ochotný nám s Rauvinem čas od času říct, co zrovna děláš. Hlídka bez informací je hodně smutná, zvlášť když se týkají samotných hlídkařů a jejich práce.")
-                        else:
-                            $ hayfa.say("Právě. Proto jsem ráda, že jsi ochotná nám s Rauvinem čas od času říct, co zrovna děláš. Hlídka bez informací je hodně smutná, zvlášť když se týkají samotných hlídkařů a jejich práce.")
+                        $ hayfa.say("Právě. Proto jsem ráda, že jsi ochotn[y] nám s Rauvinem čas od času říct, co zrovna děláš. Hlídka bez informací je hodně smutná, zvlášť když se týkají samotných hlídkařů a jejich práce.")
                     else:
                         $ hayfa.say("Právě. Proto mě mrzí, že se nám s Rauvinem občas snažíš tajit, co zrovna děláš. Hlídka bez informací je hodně smutná, zvlášť když se týkají samotných hlídkařů a jejich práce.")
                         show mcPic at menuImage
@@ -70,11 +64,7 @@ label hayfaRecruiting:
                                 $ status.append("promise to share info")
                                 $ hayfa.say("Když někdy zajdeš za Rauvinem s hlášením, bude to dobrý začátek.")
                                 $ dailyStatus.append("promised to share")
-                            "Nejsem děcko, abych vám hlásil každou hloupost." if gender == "M":
-                                hide mcPic
-                                $ hayfa.say("Jak už jsem říkala, já to na jednu stranu chápu. Jen si uvědom, že jestli se někdy dostaneš do průšvihu, jsme to my, kdo by ti měl krýt záda, stejně jako ty nám.")
-                                $ hayfa.say("Násilím to z tebe páčit nebudu.")
-                            "Nejsem děcko, abych vám hlásila každou hloupost." if gender == "F":
+                            "Nejsem děcko, abych vám hlásil[a] každou hloupost.":
                                 hide mcPic
                                 $ hayfa.say("Jak už jsem říkala, já to na jednu stranu chápu. Jen si uvědom, že jestli se někdy dostaneš do průšvihu, jsme to my, kdo by ti měl krýt záda, stejně jako ty nám.")
                                 $ hayfa.say("Násilím to z tebe páčit nebudu.")
@@ -94,18 +84,12 @@ label hayfaRecruiting:
 label hayfaRecruitingMenu:
     call hayfaRecruitingOptionsRemainingCheck
     if optionsRemaining == 0:
-        if gender == "M":
-            $ mc.say("Asi bych se měl vrátit ke svému případu...")
-        else:
-            $ mc.say("Asi bych se měla vrátit ke svému případu...")
+        $ mc.say("Asi bych se měl[a] vrátit ke svému případu...")
         call hayfaRecruitingPlayerLeaves
         return
     if len(hayfa.asked) - len(origAsked) >= 2:
         $ hayfa.say("Támhle jde Amrin. Musím jít.")
-        if gender == "M":
-            $ mc.say("...prosím? Něco, o čem bych měl vědět?")
-        else:
-            $ mc.say("...prosím? Něco, o čem bych měla vědět?")
+        $ mc.say("...prosím? Něco, o čem bych měl[a] vědět?")
         $ hayfa.say("Ani ne, aspoň zatím. Soustřeď se na svůj případ.")
         return
 
@@ -114,10 +98,7 @@ label hayfaRecruitingMenu:
         "Takže nebude nijak potrestaná?" if "pickpocket disapproval" in hayfa.asked and "pickpocket punishment" not in hayfa.asked:
             hide mcPic
             $ hayfa.asked.append("pickpocket punishment")
-            if gender == "M":
-                $ hayfa.say("Ty bys pro nějaký trest byl?")
-            else:
-                $ hayfa.say("Ty bys pro nějaký trest byla?")
+            $ hayfa.say("Ty bys pro nějaký trest byl[a]?")
             show mcPic at menuImage
             menu:
                 "Ani ne, k čemu? Jen by pak považovala hlídku za další z té řady dospělých a bohatých, před kterými se musí schovávat.":
@@ -137,10 +118,7 @@ label hayfaRecruitingMenu:
             $ hayfa.say("Myslím, že se dozvím spoustu drbů, kdo se s kým tajně líbá ve starém sklepě a kdo krade med ze spíže. Ale někde mezi tím může být i něco užitečného.")
             $ mc.say("Dost na to, aby to stálo za to?")
             $ hayfa.say("Jinak bych to nedělala. Navíc se to pak mezi podobnými dětmi rozkřikne a je snazší za nimi přijít.")
-        "Asi bych se měl vrátit ke svému případu..." if gender == "M":
-            call hayfaRecruitingPlayerLeaves
-            return
-        "Asi bych se měla vrátit ke svému případu..." if gender == "F":
+        "Asi bych se měl[a] vrátit ke svému případu...":
             call hayfaRecruitingPlayerLeaves
             return
     jump hayfaRecruitingMenu
@@ -154,10 +132,7 @@ label hayfaRecruitingPlayerLeaves:
     elif "flattered by first case" in personality or "nervous of first case" in personality:
         $ mc.say("Když už mám vlastní případ, tak nechci zklamat vaši důvěru.")
     $ hayfa.say("Hodně štěstí v pátrání. Já si tady ještě počkám na Amrin, poslední dobou se chová divně.")
-    if gender == "M":
-        $ mc.say("...prosím? Něco, o čem bych měl vědět?")
-    else:
-        $ mc.say("...prosím? Něco, o čem bych měla vědět?")
+    $ mc.say("...prosím? Něco, o čem bych měl[a] vědět?")
     $ hayfa.say("Ani ne, aspoň zatím. Soustřeď se na svůj případ.")
     return
 

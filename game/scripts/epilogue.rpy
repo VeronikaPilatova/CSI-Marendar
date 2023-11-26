@@ -2,10 +2,7 @@ label mcArrested:
     call otherPrisoners
     if time.days == 3 or (time.days == 2 and time.hours > 21):
         "Rauvin se zanedlouho vrátí k tvé cele. Ve tmě mu nevidíš dobře do tváře, ale skutečně vypadá vyčerpaně."
-    if gender == "M":
-        $ rauvin.say("Ještě tě musím požádat o vrácení glejtu, který tě opravňuje jednat za městskou hlídku. Pokud se ukáže, že ses nedopustil zločinného jednání, dostaneš ho pochopitelně zpátky. Ačkoli naději na něco podobného nevidím velkou.")
-    else:
-        $ rauvin.say("Ještě tě musím požádat o vrácení glejtu, který tě opravňuje jednat za městskou hlídku. Pokud se ukáže, že ses nedopustila zločinného jednání, dostaneš ho pochopitelně zpátky. Ačkoli naději na něco podobného nevidím velkou.")
+    $ rauvin.say("Ještě tě musím požádat o vrácení glejtu, který tě opravňuje jednat za městskou hlídku. Pokud se ukáže, že ses nedopustil[a] zločinného jednání, dostaneš ho pochopitelně zpátky. Ačkoli naději na něco podobného nevidím velkou.")
     menu:
         "{i}(Odevzdat listinu){/i}":
             "Prostrčíš listinu mřížemi. Rauvin se na ni sotva podívá a uloží si ji do kapsy."
@@ -18,15 +15,9 @@ label mcArrested:
                 $ rauvin.say("Někdo se tě ještě před začátkem procesu zeptá znovu. Doporučuji vyhovět, tvoje vyhlídky už tak nejsou dobré.")
     if "arrested during break in" in status:
         if mc.imageParameter == "beaten":
-            if gender == "M":
-                $ rauvin.say("Jelikož rozumím, že jsi mistra Heinricha a jeho syna ohrožoval na zdraví, budeš nakonec rád, když vyvázneš živý.")
-            else:
-                $ rauvin.say("Jelikož rozumím, že jsi mistra Heinricha a jeho syna ohrožovala na zdraví, budeš nakonec ráda, když vyvázneš živá.")
+            $ rauvin.say("Jelikož rozumím, že jsi mistra Heinricha a jeho syna ohrožoval[a] na zdraví, budeš nakonec rád, když vyvázneš živ[y].")
         else:
-            if gender == "M":
-                $ rauvin.say("Když ti bude soud nakloněný, můžeš vyváznout jen s pranýřem. Pokud se ale zjistí, že jsi zneužil důvěry mistra Heinricha, když tě vpustil do svého domu, nebo že jsi jeho nebo jeho rodinu ohrožoval na zdraví, budeš nakonec rád, když vyvázneš živý.")
-            else:
-                $ rauvin.say("Když ti bude soud nakloněný, můžeš vyváznout jen s pranýřem. Pokud se ale zjistí, že jsi zneužila důvěry mistra Heinricha, když tě vpustil do svého domu, nebo že jsi jeho nebo jeho rodinu ohrožovala na zdraví, budeš nakonec ráda, když vyvázneš živá.")
+            $ rauvin.say("Když ti bude soud nakloněný, můžeš vyváznout jen s pranýřem. Pokud se ale zjistí, že jsi zneužil[a] důvěry mistra Heinricha, když tě vpustil do svého domu, nebo že jsi jeho nebo jeho rodinu ohrožoval[a] na zdraví, budeš nakonec rád[a], když vyvázneš živ[y].")
     if time.hours > 21:
         $ rauvin.say("S vyšetřováním začneme zítra.")
         "S těmito slovy tě opustí a zanechá tě v cele bez možnosti výrazně ovlivnit svůj osud."
@@ -41,17 +32,10 @@ label workshopNightArrestAfter:
     "Probudí tě pevný dotyk na rameni. Škubneš sebou a zkusíš se odtáhnout, ale zjistíš, že tě drží víc než jeden pár rukou a že ten úchop je pevný."
     $ solian.say("Klídek, nemá smysl se prát. Jen se zeptáme na pár věcí, a jestli je všechno v pořádku, můžeš za chvíli zase běžet.")
     "Rozhlédneš se lépe a o pár kroků dále spatříš Rauvina. Vypadá bledší než obvykle, možná to je světlem, možná nedostatkem spánku."
-    if gender == "M":
-        $ rauvin.say("Mistr Heinrich tvrdí, že tě jeho syn přistihl při vloupání do jejich dílny dnes v noci. Byl jsi tam?")
-    else:
-        $ rauvin.say("Mistr Heinrich tvrdí, že tě jeho syn přistihl při vloupání do jejich dílny dnes v noci. Byla jsi tam?")
+    $ rauvin.say("Mistr Heinrich tvrdí, že tě jeho syn přistihl při vloupání do jejich dílny dnes v noci. Byl[a] jsi tam?")
     show mcPic at menuImage
     menu:
-        "Ano, ale nic jsem tam nevzal." if gender == "M":
-            hide mcPic
-            $ status.append("confessed to break-in")
-            $ rauvin.say("To je pouze tvé tvrzení a beztak se jedná o neoprávněné vniknutí.")
-        "Ano, ale nic jsem tam nevzala." if gender == "F":
+        "Ano, ale nic jsem tam nevzal[a].":
             hide mcPic
             $ status.append("confessed to break-in")
             $ rauvin.say("To je pouze tvé tvrzení a beztak se jedná o neoprávněné vniknutí.")
@@ -87,10 +71,7 @@ label workshopNightArrestAfter:
         $ solian.say("Prý musíme všem vždy říkat obvinění, tak tedy dobře, ať mě Rauvin neseřve, jakmile se uzdraví. Zatýkám tě za vloupání do dílny mistra Heinricha.", "angry")
         $ solian.say("Doteď to bylo jen zadržení pro jistotu, aby mistr viděl, že jeho stížnost bereme vážně, ale teď už to je opravdu zatčení a půjdeš před soud.")
     $ solian.say("V dílně tě viděl jeho syn a jeden zámečník dosvědčil, že pro tebe vyrobil kopii klíče, který je podezřele podobný tomu od dílny. A že se k tobě ten klíč dostal, to také víme. To je dost na to, aby to šlo k soudu, bez ohledu na přiznání.")
-    if gender == "M":
-        $ solian.say("Při troše štěstí můžeš vyváznout jen s pranýřem, ale jestli ti vážně mistr Heinrich svěřil svůj klíč a ty jsi ho takhle zneužil, no nevím nevím.", "angry")
-    else:
-        $ solian.say("Při troše štěstí můžeš vyváznout jen s pranýřem, ale jestli ti vážně mistr Heinrich svěřil svůj klíč a ty jsi ho takhle zneužila, no nevím nevím.", "angry")
+    $ solian.say("Při troše štěstí můžeš vyváznout jen s pranýřem, ale jestli ti vážně mistr Heinrich svěřil svůj klíč a ty jsi ho takhle zneužil[a], no nevím nevím.", "angry")
     $ solian.say("Nepočítej s tím, že tě hlídka nepodrží. Naopak, Rauvin i velitel Galar se budou snažit všechny upokojit, že hlídka v žádném případě nedělá nic špatného, a když to nějaký jednotlivec udělá, tak se ho rychle a rázně zbaví.")
     $ solian.say("Být tebou si tedy připravím nějakou hodně dobrou obhajobu.")
     $ solian.say("A já teď ke všem ostatním věcem musím nějak uklidnit mistra Heinricha a ještě mu za půl dne najít toho zatraceného zloděje, prostě nádhera.", "angry")

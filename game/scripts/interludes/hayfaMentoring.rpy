@@ -8,26 +8,18 @@ label hayfaMentoring:
     menu:
         "[response!c]":
             hide mcPic
-        "Radši bych si to nechala pro sebe." if gender == "F":
-            call hayfaMentoringSecrecy
-        "Radši bych si to nechal pro sebe." if gender == "M":
+        "Radši bych si to nechal[a] pro sebe.":
             call hayfaMentoringSecrecy
     $ hayfa.say("Vida, zrovna mám pochůzku stejným směrem. Můžu se připojit?")
     "Působí to spíš jako řečnická otázka. Společně vyrazíte ulicí."
     $ hayfa.say("Co si zatím o hlídce myslíš?")
     show mcPic at menuImage
     menu:
-        "Čekal jsem, že budeme řešit nějakou vraždu, a ono boty." if gender == "M":
+        "Čekal[a] jsem, že budeme řešit nějakou vraždu, a ono boty.":
             call hayfaMentoringBoredResponse
-        "Čekala jsem, že budeme řešit nějakou vraždu, a ono boty." if gender == "F":
-            call hayfaMentoringBoredResponse
-        "Čekal jsem, že budeme jen postávat někde na stráži, z toho běhání mě začínají bolet nohy." if gender == "M":
+        "Čekal[a] jsem, že budeme jen postávat někde na stráži, z toho běhání mě začínají bolet nohy.":
             call hayfaMentoringTiredResponse
-        "Čekala jsem, že budeme jen postávat někde na stráži, z toho běhání mě začínají bolet nohy." if gender == "F":
-            call hayfaMentoringTiredResponse
-        "Čekal jsem, že nejdřív budu muset jen stát někde na stráži nebo něco opisovat, ne že hned dostanu vlastní případ." if gender == "M":
-            call hayfaMentoringImportantResponse
-        "Čekala jsem, že nejdřív budu muset jen stát někde na stráži nebo něco opisovat, ne že hned dostanu vlastní případ." if gender == "F":
+        "Čekal[a] jsem, že nejdřív budu muset jen stát někde na stráži nebo něco opisovat, ne že hned dostanu vlastní případ.":
             call hayfaMentoringImportantResponse
         "Přemýšlím, kolik z práce hlídky opravdu pomáhá městu a kolik toho děláme jen proto, že to někdo bohatý požaduje.":
             hide mcPic
@@ -39,15 +31,9 @@ label hayfaMentoring:
         $ mc.say("Už dvě. Ptá se takhle lidí pokaždé, kdy je vidí?")
         $ hayfa.say("Jen když mezitím stihli vylézt ze strážnice. Nebo když sice neodešli, ale on na ně mezitím zapomněl.")
     else:
-        if gender == "M":
-            $ mc.say("Zatím jedno, jakmile jsem se poprvé vrátil na strážnici.")
-        else:
-            $ mc.say("Zatím jedno, jakmile jsem se poprvé vrátila na strážnici.")
+        $ mc.say("Zatím jedno, jakmile jsem se poprvé vrátil[a] na strážnici.")
     $ hayfa.say("Rauvin hlášení miluje. Má rád přehled a z armády je na to zvyklý. Myslím, že i dávání portrétů na zeď všechny učí hlavně proto, aby mohl snáz dohlížet.")
-    if gender == "M":
-        $ hayfa.say("Jestli si chceš šplhnout, zajdi za ním s hlášením někdy sám od sebe.")
-    else:
-        $ hayfa.say("Jestli si chceš šplhnout, zajdi za ním s hlášením někdy sama od sebe.")
+    $ hayfa.say("Jestli si chceš šplhnout, zajdi za ním s hlášením někdy [sam] od sebe.")
     show mcPic at menuImage
     menu:
         "Ty Rauvina asi nemáš moc ráda?":
@@ -70,10 +56,7 @@ label hayfaMentoring:
     $ hayfa.say("Ve skutečnosti stejně jako všichni. Bavím se s lidmi, všímám si věcí, používám hlavu. Jsem v tom dobrá, ale většinou nedělám nic tak zvláštního.")
     $ hayfa.say("Od Rauvina a ostatních se liším v tom, že oni hrozně dají na lidi, co považují za vážené měšťany. Já se mnohem víc ptám různých žebráků, tichých manželek a podobně. Jeden by nevěřil, kolik špíny na tyhlety vážené měšťany občas vědí.")
     $ mc.say("Díky za radu. Je ještě něco, co bys mi doporučila?")
-    if gender == "M":
-        $ hayfa.say("Jo. Nikdy nepředpokládej, že už jsi od někoho zjistil všechno. Při prvním rozhovoru většina lidí jednu půlku věcí zapomene a druhou zatají. Často je potřeba k nim přijít znovu a připomenout jim nějaké nové zjištění, které by mohli chtít vysvětlit.")
-    else:
-        $ hayfa.say("Jo. Nikdy nepředpokládej, že už jsi od někoho zjistila všechno. Při prvním rozhovoru většina lidí jednu půlku věcí zapomene a druhou zatají. Často je potřeba k nim přijít znovu a připomenout jim nějaké nové zjištění, které by mohli chtít vysvětlit.")
+    $ hayfa.say("Jo. Nikdy nepředpokládej, že už jsi od někoho zjistil[a] všechno. Při prvním rozhovoru většina lidí jednu půlku věcí zapomene a druhou zatají. Často je potřeba k nim přijít znovu a připomenout jim nějaké nové zjištění, které by mohli chtít vysvětlit.")
     $ hayfa.say("Ještě bych ti ráda doporučila, že se může hodit, když co nejméně lidí ví, že patříš k hlídce. Ale to jde hodně těžko, tak to možná ani nemá smysl zkoušet.")
     $ hayfa.say("Přinejmenším mě už zná výrazně víc lidí, než by se mi líbilo.")
     $ mc.say("Aspoň už se nemusíš desetkrát denně prokazovat glejtem?")
@@ -88,10 +71,7 @@ label hayfaMentoringBoredResponse:
     $ personality.append("bored by first case")
     $ hayfa.say("Marendar je poměrně malé město, k vraždám tu naštěstí dochází zřídka.")
     $ hayfa.say("Naštěstí. Vražda znamená aspoň jednoho mrtvého člověka, její vyřešení dalšího a podle mých zkušeností většinou bývá jednoho z nich škoda.")
-    if gender == "M":
-        $ mc.say("Čekal bych, že tu budou potíže třeba s loupežníky, co si nevšimli, že už skončilo bezvládí, nebo že se občas vynoří spor mezi lidmi a elfy.")
-    else:
-        $ mc.say("Čekala bych, že tu budou potíže třeba s loupežníky, co si nevšimli, že už skončilo bezvládí, nebo že se občas vynoří spor mezi lidmi a elfy.")
+    $ mc.say("Čekal[a] bych, že tu budou potíže třeba s loupežníky, co si nevšimli, že už skončilo bezvládí, nebo že se občas vynoří spor mezi lidmi a elfy.")
     $ hayfa.say("Loupežníci opravdu občas něco provedou, ale většinou to nekončí smrtí. A sporům mezi rasami se tady všichni ze všech sil vyhýbají. Bojí se, aby to nespustilo další boje v ulicích.")
     return
 
@@ -153,10 +133,7 @@ label hayfaMentoringSecrecy:
 label hayfaMentoringPreparation:
     if chosenChar == "apprentice1" or chosenChar == "apprentice2":
         $ response = "položit pár otázek Heinrichovým učedníkům."
-        if gender = "M":
-            $ advice = "zamysli se, jestli s učedníky chceš mluvit v Heinrichově přítomnosti. Myslím, že se ho dost bojí a neřeknou nic, s čím by mohl nesouhlasit. Na druhou stranu kdybys s nimi měl mít problémy, vyhrožovat Heinrichem by mělo zabrat."
-        else:
-            $ advice = "zamysli se, jestli s učedníky chceš mluvit v Heinrichově přítomnosti. Myslím, že se ho dost bojí a neřeknou nic, s čím by mohl nesouhlasit. Na druhou stranu kdybys s nimi měla mít problémy, vyhrožovat Heinrichem by mělo zabrat."
+        $ advice = "zamysli se, jestli s učedníky chceš mluvit v Heinrichově přítomnosti. Myslím, že se ho dost bojí a neřeknou nic, s čím by mohl nesouhlasit. Na druhou stranu kdybys s nimi měl[a] mít problémy, vyhrožovat Heinrichem by mělo zabrat."
     elif chosenChar == "erle":
         $ response = "položit pár otázek žebračce Erle."
         $ advice = "s Erle jsem párkrát mluvila a pořád si nejsem jistá, jestli je tak hrdá, že nechce přijmout pomoc, nebo jestli jí současný život opravdu vyhovuje. Asi by mě pak zajímal i tvůj názor."

@@ -56,25 +56,15 @@ label rumelinFirst:
         "Najdeš krásný dům v elfí čtvrti a zaklepeš na dveře. Otevře ti starší elfka a tázavě se na tebe podívá."
         $ mc.say("Dobrý den. Jsem %(mcName)s z městské hlídky a vyšetřuji krádež v dílně jednoho z ševcovských mistrů.")
         $ nirevia.say("Pak asi budete chtít mluvit s mým manželem. Touto dobou už ale nepracuje.")
-        if gender == "M":
-            $ mc.say("Mohl bych s ním mluvit i tak? Případ velice spěchá.")
-        else:
-            $ mc.say("Mohla bych s ním mluvit i tak? Případ velice spěchá.")
+        $ mc.say("Mohl[a] bych s ním mluvit i tak? Případ velice spěchá.")
         $ nirevia.say("Co se ztratilo a komu?")
         $ mc.say("Mistru Heinrichovi někdo v noci ukradl jeho čerstvě dokončený mistrovský výrobek.")
         $ nirevia.say("Na Einionovy slavnosti? To by pro mistra Heinricha mohl být vážný problém.")
-        if gender == "M":
-            $ mc.say("Právě proto bych uvítal vaši pomoc při vyšetřování.")
-            "Elfka se na moment zamračí, ale pak kývne a pokyne ti, abys šel dál."
-        else:
-            $ mc.say("Právě proto bych uvítala vaši pomoc při vyšetřování.")
-            "Elfka se na moment zamračí, ale pak kývne a pokyne ti, abys šla dál."
+        $ mc.say("Právě proto bych uvítal[a] vaši pomoc při vyšetřování.")
+        "Elfka se na moment zamračí, ale pak kývne a pokyne ti, abys [sel] dál."
         scene bg rumelin inside
         $ nirevia.say("Dojdu pro manžela.")
-        if gender == "M":
-            "Paní Nirevia ti pokyne, aby ses zatím posadil. Cechmistr Rumelin dorazí za okamžik s těžko čitelným výrazem."
-        else:
-            "Paní Nirevia ti pokyne, aby ses zatím posadila. Cechmistr Rumelin dorazí za okamžik s těžko čitelným výrazem."
+        "Paní Nirevia ti pokyne, aby ses zatím posadil[a]. Cechmistr Rumelin dorazí za okamžik s těžko čitelným výrazem."
         $ mc.say("Omlouvám se, že vás ruším takhle pozdě...")
     # common introduction
     $ rumelin.say("Hlídka má samozřejmě mou plnou podporu v pátrání. Pokud se ukradená věc nenajde do slavností, mohlo by to poškodit pověst celého cechu a to ani nemluvím o urážce Einiona samotného…")
@@ -107,10 +97,7 @@ label rumelinClosedDoor:
             menu:
                 "Jdu si vybrat slíbenou laskavost.":
                     hide mcPic
-                    if gender == "M":
-                        $ rumelin.say("A co byste si přál?")
-                    else:
-                        $ rumelin.say("A co byste si přála?")
+                    $ rumelin.say("A co byste si přál[a]?")
                     call rumelinFavourOptions
                     $ rumelin.say("Předpokládám, že to je vše? Jistě chápete, že mám ještě mnoho práce.")
                 "Mám ještě pár otázek k případu..." if "rumelin closed door" not in status:
@@ -134,10 +121,7 @@ label rumelinClosedDoor:
 
 label rumelinCellsIntro:
     "Mistr Rumelin působí, jako by vůbec neviděl mříže své cely. Dívá se přímo před sebe a jeho výraz je naprosto klidný. Tebe ale při příchodu probodne pohledem."
-    if gender == "M":
-        $ rumelin.say("Přišel jsi stáhnout to směšné obvinění?", "angry")
-    else:
-        $ rumelin.say("Přišla jsi stáhnout to směšné obvinění?", "angry")
+    $ rumelin.say("Při[sel] jsi stáhnout to směšné obvinění?", "angry")
     show mcPic at menuImage
     menu:
         "Ano, došlo mi, že to byla chyba.":
@@ -159,10 +143,7 @@ label rumelinOptions:
         return
     call rumelinOptionsRemainingCheck
     if optionsRemaining == 0:
-        if gender == "M":
-            $ mc.say("To je všechno, na co jsem se chtěl zeptat. Děkuji vám za spolupráci.")
-        else:
-            $ mc.say("To je všechno, na co jsem se chtěla zeptat. Děkuji vám za spolupráci.")
+        $ mc.say("To je všechno, na co jsem se chtěl[a] zeptat. Děkuji vám za spolupráci.")
         return
 
     show mcPic at menuImage
@@ -213,7 +194,7 @@ label rumelinOptions:
             hide mcPic
             $ rumelin.asked.append("alibi")
             $ rumelin.say("Od Salmy jsem šel rovnou domů a spát.")
-            call alibiReaction from _call_alibiReaction
+            call alibiReaction
         "Změnil jste v poslední době nějak způsob obchodování nebo místo uzavírání smluv na materiál?" if "less deals" in salma.asked and "less deals" not in rumelin.asked:
             hide mcPic
             $ rumelin.asked.append("less deals")
@@ -294,10 +275,7 @@ label rumelinOptions:
             call rumelinThreatened
             return
 
-        "To je všechno, na co jsem se chtěl zeptat. Děkuji vám za spolupráci." if gender == "M":
-            hide mcPic
-            return
-        "To je všechno, na co jsem se chtěla zeptat. Děkuji vám za spolupráci." if gender == "F":
+        "To je všechno, na co jsem se chtěl[a] zeptat. Děkuji vám za spolupráci.":
             hide mcPic
             return
 
@@ -384,10 +362,7 @@ label rumelinTooManyQuestions:
         "Mám povinnost vyšetřit jakékoliv podezření na možný zločin.":
             hide mcPic
             $ rumelin.say("A také je vaší povinností krotit svůj zápal a neplýtvat časem počestných lidí ani časem hlídky, kterou platíme ze svých daní.", "angry")
-    if gender == "M":
-        $ rumelin.say("Myslím, že je čas, abyste se vrátil ke svému skutečnému případu.", "angry")
-    else:
-        $ rumelin.say("Myslím, že je čas, abyste se vrátila ke svému skutečnému případu.", "angry")
+    $ rumelin.say("Myslím, že je čas, abyste se vrátil[a] ke svému skutečnému případu.", "angry")
     "Mistr Rumelin s nekompromisním výrazem ukáže na dveře a nereaguje na žádné další argumenty."
     $ leaveOption = "none"
     return
@@ -442,10 +417,7 @@ label rumelinThreatened:
             $ leaveOption = "angry"
         "Abyste si začal chystat obhajobu, protože to musím nahlásit svým nadřízeným.":
             hide mcPic
-            if gender == "M":
-                $ rumelin.say("Vřele děkuji za varování. Ve skutečnosti, já obhajobu potřebovat nebudu, ale vy byste si měl lépe načíst marendarské zákony.")
-            else:
-                $ rumelin.say("Vřele děkuji za varování. Ve skutečnosti, já obhajobu potřebovat nebudu, ale vy byste si měla lépe načíst marendarské zákony.")
+            $ rumelin.say("Vřele děkuji za varování. Ve skutečnosti, já obhajobu potřebovat nebudu, ale vy byste si měl[a] lépe načíst marendarské zákony.")
             $ leaveOption = "angry"
         "Že chci být vaším přítelem, a tak se o tom ode mě nikdo nedozví.":
             hide mcPic
@@ -454,15 +426,9 @@ label rumelinThreatened:
             "Cechmistr Rumelin povytáhne obočí, jinak ale nezmění výraz."
             $ rumelin.say("Už je to nějakou dobu, co jsem měl naposledy přítele v hlídce, ale stále si pamatuji, že to může být velmi užitečné. Věřím, že si dokážeme vzájemně pomoci.")
             if "case solved" not in status:
-                if gender == "M":
-                    $ rumelin.say("Děkuji vám. Teď byste ale asi měl vrátit k vašemu původnímu případu. Je to dobrý způsob, jak nabrat zásluhy.")
-                else:
-                    $ rumelin.say("Děkuji vám. Teď byste ale asi měla vrátit k vašemu původnímu případu. Je to dobrý způsob, jak nabrat zásluhy.")
+                $ rumelin.say("Děkuji vám. Teď byste ale asi měl[a] vrátit k vašemu původnímu případu. Je to dobrý způsob, jak nabrat zásluhy.")
             else:
-                if gender == "M":
-                    $ rumelin.say("Děkuji vám. Teď byste se ale asi měl vrátit ke své další práci, abychom nevzbudili žádná podezření.")
-                else:
-                    $ rumelin.say("Děkuji vám. Teď byste se ale asi měla vrátit ke své další práci, abychom nevzbudili žádná podezření.")
+                $ rumelin.say("Děkuji vám. Teď byste se ale asi měl[a] vrátit ke své další práci, abychom nevzbudili žádná podezření.")
             $ leaveOption = "none"
     return
 

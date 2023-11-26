@@ -104,19 +104,13 @@ label workshopCleanedFirst:
 label workshopAgain:
     scene bg workshop
     "Mistr Heinrich tě mírně neochotně pustí do dílny."
-    if gender == "M":
-        "Ta vypadá uvnitř stejně, jako když jsi tu byl naposled. Spousta bot všech druhů a velikostí v policích a u jedné stěny stolek se zásuvkami plný nástrojů, z nichž tak polovina ti vůbec nic neříká."
-    else:
-        "Ta vypadá uvnitř stejně, jako když jsi tu byla naposled. Spousta bot všech druhů a velikostí v policích a u jedné stěny stolek se zásuvkami plný nástrojů, z nichž tak polovina ti vůbec nic neříká."
+    "Ta vypadá uvnitř stejně, jako když jsi tu byl[a] naposled. Spousta bot všech druhů a velikostí v policích a u jedné stěny stolek se zásuvkami plný nástrojů, z nichž tak polovina ti vůbec nic neříká."
     return
 
 label workshopOptions:
     call workshopOptionsRemainingCheck
     if workshopOptionsRemaining == 0:
-        if gender == "M":
-            $ mc.say("Děkuji, to je všechno, co jsem chtěl vidět.")
-        else:
-            $ mc.say("Děkuji, to je všechno, co jsem chtěla vidět.")
+        $ mc.say("Děkuji, to je všechno, co jsem chtěl[a] vidět.")
         return
     call boysOptionsRemainingCheck
 
@@ -211,9 +205,7 @@ label workshopOptions:
                     hide mcPic
                     "Mistr se zamračí, ale pak beze slova odejde z dílny."
             call boysMain
-        "Děkuji, to je všechno, co jsem chtěl vidět." if gender == "M":
-            return
-        "Děkuji, to je všechno, co jsem chtěla vidět." if gender == "F":
+        "Děkuji, to je všechno, co jsem chtěl[a] vidět.":
             return
     jump workshopOptions
 
@@ -239,10 +231,7 @@ label leavingWorkshop:
 label burnedEvidenceSeenVictim:
     $ victim.asked.append("burned evidence seen")
     $ victim.say("To by mohlo… kde to bylo? A proč je to napůl spálené?", "angry")
-    if gender == "M":
-        $ mc.say("Našel jsem to v krbu…")
-    else:
-        $ mc.say("Našla jsem to v krbu…")
+    $ mc.say("Na[sel] jsem to v krbu...")
     $ victim.say("V jakém krbu? Kde?", "angry")
     if currentLocation == "workshop":
         $ mc.say("Tady v dílně.")

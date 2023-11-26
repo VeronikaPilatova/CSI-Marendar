@@ -10,10 +10,7 @@ label zairisController:
 label zairisOptions:
     call zairisOptionsRemainingCheck
     if zairisOptionsRemaining == 0:
-        if gender == "M":
-            $ mc.say("To je všechno, na co jsem se chtěl zeptat.")
-        else:
-            $ mc.say("To je všechno, na co jsem se chtěla zeptat.")
+        $ mc.say("To je všechno, na co jsem se chtěl[a] zeptat.")
         return
 
     show mcPic at menuImage
@@ -25,10 +22,7 @@ label zairisOptions:
             if "Ada confronts Zairis" in status:
                 $ zairis.say("Ada mě přesvědčila, abych si s ním šel promluvit, ale ten surovec umí mluvit jen pěstmi. Ani mě nepustil ke slovu.", "angry")
             else:
-                if gender == "M":
-                    $ zairis.say("Jak jsi říkal, že si s ním mám promluvit... tak ten surovec umí mluvit jen pěstmi. Ani mě nepustil ke slovu.", "angry")
-                else:
-                    $ zairis.say("Jak jsi říkala, že si s ním mám promluvit... tak ten surovec umí mluvit jen pěstmi. Ani mě nepustil ke slovu.", "angry")
+                $ zairis.say("Jak jsi říkal[a], že si s ním mám promluvit... tak ten surovec umí mluvit jen pěstmi. Ani mě nepustil ke slovu.", "angry")
             show mcPic at menuImage
             menu:
                 "Doufal jsem, že to vezme lépe." if "Ada confronts Zairis" not in status and gender == "M":
@@ -68,12 +62,8 @@ label zairisOptions:
                 $ zairis.say("A jak řeší všechny ty… no dobře, on je tady ten nejzkušenější...", "surprised")
             elif "njal deals" in rovien.asked:
                 $ mc.say("Tvůj otec.")
-                if gender == "M":
-                    $ zairis.say("To je zvláštní, čekal bych, že o něčem podobném by mi otec řekl... jste si jistý, že jste to správně pochopil?")
-                    $ mc.say("Jsem si jistý. Doslova říkal, že cechmistr Rumelin se rozhodl, že některý luxusní materiál bude lepší nakupovat pro celý cech najednou.")
-                else:
-                    $ zairis.say("To je zvláštní, čekal bych, že o něčem podobném by mi otec řekl... jste si jistá, že jste to správně pochopila?")
-                    $ mc.say("Jsem si jistá. Doslova říkal, že cechmistr Rumelin se rozhodl, že některý luxusní materiál bude lepší nakupovat pro celý cech najednou.")
+                $ zairis.say("To je zvláštní, čekal bych, že o něčem podobném by mi otec řekl... jste si jist[y], že jste to správně pochopil[a]?")
+                $ mc.say("Jsem si jist[y]. Doslova říkal, že cechmistr Rumelin se rozhodl, že některý luxusní materiál bude lepší nakupovat pro celý cech najednou.")
                 $ zairis.say("Pak je možné, že jsou ty plány ještě hodně v počátcích a možná se to týká jen jednoho nebo dvou druhů zboží.")
             elif "rumelin reasons" in lotte.asked:
                 $ mc.say("Karstenova manželka Lotte.")
@@ -109,19 +99,12 @@ label zairisOptions:
             $ zairis.asked.append("book 2")
             $ zairis.trust += 1
             $ zairis.say("Poslíček nakonec dorazil. Prý se u brány jeden kupec před ním snad půl dne dohadoval o výšce cla. Nakonec ho prý zaplatil, ale prohlašoval u toho, že to tak nenechá a bude si stěžovat.")
-        "Mohl bych si ještě promluvit s tvým otcem?" if gender == "M":
+        "Mohl[a] bych si ještě promluvit s tvým otcem?":
             hide mcPic
             $ zairis.say("Předpokládám, že ano. Dojdu se ho zeptat.")
             "Mladý elf se otočí a na chvíli zmizí do jiné místnosti. Slyšíš tlumený rozhovor a pak Zairise vystřídá jeho otec."
             jump rovienController
-        "Mohla bych si ještě promluvit s tvým otcem?" if gender == "F":
-            hide mcPic
-            $ zairis.say("Předpokládám, že ano. Dojdu se ho zeptat.")
-            "Přikývneš a mladý elf na chvíli zmizí do jiné místnosti. Slyšíš tlumený rozhovor a pak Zairise vystřídá jeho otec."
-            jump rovienController
-        "To je všechno, na co jsem se chtěl zeptat." if gender == "M":
-            return
-        "To je všechno, na co jsem se chtěla zeptat." if gender == "F":
+        "To je všechno, na co jsem se chtěl[a] zeptat.":
             return
     jump zairisOptions
 
@@ -152,15 +135,9 @@ label poetry:
                         $ zairis.say("Sága samotná byla o skupině trpaslíků, kteří žili kousek odtud v Chatevinu a rozhodli se bránit svůj domov před povstaleckou armádou, a jejímu autorovi se nějak podařilo i z obyčejných životních situací udělat téměř hrdinské činy hodné obdivu. A celková atmosféra přednesu a obecenstva působila skoro jako na bohoslužbě.")
                         $ mc.say("To vlastně nejsi tak daleko od pravdy...")
                         $ zairis.say("Asi nejvíc mě fascinovala práce s rytmem...")
-                        if gender == "M":
-                            "Debatou o trpasličích ságách a jejich vztahem k jiným druhům poezie strávíte mnohem víc času, než jsi původně plánoval. Pak vás ale přeruší Rovien, který Zairise pošle vrátit se ke skutečné práci."
-                        else:
-                            "Debatou o trpasličích ságách a jejich vztahem k jiným druhům poezie strávíte mnohem víc času, než jsi původně plánovala. Pak vás ale přeruší Rovien, který Zairise pošle vrátit se ke skutečné práci."
+                        "Debatou o trpasličích ságách a jejich vztahem k jiným druhům poezie strávíte mnohem víc času, než jsi původně plánoval[a]. Pak vás ale přeruší Rovien, který Zairise pošle vrátit se ke skutečné práci."
                     else:
-                        if gender == "M":
-                            "Debatou o různých druzích poezie a oblíbených autorech strávíte mnohem víc času, než jsi původně plánoval. Pak vás ale přeruší Rovien, který Zairise pošle vrátit se ke skutečné práci."
-                        else:
-                            "Debatou o různých druzích poezie a oblíbených autorech strávíte mnohem víc času, než jsi původně plánovala. Pak vás ale přeruší Rovien, který Zairise pošle vrátit se ke skutečné práci."
+                        "Debatou o různých druzích poezie a oblíbených autorech strávíte mnohem víc času, než jsi původně plánoval[a]. Pak vás ale přeruší Rovien, který Zairise pošle vrátit se ke skutečné práci."
                     $ time.addHours(2)
                     return
         "Taky se snažím psát...":
@@ -171,9 +148,7 @@ label poetry:
             $ zairis.say("Můžu si od vás něco přečíst?")
             show mcPic at menuImage
             menu:
-                "Zatím píšu hodně špatně, styděl bych se to komukoli ukázat..." if gender == "M":
-                    call mcBadPoet
-                "Zatím píšu hodně špatně, styděla bych se to komukoli ukázat..." if gender == "F":
+                "Zatím píšu hodně špatně, styděl[a] bych se to komukoli ukázat...":
                     call mcBadPoet
                 "Jistě, ale nemám teď nic u sebe.":
                     hide mcPic
@@ -201,10 +176,7 @@ label poetry:
                         "Zairis odvrátí pohled a na chvíli se odmlčí."
                         $ zairis.say("To byla nešťastná událost. Už to, že Zeran skončil u mistra jako Heinrich, který nikdy nepochopí citlivou elfí duši.", "sad")
                         $ zairis.say("Bylo by mnohem lepší, kdyby ho k sobě tehdy vzal strýc, ale ten prý neměl v dílně místo...", "sad")
-                        if gender == "M":
-                            $ mc.say("Minulost už nezměníme, ale pokud je šance ho očistit, chtěl bych to udělat. A ty dopisy jsou jediná věc, kterou máme v rukou.")
-                        else:
-                            $ mc.say("Minulost už nezměníme, ale pokud je šance ho očistit, chtěla bych to udělat. A ty dopisy jsou jediná věc, kterou máme v rukou.")
+                        $ mc.say("Minulost už nezměníme, ale pokud je šance ho očistit, chtěl[a] bych to udělat. A ty dopisy jsou jediná věc, kterou máme v rukou.")
                         $ mc.say("A kvůli které se na něj Heinrich rozzuřil.")
                         $ zairis.say("Já ale Zerana neznám nijak dobře. Nemyslím si, že bych dokázal poznat jeho styl.")
                 $ zairis.asked.append("poetry for Ada")

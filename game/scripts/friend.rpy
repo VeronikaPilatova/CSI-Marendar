@@ -92,10 +92,7 @@ label sentForKeyLate:
     if eckhard.alreadyMet == True:
         $ eckhard.say("Nic proti tobě, samozřejmě.")
     else:
-        if gender == "M":
-            $ eckhard.say("Promiň, co že jsi to chtěl?")
-        else:
-            $ eckhard.say("Promiň, co že jsi to chtěla?")
+        $ eckhard.say("Promiň, co že jsi to chtěl[a]?")
     call eckhardOptionsRemainingCheck from _call_eckhardOptionsRemainingCheck_2
     if optionsRemaining == 0:
         $ mc.say("Hlavně, že je klíč vrácený.")
@@ -149,10 +146,7 @@ label eckhardCellsIntro:
 label eckhardOptions:
     call eckhardOptionsRemainingCheck from _call_eckhardOptionsRemainingCheck_3
     if optionsRemaining == 0:
-        if gender == "M":
-            $ mc.say("Děkuji, to jsou všechny otázky.")
-        else:
-            $ mc.say("Děkuji, to jsou všechny otázky.")
+        $ mc.say("Děkuji, to jsou všechny otázky.")
         return
 
     show mcPic at menuImage
@@ -211,10 +205,7 @@ label eckhardOptions:
             hide mcPic
             $ eckhard.asked.append("defend boys")
             $ eckhard.say("Přimluvit? Já? Není Heinrichova domácnost jeho věc?", "surprised")
-            if gender == "M":
-                $ mc.say("To samozřejmě je, ale rád bych, aby neudělal ukvapené rozhodnutí jen proto, že bude zrovna naštvaný.")
-            else:
-                $ mc.say("To samozřejmě je, ale ráda bych, aby neudělal ukvapené rozhodnutí jen proto, že bude zrovna naštvaný.")
+            $ mc.say("To samozřejmě je, ale rád[a] bych, aby neudělal ukvapené rozhodnutí jen proto, že bude zrovna naštvaný.")
             $ eckhard.say("Jo, zuřit on umí. Co zase kluci provedli?")
             $ mc.say("Vypili mu část jeho zásob vína.")
             $ eckhard.say("Cože? Snad ne i chatevinské šedé, na které mě chtěl Heinrich pozvat! To by byla hrozná škoda.", "surprised")
@@ -382,10 +373,7 @@ label locksmith:
     $ locksmith.say("Co pro vás můžu udělat?")
     show mcPic at menuImage
     menu:
-        "Potřeboval bych duplikát tohoto klíče. Ideálně tak, abych tady nemusel ten klíč dlouho nechat…" if gender == "M":
-            hide mcPic
-            call duplicatingKey
-        "Potřebovala bych duplikát tohoto klíče. Ideálně tak, abych tady nemusela ten klíč dlouho nechat…" if gender == "F":
+        "Potřeboval[a] bych duplikát tohoto klíče. Ideálně tak, abych tady nemusel[a] ten klíč dlouho nechat...":
             hide mcPic
             call duplicatingKey
         "Vlastně nic, jenom se tu rozhlížím.":
@@ -403,10 +391,7 @@ label duplicatingKey:
         $ mc.say("Samozřejmě. Tady je moje pověření.")
         $ locksmith.say("To vypadá v pořádku… výborně, moc vám děkuji.")
     else:
-        if gender == "M":
-            $ mc.say("Ve skutečnosti… jsem si ho zapomněl vzít s sebou. A opravdu potřebuji pokračovat ve vyšetřování případu. Můžu vám své pověření ukázat až při převzetí toho duplikátu?")
-        else:
-            $ mc.say("Ve skutečnosti… jsem si ho zapomněla vzít s sebou. A opravdu potřebuji pokračovat ve vyšetřování případu. Můžu vám své pověření ukázat až při převzetí toho duplikátu?")
+        $ mc.say("Ve skutečnosti... jsem si ho zapomněl[a] vzít s sebou. A opravdu potřebuji pokračovat ve vyšetřování případu. Můžu vám své pověření ukázat až při převzetí toho duplikátu?")
         $ locksmith.say("To by asi mohlo být… dobře, tedy při převzetí. Ale budu vám velmi zavázán, když si na něj vzpomenete.")
     "Zámečník si od tebe vezme klíč od dílny mistra Heinricha a prohlédne si ho."
     $ locksmith.say("Výborně. Dejte mi chvilku na formu a do večera budete mít druhý klíč.")

@@ -55,8 +55,5 @@ label cellsEmpty:
     return
 
 label leavingCells:
-    if gender == "M":
-        "Vyjdeš ze studeného sklepa zpět na světlo s pocitem úlevy, že jsi toto místo nikdy nemusel poznat z té druhé strany."
-    else:
-        "Vyjdeš ze studeného sklepa zpět na světlo s pocitem úlevy, že jsi toto místo nikdy nemusela poznat z té druhé strany."
+    "Vyjdeš ze studeného sklepa zpět na světlo s pocitem úlevy, že jsi toto místo nikdy nemusel[a] poznat z té druhé strany."
     return

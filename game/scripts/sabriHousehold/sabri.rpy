@@ -67,10 +67,7 @@ label sabriOptions:
         "Proč zrovna jako ona?" if "hayfa" in sabri.asked and "what makes hayfa special" not in sabri.asked:
             hide mcPic
             $ sabri.asked.append("what makes hayfa special")
-            if gender == "M":
-                $ sabri.say("Protože bude chránit město do roztrhání těla a protože je neobyčejně schopná. Ale to bys přece měl vědět lépe než já. Já nesloužím v hlídce, ty ano.")
-            else:
-                $ sabri.say("Protože bude chránit město do roztrhání těla a protože je neobyčejně schopná. Ale to bys přece měla vědět lépe než já. Já nesloužím v hlídce, ty ano.")
+            $ sabri.say("Protože bude chránit město do roztrhání těla a protože je neobyčejně schopná. Ale to bys přece měl[a] vědět lépe než já. Já nesloužím v hlídce, ty ano.")
         "Jak jste se poznali?" if "hayfa" in sabri.asked and "meeting hayfa" not in sabri.asked:
             hide mcPic
             $ sabri.asked.append("meeting hayfa")

@@ -124,27 +124,17 @@ label backToEvidenceWall:
 label suspectListDelivered:
     if "out of office" not in rauvin.status:
         "Jakmile si tě Rauvin všimne, mávne na tebe listem papíru."
-        if gender == "M":
-            $ rauvin.say("Hostinská Salma ti posílá seznam hostů ze včerejška, prý sis ho vyžádal.")
-            $ mc.say("To je pravda. Myslel jsem, že by nám pomohlo vědět, kdo všechno mohl slyšet o dokončených střevících.")
-        else:
-            $ rauvin.say("Hostinská Salma ti posílá seznam hostů ze včerejška, prý sis ho vyžádala.")
-            $ mc.say("To je pravda. Myslela jsem, že by nám pomohlo vědět, kdo všechno mohl slyšet o dokončených střevících.")
+        $ rauvin.say("Hostinská Salma ti posílá seznam hostů ze včerejška, prý sis ho vyžádal.[a]")
+        $ mc.say("To je pravda. Myslel[a] jsem, že by nám pomohlo vědět, kdo všechno mohl slyšet o dokončených střevících.")
         "Rauvin se mírně zamračí."
         $ rauvin.say("Ta úvaha dává smysl, ale nejsem si jistý, jestli na procházení celého seznamu máme čas. Einionovy slavnosti jsou už za čtyři dny a jen obejít všechny tyhle lidi by mohlo zabrat celý den, možná víc.")
         $ rauvin.say("Zkus se zaměřit na jiné stopy a pokud by žádná z nich nikam nevedla, k seznamu hostů se můžeš vrátit později.")
     else:
         "Dojde k tobě Solian a podá ti list papíru."
-        if gender == "M":
-            $ solian.say("Tady ti Salma posílá seznam hostů ze včerejška, prý jsi chtěl vědět, kdo mohl slyšet o Heinrichově dokončeném díle. Znamená to, že nemáš žádnou konkrétní stopu?")
-        else:
-            $ solian.say("Tady ti Salma posílá seznam hostů ze včerejška, prý jsi chtěla vědět, kdo mohl slyšet o Heinrichově dokončeném díle. Znamená to, že nemáš žádnou konkrétní stopu?")
+        $ solian.say("Tady ti Salma posílá seznam hostů ze včerejška, prý jsi chtěl[a] vědět, kdo mohl slyšet o Heinrichově dokončeném díle. Znamená to, že nemáš žádnou konkrétní stopu?")
         show mcPic at menuImage
         menu:
-            "Konkrétní stopy mám, ale chtěl jsem být důkladný." if gender == "M":
-                hide mcPic
-                $ solian.say("Tak se zaměř spíš na ně. Einionovy slavnosti jsou za čtyři dny a už jenom oběhnout celý tenhle seznam může zabrat víc času, než vůbec máš.", "angry")
-            "Konkrétní stopy mám, ale chtěla jsem být důkladná." if gender == "F":
+            "Konkrétní stopy mám, ale chtěl[a] jsem být důkladn[y].":
                 hide mcPic
                 $ solian.say("Tak se zaměř spíš na ně. Einionovy slavnosti jsou za čtyři dny a už jenom oběhnout celý tenhle seznam může zabrat víc času, než vůbec máš.", "angry")
             "Zatím méně, než by se mi líbilo.":
@@ -159,22 +149,15 @@ label suspectListDelivered:
 label AmlCheckResult:
     if "out of office" not in rauvin.status:
         "Dojde k tobě Rauvin."
-        if gender == "M":
-            $ rauvin.say("Vypadá to, že se změnou v obchodování ševcovských mistrů jsi měl pravdu. Nechal jsem to prověřit a v ostatních hospodách to vypadá přesně stejně.")
-        else:
-            $ rauvin.say("Vypadá to, že se změnou v obchodování ševcovských mistrů jsi měla pravdu. Nechal jsem to prověřit a v ostatních hospodách to vypadá přesně stejně.")
+        $ rauvin.say("Vypadá to, že se změnou v obchodování ševcovských mistrů jsi měl[a] pravdu. Nechal jsem to prověřit a v ostatních hospodách to vypadá přesně stejně.")
         $ rauvin.say("Mistra Njala několik obchodníků odmítlo i jinde a mistra Rumelina nikdo neviděl nakupovat luxusní materiál, přestože ho podle všeho má a používá.")
         $ mc.say("Pokusím se zjistit, kdo za tím stojí.")
         "Rauvin krátce kývne."
         $ rauvin.say("Postupuj opatrně, a pokud něco zjistíš, určitě mi to nahlaš.")
     else:
         "Přijde k tobě Solian se zamračeným výrazem."
-        if gender == "M":
-            $ solian.say("Jak jsi řešil ty změny v obchodování...", "angry")
-            $ mc.say("Přišlo mi to podezřelé, a tak jsem chtěl vědět, jestli se to změnilo opravdu i v jiných hospodách než u Salmy.")
-        else:
-            $ solian.say("Jak jsi řešila ty změny v obchodování...")
-            $ mc.say("Přišlo mi to podezřelé, a tak jsem chtěla vědět, jestli se to změnilo opravdu i v jiných hospodách než u Salmy.")
+        $ solian.say("Jak jsi řešil[a] ty změny v obchodování...", "angry")
+        $ mc.say("Přišlo mi to podezřelé, a tak jsem chtěl[a] vědět, jestli se to změnilo opravdu i v jiných hospodách než u Salmy.")
         $ solian.say("Nechali jsme to prověřit a mistra Njala prý opravdu několik obchodníků odmítlo i jinde. Ale...")
         $ mc.say("A co mistr Rumelin? Viděl ho někdo v poslední době nakupovat luxusní materiál?")
         $ solian.say("Pokud vím, tak ne. Ale souvisí to nějak s tvým případem?", "angry")
@@ -187,10 +170,7 @@ label AmlCheckResult:
             "Pokud tu dochází ke zločinu, budu ho řešit.":
                 hide mcPic
                 $ solian.trust -= 1
-                if gender == "M":
-                    $ solian.say("Hlavně buď opatrný a nestrkej do ničeho zbytečně prsty.", "angry")
-                else:
-                    $ solian.say("Hlavně buď opatrná a nestrkej do ničeho zbytečně prsty.", "angry")
+                $ solian.say("Hlavně buď opatrn[y] a nestrkej do ničeho zbytečně prsty.", "angry")
         $ mc.say("V každém případě díky za ověření, že Salma měla pravdu.")
         "Solian jen kývne a vrátí se k vlastní práci."
         $ solian.asked.append("less deals")
@@ -203,10 +183,7 @@ label AmlMerchantListDelivered:
     if "out of office" not in rauvin.status:
         "Přijde k tobě Rauvin s listem papíru v ruce."
         if "less deals checked" in status:
-            if gender == "M":
-                $ rauvin.say("Mistr Njal ti tady posílá seznam jmen. Týká se to myslím těch podezřelých obchodů, které jsi prověřoval.")
-            else:
-                $ rauvin.say("Mistr Njal ti tady posílá seznam jmen. Týká se to myslím těch podezřelých obchodů, které jsi prověřovala.")
+            $ rauvin.say("Mistr Njal ti tady posílá seznam jmen. Týká se to myslím těch podezřelých obchodů, které jsi prověřoval[a].")
         else:
             $ rauvin.say("Mistr Njal ti tady posílá nějaký seznam jmen.")
         if "AML" in lotte.asked:
@@ -216,23 +193,14 @@ label AmlMerchantListDelivered:
         if "less deals checked" not in status:
             "Rauvin povytáhne obočí."
             $ rauvin.say("O co vlastně jde?")
-            if gender == "M":
-                $ mc.say("Mistr Njal má v poslední době zvláštní problémy s nákupy materiálu, tak jsem chtěl prověřit, jestli to není snaha poškodit ševcovský cech jako celek. Njal mi slíbil seznam obchodníků, kteří mu odmítli něco prodat.")
-            else:
-                $ mc.say("Mistr Njal má v poslední době zvláštní problémy s nákupy materiálu, tak jsem chtěla prověřit, jestli to není snaha poškodit ševcovský cech jako celek. Njal mi slíbil seznam obchodníků, kteří mu odmítli něco prodat.")
+            $ mc.say("Mistr Njal má v poslední době zvláštní problémy s nákupy materiálu, tak jsem chtěl[a] prověřit, jestli to není snaha poškodit ševcovský cech jako celek. Njal mi slíbil seznam obchodníků, kteří mu odmítli něco prodat.")
             if "AML" in lotte.asked:
-                if gender == "M":
-                    $ rauvin.say("To rozhodně za prověření stojí. Co jsi zatím zjistil?")
-                else:
-                    $ rauvin.say("To rozhodně za prověření stojí. Co jsi zatím zjistila?")
+                $ rauvin.say("To rozhodně za prověření stojí. Co jsi zatím zjistil[a]?")
             else:
                 $ rauvin.say("To rozhodně za prověření stojí. Můžu ten seznam rovnou předat našim lidem, ať se nezdržuješ obcházením většího množství lidí.")
         else:
             if "AML" in lotte.asked:
-                if gender == "M":
-                    $ rauvin.say("Co jsi zatím zjistil?")
-                else:
-                    $ rauvin.say("Co jsi zatím zjistila?")
+                $ rauvin.say("Co jsi zatím zjistil[a]?")
         if "AML" in lotte.asked:
             show mcPic at menuImage
             menu:
@@ -247,36 +215,24 @@ label AmlMerchantListDelivered:
     else:
         "Přijde k tobě Solian s papírem v ruce."
         if "less deals checked" in status:
-            if gender == "M":
-                $ solian.say("Chápu správně, že jsi otravoval mistra Njala tím podezřením na změny v obchodech?", "angry")
-            else:
-                $ solian.say("Chápu správně, že jsi otravovala mistra Njala tím podezřením na změny v obchodech?", "angry")
+            $ solian.say("Chápu správně, že jsi otravoval[a] mistra Njala tím podezřením na změny v obchodech?", "angry")
             if "less deals" in solian.asked:
                 $ solian.say("Neříkal jsem ti, že by to měl řešit především cech samotný?", "angry")
             show mcPic at menuImage
             menu:
                 "Rauvin by to chtěl vyšetřit." if "less deals" in solian.asked:
                     hide mcPic
-                    if gender == "M":
-                        $ solian.say("Říká někdo, kdo ho zná dva dny. Rauvin by ti hlavně řekl, abys byl opatrný a nešlápnul někomu na kuří oko.", "angry")
-                    else:
-                        $ solian.say("Říká někdo, kdo ho zná dva dny. Rauvin by ti hlavně řekl, abys byla opatrná a nešlápla někomu na kuří oko.", "angry")
+                    $ solian.say("Říká někdo, kdo ho zná dva dny. Rauvin by ti hlavně řekl, abys byl[a] opatrn[y] a nešlápnul někomu na kuří oko.", "angry")
                     $ solian.say("A především, Rauvin tu teď není a my ostatní musíme řešit nejdřív ty případy, na kterých záleží někomu důležitému. Jinak bychom taky mohli mít ještě míň lidí a zdrojů, než máme teď.")
                 "Rauvin mě pověřil, ať to vyšetřím." if "less deals" not in solian.asked:
                     hide mcPic
-                    if gender == "M":
-                        $ solian.say("To je možné. A také ti určitě řekl, že máš být opatrný a nešlápnout někomu na kuří oko.", "angry")
-                    else:
-                        $ solian.say("To je možné. A také ti určitě řekl, že máš být opatrná a nešlápnout někomu na kuří oko.", "angry")
+                    $ solian.say("To je možné. A také ti určitě řekl, že máš být opatrn[y] a nešlápnout někomu na kuří oko.", "angry")
                     $ solian.say("A především, Rauvin tu teď není a my ostatní musíme řešit nejdřív ty případy, na kterých záleží někomu důležitému. Jinak bychom taky mohli mít ještě míň lidí a zdrojů, než máme teď.")
                 "Mistr Njal mne požádal o pomoc.":
                     hide mcPic
                     "Solian se zamračí."
                     $ solian.say("Pak měl radši požádat hlídku jako celek.", "angry")
-                    if gender == "M":
-                        $ solian.say("Jestli je to něco, na čem mistru Njalovi záleží, tak prosím. Ale i tak buď opatrný, abys proti hlídce nepoštval někoho důležitého. Nebo abys nezanedbával ztracené dílo mistra Heinricha.", "angry")
-                    else:
-                        $ solian.say("Jestli je to něco, na čem mistru Njalovi záleží, tak prosím. Ale i tak buď opatrná, abys proti hlídce nepoštvala někoho důležitého. Nebo abys nezanedbávala ztracené dílo mistra Heinricha.", "angry")
+                    $ solian.say("Jestli je to něco, na čem mistru Njalovi záleží, tak prosím. Ale i tak buď opatrn[y], abys proti hlídce nepoštval[a] někoho důležitého. Nebo abys nezanedbával[a] ztracené dílo mistra Heinricha.", "angry")
         else:
             $ solian.say("Mistr Njal ti tady posílá seznam jmen. Nechápu ale, jak to souvisí s krádeží u mistra Heinricha.", "angry")
             show mcPic at menuImage
@@ -292,18 +248,12 @@ label AmlMerchantListDelivered:
                             "Solian kývne, podá ti list se jmény a vrátí se zas ke své práci."
                         "Pokud tu dochází ke zločinu, budu ho řešit.":
                             hide mcPic
-                            if gender == "M":
-                                $ solian.say("Hlavně buď opatrný a nestrkej do ničeho zbytečně prsty.", "angry")
-                            else:
-                                $ solian.say("Hlavně buď opatrná a nestrkej do ničeho zbytečně prsty.", "angry")
+                            $ solian.say("Hlavně buď opatrn[y] a nestrkej do ničeho zbytečně prsty.", "angry")
                 "Nejspíš nijak, ale mistr Njal mne požádal o pomoc.":
                     hide mcPic
                     "Solian se zamračí."
                     $ solian.say("Pak měl radši požádat hlídku jako celek.", "angry")
-                    if gender == "M":
-                        $ solian.say("Jestli je to něco, na čem mistru Njalovi záleží, tak prosím. Ale i tak buď opatrný, abys proti hlídce nepoštval někoho důležitého. Nebo abys nezanedbával ztracené dílo mistra Heinricha.", "angry")
-                    else:
-                        $ solian.say("Jestli je to něco, na čem mistru Njalovi záleží, tak prosím. Ale i tak buď opatrná, abys proti hlídce nepoštvala někoho důležitého. Nebo abys nezanedbávala ztracené dílo mistra Heinricha.", "angry")
+                    $ solian.say("Jestli je to něco, na čem mistru Njalovi záleží, tak prosím. Ale i tak buď opatrn[y], abys proti hlídce nepoštval[a] někoho důležitého. Nebo abys nezanedbával[a] ztracené dílo mistra Heinricha.", "angry")
     $ status.remove("awaiting AML merchant list")
     $ status.append("AML merchant list delivered")
     $ time.addMinutes(5)
@@ -312,15 +262,9 @@ label AmlMerchantListDelivered:
 label guarhouseHeinrichComplained:
     if "out of office" not in rauvin.status:
         $ status.append("heinrich complained")
-        if gender == "M":
-            "Rauvin na tebe ještě z dálky mávne a ukáže směrem k té místnosti, ve které jsi dřív mluvil s mistrem Heinrichem. Tváří se ještě vážněji než obvykle a už to samo o sobě tě dokáže znervóznit."
-        else:
-            "Rauvin na tebe ještě z dálky mávne a ukáže směrem k té místnosti, ve které jsi dřív mluvila s mistrem Heinrichem. Tváří se ještě vážněji než obvykle a už to samo o sobě tě dokáže znervóznit."
+        "Rauvin na tebe ještě z dálky mávne a ukáže směrem k té místnosti, ve které jsi dřív mluvil[a] s mistrem Heinrichem. Tváří se ještě vážněji než obvykle a už to samo o sobě tě dokáže znervóznit."
         scene bg interviewroom
-        if gender == "M":
-            $ rauvin.say("Měl bys vědět, že tady byl mistr Heinrich a stěžoval si na tebe.", "angry")
-        else:
-            $ rauvin.say("Měla bys vědět, že tady byl mistr Heinrich a stěžoval si na tebe.", "angry")
+        $ rauvin.say("Měl[a] bys vědět, že tady byl mistr Heinrich a stěžoval si na tebe.", "angry")
         $ heinrichComplaint = "Prý se k němu nechováš s dostatečným respektem"
 
         python:
@@ -330,10 +274,7 @@ label guarhouseHeinrichComplained:
                 heinrichComplaint += ", kladeš naprosto zbytečné otázky"
             if "secret lover" in victim.asked or "relationship" in victim.asked:
                 heinrichComplaint += ", strkáš nos do věcí, do kterých ti nic není,"
-            if gender == "M":
-                heinrichComplaint += " a měl by sis víc hledět své práce."
-            else:
-                heinrichComplaint += " a měla by sis víc hledět své práce."
+            heinrichComplaint += " a měl[a] by sis víc hledět své práce."
 
         $ rauvin.say("%(heinrichComplaint)s.")
         if rauvin.trust > 4:
@@ -345,10 +286,7 @@ label guarhouseHeinrichComplained:
         else:
             $ rauvin.say("Radil bych ti mistra Heinricha neprovokovat. Je to vážený muž a městská hlídka potřebuje dobrou pověst.")
     else:
-        if gender == "M":
-            "Solian rázným krokem přijde až k tobě, popadne tě za paži a odvede tě do hloubi strážnice. Na krátký okamžik zaváháš, zda to má být zatčení, dojdete však pouze do místnosti, v níž jsi předtím mluvil s Heinrichem."
-        else:
-            "Solian rázným krokem přijde až k tobě, popadne tě za paži a odvede tě do hloubi strážnice. Na krátký okamžik zaváháš, zda to má být zatčení, dojdete však pouze do místnosti, v níž jsi předtím mluvila s Heinrichem."
+        "Solian rázným krokem přijde až k tobě, popadne tě za paži a odvede tě do hloubi strážnice. Na krátký okamžik zaváháš, zda to má být zatčení, dojdete však pouze do místnosti, v níž jsi předtím mluvil[a] s Heinrichem."
         scene bg interviewroom
         $ solian.say("Byl tady mistr Heinrich. Jak se to k němu prosím tě chováš?", "angry")
         $ heinrichComplaint = "Prý vůbec nemáš respekt"
@@ -360,10 +298,7 @@ label guarhouseHeinrichComplained:
                 heinrichComplaint += ", ptáš se na úplné zbytečnosti"
             if "secret lover" in victim.asked or "relationship" in victim.asked:
                 heinrichComplaint += ", strkáš nos do věcí, do kterých ti nic není,"
-            if gender == "M":
-                heinrichComplaint += " a měl by sis víc hledět své práce."
-            else:
-                heinrichComplaint += " a měla by sis víc hledět své práce."
+            heinrichComplaint += " a měl[a] by sis víc hledět své práce."
 
         $ solian.say("%(heinrichComplaint)s.")
         $ solian.say("Uvědomuješ si, že ten člověk si velmi dobře rozumí s purkmistrem a sám se možná za pár dní stane cechmistrem? Vážně chceš, aby zrovna on měl pocit, že nestojíme za nic a přesně tolik by nám město mělo platit?", "angry")
@@ -378,10 +313,7 @@ label zeranWitnessesChecked:
         $ rauvin.say("Janis ho na tu noc skutečně najal na čištění žump a do rána byla práce odvedená. Francek skutečně pracoval nedaleko a matně si vzpomíná, že Zerana v noci potkal, i když spolu nemluvili.")
     else:
         "Dojde za tebou Solian."
-        if gender == "M":
-            $ solian.say("Jak jsi chtěl prověřit Zeranovy údajné svědky, tak nejsou schopní říct nic konkrétního.")
-        else:
-            $ solian.say("Jak jsi chtěla prověřit Zeranovy údajné svědky, tak nejsou schopní říct nic konkrétního.")
+        $ solian.say("Jak jsi chtěl[a] prověřit Zeranovy údajné svědky, tak nejsou schopní říct nic konkrétního.")
         $ solian.say("Janis ho na tu noc opravdu najal na čištění žump a do rána byla práce odvedená, nic jiného neví. Francek skutečně pracoval poblíž a prý Zerana možná v noci potkal, ale nemluvili spolu.")
         $ mc.say("Takže jeho výpověď se potvrdila?")
         $ solian.say("Možná. Ale pevný důkaz to není. Francek si není úplně jistý a stejně není dost důvěryhodný, aby jen jeho slovo stačilo.")
@@ -456,10 +388,7 @@ label nervousSolian:
             $ solian.say("A co tedy chceš dělat? Říct mistru Heinrichovi, že jsme to nezvládli?", "angry")
             $ mc.say("Lepší než zatknout někoho, proti komu nemáme dostatečné důkazy.")
             $ solian.say("V tom případě se běž vrátit k případu a koukej ty svoje dostatečné důkazy hodně rychle najít.", "angry")
-            if gender == "M":
-                $ solian.say("Jestli mi do zítřejšího poledne nedokážeš říct, koho můžeme zatknout, bude to znamenat, že ses neosvědčil. Určitě dokážeš domyslet, co to pro tvoje další působení v hlídce znamená.")
-            else:
-                $ solian.say("Jestli mi do zítřejšího poledne nedokážeš říct, koho můžeme zatknout, bude to znamenat, že ses neosvědčila. Určitě dokážeš domyslet, co to pro tvoje další působení v hlídce znamená.")
+            $ solian.say("Jestli mi do zítřejšího poledne nedokážeš říct, koho můžeme zatknout, bude to znamenat, že ses neosvědčil[a]. Určitě dokážeš domyslet, co to pro tvoje další působení v hlídce znamená.")
             show mcPic at menuImage
             menu:
                 "Vynasnažím se.":
@@ -476,10 +405,7 @@ label nervousSolian:
                     $ solian.say("Přijmi teď tedy mou dobrou radu a nenech se už zdržovat.", "angry")
         "Můžeme zatknout mistra Kaspara." if "confession" in kaspar.asked:
             hide mcPic
-            if gender == "M":
-                $ solian.say("Jseš si jistý? Je to vážený mistr a navíc se možná bude ucházet o místo cechmistra. Musíme si být opravdu jistí, než ho z čehokoli obviníme.")
-            else:
-                $ solian.say("Jseš si jistá? Je to vážený mistr a navíc se možná bude ucházet o místo cechmistra. Musíme si být opravdu jistí, než ho z čehokoli obviníme.")
+            $ solian.say("Jseš si jist[y]? Je to vážený mistr a navíc se možná bude ucházet o místo cechmistra. Musíme si být opravdu jistí, než ho z čehokoli obviníme.")
             $ mc.say("Sám se mi přiznal, že v dílně mistra Heinricha byl a že jeho boty zničit chtěl. Doufal, že ho tím znemožní právě před tou volbou cechmistra, do které se chtěli hlásit oba.")
             $ solian.say("To ale před soudem nezopakuje. Vždyť tím by znemožnil hlavně sám sebe. Je proti němu i jiný důkaz?", "angry")
             $ mc.say("Paní Lisbeth ho do té dílny sama pustila. Namluvil jí, že si boty chce jen prohlédnout.")
@@ -511,10 +437,7 @@ label nervousSolian:
             if "police business" in njal.asked:
                 $ mc.say("Částečně. Njal s ním o ukradeném střihu mluvil, ale o vloupání do dílny už ne, pokud vím.")
             else:
-                if gender == "M":
-                    $ mc.say("To nevím. Njal to neříkal a s Rumelinem jsem o tom nemluvil.")
-                else:
-                    $ mc.say("To nevím. Njal to neříkal a s Rumelinem jsem o tom nemluvila.")
+                $ mc.say("To nevím. Njal to neříkal a s Rumelinem jsem o tom nemluvil[a].")
             $ solian.say("V tom případě za ním zajdu, aby z toho soudu nebyl překvapený. Mohlo by ho to ukázat ve špatném světle.")
         "Můžeme zatknout Zerana." if zeranNote.isActive == True and zeran.status != "cleared":
             hide mcPic

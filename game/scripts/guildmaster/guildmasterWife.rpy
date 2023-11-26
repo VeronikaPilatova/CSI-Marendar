@@ -44,21 +44,14 @@ label nireviaFirst:
         $ nirevia.say("Pak asi budete chtít mluvit s mým manželem, ten bude touto dobou pracovat v budově cechu na náměstí.")
     else:
         $ nirevia.say("Pak asi budete chtít mluvit s mým manželem. Touto dobou už ale nepracuje.")
-    if gender == "M":
-        $ mc.say("Mohl bych položit několik otázek vám?")
-        "Paní Nirevia se na moment zamračí, ale pak kývne a pokyne ti, abys šel dál."
-    else:
-        $ mc.say("Mohla bych položit několik otázek vám?")
-        "Paní Nirevia se na moment zamračí, ale pak kývne a pokyne ti, abys šla dál."
+    $ mc.say("Mohl[a] bych položit několik otázek vám?")
+    "Paní Nirevia se na moment zamračí, ale pak kývne a pokyne ti, abys [sel] dál."
 
     scene bg rumelin inside
     $ nirevia.say("Co se ztratilo a komu?")
     $ mc.say("Mistru Heinrichovi někdo v noci ukradl jeho čerstvě dokončený mistrovský výrobek.")
     $ nirevia.say("Na Einionovy slavnosti? To by pro mistra Heinricha mohl být vážný problém.")
-    if gender == "M":
-        $ mc.say("Právě proto bych uvítal vaši pomoc při vyšetřování.")
-    else:
-        $ mc.say("Právě proto bych uvítala vaši pomoc při vyšetřování.")
+    $ mc.say("Právě proto bych uvítal[a] vaši pomoc při vyšetřování.")
     $ nirevia.say("Ptejte se a já se pokusím odpovědět.")
     return
 
@@ -66,10 +59,7 @@ label nireviaAgain:
     scene bg rumelin outside
     "Znovu zaklepeš na dveře domu, kde žije cechmistr Rumelin se svou manželkou."
     $ nirevia.say("Dobrý den. Jak pokračuje vaše pátrání? Podařilo se vám najít Heinrichův výrobek a zloděje?")
-    if gender == "M":
-        $ mc.say("Stále po něm pátrám. Mohl bych vám ještě položit několik otázek?")
-    else:
-        $ mc.say("Stále po něm pátrám. Mohla bych vám ještě položit několik otázek?")
+    $ mc.say("Stále po něm pátrám. Mohl[a] bych vám ještě položit několik otázek?")
     $ nirevia.say("Pokud to pomůže, pokusím se odpovědět.")
     scene bg rumelin inside
     return
@@ -177,10 +167,7 @@ label nireviaOptions:
             $ nirevia.say("Pravděpodobně velmi dobře. Taková spolupráce umožní mistrům dosáhnout výsledku, na který by sami nikdy nedosáhli.")
             $ nirevia.say("Pamatuji si, jak před mnoha lety tesaři společně vytvořili čtveřici sousoší symbolizujících roční doby. Dohromady je těch soch snad patnáct a všechny viditelně patří jedna k druhé. Myslím, že to bylo snad nejlepší dílo, které toto město vidělo.")
             if race == "elf":
-                if gender == "M":
-                    $ nirevia.say("Ty sochy jsou pořád v našem chrámu, určitě jste si jich už musel všimnout.")
-                else:
-                    $ nirevia.say("Ty sochy jsou pořád v našem chrámu, určitě jste si jich už musela všimnout.")
+                $ nirevia.say("Ty sochy jsou pořád v našem chrámu, určitě jste si jich už musel[a] všimnout.")
             else:
                 $ nirevia.say("Ty sochy jsou pořád v našem chrámu. Tím myslím chrám rovnováhy, samozřejmě. Když slušně požádáte, určitě vás nechají si ty sochy prohlédnout.")
             $ nirevia.say("Je škoda, že v našem cechu nic takového není možné.")

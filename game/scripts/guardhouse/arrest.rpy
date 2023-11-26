@@ -37,10 +37,7 @@ label endArrest:
 label zeranVagrancyArrestReaction:
     scene bg cells entrance
     "Když začneš stoupat po schodech od chodby s celami zpět na denní světlo, zjistíš, že dveře zpět do hlavní místnosti jsou zavřené a před nimi, přímo na vrcholku schodiště, stojí Hayfa."
-    if gender == "M":
-        $ hayfa.say("Vážně jsi právě zahodil svou budoucnost jen proto, aby sis něco dokázal?")
-    else:
-        $ hayfa.say("Vážně jsi právě zahodila svou budoucnost jen proto, aby sis něco dokázala?")
+    $ hayfa.say("Vážně jsi právě zahodil[a] svou budoucnost jen proto, aby sis něco dokázal[a]?")
     $ mc.say("... prosím?")
     if gender == "M":
         $ hayfa.say("Zatknul jsi Zerana. Za potulku. Uvnitř domu, ve kterém bydlí. Za takové zneužití moci by se nestyděl ani Velin.", "angry")

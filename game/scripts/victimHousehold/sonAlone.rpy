@@ -142,10 +142,7 @@ label aachimAloneOptions:
             hide mcPic
             $ actionsTaken = 4
             "Aachim na chvíli zaváhá."
-            if gender == "M":
-                $ son.say("Vlastně bych vás asi neměl nechat moc se ve věcech hrabat... kdybyste je nevrátil na přesně správné místo a tak...", "surprised")
-            else:
-                $ son.say("Vlastně bych vás asi neměl nechat moc se ve věcech hrabat... kdybyste je nevrátila na přesně správné místo a tak...", "surprised")
+            $ son.say("Vlastně bych vás asi neměl nechat moc se ve věcech hrabat... kdybyste je nevrátil[a] na přesně správné místo a tak...", "surprised")
             $ mc.say("Umím se chovat hodně opatrně.")
             $ son.say("O tom nepochybuju, ale... já nevím...", "sad")
         "Asi bych měl zase jít" if currentLocation == "workshop night" and gender == "M":

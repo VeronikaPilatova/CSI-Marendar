@@ -43,10 +43,7 @@ label rovienOptions:
             hide mcPic
             $ rovien.asked.append("njal deals")
             $ rovien.say("Nic mě nenapadá, proč se ptáte?")
-            if gender == "M":
-                $ mc.say("Slyšel jsem, že jste mu odmítl prodat materiál na jeho práci.")
-            else:
-                $ mc.say("Slyšela jsem, že jste mu odmítl prodat materiál na jeho práci.")
+            $ mc.say("Slyšel[a] jsem, že jste mu odmítl prodat materiál na jeho práci.")
             "Rovien se zarazí."
             $ rovien.say("To nebylo... nic osobního. Jen...")
             if "AML" in lotte.asked:

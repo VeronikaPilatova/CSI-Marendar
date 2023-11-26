@@ -9,10 +9,7 @@ label endOfDay:
         if "duplicate key" in status:
             scene bg heinrich outside night
             "Cestou spát se ještě jednou podíváš směrem k Heinrichově dílně a stiskneš v ruce svou kopii klíče."
-            if gender == "M":
-                "Převzetí u zámečníka bylo ještě snazší, než jsi čekal. Stačilo jen ukázat pověření člena hlídky a úslužný usměvavý hobit už neměl žádné další otázky. Ten humbuk s hořícím vozem ale přišel v nejhorší možnou chvíli."
-            else:
-                "Převzetí u zámečníka bylo ještě snazší, než jsi čekala. Stačilo jen ukázat pověření člena hlídky a úslužný usměvavý hobit už neměl žádné další otázky. Ten humbuk s hořícím vozem ale přišel v nejhorší možnou chvíli."
+            "Převzetí u zámečníka bylo ještě snazší, než jsi čekal[a]. Stačilo jen ukázat pověření člena hlídky a úslužný usměvavý hobit už neměl žádné další otázky. Ten humbuk s hořícím vozem ale přišel v nejhorší možnou chvíli."
             "Na ulici se pořád pohybují lidé, ve většině domů se svítí a nezdá se, že by se to mělo dost rychle změnit. Rozhodně se nemůžeš spolehnout na to, že by tě v Heinrichově domě nikdo neviděl."
             "Rozhodneš se, že jestli máš opravdu jít v noci do dílny, bude to muset počkat."
     if time.days == 2 and "duplicate key" in status:
@@ -25,10 +22,7 @@ label endOfDay:
                 call workshopNightController
 
     scene bg hayloft night
-    if gender == "M":
-        "Nahoru na seník se sotva vyškrábeš, jak jsi unavený. Zabalíš se do deky a okamžitě usneš."
-    else:
-        "Nahoru na seník se sotva vyškrábeš, jak jsi unavená. Zabalíš se do deky a okamžitě usneš."
+    "Nahoru na seník se sotva vyškrábeš, jak jsi unaven[y]. Zabalíš se do deky a okamžitě usneš."
 
     if "seen during break in" in status:
         jump workshopNightArrestAfter

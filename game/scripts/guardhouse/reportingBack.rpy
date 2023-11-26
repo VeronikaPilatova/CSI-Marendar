@@ -5,10 +5,7 @@ label reportingBack:
         $ rauvin.trust -= 2
         $ hayfa.trust -= 2
         $ status.append("no clue")
-        if gender == "M":
-            $ rauvin.say("V tom případě bys měl s pátráním co nejdřív začít, Einionovy slavnosti začínají už za čtyři dny.")
-        else:
-            $ rauvin.say("V tom případě bys měla s pátráním co nejdřív začít, Einionovy slavnosti začínají už za čtyři dny.")
+        $ rauvin.say("V tom případě bys měl[a] s pátráním co nejdřív začít, Einionovy slavnosti začínají už za čtyři dny.")
         return
 
     show mcPic at menuImage
@@ -26,20 +23,14 @@ label reportingBack:
             hide mcPic
             $ rauvin.asked.append("break-in")
             $ rauvin.say("A myslíš, že to souvisí s tvým případem? Boty by se myslím do zásuvky nevešly, nemohlo se to stát někdy dřív?")
-            if gender == "M":
-                $ mc.say("Mistr Heinrich o tom nevěděl, dokud jsem na to neupozornil. Víc zatím nevím.")
-            else:
-                $ mc.say("Mistr Heinrich o tom nevěděl, dokud jsem na to neupozornila. Víc zatím nevím.")
+            $ mc.say("Mistr Heinrich o tom nevěděl, dokud jsem na to neupozornil[a]. Víc zatím nevím.")
             $ rauvin.trust += 1
             $ hayfa.trust += 1
         "Jedna ze zásuvek v dílně mistra Heinricha byla násilím vylomená." if "break-in" in clues and "missing stuff1" not in workshop.checked and "break-in1" not in cluesReported:
             hide mcPic
             $ rauvin.asked.append("break-in")
             $ rauvin.say("Boty by se myslím do zásuvky nevešly, znamená to, že zloděj hledal ještě něco jiného? Ztratilo se z té zásuky něco?")
-            if gender == "M":
-                $ mc.say("Nevím, neptal jsem se.")
-            else:
-                $ mc.say("Nevím, neptala jsem se.")
+            $ mc.say("Nevím, neptal[a] jsem se.")
             $ rauvin.trust -= 1
             $ hayfa.trust -= 1
         "V krbu v dílně mistra Heinricha jsem našel stužku, která odpovídala popisu ztracených střevíců." if "burned evidence" in clues and "shoes description" in clues and "burned evidence" not in cluesReported and gender == "M":
@@ -82,10 +73,7 @@ label reportingBack:
             hide mcPic
             $ mc.say("Podle Karstenovy manželky Lotte se jednalo o jeho instrukce.")
             $ rauvin.say("Jaké by k tomu měl důvody?")
-            if gender == "M":
-                $ mc.say("To nevím, zatím jsem s ním nemluvil.")
-            else:
-                $ mc.say("To nevím, zatím jsem s ním nemluvila.")
+            $ mc.say("To nevím, zatím jsem s ním nemluvil[a].")
         "Za podezřelými obchody stojí cechmistr Rumelin, dokonce se mi i přiznal." if "AML" in rauvin.asked and "confession" in rumelin.asked and "AML solved" not in cluesReported:
             hide mcPic
             $ mc.say("Cechmistr chtěl zabránit mistru Njalovi, aby dokončil své dílo na Einionovy slavnosti. Celé to souviselo s ukradeným střihem, podle kterého šil svoje boty mistr Heinrich.")
@@ -99,10 +87,7 @@ label reportingBack:
             if "workshop unlocked" in clues:
                 $ mc.say("Dílna byla zřejmě celou noc odemčená, takže bohužel v podstatě kdokoli.")
             elif "doors" in workshop.checked:
-                if gender == "M":
-                    $ mc.say("Na dveřích do dílny jsem neviděl žádné stopy násilí, takže zřejmě jen někdo, koho tam pustil někdo zevnitř. Nebo komu by se podařilo získat klíč.")
-                else:
-                    $ mc.say("Na dveřích do dílny jsem neviděla žádné stopy násilí, takže zřejmě jen někdo, koho tam pustil někdo zevnitř. Nebo komu by se podařilo získat klíč.")
+                $ mc.say("Na dveřích do dílny jsem neviděl[a] žádné stopy násilí, takže zřejmě jen někdo, koho tam pustil někdo zevnitř. Nebo komu by se podařilo získat klíč.")
         "Mistr Heinrich vyhodil tři učedníky a jeden z nich se prý dostal do špatné společnosti." if "fired apprentices" in clues and "fired apprentices" not in cluesReported:
             hide mcPic
             $ rauvin.asked.append("fired apprentices")
@@ -112,10 +97,7 @@ label reportingBack:
             hide mcPic
             $ rauvin.asked.append("fired apprentices")
             $ rauvin.say("Pak by mohl být dobrý nápad si se všemi učedníky promluvit. Víš, kde najít ty, co u něj už nejsou?")
-            if gender == "M":
-                $ mc.say("Jeden z nich se přestěhoval do Sehnau, druzí dva budou někde ve městě. Nejsem si jistý, kde přesně.")
-            else:
-                $ mc.say("Jeden z nich se přestěhoval do Sehnau, druzí dva budou někde ve městě. Nejsem si jistá, kde přesně.")
+            $ mc.say("Jeden z nich se přestěhoval do Sehnau, druzí dva budou někde ve městě. Nejsem si jist[y], kde přesně.")
             $ rauvin.trust -= 1
             $ hayfa.trust -= 1
 
@@ -139,10 +121,7 @@ label reportingBack:
             $ mc.say("Prý se osobně postará, aby se nikdy nedostal do čela cechu. To mi zní jako silný motiv.")
             $ rauvin.say("Mistra Rumelina znám spíš jako vyjednavače. Čekal bych, že mistra Heinricha třeba pomluví a poštve proti němu další mistry, ne že by se vloupal do jeho dílny. Ani že by tam někoho poslal.")
             $ rauvin.say("Ukazuje na cechmistra ještě něco dalšího?")
-            if gender == "M":
-                $ mc.say("Zatím nic, o čem bych věděl.")
-            else:
-                $ mc.say("Zatím nic, o čem bych věděla.")
+            $ mc.say("Zatím nic, o čem bych věděl[a].")
             if "rumelin alibi" in salma.asked:
                 $ mc.say("Navíc od Salmy odešel o hodně později, než Heinrich.")
             $ rauvin.say("Rozumím. Asi ho nemůžeme zcela vyloučit, ale zaměřil bych se hlavně na jiné podezřelé.")
@@ -178,10 +157,7 @@ label reportingBack:
                 "Tvrdí, že je našla v blátě u řeky." if "bottles 2" in erle.asked:
                     hide mcPic
                     $ rauvin.say("To se takhle v blátě u řeky přehrabuje často?")
-                    if gender == "M":
-                        $ mc.say("Mluvil jsem s ní pod mostem, kde asi tráví většinu času. Tak bych se vlastně nedivil.")
-                    else:
-                        $ mc.say("Mluvila jsem s ní pod mostem, kde asi tráví většinu času. Tak bych se vlastně nedivila.")
+                    $ mc.say("Mluvil[a] jsem s ní pod mostem, kde asi tráví většinu času. Tak bych se vlastně nedivil[a].")
                     $ rauvin.say("Potom potřebujeme zjistit, jestli si vymýšlí, nebo jakou zvláštní cestou se lahve mistra Heinricha do té řeky dostaly.")
                     $ mc.say("To mám přesně v úmyslu.")
                 "Kde jinde, než v té dílně?":
@@ -197,10 +173,7 @@ label reportingBack:
                         $ mc.say("Prý v blátě u řeky, ale to nedává smysl. Jak by se tam dostaly?")
                         $ rauvin.say("Jak by se Erle dostala do dílny a kam zmizel obsah těch lahví? Nemyslím, že v tuto chvíli můžeme dělat jakékoli závěry.")
                     else:
-                        if gender == "M":
-                            $ mc.say("Na to jsem se ještě nestihl zeptat.")
-                        else:
-                            $ mc.say("Na to jsem se ještě nestihla zeptat.")
+                        $ mc.say("Na to jsem se ještě nestihl[a] zeptat.")
                         $ rauvin.say("Tak to udělej, třeba nás to na něco navede.")
                 "Asi někde na smetišti?":
                     hide mcPic
@@ -301,10 +274,7 @@ label alcoholicResponse:
             hide mcPic
             $ rauvin.trust -= 2
             $ hayfa.trust -= 2
-            if gender == "M":
-                $ rauvin.say("Protože je tvůj zdroj tak tajný, nebo tak málo důvěryhodný? V každém případě myslím, že je na čase, aby ses vrátil k případu.")
-            else:
-                $ rauvin.say("Protože je tvůj zdroj tak tajný, nebo tak málo důvěryhodný? V každém případě myslím, že je na čase, aby ses vrátila k případu.")
+            $ rauvin.say("Protože je tvůj zdroj tak tajný, nebo tak málo důvěryhodný? V každém případě myslím, že je na čase, aby ses vrátil[a] k případu.")
     return
 ###
 

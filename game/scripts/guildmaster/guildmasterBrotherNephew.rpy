@@ -79,17 +79,11 @@ label rovienHouseFirst:
                 $ status.append("Zairis writing sample")
                 $ zairis.asked.append("book title")
                 $ zairis.say("Tady to máte a děkuji.", "happy")
-                if gender == "M":
-                    $ zairis.say("Ale vy jste určitě chtěl něco jiného. Říkal jste městská hlídka? Stalo se něco?")
-                else:
-                    $ zairis.say("Ale vy jste určitě chtěla něco jiného. Říkal jste městská hlídka? Stalo se něco?")
+                $ zairis.say("Ale vy jste určitě chtěl[a] něco jiného. Říkal[a] jste městská hlídka? Stalo se něco?")
             "Snad dorazí brzy.":
                 hide mcPic
                 $ zairis.say("Doufám. Dobrá poezie se shání těžko.")
-                if gender == "M":
-                    $ zairis.say("Počkej, říkal jsi městská hlídka? Stalo se něco?")
-                else:
-                    $ zairis.say("Počkej, říkala jsi městská hlídka? Stalo se něco?")
+                $ zairis.say("Počkej, říkal[a] jsi městská hlídka? Stalo se něco?")
     else:
         $ zairis.say("Počkej, říkal jsi městská hlídka? Stalo se něco?")
     label rovienHouseIntroductionMenu:
@@ -137,10 +131,7 @@ label rovienHouseAgain:
                 "Samozřejmě, tady je.":
                     hide mcPic
                     call mcPoemReaction
-                "Ještě jsem nestihl žádnou vhodnou vybrat." if gender == "M":
-                    hide mcPic
-                    $ zairis.say("Škoda, opravdu velmi rád bych si nějakou přečetl.", "sad")
-                "Ještě jsem nestihla žádnou vhodnou vybrat." if gender == "F":
+                "Ještě jsem nestihl[a] žádnou vhodnou vybrat.":
                     hide mcPic
                     $ zairis.say("Škoda, opravdu velmi rád bych si nějakou přečetl.", "sad")
         elif chosenChar == "rovien":
@@ -151,10 +142,7 @@ label rovienHouseAgain:
             "Zairis na chvíli zmizí v domě a pak tě pozve dál."
             jump rovienController
         else:
-            if gender == "M":
-                $ mc.say("Ještě jsem nestihl žádnou vhodnou vybrat.")
-            else:
-                $ mc.say("Ještě jsem nestihla žádnou vhodnou vybrat.")
+            $ mc.say("Ještě jsem nestihl[a] žádnou vhodnou vybrat.")
             $ zairis.say("Škoda, opravdu velmi rád bych si nějakou přečetl.", "sad")
     else:
         "Znovu ti otevře Zairis a zdvořile se na tebe usměje."
@@ -162,15 +150,9 @@ label rovienHouseAgain:
     $ zairis.say("Můžeme ještě nějak pomoct s vaším vyšetřováním?")
     if chosenChar == "rovien":
         if rovien.alreadyMet:
-            if gender == "M":
-                $ mc.say("Rád bych ještě jednou mluvil s tvým otcem, pokud je to možné.")
-            else:
-                $ mc.say("Rád bych ještě jednou mluvila s tvým otcem, pokud je to možné.")
+            $ mc.say("Rád[a] bych ještě jednou mluvil[a] s tvým otcem, pokud je to možné.")
         else:
-            if gender == "M":
-                $ mc.say("Rád bych mluvil s tvým otcem, pokud je to možné.")
-            else:
-                $ mc.say("Rád bych mluvila s tvým otcem, pokud je to možné.")
+            $ mc.say("Rád[a] bych mluvil[a] s tvým otcem, pokud je to možné.")
         $ zairis.say("Dojdu mu říct.")
         "Zairis na chvíli zmizí v domě a pak tě pozve dál."
         call rovienController
@@ -243,10 +225,7 @@ label writingComparisonZairis:
             if "book title" in zairis.asked or "writing sample" in zairis.asked:
                 "Cestou z Rovienova domu se pokusíš co nejpřesněji si vybavit písmo na dopisech pro Adu."
                 "Zairisova poznámka je psaná viditelně ve spěchu. Přesto se podle tvaru písmen a způsobu vedení jednotlivých tahů zdá, aspoň co si pamatuješ a dokážeš posoudit, že oba texty psala stejná ruka."
-                if gender == "M":
-                    "Navíc jsi přesvědčený, že dopisy jsou napsané na stejný druh papíru, který teď držíš v ruce."
-                else:
-                    "Navíc jsi přesvědčená, že dopisy jsou napsané na stejný druh papíru, který teď držíš v ruce."
+                "Navíc jsi přesvědčen[y], že dopisy jsou napsané na stejný druh papíru, který teď držíš v ruce."
             elif "Zairis sonnet kept" in status:
                 "Cestou z Rovienova domu se pokusíš co nejpřesněji si vybavit písmo na dopisech pro Adu a porovnat ho se Zairisovým sonetem."
                 "Aspoň co si pamatuješ a dokážeš posoudit, tvar písmen i způsob vedení tahů se velmi dobře shoduje a je velmi pravděpodobné, že oba texty psala stejná ruka."
@@ -259,10 +238,7 @@ label writingComparisonZairis:
 label writePoetry:
     scene bg writing table
     show sh blank papers
-    if gender == "M":
-        "Na psaní poezie jsi nikdy neměl moc času a zvlášť v posledních letech ses nedostal k ničemu lepšímu, než jednoduchým rýmovačkám o nudné nebo příliš těžké práci. Ale možná tím spíš to teď stojí za to zkusit pro úspěch tvého vyšetřování."
-    else:
-        "Na psaní poezie jsi nikdy neměla moc času a zvlášť v posledních letech ses nedostala k ničemu lepšímu, než jednoduchým rýmovačkám o nudné nebo příliš těžké práci. Ale možná tím spíš to teď stojí za to zkusit pro úspěch tvého vyšetřování."
+    "Na psaní poezie jsi nikdy neměl[a] moc času a zvlášť v posledních letech ses nedostal[a] k ničemu lepšímu, než jednoduchým rýmovačkám o nudné nebo příliš těžké práci. Ale možná tím spíš to teď stojí za to zkusit pro úspěch tvého vyšetřování."
     "Na strážnici najdeš klidný kout, vytáhneš pár papírů a inkoust a zamyslíš se, jak začít."
     menu:
         "Zločinče, třes se, neb jsem teď v městské stráži!":

@@ -15,10 +15,7 @@ label visitGuardhouseReminder:
     return
 
 label visitGuardhouseReminderFirst:
-    if gender == "M":
-        "Při procházení městem tě zastaví mladý elf. Vlastně sis ho ani nevšiml přicházet, dokud nestál přímo před tebou."
-    else:
-        "Při procházení městem tě zastaví mladý elf. Vlastně sis ho ani nevšimla přicházet, dokud nestál přímo před tebou."
+    "Při procházení městem tě zastaví mladý elf. Vlastně sis ho ani nevšiml[a] přicházet, dokud nestál přímo před tebou."
     show mcPic at menuImage
     menu:
         "Potřebuješ něco?":
@@ -33,10 +30,7 @@ label visitGuardhouseReminderFirst:
     return
 
 label visitGuardhouseReminderAgain:
-    if gender == "M":
-        "Na moment se zastavíš, jen abys zkontroloval, že jdeš správnou ulicí, když tě někdo osloví."
-    else:
-        "Na moment se zastavíš, jen abys zkontrolovala, že jdeš správnou ulicí, když tě někdo osloví."
+    "Na moment se zastavíš, jen abys zkontroloval[a], že jdeš správnou ulicí, když tě někdo osloví."
     $ messenger.say("%(callingMc)s?")
     "Otočíš se za hlasem a díváš se přímo do obličeje mladého elfa. Až po chvilce k němu přiřadíš správné jméno."
     $ messenger.say("Máš se zase stavit na strážnici.")
@@ -63,10 +57,7 @@ label visitGuardhouseReminderMenu:
             $ messenger.asked.append("uniform")
             "Melien se usměje."
             $ messeger.say("Proč ho nemáš ty?", "happy")
-            if gender == "M":
-                $ mc.say("Vlastně mi ho ještě nestihli dát… k hlídce jsem nastoupil teprve dnes.")
-            else:
-                $ mc.say("Vlastně mi ho ještě nestihli dát… k hlídce jsem nastoupila teprve dnes.")
+            $ mc.say("Vlastně mi ho ještě nestihli dát... k hlídce jsem nastoupil[a] teprve dnes.")
             $ messenger.say("Na slavnosti ho určitě dostaneš, ale Hayfa velitele a Rauvina přesvědčila, že občas je lepší nebýt vidět až z městských hradeb.")
         "Co si vlastně o Rauvinovi myslíš?" if messenger.alreadyMet == True and "Rauvin" not in messenger.asked:
             hide mcPic

@@ -39,10 +39,7 @@ label sabriHouseholdController:
 
 label sabriHouseFirst:
     scene bg temporary quarter
-    if gender == "M":
-        "Vydat se do dočasné čtvrti působí trochu jako návrat v čase. Během velkého požáru jsi sice ve městě nebyl, ale když procházíš kolem sežehnutých kamenných základů a zuhelnatělých trosek, dokážeš si zničující oheň představit až příliš živě."
-    else:
-        "Vydat se do dočasné čtvrti působí trochu jako návrat v čase. Během velkého požáru jsi sice ve městě nebyla, ale když procházíš kolem sežehnutých kamenných základů a zuhelnatělých trosek, dokážeš si zničující oheň představit až příliš živě."
+    "Vydat se do dočasné čtvrti působí trochu jako návrat v čase. Během velkého požáru jsi sice ve městě nebyl[a], ale když procházíš kolem sežehnutých kamenných základů a zuhelnatělých trosek, dokážeš si zničující oheň představit až příliš živě."
     "Jiné části města jsou nově přestavěné, ale tady to vypadá, jakoby se nikdo nenamáhal ani opravami nebo stržením neobyvatelných budov. Až po chvíli si všimneš, že část obydlí je zřejmě nová a provizorně působící. To by tě možná mělo naplnit nadějí jako příslib lepší budoucnosti, ale přítomnost to nedělá méně bezútěšnou."
     "Místní sem obvykle nechodí, pokud opravdu nemusí a na lidech kolem tebe je znát, že nemají kam jinam jít."
     "Dotazy na Sabriho ubytovnu tě nakonec zavedou k většímu domu, který sice působí zanedbaně, ale je celý a vypadá stabilně."

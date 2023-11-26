@@ -22,17 +22,10 @@ label adaIntro:
         $ ada.say("To musíš kvůli zatraceným botám strkat nos do cizích vztahů? Co jsi přesně tátovi řekl, že tak vyletěl?", "angry")
         show mcPic at menuImage
         menu:
-            "Co jsem mu měl říct?" if gender == "M":
+            "Co jsem mu měl[a] říct?":
                 hide mcPic
-                $ ada.say("Neměl jsi mu říkat nic, co není o těch jeho hloupých botách.", "angry")
+                $ ada.say("Neměl[a] jsi mu říkat nic, co není o těch jeho hloupých botách.", "angry")
                 if "zairis dealt with" in status and "ada confrontation zairis" not in status:
-                    $ ada.say("Co jste ti se Zairisem udělali?", "angry")
-                else:
-                    $ ada.say("Co ti máma udělala?", "angry")
-            "Co jsem mu měla říct?" if gender == "F":
-                hide mcPic
-                $ ada.say("Neměla jsi mu říkat nic, co není o těch jeho hloupých botách.", "angry")
-                if "zairis dealt with" in status:
                     $ ada.say("Co jste ti se Zairisem udělali?", "angry")
                 else:
                     $ ada.say("Co ti máma udělala?", "angry")
@@ -53,10 +46,7 @@ label adaIntro:
                     $ ada.say("To taky, ale myslím ještě potom. O mámě!", "angry")
                     $ ada.say("To se snažíš zničit život co nejvíc lidem, nebo co?", "angry")
                 else:
-                    if gender == "M":
-                        $ ada.say("Proč jsi do toho musel šťourat?", "angry")
-                    else:
-                        $ ada.say("Proč jsi do toho musela šťourat?", "angry")
+                    $ ada.say("Proč jsi do toho musel[a] šťourat?", "angry")
             "...o Rumelinovi?" if "rumelin exposed" in victim.asked:
                 hide mcPic
                 if "zairis dealt with" in status:
@@ -90,16 +80,13 @@ label adaConfrontationLisbeth:
     menu:
         "Omlouvám se, nedošlo mi, jak to vezme.":
             hide mcPic
+            $ ada.say("A to sis nevšiml[a], jak vždycky vyletí, když se mu něco nelíbí?", "angry")
+        "Kaspar byl v jeho dílně, to jsem přece říct musel[a].":
+            hide mcPic
             if gender == "M":
-                $ ada.say("A to sis nevšiml, jak vždycky vyletí, když se mu něco nelíbí?", "angry")
+                $ ada.say("A už jsi ho zatknul? Jestli ne, tak to asi tak důležité nebylo.", "angry")
             else:
-                $ ada.say("A to sis nevšimla, jak vždycky vyletí, když se mu něco nelíbí?", "angry")
-        "Kaspar byl v jeho dílně, to jsem přece říct musel." if gender == "M":
-            hide mcPic
-            $ ada.say("A už jsi ho zatknul? Jestli ne, tak to asi tak důležité nebylo.", "angry")
-        "Kaspar byl v jeho dílně, to jsem přece říct musela." if gender == "F":
-            hide mcPic
-            $ ada.say("A už jsi ho zatkla? Jestli ne, tak to asi tak důležité nebylo.", "angry")
+                $ ada.say("A už jsi ho zatkla? Jestli ne, tak to asi tak důležité nebylo.", "angry")
         "Má přece právo vědět, s kým se jeho žena baví.":
             hide mcPic
             $ mc.say("Zvlášť, když to jako nevěra opravdu vypadá.")
@@ -114,21 +101,12 @@ label adaConfrontationZairis:
     menu:
         "Omlouvám se, nedošlo mi, co tvůj otec udělá.":
             hide mcPic
-            if gender == "M":
-                $ ada.say("A to sis nevšiml, jak vždycky vyletí, když se mu něco nelíbí?", "angry")
-            else:
-                $ ada.say("A to sis nevšimla, jak vždycky vyletí, když se mu něco nelíbí?", "angry")
+            $ ada.say("A to sis nevšiml[a], jak vždycky vyletí, když se mu něco nelíbí?", "angry")
         "Je to tvůj otec, má právo vědět, s kým se stýkáš":
             hide mcPic
             $ ada.trust -= 2
-            if gender == "M":
-                $ ada.say("A to sis nevšiml, jak vždycky vyletí, když se mu něco nelíbí?", "angry")
-            else:
-                $ ada.say("A to sis nevšimla, jak vždycky vyletí, když se mu něco nelíbí?", "angry")
-        "Chtěl jsem očistit Zerana, aby mohl dokončit učení." if gender == "M":
-            hide mcPic
-            $ ada.say("A to nešlo nějak jinak?", "angry")
-        "Chtěla jsem očistit Zerana, aby mohl dokončit učení." if gender == "F":
+            $ ada.say("A to sis nevšiml[a], jak vždycky vyletí, když se mu něco nelíbí?", "angry")
+        "Chtěl[a] jsem očistit Zerana, aby mohl dokončit učení.":
             hide mcPic
             $ ada.say("A to nešlo nějak jinak?", "angry")
     $ ada.say("Teď ani jeden z nás nesmí na krok z domu a kdo ví, co s ním jeho rodiče ještě provedou.", "sad")
@@ -194,10 +172,7 @@ label adaOptions:
             $ ada.say("Možná mistr Kaspar? Baví se spolu dost a půjčují si knížky. Zrovna včera jsem šla pro jednu, kterou máma chtěla vrátit.")
             $ ada.say("Olwenova cesta - sbírka mravoučných příběhů. Nuda na nudu, ale co čekat od mámy.")
             if "night meeting" in lisbeth.asked:
-                if gender == "M":
-                    $ mc.say("Já myslel, že tu vrátil mistr Kaspar sám, někdy včera pozdě večer.")
-                else:
-                    $ mc.say("Já myslela, že tu vrátil mistr Kaspar sám, někdy včera pozdě večer.")
+                $ mc.say("Já myslel[a], že tu vrátil mistr Kaspar sám, někdy včera pozdě večer.")
                 "Ada zavrtí hlavou."
                 $ ada.say("Ne, já ji mámě přinesla. Zkusila jsem i nakouknout dovnitř, ale bylo to opravdu tak hrozné, jak to zní.")
                 $ ada.say("Kdo to říkal?")
