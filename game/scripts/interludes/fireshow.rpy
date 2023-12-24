@@ -72,6 +72,7 @@ label fireshow:
                             $ hayfa.say("Tys nezažil[a] požár Marendaru. Já ano.", "angry")
                             $ hayfa.say("Oheň na ulici je zakázaný z dobrého důvodu.", "angry")
                             "Hayfa smýkne dívkou a opět vyrazí na cestu."
+                            $ globalClues.append("Hayfa experienced fire")
                         "Samozřejmě, že ne!":
                             hide mcPic
                             $ mc.say("Jen mě těší, že ji neubili na ulici, ale rozhodne o ní spravedlivý soud.")

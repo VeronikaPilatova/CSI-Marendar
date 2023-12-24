@@ -184,7 +184,7 @@ label adaOptions:
         "Jak dobře ses znala se Zeranem?" if "Zeran offense" in clues and "Zeran" not in ada.asked:
             hide mcPic
             $ ada.asked.append("Zeran")
-            $ ada.say("Tak… normálně. Přes dva roky jsme spolu bydleli, jasně, že jsme se občas bavili. Vyprávěl mi elfí legendy a tak.")
+            $ ada.say("Tak... normálně. Přes dva roky jsme spolu bydleli, jasně, že jsme se občas bavili. Vyprávěl mi elfí legendy a tak.")
             $ ada.say("Ale nic mezi námi nebylo.")
             $ clues.append("Zeran innocent")
             show mcPic at menuImage
@@ -223,6 +223,11 @@ label adaOptions:
             $ ada.say("Psal mi básně, opravdu krásné. A vyprávěl o zajímavých místech, která navštívil. Jednou dokonce viděl Amadisův hrob, to jsem trochu záviděla.", "blushing")
             $ ada.say("Doma se o historii nikdo nezajímá a rytířským ideálům by se jenom vysmáli. I máma čte jenom nudné mravoučné hlouposti, pro tátu je hrdina jenom ten, kdo vyrobí lepší botu, a kluci nic neberou vážně.", "angry")
             $ ada.say("Nikdo z nich Amadisův život nemůže pochopit.")
+        "Tvůj ctitel musí být hodně sečtělý" if "letters topic" in ada.asked and "lover well read" not in ada.asked:
+            hide mcPic
+            $ ada.asked.append("lover well read")
+            $ libraryNote.isActive = True
+            $ ada.say("To je, většinu básní v místní knihovně prý už zná nazpaměť a doufá, že paní Luisa pořídí nějaké nové. A doporučil mi spisy od Ignáce z Mardenu, prý dokud mě na podobnou cestu nevezme sám.", "blushing")
         "A proč se tvůj tajný ctitel nepřihlásil sám, když tolik obdivuje Amadise?" if "letters topic" in ada.asked and "lover conscience" not in ada.asked:
             hide mcPic
             $ ada.asked.append("lover conscience")
@@ -294,5 +299,7 @@ label adaOptionsRemainingCheck:
     if "letters topic" in ada.asked and "lover conscience" not in ada.asked:
         $ adaOptionsRemaining += 1
     if "zairis confessed" in status:
+        $ adaOptionsRemaining += 1
+    if "letters topic" in ada.asked and "lover well read" not in ada.asked:
         $ adaOptionsRemaining += 1
     return

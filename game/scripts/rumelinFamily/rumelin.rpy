@@ -274,6 +274,28 @@ label rumelinOptions:
             $ rumelin.asked.append("threaten")
             call rumelinThreatened
             return
+        "Mohl byste se přimluvit u soudu s Katrin, tou tanečnicí?" if katrin in cells and "testify for dancer" not in rumelin.asked:
+            hide mcPic
+            $ rumelin.asked.append("testify for dancer")
+            $ rumelin.say("O žádném soudu s tanečnicím nevím.")
+            $ rumelin.say("Jedině že byste myslel[a] tu, která málem zapálila město, ale to nepředpokládám.")
+            $ mc.say("To podezření je silně přehnané. Dokud ji nezačali pronásledovat rozlícení měšťané, nehrozilo žádné nebezpečí.")
+            $ mc.say("Jistě byste o tom dokázal soud přesvědčit.")
+            $ rumelin.say("Možná. Nebo by také získali dojem, že stárnu a přestávám mít pořádek v myšlenkách.", "angry")
+            $ rumelin.say("Vám to možná nedochází, když nejste místní, ale ten požár město silně poznamenal a všichni jsou od té doby s ohněm nesmírně obezřetní.")
+            $ rumelin.say("Nemám v úmyslu začít všechny přesvědčovat, že naše opatrnost je přehnaná. Na to si najděte někoho, o kom už nikdo stejně nemá žádné mínění.", "angry")
+        "Jak víte, že nejsem místní?" if "testify for dancer" in rumelin.asked and "local" not in rumelin.asked and origin != "born here":
+            hide mcPic
+            $ rumelin.asked.append("local")
+            $ rumelin.say("Vaše názory na oheň leccos napovídají.")
+            $ rumelin.say("A i kdybyste si je nechal[a] pro sebe, Marendar není tak velké město a já v něm žiju celý život, stejně jako většina ostatních. Neznámá tvář je nápadná.")
+        "Já se tu narodil/a!" if "testify for dancer" in rumelin.asked and "local" not in rumelin.asked and origin == "born here":
+            hide mcPic
+            $ rumelin.asked.append("local")
+            $ rumelin.say("Jistě, dávno před požárem.")
+            $ rumelin.say("Být místní ale zdaleka neznamená jen původ, ale především vztahy, společné zážitky a zkušenosti. A jistě jste si všiml[a], kolik se toho v Marendaru změnilo od doby, kdy jste tu byl[a] naposled.")
+            if rumelin.trust < 0:
+                $ rumelin.say("Například hádám, že tehdy jste se ještě nepotřeboval[a] [sam.capitalize()] starat o živobytí. Navrhuji vám uvědomit si, že ta doba už je pryč, a věnovat se vaší skutečné práci.")
 
         "To je všechno, na co jsem se chtěl[a] zeptat. Děkuji vám za spolupráci.":
             hide mcPic
@@ -465,6 +487,17 @@ label rumelinFavourOptions:
             $ rumelin.say("Dobrá. Nemůžu samozřejmě mistry ve svém cechu k ničemu nutit, jen jim dávat doporučení, ale věřím že zařídit to bude v mých silách.")
             $ status.remove("rumelin owes a favour")
             $ status.append("rumelin helping Zeran")
+        "Vaše svědectví u soudu s Katrin, v její prospěch." if katrin in cells:
+            hide mcPic
+            $ rumelin.say("A Katrin je...?")
+            $ mc.say("Komediantka zatčená za tanec s ohněm. Má být souzena za žhářství.")
+            $ rumelin.say("U toho případu jsem nebyl, ale co jsem slyšel, ona skutečně s otevřeným ohněm tančila. Bojím se, že tady budu mít jen omezené možnosti.")
+            $ mc.say("Jste vlivný muž, vaše přímluva přece musí něco znamenat.")
+            "Cechmistr pokrčí rameny."
+            $ rumelin.say("Pokusím se trochu zklidnit horké hlavy a zeptat se jich, jak moc ta komediantka skutečně město ohrozila. Ale těžko sám dosáhnu toho, aby ji zprostili viny.")
+            $ rumelin.say("Ostatně ve městě se shodujeme, že i malé nebezpečí, že znovu vypukne požár, znamená opravdu velkou opatrnost.")
+            $ katrin.cluesAgainst += 1
+            $ status.remove("rumelin owes a favour")
         "Vlastně si to ještě nechám projít hlavou.":
             hide mcPic
             "Rumelin bez zjevného zájmu pokrčí rameny."
@@ -476,6 +509,8 @@ label rumelinFavourOptions:
 label rumelinFavourRemainingCheck:
     $ favourOptionsRemaining = 0
     if "why not finish apprenticeship" in zeran.asked:
+        $ favourOptionsRemaining += 1
+    if katrin in cells:
         $ favourOptionsRemaining += 1
     return
 
@@ -510,5 +545,9 @@ label rumelinOptionsRemainingCheck:
     if "join forces victim pending" in status and "join forces" not in rumelin.asked:
         $ optionsRemaining += 1
     if "confession" in rumelin.asked and rumelin not in arrested:
+        $ optionsRemaining += 1
+    if katrin in cells and "testify for dancer" not in rumelin.asked:
+        $ optionsRemaining += 1
+    if "testify for dancer" in rumelin.asked and "local" not in rumelin.asked:
         $ optionsRemaining += 1
     return

@@ -16,7 +16,9 @@ label kasparController:
 
     # visit itself
     scene bg kaspar inside
-    if kaspar.alreadyMet == False:
+    if kaspar.imageParameter == "beaten" and "assaulted" not in kaspar.asked:
+        call kasparBeatenIntro
+    elif kaspar.alreadyMet == False:
         call kasparFirst
     else:
         call kasparAgain
@@ -78,6 +80,84 @@ label kasparAgain:
     $ kaspar.say("Nějaké pokroky ve vyšetřování?")
     $ mc.say("Sleduji teď jednu stopu, můžu se vás ještě na pár věcí zeptat?")
     $ kaspar.say("Ale samozřejmě, rád pomůžu.")
+    return
+
+label kasparBeatenIntro:
+    "Mistr Kaspar na tebe tentokrát spustí, sotva vkročíš do dveří."
+    $ kaspar.say("To je dobře, že jdete. Byl tu Heinrich! Přiřítil se, když jsem poklidně pracoval před domem, začal mi nadávat a vrhl se na mě! Jen tak, hrubián zatracený!", "surprised")
+    $ kaspar.say("To se dělá, útočit takhle na řemeslného mistra? Svoje učedníky ať si mlátí, jak chce, a také to očividně dělá, podle toho, kolik mu jich odchází, ale ať aspoň nechá na pokoji slušné dospělé lidi.", "angry")
+    $ kaspar.say("Já nejsem odborník na zákony, ale tohle přece nemůžete nechat jen tak!", "angry")
+    label kasparBeatenOptions:
+    show mcPic at menuImage
+    menu:
+        "Jaký říkal, že k tomu má důvod?" if "beaten - reasons" not in kaspar.asked:
+            hide mcPic
+            $ kaspar.asked.append("beaten - reasons")
+            $ kaspar.say("Neříkal nic, čemu by příčetný člověk rozuměl. Jen chrlil nadávky.", "angry")
+            jump kasparBeatenOptions
+        "Nechodil jste mu za ženou?" if "beaten - affair" not in kaspar.asked:
+            hide mcPic
+            $ kaspar.asked.append("beaten - affair")
+            $ kaspar.say("Prosím? Co je tohle za pomluvy? Občas spolu mluvíme, ale to může za cokoli špatného považovat možná tak Heinrich, ale určitě nikdo jiný!", "surprised")
+            show mcPic at menuImage
+            menu:
+                "Souhlasím, mistr Heinrich vás očividně nechápe.":
+                    hide mcPic
+                    $ kaspar.say("Přesně. Já věděl, že ho prokouknete.", "happy")
+                "Kdyby to bylo tak v pořádku, neměli byste s paní Lisbeth důvod to tajit.":
+                    hide mcPic
+                    $ kaspar.say("Ten důvod je přesně v tom, že Heinrich nic nechápe. Jak se teď jasně ukázalo.", "angry")
+            jump kasparBeatenOptions
+        "Co vaše návštěva jeho dílny?" if "confession" in kaspar.asked and "beaten - workshop visit" not in kaspar.asked:
+            hide mcPic
+            $ kaspar.asked.append("beaten - workshop visit")
+            $ kaspar.say("O tom přece nemůže nic tušit. Jak by to asi poznal? Na nic jsem ani nesáhnul, natož abych něco rozbil nebo odnesl.", "angry")
+            $ kaspar.say("A Lisbeth ví, jaký je. Jedině že byste mu to řekl[a] vy, ale to jste snad neudělal[a], že ne?", "angry")
+            show mcPic at menuImage
+            menu:
+                "Samozřejmě že ne.":
+                    hide mcPic
+                    $ kaspar.asked.append("not ratted out")
+                    $ mc.say("Máte pravdu, byla to špatná úvaha.")
+                    $ kaspar.say("To je v pořádku, každý se někdy spleteme. Hlavně aby mu to neprošlo.")
+                "Samozřejmě že ano. Měl právo to vědět.":
+                    hide mcPic
+                    $ kaspar.asked.append("ratted out")
+                    $ kaspar.trust -= 3
+                    $ kaspar.say("Prosím? A čeho jste tím prosím vás chtěl[a] dosáhnout? Jste se sebou teď spokojen[y]?")
+                    show mcPic at menuImage
+                    menu:
+                        "Je to soukromá záležitost a on ji řešil soukromě. Tak je to v pořádku a já do toho nebudu zasahovat.":
+                            hide mcPic
+                            $ kaspar.say("Tak to jsem o vás tedy měl jiné mínění.", "angry")
+                        "Uznávám, že mě překvapil. Takhle přehnat to neměl.":
+                            hide mcPic
+                            $ kaspar.trust += 1
+                            $ kaspar.say("Tak se hlavně postarejte, aby mu to neprošlo.", "angry")
+            jump kasparBeatenOptions
+        "Rozhodně to tak nenechám.":
+            hide mcPic
+            if "ratted out" in kaspar.asked:
+                $ kaspar.say("No aspoň že tak.", "angry")
+            else:
+                $ kaspar.say("Věděl jsem, že se na hlídku mohu spolehnout.", "happy")
+            $ kaspar.say("Ale přivedlo vás sem něco jiného. S čím můžu pomoct?")
+            $ kaspar.asked.append("promised to deal with Heinrich")
+        "Je mi líto, nemůžu s tím nic udělat. Musím se věnovat jiným záležitostem.":
+            hide mcPic
+            $ kaspar.say("Jako třeba hledání ztracených bot přesně toho hrubiána, který pobíhá po městě a mlátí lidi, kteří chtějí v klidu pracovat? Opravdu je pro vás tohle to hlavní?", "angry")
+            $ kaspar.say("Zeptejte se prosím jeho jasnosti, jestli si takto hlídka představuje udržování práva, protože já tedy ne.", "angry")
+            $ mc.say("... koho že?")
+            $ kaspar.say("Jeho jasnosti svobodného pána Rauvina de Vito, samozřejmě. Kolik šlechticů v tomhle městě znáte?")
+            show mcPic at menuImage
+            menu:
+                "Dobře, zeptám se ho.":
+                    hide mcPic
+                "Jeho názory znám. A vím, co mi dal za úkol.":
+                    hide mcPic
+            $ mc.say("Ale přišel[a] jsem za vámi kvůli něčemu jinému.")
+            $ kaspar.say("No tak do toho, když to jinak nejde.")
+    $ kaspar.asked.append("assaulted")
     return
 
 label kasparOptions:

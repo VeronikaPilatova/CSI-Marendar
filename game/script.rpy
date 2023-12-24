@@ -176,19 +176,23 @@ label preparation:
     default reasons = "" # altruist / order / personal
     default skill =  "" # combat / observation / diplomacy
     default personality = []
+    default cultistMaterial = 0
+
+    # variables - gender distinction
     default a = "/a" # additional letter for female
     default e = "/e" # additional letter for female
     default y = "ý/á" # gendering some adjectives
     default pronoun4 = "ho/ji" # personal pronoun, 4th case
     default pronoun7 = "ním/ní" # personal pronoun, 7th case
-    default sel = "šel/šla" # gendered distinction
-    default sam = "sám/sama" # gendered distinction
+    default sel = "šel/šla"
+    default sam = "sám/sama"
 
     # variables - investigation progress
     default clues = []
     default globalClues = []
     default status = []
     default dailyStatus = []
+    default globalStatus = []
     default cluesReported = []
     default boysAsked = []
     default colleaguesAsked = []

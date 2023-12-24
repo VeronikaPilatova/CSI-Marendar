@@ -89,10 +89,8 @@ label guardhouseIntro:
         call AmlMerchantListDelivered
     elif "zeran witnesses" in status:
         call zeranWitnessesChecked
-    elif time.hours > 16 and "report given" not in dailyStatus and "out of office" not in rauvin.status:
-        "Rauvin na tebe kývne."
-        $ rauvin.say("Chtěl jsem se zeptat, jak pokračuješ s případem. Máš nový vývoj nebo slibnou stopu?")
-        call reportingBack
+    elif time.hours > 16 and "report given" not in dailyStatus and "out of office" not in rauvin.status and optionsRemaining != 0:
+        call reportWantedIntro
     elif sceneWitnessed == False:
         "Rauvin sedí u stolu a prochází nějaké papíry, ale když se přiblížíš, zvedne hlavu a otočí se na tebe."
     return
@@ -328,6 +326,55 @@ label zeranWitnessesChecked:
                 $ solian.say("Tak zkus nezapomenout, že pravda pak musí ještě obstát u soudu.")
     $ status.remove("zeran witnesses")
     $ status.append("zeran witnesses checked")
+    return
+
+label reportWantedIntro:
+    "Rauvin na tebe kývne."
+    $ rauvin.say("Chtěl jsem se zeptat, jak pokračuješ s případem. Máš nový vývoj nebo slibnou stopu?")
+    show mcPic at menuImage
+    menu:
+        "Něco ano, můžeme to hned probrat.":
+            hide mcPic
+        "Něco ano, ale zatím to není ucelené, radši bych ještě nějakou dobu věnoval[a] pátrání.":
+            hide mcPic
+            $ rauvin.say("Pojďme si promluvit o tom, co máš. Chápu, že ještě nemusíš mít rozpletený celý případ, ale potřebuji vědět, jak se věc vyvíjí. A třeba tě dokážu i nějak podpořit.")
+        "Zatím vlastně nic nemám.":
+            hide mcPic
+            $ rauvin.say("Pojďme si tedy promluvit o tom, jaké stopy jsi sledoval[a] a co z nich vzešlo. Třeba jsi ve skutečnosti blíž, než si [sam] myslíš.")
+            $ rauvin.say("A jestli ne, tím spíš to potřebuji vědět.")
+        "Tím se teď nechci zdržovat.":
+            hide mcPic
+            $ rauvin.trust -= 2
+            $ rauvin.say("Dávat hlášení velícímu důstojníkovi není zdržování, ale nutnost pro to, aby hlídka držela pohromadě.", "angry")
+            $ rauvin.say("Takže začni.", "angry")
+            show mcPic at menuImage
+            menu:
+                "No dobře, jestli to půjde rychle...":
+                    hide mcPic
+                "Já to myslím vážně, na tohle nemám čas.":
+                    hide mcPic
+                    $ rauvin.trust -= 3
+                    $ mc.cluesAgainst += 1
+                    if mc.cluesAgainst > 1:
+                        $ rauvin.say("To jsme dva. K čemu je mi hlídkař, který se mnou ani nemluví?", "angry")
+                        $ rauvin.say("A není to první případ, se chováš způsobem, který je s působením v hlídce neslučitelný. Přinejmenším v hlídce, která opravdu hájí všechny v tomto městě.", "angry")
+                        $ rauvin.say("Vrať mi pověřovací listinu a já ti popřeji hodně štěstí při hledání nějakého zaměstnání, kde si budeš moci víc dělat, co tě zrovna napadne.")
+                        scene bg door01
+                        "Zanedlouho se ocitneš znovu před strážnicí. Stojíš na ulici a přemýšlíš, kam ještě jít."
+                        jump thrownOut
+                    else:
+                        $ rauvin.say("Já také. Dej mi hlášení, nebo vrať pověřovací listinu.", "angry")
+                        show mcPic at menuImage
+                        menu:
+                            "Když to musí být, tak tedy pojďme na to.":
+                                hide mcPic
+                            "{i}(Vrátit glejt){/i}":
+                                hide mcPic
+                                "Beze slova podáš Rauvinovi listinu s pečetí a tvým jménem. Rauvin na tebe chvíli zkoumavě hledí a také nic neříká. Poté tvé pověření přijme a schová si ho za pás."
+                                $ rauvin.say("Plat si nezasloužíš, protože nemám doklad o žádné vykonané práci. K východu trefíš.")
+                                "Otočíš se a bez dalšího loučení vyjdeš ven na ulici vstříc osudu, který už s hlídkou nebude nijak spjatý."
+                                jump thrownOut
+    call reportingBack
     return
 
 ###

@@ -50,6 +50,13 @@ label dancerOptions:
             $ katrin.asked.append("brother")
             $ katrin.say("Můj mladší bratr. Jmenuje se Kilian.")
             $ katrin.say("Prostě brnkal podle toho, co jsem řekla. Rozhodně nevybíral, jaké číslo bude následovat.", "angry")
+        "Kde můžu tvého bratra najít?" if "brother" in katrin.asked and "finding brother" not in katrin.asked:
+            hide mcPic
+            $ katrin.asked.append("finding brother")
+            $ katrin.say("To nevím. Nejspíš se někam schoval.")
+            $ mc.say("Nenapadá tě, kam tak mohl jít?")
+            $ katrin.say("Nevím, kde je! Kolikrát to mám opakovat?", "angry")
+            $ katrin.say("Domluvili jsme si přespání v koutě nějakého hostince. Vede ho hobitka a má ve znaku koně. Ale tam teď Killian nebude. Neví, jestli ho také nechcete sebrat.")
         "Víš, co ti hrozí za trest?" if "punishment" not in katrin.asked:
             hide mcPic
             $ katrin.asked.append("punishment")
@@ -89,5 +96,7 @@ label dancerOptionsRemainingCheck:
     if "punishment" not in katrin.asked:
         $ optionsRemaining += 1
     if "cold" not in katrin.asked:
+        $ optionsRemaining += 1
+    if "brother" in katrin.asked and "finding brother" not in katrin.asked:
         $ optionsRemaining += 1
     return

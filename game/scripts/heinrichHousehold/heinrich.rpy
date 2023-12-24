@@ -510,7 +510,23 @@ label zairisGuiltyOptions:
             $ victim.asked.append("zairis guilty poetry")
             $ patience -= 1
             $ victim.say("Mně přišly jako snůška nesmyslů a sladkých řečiček. Jak víš, že jsou tak zvláštní?", "angry")
-            "TODO"
+            if "letters for Ada checked in library" in status:
+                $ zeran.cluesAgainst += 1
+                $ mc.say("Ptal[a] jsem se na ně v knihovně a tu báseň prý v žádném spisu nemají. Naopak prý už od Zairise několik básní četli a jeho stylu je to podobné.")
+                $ victim.say("Tak to Zeran ukradl přímo Zairisovi. Nebo si to od něj nechal napsat na zakázku. To tě nenapadlo?", "angry")
+                $ mc.say("To by mohlo vysvětlit jednu, dvě básně. Kolik jich Ada dostala?")
+                $ victim.say("I kdyby jen jednu, je to víc, než měla, holomek zatracený.", "angry")
+            else:
+                $ mc.say("Vím o poezii dost, abych to poznal[a].")
+                if race == "elf":
+                    $ mc.say("My elfové si na vzdělání zakládáme a znalost staré poezie k tomu neodmyslitelně patří.")
+                elif race == "dwarf":
+                    $ mc.say("Ságy o předcích se u nás trpaslíků vypráví velmi často a všechny musí být co nejkrásnější, aby jim dělaly čest.")
+                elif race == "hobbit":
+                    $ mc.say("Snažím se ve městě zapadnout, a tak jsem se často přichomýtl[a] k poslechu nějakého pěvce, ať už lidského, nebo elfího.")
+                else:
+                    $ mc.say("Na jarmarcích jsem slyšel[a] už spoustu písní od různých pěvců.")
+                $ victim.say("To je ale něco dost jiného než tohle hloupé cukrování. To neberu.", "angry")
         "Ty dopisy jsou psané vytříbeným stylem, který vyžaduje určité vzdělání. Zairis ho má, ale kde by k němu přišel Zeran? " if "letters for Ada seen" and "zairis guilty style" not in victim.asked:
             hide mcPic
             $ victim.asked.append("zairis guilty style")
@@ -685,7 +701,7 @@ label zeranLettersResponse:
 
 label heinrichMaritalRelationship:
     $ victim.say("Co je tohle za otázky? Je to moje žena. Kdybychom spolu neměli dobrý vztah, nejsme manželé.", "angry")
-    if victim.trust > 0:
+    if victim.trust > 0 and "affair revealed" not in status:
         $ victim.say("Navíc bez ní a toho, jak vede domácnost, bych možná nebyl nejlepší švec v celém Marendaru.")
         show mcPic at menuImage
         menu:

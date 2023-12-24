@@ -1,6 +1,6 @@
 label libraryPreparation:
     default literatureTopics = ["wellWrittenTrash", "farawayTravels"]
-    default lawTopics = []
+    default lawTopics = ["lawIntro"]
     default historyTopics = []
     return
 
@@ -45,14 +45,20 @@ label libraryOptions:
             $ chosenTopic = renpy.random.choice(literatureTopics)
             $ library.checked.append("literature " + chosenTopic)
             $ literatureTopics.remove(chosenTopic)
+            scene bg books
         "{i}(Nastudovat si právo a místní zákony){/i}" if lawTopics != []:
-            $ chosenTopic = renpy.random.choice(lawTopics)
+            if "lawIntro" in lawTopics:
+                $ chosenTopic = "lawIntro"
+            else:
+                $ chosenTopic = renpy.random.choice(lawTopics)
             $ library.checked.append("law " + chosenTopic)
             $ lawTopics.remove(chosenTopic)
+            scene bg books
         "{i}(Nastudovat si městskou historii){/i}" if historyTopics != []:
             $ chosenTopic = renpy.random.choice(historyTopics)
             $ library.checked.append("history " + chosenTopic)
             $ historyTopics.remove(chosenTopic)
+            scene bg books
         "{i}(Vrátit se na strážnici){/i}":
             $ chosenTopic = "leave"
 
@@ -88,21 +94,25 @@ label stealPoetry:
 
 label libraryConsultLettersForAda:
     $ assistant.asked.append("poetry style")
+    $ status.append("letters for Ada checked in library")
     return
 
 label wellWrittenTrash:
-    scene bg books
     "Ze své volby se cítíš trochu rozpačitě. Mohlo tě asi napadnout, že “příběhy k poučení” budou klást důraz hlavně na kázání o morálce před zajímavostí zápletky. Tuto knihu ale napsal kněz Einiona, boha všech řemeslníků a umělců - a autor, nutno přiznat, byl v řemesle skládání vět dobře zběhlý."
     "Než si uvědomíš, jak hloupý děj většiny příběhů je, máš už za sebou notný kus knihy a až zpětně si uvědomíš, že tě ze sezení ve strnulé poloze bolí záda."
     return
 
 label farawayTravels:
-    scene bg books
     "O mnoha kněžích Olwena se říká, že jen sedí ve svých chrámech a pobírají desátky a že tak by uctívání boha cesty vypadat nemělo. Ignáce z Mardenu z něčeho podobného ovšem rozhodně nelze obviňovat."
     "Jestli lze jeho cestopisu věřit, viděl snad víc moří a přešel víc pohoří, než kolik běžný člověk dokáže vyjmenovat měst - a že jich každý tovaryš pozná pěknou řádku, když chodí na zkušenou."
     "Ignácovo vyprávění je plné poutavých popisů cizích krajů. Lidé s čepicemi ze stočené látky, které vypadají trochu jako ulity některých korýšů, obrovská jízdní zvířata s pěti nohama, hrbatí koně, pálenka z koňského mléka, neuvěřitelně dlouhý seznam překvapení, která se všechna dají najít na jednom jediném světě."
     "Jako písaře tě navíc zaujme, jakou váhu má v některých zemích kaligrafické umění. Kdyby tomu tak bylo i zde, mohl tvůj život možná vypadat jinak. Takto musíš knihu brzy opět zavřít a vrátit se do Marendaru."
     return
+
+label lawIntro:
+    "Stejně jako jinde, i v Marendaru se soudci řídí především zvykem a jako vodítko často používají rozsudky svých předchůdců. Nic jako soupis městských zákonů neexistuje, najdeš ale přepisy několika různých nařízení."
+    "Ve městě je přísně zakázáno nošení otevřeného ohně na ulici včetně loučí a pochodní a jakékoli neopatrné zacházení s ohněm. Pod zákazem jsou podepsaní Gerfried a Etrian, podle všeho ale v tomto případě potvrzují nařízení vydané ještě Velinem."
+    "Ze stejné doby a se stejným podpisem je i podrobně rozepsaný zákaz jakkoli rozdílného zacházení na základě rasy, bez ohledu na původ kteréhokoli z aktérů."
 
 ###
 

@@ -207,6 +207,48 @@ label zeranOptions:
             $ zeran.say("To vám nedochází, že mě ten hlupák nezajímá a chci od něj mít pokoj?", "angry")
             $ zeran.say("Jeden by myslel, že když mě vyhodil a okradl, bude to stačit, ale ne, on mi musí pořád kazit život jenom tím, že jsem ho dřív znal.", "angry")
             $ zeran.asked.append("theft mention")
+        "Počkej, co tím myslíš, že tě okradl?" if "theft mention" in zeran.asked and "victim of theft" not in zeran.asked:
+            hide mcPic
+            $ zeran.say("Byl[a] jsi někdy v učení?")
+            $ mc.say("No... vlastně ne. Jít do učení bez peněz se nedá a ty já neměl[a].")
+            $ zeran.say("Jo. Přesně. A jestli si myslíš, že zrovna Heinrich mě přijal jen z dobroty srdce, tak ne.", "angry")
+            $ zeran.say("Stálo mě to v podstatě všechny peníze, co mi zbyly po rodičích.", "sad")
+            $ zeran.say("A můžeš hádat, jestli mi něco z toho vrátil, jak by správně měl. Takže teď ani nejsem vyučený, ani nemám peníze. Ale zajímá to někoho?", "angry")
+            label zeranVictimOfTheftReaction:
+            show mcPic at menuImage
+            menu:
+                "To by rozhodně mělo!" if "theft should matter" in zeran.asked:
+                    hide mcPic
+                    $ zeran.asked.append("theft should matter")
+                    $ zeran.say("Mělo, ale očividně nezajímá.", "angry")
+                    jump zeranVictimOfTheftReaction
+                "Byl jsi s tím za hlídkou?" if "asked watch for help" not in zeran.asked:
+                    hide mcPic
+                    $ zeran.asked.append("asked watch for help")
+                    $ zeran.say("Byl jsem s tím za pár lidmi a všichni se mi vysmáli, že si za to můžu sám. U soudu by mě nikdo neposlouchal a jen by mi přišili trest navíc.", "angry")
+                    jump zeranVictimOfTheftReaction
+                "Mě to rozhodně zajímá.":
+                    hide mcPic
+                    $ zeran.say("A co s tím uděláš?")
+                    if "asked watch for help" not in zeran.asked:
+                        $ zeran.say("Jestli s tím půjdeš za Heinrichem, tak se ti jen vysměje, a soud by mi jen přišil trest navíc.", "sad")
+                    show mcPic at menuImage
+                    menu:
+                        "Máš pravdu, asi s tím nic nezmůžu.":
+                            hide mcPic
+                            $ zeran.say("Tak se vraťme k tomu opravdu důležitému zločinu, ať odtud můžeš vypadnout.", "angry")
+                        "Pokusím se něco vymyslet.":
+                            hide mcPic
+                            $ zeran.say("No to jsem teda zvědavý.")
+                            $ globalStatus.append("promised Zeran help")
+                "S tím asi nic neuděláme.":
+                    hide mcPic
+                    $ zeran.say("Neuděláme. Přeci jen, jsi jenom z hlídky, řešení zločinů není tvoje práce.", "angry")
+                "Jsou důležitější zločiny, kterým je potřeba se věnovat.":
+                    hide mcPic
+                    $ zeran.say("Samozřejmě, jako třeba ukradené boty.", "angry")
+                    $ mc.say("Mistrovský výrobek na Einionovy slavnosti je přece důležitý.")
+                    $ zeran.say("A hlavně je důležitý Heinrich a jeho uražená ješitnost. Mnohem víc než to, jestli já budu mít, co jíst.", "angry")
         "Napsal bys mi jména těch, za kým můžu dojít?" if "alibi witnesses" in zeran.asked and "letters for Ada seen" in status and "Zeran writing sample" not in status:
             hide mcPic
             $ zeran.say("To si nezvládnete zapamatovat tři jména? Vlastně dvě, Sabriho si asi pamatovat musíte, když jste sem zvládl[a] dojít.")
@@ -326,7 +368,41 @@ label zeranOptions:
                     $ mc.say("Jsem si dost jist[y], že je nikdo hledat nebude. Pak by se mohly roznést po městě zprávy, které by se podle mínění některých bohatých osob roznést neměly.")
             $ zeran.say("Dobře... dejme tomu, že z těch peněz nekouká okamžitá cesta do šatlavy.")
             $ zeran.say("Pořád ale nechápu, co tě vede k tomu mi takovou fůru peněz jen tak dát. To je nedokážeš využít nijak jinak?")
-
+            show mcPic at menuImage
+            menu:
+                "Trochu se v tobě vidím.":
+                    hide mcPic
+                    $ mc.say("Také byla doba, kdy jsem neměl[a] nic kromě pocitu, že mi celý svět schválně ubližuje.")
+                    $ zeran.say("Ale pak ses z toho dostal[a] díky víře, práci a spoustě dalších ctností, co?", "angry")
+                    $ mc.say("Ve skutečnosti hlavně díky úplně hloupému štěstí.")
+                    $ mc.say("A napadlo mě, že mít také jednou štěstí by sis zasloužil i ty. Třeba v tom, že potkáš blázna, co ti jen tak dá peníze.")
+                "Stala se ti nespravedlnost a já ji chci aspoň trochu napravit.":
+                    hide mcPic
+                    $ zeran.say("Nespravedlnosti se v tomhle městě dějí pořád.", "angry")
+                    $ mc.say("Možná, ale na tuhle jsem zrovna narazil[a].")
+                    $ zeran.say("A co ty, přímo tobě se nic nestalo?")
+                    $ mc.say("To zůstalo daleko, v jiných městech a vesnicích. Nemá význam se k tomu vracet.")
+                    $ mc.say("Místo v hlídce není to nejlepší, co mě mohlo potkat, ale ani to nejhorší. Ty potřebuješ peníze víc.")
+                "Je to bezpečnější.":
+                    hide mcPic
+                    $ mc.say("Kdybych je použil[a] pro sebe, mohli by se lidi zajímat, kde jsem k nim při[sel], a ještě bych z toho měl[a] malér. Ty můžeš zmizet z města, to nikoho nepřekvapí, a víc se nikdo nedozví.")
+                    $ zeran.say("Můžeš zmizet z města ty.")
+                    $ mc.say("Já už se toho nacestoval[a] až dost. Nechci už zase začínat znova. Na vyučení by mi peníze nestačily, na obchodování se necítím... Tady mám aspoň to místo v hlídce.")
+                    $ mc.say("Jestli se někdy vzmůžeš, můžeš mi pak ty peníze poslat zpátky.")
+                    $ zeran.say("Nevím, nakolik v to můžu doufat... ale rozhodně mám v úmyslu se dostat k něčemu lepšímu, než mám teď. To by nemělo být tak těžké.")
+                "Prostě mi přijde vtipné využít Rumelinovy peníze zrovna takto.":
+                    hide mcPic
+                    $ mc.say("On určitě čeká, že je utratím za něco drahého nebo s nimi zkusím dělat dojem na známé. Tímhle ho dokonale převezu.")
+                    if "money safe" in zeran.asked:
+                        $ zeran.say("Ještě před chvílí ses tvářil[a], že to byl dárek od obzvlášť hodných přátel. Ne od někoho, z koho si chceš podobným způsobem tropit žerty.")
+                    else:
+                        if "money doesn't matter" in zeran.asked:
+                            $ zeran.say("Jo tak Rumelin. Náš příkladný cechmistr a nechá se vydírat. No asi by mě to v tomhle městě nemělo překvapovat.","happy")
+                        $ zeran.say("To je docela draze koupený pocit zadostiučinění, ne?")
+                        $ zeran.say("Určitě jsou i jiné způsoby, jak ho převézt. Co já vím, pláchnout s penězi a pak o té jeho špíně někomu napsat dopis.")
+                    $ zeran.say("Co máš doopravdy v plánu? K čemu mě chceš využít?", "angry")
+                    $ mc.say("Nechci tě k ničemu využít. Prostě mám možnost pomoct, tak chci pomoct. Já se nějak protluču a tobě ty peníze z mých známých pomůžou nejvíc. Vážně je to tak divné?")
+                    $ zeran.say("V tomhle městě? To rozhodně je.")
             "Zeran se zamračí, krátce povzdechne a zavrtí hlavou."
             $ zeran.say("Možná mě jenom zkazili a jsem zbytečně podezřívavý. Jestli mi chceš pomoct, jistě že to neodmítnu.")
             show mcPic at menuImage
@@ -554,5 +630,7 @@ label zeranOptionsRemainingCheck:
     if "letters for Ada seen" in status and "Zeran writing sample" not in status and "writing sample" not in zeran.asked:
         $ zeranOptionsRemaining += 1
     if "writing sample refused" in zeran.asked and "Zeran writing sample" not in status:
+        $ zeranOptionsRemaining += 1
+    if "theft mention" in zeran.asked and "victim of theft" not in zeran.asked:
         $ zeranOptionsRemaining += 1
     return

@@ -66,10 +66,16 @@ label kilianEncounter:
     $ rauvin.say("Obvinění ze žhářství je příliš závažné a musí ho projednat soud, nejspíš ještě před začátkem slavností. Po něm a po provedení případného trestu samozřejmě budete volní.")
     $ kilian.say("Ale...", "sad")
     "Kluk nedopoví, otočí se na místě a vyběhne ven ze strážnice. Hlídkaři ho sledují, dokud se neztratí za nejbližším rohem."
-    $ rauvin.say("Zvláštní. Čekal jsem, že ji aspoň bude chtít vidět.")
+    $ rauvin.say("Zvláštní. Čekal jsem, že ji aspoň bude chtít vidět, když jí hrozí poprava.")
     "Hayfa jen pokrčí rameny a dojde zavřít dveře."
     show mcPic at menuImage
     menu:
+        "Poprava? Za tanec s ohněm?":
+            hide mcPic
+            $ hayfa.say("Co jiného bys dělal[a] se žhářkou?", "angry")
+            $ mc.say("Většina komediantů nic podpalovat nechce. Většina z nich jenom předvádí čísla, která vypadají dobře. Kdyby chtěla založit požár, nebude to dělat před obecenstvem.")
+            $ hayfa.say("Chtít mohla cokoli, ale ten požár opravdu málem způsobila.", "angry")
+            $ rauvin.say("Po tom velkém požáru před dvěma lety jsou tady hodně přísné zákony kolem neopatrného nošení otevřeného ohně. Bojím se, že její představení pod to spadá.")
         "Otravují vás takhle zločinci často?":
             hide mcPic
             $ rauvin.trust -= 1

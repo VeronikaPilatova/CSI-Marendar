@@ -91,10 +91,47 @@ label erleOptions:
             menu:
                 "Ty lahve byly nejspíš kradené.":
                     hide mcPic
+                    $ erle.say("Tak to je musíme co nejrychleji vrátit! Snad je má Salma ještě u sebe...", "surprised")
+                    $ erle.say("Ale proč by někdo kradl lahve a pak je házel do řeky?")
+                    $ erle.say("Myslím, že je ukradl včetně toho pití vevnitř.")
+                    $ erle.say("Ale to už vrátit nedokážeme...", "sad")
                 "Souvisí to s mým vyšetřováním.":
                     hide mcPic
+                    $ erle.say("Ale na vyhazování lahví přece není nic špatného?", "surprised")
+                    $ erle.say("Třeba se jich někdo jen chtěl zbavit, aby se o ně nemusel bát?")
+                    show mcPic at menuImage
+                    menu:
+                        "Cože?":
+                            hide mcPic
+                            $ mc.say("Pokud by se o ně bál, tak by se jich přece nezbavil.")
+                            $ erle.say("Bát se můžeš jenom o něco, co máš. Když to už není, není ani strach.")
+                            $ erle.say("Nebo ty snad umíš přijít o něco dvakrát?")
+                            $ mc.say("Mně přijde nejlepší o to nepřijít ani jednou.")
+                            $ erle.say("To většině lidí. Snaží se držet vše pevně v hrsti, kupují koše a staví domy, aby to tam ukryli.")
+                            $ erle.say("A pak přijde válka nebo povodeň a všechno to zmizí jako nic.", "sad")
+                            $ erle.say("Proč plýtvat úsilím na něco, co stejně nevydrží?", "sad")
+                            $ erle.say("Lepší je být šťastný teď, dokud to jde.")
+                            $ clues.append("Erle's philosophy")
+                        "Možná...":
+                            hide mcpic
+                            $ erle.say("Jestli neměl, jak je využít, tak bych se mu vlastně nedivila. Jenom by musel dávat pozor, aby je třeba nerozbil.")
+                            $ erle.say("Mohl je donést Salmě sám, ale jestli nevěděl, že by mohly někoho potěšit...")
+                            "Erle pokrčí rameny."
                 "Zajímá mě, kam tu lidé vyhazují odpadky.":
                     hide mcPic
+                    $ erle.say("Správně by je měli nosit za hradby, ale většinou je pohodí jen tak na ulici. V lepších čtvrtích s nimi aspoň posílají sloužící na smetiště.")
+                    $ erle.say("Na takovém smetišti se dá najít spousta hezkých věcí. Potěší tě a pak je můžeš někomu dát za trochu jídla.", "happy")
+                    $ erle.say("Nejbližší je kousek odtud, směrem k bráně. Můžu tě tam zavést.", "happy")
+                    $ mc.say("To asi nebude potřeba, ale díky.")
+                    $ erle.say("Opravdu? Můžu i pomoct s hledáním...")
+                    $ mc.say("Možná někdy jindy.")
+                    $ erle.say("Dobře.", "happy")
+        "Neviděla jsi toho, kdo ty lahve vyhodil?" if "bottles 2" in erle.asked and "see who threw bottles away" not in erle.asked:
+            hide mcPic
+            $ erle.asked.append("see who threw bottles away")
+            $ erle.say("Jistěže ne! To bych mu řekla, ať tak hezké lahve radši někomu daruje, když už je sám nechce.", "surprised")
+            $ mc.say("Ani jsi ho neviděla projít kolem? Nebo ji?")
+            $ erle.say("I kdybych viděla, nevěděla bych, že to je on.")
         "Bylo mezi těmi odpadky ještě něco dalšího?" if "bottles 2" in erle.asked and "anything else" not in erle.asked:
             hide mcPic
             $ erle.asked.append("anything else")
@@ -221,5 +258,7 @@ label erleOptionsRemainingCheck:
     if race == "dwarf" and "ancestors" not in erle.asked:
         $ optionsRemaining += 1
     if "teach me" not in erle.asked:
+        $ optionsRemaining += 1
+    if "bottles 2" in erle.asked and "see who threw bottles away" not in erle.asked:
         $ optionsRemaining += 1
     return

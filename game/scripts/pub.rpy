@@ -99,15 +99,19 @@ label pubOrder:
                 $ salma.trust += 1
             $ status.append("ordered dinner")
             if "second dinner with Salma" in dailyStatus:
-                "TODO - Něco by mělo zbýt i na ostatní"
+                $ salma.say("Panečku, kdy vám naposledy dali najíst? Pečínka ani kaše už nejsou, ale můžeme vám donést ještě placku a nějaké ovoce.", "happy")
+                $ salma.say("Ale budu chtít nejdřív vše zaplatit. Nic proti vám, vypadáte důvěryhodně, ale občas návštěvníci zkouší různé kousky.")
+                "Dáš hostinské pár mincí, ona spokojeně přikývne a zavolá na jednoho z pomocníků. O chvíli později se k tobě přiblíží jeden z hobitích výrostků s jídlem a zvědavě po tobě pokukuje."
+                "Jakmile si ale uvědomí, že o tom víš, odvrátí pohled, rychle před tebe postaví tác a zase zmizí. Ty si tak můžeš v klidu vychutnat svou porci, stejně dobrou jako ty předešlé."
             elif "dinner with Salma" in dailyStatus:
-                "TODO - Salma se diví"
-                $dailyStatus.append("second dinner with Salma")
+                $ salma.say("Výběr je stejný jako předtím, pečínka, kaše s ovocem, placky, sýr a uzené. Věřím, že dost na to, abychom nasytili i ty nejnáročnější jedlíky.", "happy")
+                $ salma.say("Co to tedy bude?")
+                "Opět si objednáš a zanedlouho opravdu dostaneš další porci. Obslouží tě jiný hobit než předtím, nicméně i tentokrát to je zřejmě Salmin mladší příbuzný a i tentokrát je chuť jídla vynikající."
+                $ dailyStatus.append("second dinner with Salma")
             else:
                 $ dailyStatus.append("dinner with Salma")
-
-            $ salma.say("Mám tu uvařenou kaši s ovocem a chlebové placky se sýrem a uzeným masem. Nebo můžete dostat i pečínku, pokud si chcete počkat.")
-            "Objednáš si dobrou večeři, kterou ti o něco později donese mladý hobit, podle podobnosti pravděpodobně Salmin přibuzný."
+                $ salma.say("Mám tu uvařenou kaši s ovocem a chlebové placky se sýrem a uzeným masem. Nebo můžete dostat i pečínku, pokud si chcete počkat.")
+                "Objednáš si dobrou večeři, kterou ti o něco později donese mladý hobit, podle podobnosti pravděpodobně Salmin přibuzný."
             call dinnerAchievementCheck
         "Můžu vám jenom položit pár otázek?" if len(salma.asked) == len(origAsked) and optionsRemaining > 0:
             hide mcPic
@@ -227,6 +231,89 @@ label salmaOptions:
             $ salma.say("Chystá se snad něco takového?")
             $ mc.say("To se uvidí na slavnostech, do té doby nemohu nic říct.")
             $ salma.say("V tom případě se budu těšit o to víc.", "happy")
+        "Hledám mladého kluka, který by tu prý měl přespávat, ještě se sestrou." if "finding brother" in katrin.asked and "searching for Kilian" not in salma.asked:
+            hide mcPic
+            $ salma.asked.append("searching for Kilian")
+            if "Killian encounter" in status:
+                $ mc.say("Asi dvanáct let, hnědé vlasy. Jmenuje se Kilian.")
+            if time.days == 2:
+                $ salma.say("Vím, koho myslíte. Ani jeden z nich tu od včerejška nebyl. Je to s Katrin tak špatné, jak se povídá?")
+            elif time.days == 3:
+                $ salma.say("Vím, koho myslíte. Ani jeden z nich tu nebyl už dva dny. Je to s Katrin tak špatné, jak se povídá?")
+            else:
+                $ salma.say("Vím, koho myslíte. Ani jeden z nich tu nebyl už tři dny. Je to s Katrin tak špatné, jak se povídá?")
+            $ mc.say("Vy asi víte lépe než já, co hrozí někomu, kdo v tomhle městě něco málem zapálí.")
+            $ salma.say("Trochu doufám, že se z toho nějak dostane. Působili oba jako milí lidé.", "sad")
+            if "helping Katrin" in status:
+                $ mc.say("Snažím se jí pomoct, ale zatím není nic jisté.")
+        "Pokud se tu Kilian ukáže, můžete dát hlídce vědět?" if "searching for Kilian" in salma.asked and "Kilian - let us know" not in salma.asked:
+            hide mcPic
+            $ salma.asked.append("Kilian - let us know")
+            $ salma.say("Co mu vlastně chcete? On s žádným ohněm nemanipuloval.")
+            show mcPic at menuImage
+            menu:
+                "Možná by jeho svědectví mohlo Katrin pomoct.":
+                    hide mcPic
+                    $ salma.say("Určitě? Je to chudý malý kluk zdaleka a jeho sestra půjde před soud za žhářství. Kolik lidí ho bude poslouchat?")
+                    $ mc.say("Já určitě. Třeba si vzpomene na něco, na čem půjde stavět, aniž by to musel opakovat před soudem.")
+                    $ salma.say("No, třeba...")
+                "I tak to je její komplic.":
+                    hide mcPic
+                    $ salma.trust -= 1
+                    $ hayfa.trust += 1
+                    $ salma.say("“Chápu. Buďte bez obav, jakmile se tu nějaký zločinec objeví, hlídka se to hned dozví.", "angry")
+                "Katrin by ho mohla chtít vidět.":
+                    hide mcPic
+                    $ salma.say("Jen pokud ho tím neuvede do nebezpečí, obávám se. A on to nebezpečí může velmi snadno cítit.")
+                    $ salma.say("Ale jestli se tu ukáže, promluvím s ním a uvidím, co se dá dělat.")
+        "Pokud Kiliana uvidíte, můžete mu aspoň něco vyřídit?" if "searching for Kilian" in salma.asked and "message for Kilian" not in salma.asked:
+            hide mcPic
+            $ salma.asked.append("message for Kilian")
+            $ salma.say("To asi můžu, ale nemůžu vůbec slíbit, že se sem vrátí. Přeci jen ho tady vidělo dost lidí.")
+            $ mc.say("I malá šance je lepší než nic.")
+            $ salma.say("To máte samozřejmě pravdu.")
+            $ salma.say("Co mu chcete vyřídit?")
+            label messageForKilianOptions:
+            show mcPic at menuImage
+            menu:
+                "Rád[a] bych s ním mluvil[a] a slibuji, že se mu nic nestane." if "message for Kilian - asking for meeting" not in status and "message for Kilian - meet me or else" not in status and "message for Kilian - get lost" not in status:
+                    hide mcPic
+                    $ status.append("message for Kilian - asking for meeting")
+                    jump messageForKilianContinue
+                "Pokud se přihlásí dobrovolně a nebudeme ho muset nahánět po celém městě, bude to polehčující okolnost." if "message for Kilian - meet me or else" not in status and "message for Kilian - asking for meeting" not in status and "message for Kilian - meet me or else" not in status:
+                    hide mcPic
+                    $ status.append("message for Kilian - meet me or else")
+                    jump messageForKilianContinue
+                "Snažím se Katrin pomoct." if "message for Kilian - helping Katrin" not in status:
+                    hide mcPic
+                    $ status.append("message for Kilian - helping Katrin")
+                    jump messageForKilianContinue
+                "Katrin ho chce vidět." if "message for Kilian - Katrin asking to meet" not in status:
+                    hide mcPic
+                    $ status.append("message for Kilian - Katrin asking to meet")
+                    jump messageForKilianContinue
+                "Takové, jako on, v Marendaru nechceme. Jestli nechce dopadnout jako jeho sestra, měl by se klidit." if "message for Kilian - get lost" not in status and "message for Kilian - asking for meeting" not in status and "message for Kilian - meet me or else" not in status:
+                    hide mcPic
+                    $ status.append("message for Kilian - get lost")
+                    jump messageForKilianContinue
+                "Ne, to už je všechno." if any("message for Kilian -" in str for str in status):
+                    hide mcPic
+                    $ salma.say("Dobře. Jestli se objeví, tak mu to předám.")
+        "Všimla jste si na Katrin a jejím bratrovi něčeho zvláštního?" if "searching for Kilian" in salma.asked and "about Katrin and Kilian" not in salma.asked:
+            hide mcPic
+            $ salma.asked.append("about Katrin and Kilian")
+            $ salma.say("Moc ne. Jsou poměrně mladí na to, že cestují sami, ale to pořád není tak neobvyklé.")
+            $ salma.say("Na komedianty jsou hodně tiší, většinu času se drželi stranou. Takových jako oni většinou bývá plná místnost. Ale každý jsme nějaký a možná to je jenom nezkušenost.")
+            $ salma.say("Rozhodně jsem si na nich nevšimla ničeho špatného.")
+        "Byla byste ochotná svědčit ve prospěch Katrin u soudu?" if "about Katrin and Kilian" in salma.asked and "testify for dancer" not in salma.asked:
+            hide mcPic
+            $ salma.asked.append("testify for dancer")
+            $ salma.say("Já u té události přece nebyla. K čemu to bude dobré?", "surprised")
+            $ salma.say("Můžu říct, že mi nepřipadala ničím podezřelá, ale nemyslím, že to samo o sobě soud obměkčí.")
+            $ salma.say("Na to potřebujete najít někoho, kdo sám viděl, jestli se něčeho dopustila.")
+            $ mc.say("A napadá vás někdo takový?")
+            $ salma.say("Bohužel. Samozřejmě se tu o tom požáru už mluvilo, ale samé zveličené historky ze třetí ruky a opilecké tlachy. Nic, co by vám pomohlo.")
+
         "Děkuji, velmi jste mi pomohla.":
             hide mcPic
             return
@@ -245,6 +332,10 @@ label leavingPub:
         "V klidu dojíš a pak se vrátíš k vyšetřování svého případu."
         $ status.remove("ordered dinner")
     return
+
+label messageForKilianContinue:
+    $ salma.say("Rozumím. Ještě něco dalšího?")
+    jump messageForKilianOptions
 
 ###
 
@@ -273,5 +364,15 @@ label salmaOptionsRemainingCheck:
     if "lost bottles" in clues and "erle" not in salma.asked:
         $ optionsRemaining += 1
     if "join forces victim pending" in status and "join forces" not in salma.asked:
+        $ optionsRemaining += 1
+    if "finding brother" in katrin.asked and "searching for Kilian" not in salma.asked:
+        $ optionsRemaining += 1
+    if "searching for Kilian" in salma.asked and "Kilian - let us know" not in salma.asked:
+        $ optionsRemaining += 1
+    if "searching for Kilian" in salma.asked and "message for Kilian" not in salma.asked:
+        $ optionsRemaining += 1
+    if "searching for Kilian" in salma.asked and "about Katrin and Kilian" not in salma.asked:
+        $ optionsRemaining += 1
+    if "about Katrin and Kilian" in salma.asked and "testify for dancer" not in salma.asked:
         $ optionsRemaining += 1
     return

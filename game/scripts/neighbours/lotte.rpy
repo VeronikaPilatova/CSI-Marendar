@@ -227,6 +227,7 @@ label lotteOptions:
         "Byla byste ochotná svědčit v její prospěch?" if "dancer arrested" in lotte.asked and "testify for dancer" not in lotte.asked:
             hide mcPic
             $ lotte.asked.append("testify for dancer")
+            $ status.append("helping Katrin")
             if "dancer innocent" in lotte.asked:
                 "Lotte zaváhá."
                 $ lotte.say("Pořád ji za žhářku považuje většina mých sousedů. Jestli se za ni postavím, mohlo by se to obrátit proti mně.")

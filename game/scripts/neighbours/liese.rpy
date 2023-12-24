@@ -54,12 +54,16 @@ label lieseOptions:
         "Poznala jste, který učedník na té pochůzce byl?" if "which apprentice" not in liese.asked:
             hide mcPic
             $ liese.asked.append("which apprentice")
-            $ liese.say("Myslím, že ten nejmladší. Hnědovlasý usměvavý kluk, jestli vám to pomůže. Možná Bert, nebo tak nějak?")
+            $ liese.say("Ten nejmladší, Gerd. Hnědovlasý usměvavý kluk.")
+            $ liese.say("Ten vlastně od Heinricha nedávno odešel k jinému mistrovi a asi bych věděla, kdyby se zase vrátil, tak možná dostal za úkol mistru Heinrichovi něco donést. Nebo se šel jen podívat za ostatními kluky?")
+            $ liese.say("To by mě vlastně vůbec nepřekvapilo, vždycky měli dobré vztahy.")
         "Ničeho dalšího jste si nevšimla?" if "anything else" not in liese.asked:
             hide mcPic
             $ liese.asked.append("anything else")
             "Žena se zamyslí."
-            $ liese.say("Jedině, že potom ráno Heinrichův syn vynášel nějaké smetí. Ale v dílně uklízí vždycky někdo z kluků.")
+            $ liese.say("Jedině, že potom ráno Aachim vynášel nějaké smetí, jestli něco takového může být užitečné.")
+            $ mc.say("Bylo na tom něco neobvyklého?")
+            $ liese.say("Jenom tím, že to většinou dělal Gerd nebo teď Rudi. Aachima jsem jít se smetím neviděla už dlouho, ale mohli si to jen s Rudim vyměnit. Uklízí stejně všichni společně.")
         "Co za smetí to bylo?" if "anything else" in liese.asked and "garbage" not in liese.asked:
             hide mcPic
             $ liese.asked.append("garbage")

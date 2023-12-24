@@ -9,6 +9,7 @@ label zairisController:
 
 label zairisOptions:
     call zairisOptionsRemainingCheck
+    call rovienOptionsRemainingCheck
     if zairisOptionsRemaining == 0:
         $ mc.say("To je všechno, na co jsem se chtěl[a] zeptat.")
         return
@@ -68,11 +69,93 @@ label zairisOptions:
             elif "rumelin reasons" in lotte.asked:
                 $ mc.say("Karstenova manželka Lotte.")
                 $ zairis.say("To se musela splést, strýc má hodně zkušeností a všechny ty problémy velmi dobře zná.")
-        "Znáš se s dcerou mistra Heinricha?" if "Ada's boyfriend" in lisbeth.asked and "Ada" not in zairis.asked:
+        "Znáš Zerana?" if "Zeran offense" in clues and "zeran" not in zairis.asked:
+            hide mcPic
+            $ zairis.asked.append("zeran")
+            $ zairis.say("Trochu, ale vlastně jsme se nikdy moc nebavili. Proč?")
+            show mcPic at menuImage
+            menu:
+                "Čekal[a] bych to. Jste oba elfové podobného věku, pohybovali jste se ve stejných kruzích...":
+                    hide mcPic
+                    $ zairis.say("No, ano, dřív jsme se občas potkali, třeba jsme chodívali ke stejnému učiteli...")
+                    $ zairis.ay("Ale to už je dávno. Posledních pár let se mnou Zeran nemluví a já se ho doprošovat nebudu.", "angry")
+                    $ mc.say("A proč jste se takto rozkmotřili?")
+                    $ zairis.say("To se ptejte jeho. Mě ten zoufalec nezajímá.", "angry")
+                    $ mc.say("Proč zoufalec?")
+                    $ zairis.say("Tak já nevím, asi špatné slovo. Prostě mě nezajímá. Dlouho jsme se neviděli a nechci na tom nic měnit, na to má moc průšvihů.", "angry")
+                    $ zairis.say("Nejradši bych na něj úplně zapomněl.")
+                "Myslím si, že byl vyhozený neprávem, a chtěl[a] bych ho očistit.":
+                    hide mcPic
+                    $ zairis.say("Neprávem? Proč? Mistr Heinrich si tím přece byl hodně jistý. A nikdo jiný to také nezpochybňoval.")
+                    if "Ada's boyfriend" in lisbeth.asked or "Zeran" in ada.asked or "Ada" in zeran.asked:
+                        show mcPic at menuImage
+                        menu:
+                            "Ada říkala, že to bylo jinak." if "Ada's boyfriend" in lisbeth.asked or "Zeran" in ada.asked:
+                                hide mcPic
+                                $ zairis.say("Ada je v tom nevinně a měla by na to co nejdřív zapomenout. Jen ji to zbytečně trápí a to si nezaslouží.")
+                                $ zairis.say("Asi mu chtěla pomoct, protože je prostě hodná. I když ty dopisy psal on. Nic víc v tom není.")
+                                $ zairis.say("Být vámi se tím už nezabývám. Hlídka má určitě důležitější starosti než rozrušovat mladé dívky. Zvlášť když to je úplně zbytečné.")
+                                $ zairis.asked.append("Zairis mentioned letters")
+                            "Zpochybňoval to Zeran." if "Ada" in zeran.asked:
+                                hide mcPic
+                                $ zairis.say("No samozřejmě, že ten to popíral. Šlo mu o vyhazov, tak to zkusil. Tomu se přece nedá věřit.", "angry")
+                                $ mc.say("Jsou lidi, co by se přiznali, třeba protože by svou lásku nechtěli zapírat.")
+                                $ zairis.say("To... samozřejmě. Asi by to bylo správně, když už... když už. Ale rýpat do toho vyhazovu jen kvůli tomu, že Zeran mezi tyhle lidi možná patří, no já nevím.")
+                            "Některé okolnosti mi na tom nesedí.":
+                                hide mcPic
+                                label zairisZeranInnocentTestingWaters:
+                                $ zairis.say("Proč nesedí? Vždyť je to úplně jasné. Prostě si vyhodit zasloužil. Všechno to udělal a nikoho si neváží. Na tom není, co zkoumat.", "angry")
+                                $ zairis.say("Samozřejmě nechci radit, čím se má hlídka zabývat. Ale tady není nic ke zjišťování. Vůbec.", "angry")
+                    else:
+                        $ mc.say("Některé okolnosti mi na tom nesedí.")
+                        jump zairisZeranInnocentTestingWaters
+        "Odkud víš, že Ada ty básně dostala v dopisech?" if "Zairis mentioned letters" in zairis.asked and "letters for Ada" not in zairis.asked and "what letters" not in zairis.asked:
+            hide mcPic
+            $ zairis.asked.append("what letters")
+            $ zairis.say("Nevím! Nikdy jsem je neviděl!", "surprised")
+            $ zairis.say("Asi jsem to někde zaslechl? Mluvilo se o tom tehdy hodně.")
+            $ mc.say("Nevypadáš jako někdo, kdo rád poslouchá drby.")
+            $ zairis.say("To nejsem! Nebo jsem to možná neslyšel, ale přišlo mi to přirozené, psát to v dopisu, a zrovna jsem to uhodl.")
+            $ zairis.say("Když jsou ty klepy všude, co mám dělat? Nedá se jim vyhnout.")
+        "Znáš se s dcerou mistra Heinricha?" if ("Ada's boyfriend" in lisbeth.asked or "zeran" in zairis.asked) and "Ada" not in zairis.asked:
             hide mcPic
             $ zairis.asked.append("Ada")
             $ zairis.say("S Adou? Občas se vídáme, na cechovních setkáních, na různých slavnostech a podobně. Proč?")
-        "Ada, dcera mistra Heinricha, prý dostala nějaké básně a potřeboval bych názor, od koho tak mohly být." if "poetry" in zairis.asked and "poetry for Ada" not in zairis.asked:
+            $ mc.say("No, o tom, proč mistr Heinrich vyhodil Zerana, jsi předpokládám slyšel?")
+            $ zairis.say("Samozřejmě. O tom tehdy v ševcovském cechu klevetili všichni.")
+            show mcPic at menuImage
+            menu:
+                "Ada prý říkala, že ji nesváděl Zeran, ale ty." if "Ada's boyfriend" in lisbeth.asked:
+                    hide mcPic
+                    $ zairis.say("Já že jsem někoho sváděl? Za koho mě máte? Myslíte snad, že bych jen tak z rozmaru ohrozil čest mladé dívky? To si vyprošuji!", "angry")
+                "Ada prý říkala, že ty básně dostala od tebe, a ne od Zerana." if "Ada's boyfriend" in lisbeth.asked:
+                    hide mcPic
+                    $ zairis.asked.append("letters for Ada")
+                    $ zairis.say("...")
+                "Chtěl[a] bych Zerana očistit. Napadá tě, kdo jiný by mohl Adu milovat?":
+                    hide mcPic
+                    $ mc.say("A hlavně kdo by ji mohl okouzlit?")
+                    $ zairis.say("No, milovat ji jistě bude spousta mužů, je to dívka s jasnýma očima a citlivou duší, pro kterou je toto město malé.")
+                    $ zairis.say("Tedy, co tak mohu soudit z toho, jak ji znám. Nesetkáváme se bohužel moc často. Ne tolik, jak... no to je jedno.")
+                    $ zairis.say("Ale okouzlit ji? To už je něco jiného. To by myslím dokázal jen někdo dostatečně vnímavý k její touze po romantice a dobrodružství.")
+                    $ zairis.say("To většina zdejších balíků není.")
+                    show mcPic at menuImage
+                    menu:
+                        "Zeran by to dokázal?":
+                            hide mcPic
+                            $ zairis.say("No to nevím. Vždy mi přišel hodně přízemní.")
+                            $ zairis.say("Ale kde je řečeno, že ji opravdu okouzlil? Už jestli se o to jen neúspěšně pokoušel, je to víc, než na co měl právo.", "angry")
+                            $ zairis.say("Možná tím hůř, muselo pro ni být únavné ho pořád odmítat. Dostal, co si zasloužil.", "angry")
+                        "Takže někdo jako ty?":
+                            hide mcPic
+                            $ zairis.say("No, nevím, jestli je vhodné, abych na to odpovídal. Nechtěl bych být nařčen ani z pýchy, ani z falešné skromnosti.")
+                            $ zairis.say("Ale jestli je to potřeba k vyšetřování, no, ano, myslím, že bych to mohl dokázat.", "happy")
+                            $ zairis.say("Kdyby k tomu byla příležitost a kdybych něco podobného měl v úmyslu, samozřejmě.")
+                        "Znáš někoho takového?":
+                            hide mcPic
+                            $ zairis.say("Upřímně, nechtěl bych nikoho tímto způsobem hodnotit. Co kdybych mu křivdil. To by nebylo správné.")
+                            $ zairis.say("Ale nenapadá mě nikdo, o kom bych si byl jistý, že to dokáže.")
+        "Ada, dcera mistra Heinricha, dostala nějaké básně a já bych potřeboval[a] bych názor, od koho tak mohly být." if "poetry" in zairis.asked and "poetry for Ada" not in zairis.asked:
             call poetryForAda
         "Byl jsi někdy u Amadisova hrobu?" if ("letters for Ada seen" in status or "letters topic" in ada.asked) and "Amadis grave" not in zairis.asked:
             hide mcPic
@@ -80,9 +163,34 @@ label zairisOptions:
             $ zairis.say("Jednou jsem měl to štěstí. Je to úžasné místo.", "smile")
             $ zairis.say("Tedy, byl jsem u hrobu toho Amadise, který se vrátil, aby nás zachránil před krvavou lázní, kterou chtěl rozpoutat Hans z Dlouhopolska a jeho povstalecká chátra.")
             $ zairis.say("Chtěl bych se někdy dostat i ke hrobu prvního Amadise, ale tak daleko zatím můj otec necestoval.")
+
+        "Všiml[a] jsem si, že tvé písmo je přesně stejné, jako písmo Adina tajného ctitele." if "letters for Ada seen" in status and "Zairis writing sample" in status and "handwriting proof" not in zairis.asked and "expensive paper proof" not in zairis.asked:
+            hide mcPic
+            $ zairis.asked.append("handwriting proof")
+            if "letters for Ada" not in zairis.asked:
+                $ zairis.say("Písmo jejího tajného ctitele? Asi nevím, co máte na mysli.")
+                call zairisLettersForAdaFirstMention
+                $ mc.say("Jak ale vysvětlíš to shodující se písmo?")
+                call zairisHandwritingProof
+        "Navíc je tvoje písmo stejné jako to na dopisech." if "letters for Ada seen" in status and "Zairis writing sample" in status and "handwriting proof" not in zairis.asked and "expensive paper proof" in zairis.asked:
+            hide mcPic
+            $ zairis.asked.append("handwriting proof")
+            call zairisHandwritingProof
+        "Všiml[a] jsem si, že používáš stejný papír, jako Adin tajný ctitel." if "letters for Ada seen" in status and "Zairis writing sample" in status and "handwriting proof" not in zairis.asked and "expensive paper proof" not in zairis.asked:
+            hide mcPic
+            $ zairis.asked.append("expensive paper proof")
+            $ zairis.say("Jakého tajného ctitele a jaký papír myslíte?")
+            call zairisLettersForAdaFirstMention
+            $ mc.say("Jak ale vysvětlíš to, že používáš přesně stejný papír?")
+            call zairisExpensivePaperProof
+        "Navíc používáš stejný papír jako ten, na kterém jsou dopisy pro Adu psané." if "letters for Ada seen" in status and "Zairis writing sample" in status and "handwriting proof" in zairis.asked and "expensive paper proof" not in zairis.asked:
+            hide mcPic
+            $ zairis.asked.append("expensive paper proof")
+            call zairisExpensivePaperProof
+
         "Mohl bys mi něco napsat, jen jako ukázku, jak píšeš?" if "letters for Ada seen" in status and "Zairis writing sample" not in status:
             hide mcPic
-            $ zairis.say("Ehm… myslíte báseň na zakázku? To by asi chvíli trvalo.", "surprised")
+            $ zairis.say("Ehm... myslíte báseň na zakázku? To by asi chvíli trvalo.", "surprised")
             $ mc.say("Ne, myslím několik libovolných vět. Jde mi pouze o rukopis.")
             $ zairis.say("A k čemu to bude dobré? Můžu vás ubezpečit, že píšu poměrně úhledně, také mě v tom dost dlouho cepovali.", "surprised")
             $ mc.say("Chci si tvůj rukopis porovnat s jinými dokumenty a ověřit autorství.")
@@ -99,7 +207,8 @@ label zairisOptions:
             $ zairis.asked.append("book 2")
             $ zairis.trust += 1
             $ zairis.say("Poslíček nakonec dorazil. Prý se u brány jeden kupec před ním snad půl dne dohadoval o výšce cla. Nakonec ho prý zaplatil, ale prohlašoval u toho, že to tak nenechá a bude si stěžovat.")
-        "Mohl[a] bych si ještě promluvit s tvým otcem?":
+
+        "Mohl[a] bych si ještě promluvit s tvým otcem?" if rovienOptionsRemaining > 0:
             hide mcPic
             $ zairis.say("Předpokládám, že ano. Dojdu se ho zeptat.")
             "Mladý elf se otočí a na chvíli zmizí do jiné místnosti. Slyšíš tlumený rozhovor a pak Zairise vystřídá jeho otec."
@@ -155,7 +264,7 @@ label poetry:
                     $ zairis.say("Jistě, to je v pořádku. Přineste něco prosím, jakmile budete moct.", "happy")
                     $ zairis.say("Marendarskou knihovnu se po požáru ještě bohužel nepodařilo vybavit tak, jak by si zasloužila. Bude skvělé dostat se k básním, které jsem ještě nečetl.", "happy")
             $ status.append("promised poetry")
-        "Ada, dcera mistra Heinricha, prý dostala nějaké básně a potřeboval bych názor, od koho tak mohly být.":
+        "Ada, dcera mistra Heinricha, dostala nějaké básně a potřeboval[a] bych názor, od koho tak mohly být.":
             label poetryForAda:
                 hide mcPic
                 $ mc.say("Styl, kvalita a tak.")
@@ -180,6 +289,7 @@ label poetry:
                         $ mc.say("A kvůli které se na něj Heinrich rozzuřil.")
                         $ zairis.say("Já ale Zerana neznám nijak dobře. Nemyslím si, že bych dokázal poznat jeho styl.")
                 $ zairis.asked.append("poetry for Ada")
+                $ zairis.asked.append("letters for Ada")
                 return
     return
 
@@ -195,6 +305,35 @@ label mcPoemReaction:
     if "poem stolen" in status:
         "Skoro okamžitě se ale jeho výraz změní."
         $ zairis.say("To je Théodore de Banville. Jeho básně znám velmi dobře.", "angry")
+    return
+
+label zairisLettersForAdaFirstMention:
+    $ mc.say("Dostaly se mi do rukou dopisy, které Ada dostala, a snažím se najít jejich autora.")
+    $ zairis.say("Aha... A co mu chcete?")
+    $ zairis.say("Chci říct, mně je to v zásadě jedno, ale není to její věc, s kým si dopisuje?")
+    show mcPic at menuImage
+    menu:
+        "Autor těch dopisů by mohl být podezřelý z krádeže v Heinrichově dílně.":
+            hide mcPic
+            $ zairis.trust -= 1
+            $ zairis.say("... jako že někdo psal Adě dopisy, dal si s ní dostaveníčko v domě jejích rodičů a pak toho využil, aby se dostal do dílny?", "surprised")
+            $ zairis.say("Nebo že ji přesvědčil, aby mu odemkla?", "surprised")
+            $ zairis.say("To je falešná stopa, to by neudělala.", "angry")
+            $ mc.say("I tak by mě ale zajímalo, kdo jí ty básně psal.")
+            $ zairis.say("Jestli vás to ale jenom zajímá a nepomáhá to pátrání, nevidím důvod, proč se tím zabývat. Pořád to považuji za soukromou záležitost a vy máte určitě důležitější věci na práci.", "angry")
+        "Mistr Heinrich za to vyhodil svého učedníka, tak mě zajímá, jestli právem.":
+            hide mcPic
+    return
+
+label zairisHandwritingProof:
+    "TBD"
+    return
+
+label zairisExpensivePaperProof:
+    $ zairis.say("Ale prosím, podobný papír se dá běžně koupit a používá ho kde kdo. To přece nemůžete považovat za důkaz.")
+    $ mc.say("Celou řadu možných odesilatelů to ale naopak vylučuje. Například Zerana.")
+    $ zairis.say("No, možná. On se tváří jako chudáček, ale třeba si ty peníze někde sehnal?")
+    $ mc.say("Třeba. Ale není to pravděpodobné.")
     return
 
 ###
@@ -220,5 +359,13 @@ label zairisOptionsRemainingCheck:
     if "letters for Ada seen" in status and "Zairis writing sample" not in status:
         $ zairisOptionsRemaining += 1
     if "book" in zairis.asked and "Rovien house visited" in status and "book 2" not in zairis.asked:
+        $ zairisOptionsRemaining += 1
+    if "Zeran offense" in clues and "zeran" not in zairis.asked:
+        $ zairisOptionsRemaining += 1
+    if "Zairis mentioned letters" in zairis.asked and "letters for Ada" not in zairis.asked and "what letters" not in zairis.asked:
+        $ zairisOptionsRemaining += 1
+    if "letters for Ada seen" in status and "Zairis writing sample" in status and "handwriting proof" not in zairis.asked:
+        $ zairisOptionsRemaining += 1
+    if "letters for Ada seen" in status and "Zairis writing sample" in status and "expensive paper proof" not in zairis.asked:
         $ zairisOptionsRemaining += 1
     return
