@@ -115,7 +115,7 @@ label preparation:
     default merchant = Person("Karsten", "merchant")
     default messenger = Person("Melien", "messenger")
     default optimist = Person("Ferdi", "apprentice1", "hungover")
-    default rauvin = Person("Rauvin", "anon")
+    default rauvin = Person("Rauvin", "rauvin")
     default sabri = Person("Sabri", "sabri")
     default son = Person("Aachim", "son", "hungover")
     default victim = Person("Mistr Heinrich", "victim")
