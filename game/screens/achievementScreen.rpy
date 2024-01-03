@@ -1,5 +1,4 @@
-## Here we have the menu screen to display all the locked
-## and unlocked achievements.
+## Here we have the menu screen to display all the locked and unlocked achievements.
 
 ## This configuration here allows the grid to be displayed even if
 ## not all elements are visible. You won't get an error for grids
@@ -8,76 +7,70 @@ define config.allow_underfull_grids = True
 
 ## The achievements screen.
 screen achievement_menu():
-
     tag menu
-
     use game_menu(_("Achievementy"), scroll="viewport"):
 
         style_prefix "achievements"
-
         text "{:01d}/{}".format(len(persistent.my_achievements), len(achievement_name) if len(persistent.my_achievements) == len(achievement_name) else len(achievement_name) - 1) size 30
 
         frame:
-
             background None
             padding (20, 20, 20, 20)
             align (0.0, 0.0)
 
             vpgrid:
-
                 cols 2 ## You can change this number depending on the width of your achievements.
                 spacing 10
 
                 ## Granted achievements
                 for t in persistent.my_achievements:
-
                     if achievement.has(t.name):
-
                         frame:
-
                             background Solid('#000000') ## black for now.
 
                             hbox:
                                 yalign 0.5
                                 xysize (100, 100)
-
                                 add t.image size (100, 100) yalign 0.5
-
                                 null width 20
 
                                 vbox:
                                     spacing 0
                                     yfill False
-
                                     text "[t.name]" style 'achievements_label' color '#ffffff'
                                     text "[t.message]" color '#888888'
 
                 ## Locked achievements
                 for v in achievement_name.values():
                     if not achievement.has(v.name):
-
-                        ## We're doing a check for all achievements that is not a 'platinum'.
-                        ## The platinum achievement will not appear in the list.
                         if v.priority is None:
-
                             frame:
-
                                 hbox:
-
                                     yalign 0.5
                                     xysize (100, 100)
-
-                                    ## This will display a locked icon.
                                     add 'images/achievements/trophy locked.png' size (100, 100) yalign 0.5
-
                                     null width 20
 
                                     vbox:
-
                                         spacing 0
                                         yfill False
-
                                         text "[v.name]" style 'achievements_label' color '#FFFFFF33'
+
+                ## Hidden achievements
+                for v in achievement_name.values():
+                    if not achievement.has(v.name):
+                        if v.priority is "hidden":
+                            frame:
+                                hbox:
+                                    yalign 0.5
+                                    xysize (100, 100)
+                                    add 'images/achievements/trophy locked.png' size (100, 100) yalign 0.5
+                                    null width 20
+
+                                    vbox:
+                                        spacing 0
+                                        yfill False
+                                        text "?" style 'achievements_label' color '#FFFFFF33'
 
 init python:
 
