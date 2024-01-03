@@ -62,7 +62,6 @@ label workshopNightOptions:
             call loveLetters
             if not achievement.has(achievement_name['burglar'].name):
                 $ Achievement.add(achievement_name['burglar'])
-            $ status.append("letters for Ada seen")
             label loveLettersBurglaryMenu:
             menu:
                 "{i}(Přečíst si dopisy znovu){/i}":
@@ -435,4 +434,7 @@ label loveLetters:
     show sh love letter4
     pause
     hide sh love letter4
+    if "letters for Ada seen" not in status:
+        $ status.append("letters for Ada seen")
+        "Jako písaře tě kromě obsahu dopisů zaujme i rukopis. Důkladně si prohlédneš, jak jsou psaná jednotlivá písmena, a pokusíš se co nejlépe si zapamatovat všechny výraznější znaky."
     return

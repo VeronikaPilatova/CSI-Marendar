@@ -247,6 +247,9 @@ label writePoetry:
         "Hle, z včerejší naděje se rodí světlý zítřek!":
             $ status.append("poem hope")
             show expression "sh poem hope [race].png"
+        "Jen samá příkoří nese mi svět":
+            $ status.append("poem poverty")
+            show expression "sh poem poverty [race].png"
     pause
     if not achievement.has(achievement_name['poet'].name):
         $ Achievement.add(achievement_name['poet'])

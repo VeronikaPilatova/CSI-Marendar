@@ -1,8 +1,8 @@
 label rumelinController:
     # check if visit makes sense
-    if "rumelin closed door" in status and ("rumelin owes favour" not in status or favourOptionsRemaining == 0):
-        "Cechmistr Rumelin s tebou stále odmítá mluvit."
-        return
+    #if "rumelin closed door" in status and ("rumelin owes favour" not in status or favourOptionsRemaining == 0):
+    #    "Cechmistr Rumelin s tebou stále odmítá mluvit."
+    #    return
     call rumelinOptionsRemainingCheck
     if optionsRemaining == 0:
         "Nenapadá tě, co dalšího se cechmistra Rumelina ještě ptát."
@@ -91,11 +91,10 @@ label rumelinClosedDoor:
             "Nikdo nezmíní slova odvaha ani drzost, ale není to potřeba."
         else:
             $ rumelin.say("Myslel jsem, že minule jsme vše vyřešili k vzájemné spokojenosti.")
-        call rumelinFavourRemainingCheck
-        if "rumelin owes favour" in status and favourOptionsRemaining != 0:
+            call rumelinFavourRemainingCheck
             show mcPic at menuImage
             menu:
-                "Jdu si vybrat slíbenou laskavost.":
+                "Jdu si vybrat slíbenou laskavost." if "rumelin owes favour" in status and favourOptionsRemaining != 0:
                     hide mcPic
                     $ rumelin.say("A co byste si přál[a]?")
                     call rumelinFavourOptions
@@ -104,15 +103,19 @@ label rumelinClosedDoor:
                     hide mcPic
                     $ rumelin.say("Pak je budete muset položit někomu jinému. Jistě pochopíte, že jsem velmi zaměstnaný a nemůžu záležitosti svého cechu jen tak odložit.")
                     "Cechmistr Rumelin s nekompromisním výrazem ukáže na dveře."
+                "Myslím, že jste moje mlčení získal příliš levně. Co nabízíte dalšího?" if "rumelin owes favour" not in status and "rumelin exposed" not in status and "more demands" not in rumelin.asked:
+                    hide mcPic
+                    $ rumelin.asked.append("more demands")
+                    $ rumelin.say("Nabízím, že vašim nadřízeným neřeknu o vašem pochybném přístupu k práci v hlídce. Nic víc už ode mě nedostanete.", "angry")
+                    $ rumelin.say("Buď mě zatkněte, nebo odejděte.", "angry")
                 "Rozumím a nebudu vás rušit." if "rumelin closed door" in status:
                     hide mcPic
                     $ rumelin.say("To bude nejlepší.")
                     "Cechmistr Rumelin s nekompromisním výrazem ukáže na dveře."
-        else:
-            $ mc.say("Mám ještě pár otázek k případu...")
-            $ rumelin.say("Pak je budete muset položit někomu jinému. Jistě pochopíte, že jsem velmi zaměstnaný a nemůžu záležitosti svého cechu jen tak odložit.")
-            "Cechmistr Rumelin s nekompromisním výrazem ukáže na dveře."
-        $ status.append("rumelin closed door")
+                "Zatýkám vás za podvod a snahu poškodit jiného mistra vašeho cechu." (badge="handcuffs") if "confession" in rumelin.asked and rumelin not in arrested:
+                    call arrestRumelin
+        if "rumelin closed door" not in status:
+            $ status.append("rumelin closed door")
     # closed door at home - no confrontation, no favours
     else:
         call rumelinHouseClosedDoor
@@ -289,7 +292,7 @@ label rumelinOptions:
             $ rumelin.asked.append("local")
             $ rumelin.say("Vaše názory na oheň leccos napovídají.")
             $ rumelin.say("A i kdybyste si je nechal[a] pro sebe, Marendar není tak velké město a já v něm žiju celý život, stejně jako většina ostatních. Neznámá tvář je nápadná.")
-        "Já se tu narodil/a!" if "testify for dancer" in rumelin.asked and "local" not in rumelin.asked and origin == "born here":
+        "Já se tu narodil[a]!" if "testify for dancer" in rumelin.asked and "local" not in rumelin.asked and origin == "born here":
             hide mcPic
             $ rumelin.asked.append("local")
             $ rumelin.say("Jistě, dávno před požárem.")
@@ -302,20 +305,24 @@ label rumelinOptions:
             return
 
         "Zatýkám vás za podvod a snahu poškodit jiného mistra vašeho cechu." (badge="handcuffs") if "confession" in rumelin.asked and rumelin not in arrested:
+            label arrestRumelin:
             hide mcPic
-            $ rumelin.say("To je nesmysl, neudělal jsem nic, za co nezákonného. Jděte si raději ještě promluvit se svými nadřízenými.", "angry")
-            if "endgame" in status:
-                $ mc.say("Mí nadřízení nejsou k dispozici, ale mám jejich plnou důvěru.")
+            if "rumelin threatened" in status and "rumelin exposed" not in status:
+                $ rumelin.say("Tedy nedržíte slovo a navíc jste hlupák. Je dobře, že naše spojenectví tak brzy končí.", "angry")
             else:
-                show mcPic at menuImage
-                menu:
-                    "Dobře, ale počítejte s tím, že se vrátím.":
-                        hide mcPic
-                        $ leaveOption = "angry"
-                        return
-                    "To není potřeba, půjdete se mnou.":
-                        hide mcPic
-            "Mistr Rumelin se velmi neochotně nechá odvést na strážnici."
+                $ rumelin.say("To je nesmysl, neudělal jsem nic, za co nezákonného. Jděte si raději ještě promluvit se svými nadřízenými.", "angry")
+                if "endgame" in status:
+                    $ mc.say("Mí nadřízení nejsou k dispozici, ale mám jejich plnou důvěru.")
+                else:
+                    show mcPic at menuImage
+                    menu:
+                        "Dobře, ale počítejte s tím, že se vrátím.":
+                            hide mcPic
+                            $ leaveOption = "angry"
+                            return
+                        "To není potřeba, půjdete se mnou.":
+                            hide mcPic
+                "Mistr Rumelin se velmi neochotně nechá odvést na strážnici."
             $ rumelin.arrestReason.append("AML")
             $ arrested.append(rumelin)
             $ status.append("arrest in progress")
@@ -474,10 +481,10 @@ label rumelinFavourOptions:
                     $ rumelin.say("Jak si přejete.")
         "Zařídit, aby někdo z vašeho cechu nechal Zerana dokončit učení." if "why not finish apprenticeship" in zeran.asked:
             hide mcPic
-            $ rumelin.say("A Zeran je…?")
+            $ rumelin.say("A Zeran je...?")
             $ mc.say("Bývalý učedník mistra Heinricha, vyhozený bez důkazů a neprávem. Heinrich mu ani nevrátil peníze, které Zeran za učení zaplatil.")
             "Cechmistr Rumelin překvapeně pozvedne obočí."
-            $ rumelin.say("Pokud vám na něm tolik záleží… zjistím, co můžu udělat.")
+            $ rumelin.say("Pokud vám na něm tolik záleží... zjistím, co můžu udělat.")
             show mcPic at menuImage
             menu:
                 "Zaslouží si, aby se za něj někdo postavil, a nikdo jiný to neudělá.":
@@ -486,7 +493,7 @@ label rumelinFavourOptions:
                     hide mcPic
             $ rumelin.say("Dobrá. Nemůžu samozřejmě mistry ve svém cechu k ničemu nutit, jen jim dávat doporučení, ale věřím že zařídit to bude v mých silách.")
             $ status.remove("rumelin owes a favour")
-            $ status.append("rumelin helping Zeran")
+            $ status.append("Zeran continues apprenticeship")
         "Vaše svědectví u soudu s Katrin, v její prospěch." if katrin in cells:
             hide mcPic
             $ rumelin.say("A Katrin je...?")
@@ -497,6 +504,7 @@ label rumelinFavourOptions:
             $ rumelin.say("Pokusím se trochu zklidnit horké hlavy a zeptat se jich, jak moc ta komediantka skutečně město ohrozila. Ale těžko sám dosáhnu toho, aby ji zprostili viny.")
             $ rumelin.say("Ostatně ve městě se shodujeme, že i malé nebezpečí, že znovu vypukne požár, znamená opravdu velkou opatrnost.")
             $ katrin.cluesAgainst += 1
+            $ rumelin.asked.append("testimony promised")
             $ status.remove("rumelin owes a favour")
         "Vlastně si to ještě nechám projít hlavou.":
             hide mcPic

@@ -1,76 +1,130 @@
 label adaMain:
     $ adaNote.isActive = True
     if lastSpokenWith == "":
-        $ lisbeth.say("Nejsem si jistá, jestli bude zrovna ona něco vědět… ale jak chcete. Pojďte dál a já vám ji zavolám.")
+        $ lisbeth.say("Nejsem si jistá, jestli bude zrovna ona něco vědět... ale jak chcete. Pojďte dál a já vám ji zavolám.")
         call victimHouseInterior
     else:
-        $ lisbeth.say("Nejsem si jistá, jestli bude zrovna ona něco vědět… ale jak chcete. Dojdu pro ni.")
-    $ ada.say("S čím vám můžu pomoct?")
+        $ lisbeth.say("Nejsem si jistá, jestli bude zrovna ona něco vědět... ale jak chcete. Dojdu pro ni.")
 
     $ lastSpokenWith = "ada"
     $ origAsked = ada.asked.copy()
     call adaIntro
-    call adaOptions
+    if "Ada closed door" not in status:
+        call adaOptions
     $ time.addMinutes((len(ada.asked) - len(origAsked)) * 3)
     jump victimHouseholdConversationEnded
     return
 
 label adaIntro:
-    if ("zairis dealt with" in status and "ada confrontation zairis" not in status) or ("kaspar and lisbeth ratted out" in status and "ada confrontation lisbeth" not in status):
-        "Paní Lisbeth přivede zamračenou Adu a nechá vám soukromí."
-        "Jakmile je její matka mimo doslech a než se stihneš začít ptát, Ada na tebe vyštěkne vlastní otázku."
-        $ ada.say("To musíš kvůli zatraceným botám strkat nos do cizích vztahů? Co jsi přesně tátovi řekl, že tak vyletěl?", "angry")
-        show mcPic at menuImage
-        menu:
-            "Co jsem mu měl[a] říct?":
-                hide mcPic
-                $ ada.say("Neměl[a] jsi mu říkat nic, co není o těch jeho hloupých botách.", "angry")
-                if "zairis dealt with" in status and "ada confrontation zairis" not in status:
-                    $ ada.say("Co jste ti se Zairisem udělali?", "angry")
-                else:
-                    $ ada.say("Co ti máma udělala?", "angry")
-            "...o mistru Kasparovi?" if "kaspar and lisbeth ratted out" in status:
-                hide mcPic
-                if "zairis dealt with" in status and "ada confrontation zairis" not in status and "kaspar and lisbeth ratted out" in status and "ada confrontation lisbeth" not in status:
-                    $ ada.asked.append("lisbeth first")
-                elif "ada confrontation lisbeth" in status:
-                    $ ada.say("To taky, ale myslím ještě potom. O Zairisovi!", "angry")
-                    $ ada.say("To se snažíš zničit život co nejvíc lidem, nebo co?", "angry")
-                else:
-                    $ ada.say("Chudák máma!", "angry")
-            "...o Zairisovi?":
-                hide mcPic
-                if "zairis dealt with" in status and "ada confrontation zairis" not in status and "kaspar and lisbeth ratted out" in status and "ada confrontation lisbeth" not in status:
-                    $ ada.asked.append("zairis first")
-                elif "ada confrontation zairis" in status:
-                    $ ada.say("To taky, ale myslím ještě potom. O mámě!", "angry")
-                    $ ada.say("To se snažíš zničit život co nejvíc lidem, nebo co?", "angry")
-                else:
-                    $ ada.say("Proč jsi do toho musel[a] šťourat?", "angry")
-            "...o Rumelinovi?" if "rumelin exposed" in victim.asked:
-                hide mcPic
-                if "zairis dealt with" in status:
-                    $ ada.say("Ten mě vůbec nezajímá. O Zairisovi!", "angry")
-                else:
-                    $ ada.say("Ten mě vůbec nezajímá. O mámě!", "angry")
-
-        if "zairis dealt with" in status and "ada confrontation zairis" not in status and "kaspar and lisbeth ratted out" in status and "ada confrontation lisbeth" not in status:
-            if "lisbeth first" in ada.asked:
-                call adaConfrontationLisbeth
-                $ ada.say("A pak ještě Zairis... To se snažíš zničit život co nejvíc lidem, nebo co?", "angry")
-                call adaConfrontationZairis
-            else:
-                call adaConfrontationZairis
-                $ ada.say("A pak ještě máma... To se snažíš zničit život co nejvíc lidem, nebo co?", "angry")
-                call adaConfrontationLisbeth
-        elif "zairis dealt with" in status and "ada confrontation zairis" not in status:
-            call adaConfrontationZairis
-        else:
-            call adaConfrontationLisbeth
-
-        $ ada.say("Ale to je tobě asi jedno. Jsi jako otec.", "angry")
+    if "Ada closed door" in status:
+        call adaIntroAngryAgain
+    elif ("zairis dealt with" in status and "ada confrontation zairis" not in status) or ("kaspar and lisbeth ratted out" in status and "ada confrontation lisbeth" not in status):
+        call adaIntroAngry
     else:
         "Paní Lisbeth přivede asi čtrnáctiletou dívku se zvědavým výrazem."
+        $ ada.say("S čím vám můžu pomoct?")
+    return
+
+label adaIntroAngry:
+    "Paní Lisbeth přivede zamračenou Adu a nechá vám soukromí."
+    "Jakmile je její matka mimo doslech a než se stihneš začít ptát, Ada na tebe vyštěkne vlastní otázku."
+    $ ada.say("To musíš kvůli zatraceným botám strkat nos do cizích vztahů? Co jsi přesně tátovi řekl, že tak vyletěl?", "angry")
+    show mcPic at menuImage
+    menu:
+        "Co jsem mu měl[a] říct?":
+            hide mcPic
+            $ ada.say("Neměl[a] jsi mu říkat nic, co není o těch jeho hloupých botách.", "angry")
+            if "zairis dealt with" in status and "ada confrontation zairis" not in status:
+                $ ada.say("Co jste ti se Zairisem udělali?", "angry")
+            else:
+                $ ada.say("Co ti máma udělala?", "angry")
+        "...o mistru Kasparovi?" if "kaspar and lisbeth ratted out" in status:
+            hide mcPic
+            if "zairis dealt with" in status and "ada confrontation zairis" not in status and "kaspar and lisbeth ratted out" in status and "ada confrontation lisbeth" not in status:
+                $ ada.asked.append("lisbeth first")
+            elif "ada confrontation lisbeth" in status:
+                $ ada.say("To taky, ale myslím ještě potom. O Zairisovi!", "angry")
+                $ ada.say("To se snažíš zničit život co nejvíc lidem, nebo co?", "angry")
+            else:
+                $ ada.say("Chudák máma!", "angry")
+        "...o Zairisovi?":
+            hide mcPic
+            if "zairis dealt with" in status and "ada confrontation zairis" not in status and "kaspar and lisbeth ratted out" in status and "ada confrontation lisbeth" not in status:
+                $ ada.asked.append("zairis first")
+            elif "ada confrontation zairis" in status:
+                $ ada.say("To taky, ale myslím ještě potom. O mámě!", "angry")
+                $ ada.say("To se snažíš zničit život co nejvíc lidem, nebo co?", "angry")
+            else:
+                $ ada.say("Proč jsi do toho musel[a] šťourat?", "angry")
+        "...o Rumelinovi?" if "rumelin exposed" in victim.asked:
+            hide mcPic
+            if "zairis dealt with" in status:
+                $ ada.say("Ten mě vůbec nezajímá. O Zairisovi!", "angry")
+            else:
+                $ ada.say("Ten mě vůbec nezajímá. O mámě!", "angry")
+
+    if "zairis dealt with" in status and "ada confrontation zairis" not in status and "kaspar and lisbeth ratted out" in status and "ada confrontation lisbeth" not in status:
+        if "lisbeth first" in ada.asked:
+            call adaConfrontationLisbeth
+            $ ada.say("A pak ještě Zairis... To se snažíš zničit život co nejvíc lidem, nebo co?", "angry")
+            call adaConfrontationZairis
+        else:
+            call adaConfrontationZairis
+            $ ada.say("A pak ještě máma... To se snažíš zničit život co nejvíc lidem, nebo co?", "angry")
+            call adaConfrontationLisbeth
+    elif "zairis dealt with" in status and "ada confrontation zairis" not in status:
+        call adaConfrontationZairis
+    else:
+        call adaConfrontationLisbeth
+
+    $ ada.say("Ale to je tobě asi jedno. Jsi jako otec.", "angry")
+    $ status.append("Ada closed door")
+    call adaAngryCounterargumentOptionsRemainingCheck
+    show mcPic at menuImage
+    menu:
+        "Není mi to jedno. Snažím se všem pomáhat, jak to jen jde." if adaAngryCounterargumentOptionsRemaining != 0:
+            hide mcpic
+            $ ada.say("Vážně?", "angry")
+            call adaAngryCounterargumentOptions
+        "Moje práce je vyšetřovat zločiny.":
+            hide mcPic
+            $ ada.say("Tak vyšetřuj zločiny a nepleť se do naší rodiny, pokrytče.", "angry")
+        "Stojím si za tím, co jsem udělal[a].":
+            hide mcPic
+            $ ada.say("Přesně jako otec, ten taky nikdy neuzná svou chybu.", "angry")
+    if "Ada closed door" in status:
+        $ ada.say("A víš co? Mně jsi zase jedno ty. Pátrej si někde jinde, ale se mnou nepočítej.", "angry")
+    return
+
+label adaIntroAngryAgain:
+    "Paní Lisbeth přivede zamračenou Adu a nechá vám soukromí."
+    $ ada.say("Nevyjádřila jsem se snad předtím jasně? Někomu jako ty pomáhat nebudu.", "angry")
+    call adaAngryCounterargumentOptionsRemainingCheck
+    show mcPic at menuImage
+    menu:
+        "Myslím, že mi křivdíš. Snažím se všem pomáhat, jak to jen jde." if adaAngryCounterargumentOptionsRemaining != 0:
+            hide mcPic
+            $ ada.say("No to jsem zvědavá.", "angry")
+            call adaAngryCounterargumentOptions
+        "Jestli nezačneš spolupracovat, zajdu za tvým otcem." if "Ada closed door" not in victim.asked and "call father" not in ada.asked:
+            hide mcPic
+            $ ada.asked.append("call father")
+            $ ada.trust -= 1
+            $ ada.say("Klidně. Třeba tě taky zmlátí, když nic jiného neumí.", "angry")
+        "{i}(Požádat mistra Heinricha, aby dceři domluvil){/i}" if "Ada closed door" not in victim.asked:
+            hide mcPic
+            $ ada.trust -= 2
+            $ victim.trust -= 2
+            "Netrvá dlouho a stojíš v jedné místnosti s Adou i jejím otcem. Mistr Heinrich si tě zamračeně měří."
+            $ victim.say("Tak o co jde, že se to beze mě neobejde?", "angry")
+            $ mc.say("Potřebuji se Ady zeptat na pár otázek a ona se mnou odmítá mluvit.")
+            $ ada.say("O botách nic nevím a to jsem dávno řekla. Odmítám odpovídat na otázky o naší rodině.", "angry")
+            $ victim.say("Proč se vyptáváš na moji rodinu? Nemáš snad pátrat po mém mistrovském výrobku? Co má tohle znamenat?", "angry")
+            $ mc.say("Mohlo by to osvětlit některé okolnosti té krádeže.")
+            $ victim.say("Tak aby bylo jasno, my jsme slušná domácnost a nikdo tady nekrade, a jestli ten bídák Zeran, Kaspar nebo někdo podobný něco spáchal, nikdo z nás o tom nic neví.", "angry")
+            "S tím se mistr Heinrich otočí, pokyne Adě a spolu oba odejdou z místnosti."
+        "Tak to se nemusíme navzájem zdržovat.":
+            $ ada.say("To tě taky mohlo napadnout, než jsi pro mě mámu poslal[a].", "angry")
     return
 
 label adaConfrontationLisbeth:
@@ -110,6 +164,62 @@ label adaConfrontationZairis:
             hide mcPic
             $ ada.say("A to nešlo nějak jinak?", "angry")
     $ ada.say("Teď ani jeden z nás nesmí na krok z domu a kdo ví, co s ním jeho rodiče ještě provedou.", "sad")
+    return
+
+label adaAngryCounterargumentOptions:
+    call adaAngryCounterargumentOptionsRemainingCheck
+    if adaAngryCounterargumentOptionsRemaining == 0:
+        $ mc.say("Proto jsem v hlídce. Nevím, co jiného chceš slyšet.")
+        $ ada.say("To by mohl říct každý. Tak hledej ty tátovy zatracené boty a nech naši rodinu na pokoji.", "angry")
+        return
+
+    show mcPic at menuImage
+    menu:
+        "Pomohl[a] jsem přece Zeranovi získat nové učednické místo." if "Zeran continues apprenticeship" in status and "helped Zeran" not in ada.asked:
+            hide mcPic
+            $ ada.asked.append("helped Zeran")
+            $ ada.say("To je pravda, to mu pomohlo hodně. Možná nejsi úplně ztracený případ.")
+            $ ada.say("Ale stejně jsem naštvaná.", "angry")
+            $ status.remove("Ada closed door")
+        "Zarazil[a] jsem cechmistrovi jeho podvod na Njalovi." if "rumelin exposed" in status and "rumelin exposed" not in ada.asked:
+            hide mcPic
+            $ ada.asked.append("rumelin exposed")
+            $ ada.say("Mě ale cechovní politika vůbec nezajímá.", "angry")
+        "Domluvil[a] jsem tvému otci spolupráci s Njalem." if "join forces victim approves" in status and "join forces njal approves" in status and "join forces" not in ada.asked:
+            hide mcPic
+            $ ada.asked.append("join forces")
+            $ ada.say("To je určitě skvělý obchod, ale my nepotřebujeme víc peněz.")
+        "Jsme dohodnutí s Aachimem, že spolu zajdeme za vaším otcem a zkusíme domluvit, aby nemusel pokračovat v učení, ve kterém je nešťastný." if "help promised" in aachim.asked and "aachim help promised" not in ada.asked:
+            hide mcPic
+            $ ada.asked.append("aachim help promised")
+            $ ada.say("Vážně? To mě upřímně řečeno spíš děsí. Ale jestli mu to pomůže...")
+            $ ada.say("Hlavně tohle by mohl říct každý. Jestli něčemu pomůžeš, tak se můžeme bavit. Do té doby tě nechci vidět.", "angry")
+        "Pomohl[a] jsem přece Aachimovi domluvit s tvým otcem, aby nemusel pokračovat v učení, ve kterém je nešťastný." if "father son confrontation successful" in status and "aachim successful" not in ada.asked:
+            hide mcPic
+            $ ada.asked.append("aachim successful")
+            $ ada.say("To je pravda... to mu hodně pomohlo.", "happy")
+            $ ada.say("Chudák už dávno věděl, že dobrý švec z něj nebude.", "sad")
+            $ status.remove("Ada closed door")
+        "Pokusil[a] jsem se pomoct vztahu tvých rodičů." if "think about relationship" in victim.asked and "parents relationship" not in ada.asked:
+            hide mcPic
+            $ ada.asked.append("parents relationship")
+            if "flowers" in status and "kaspar and lisbeth ratted out" in status:
+                $ ada.say("A potom jsi to zkazil víc, než Aachim svou první botu.", "angry")
+                $ ada.say("Ale je pravda, že chvíli se otec dokonce i snažil a máma byla šťastná.", "sad")
+                $ status.remove("Ada closed door")
+            elif "flowers" in status:
+                $ ada.say("Je pravda, že se otec začal snažit. Takhle šťastnou jsem mámu už dlouho neviděla.", "happy")
+                $ status.remove("Ada closed door")
+            elif "kaspar and lisbeth ratted out" in status:
+                $ ada.say("Tak už nikdy nikomu nepomáhej, jestli to děláš takhle.", "angry")
+            else:
+                $ ada.say("Možná, ale bez úspěchu. To mě vážně neohromí.")
+        "Proto jsem v hlídce. Nevím, co jiného chceš slyšet.":
+            hide mcPic
+            $ ada.say("To by mohl říct každý. Tak hledej ty tátovy zatracené boty a nech naši rodinu na pokoji.", "angry")
+            return
+    if "Ada closed door" in status:
+        jump adaAngryCounterargumentOptions
     return
 
 label adaOptions:
@@ -302,4 +412,20 @@ label adaOptionsRemainingCheck:
         $ adaOptionsRemaining += 1
     if "letters topic" in ada.asked and "lover well read" not in ada.asked:
         $ adaOptionsRemaining += 1
+    return
+
+label adaAngryCounterargumentOptionsRemainingCheck:
+    $ adaAngryCounterargumentOptionsRemaining = 0
+    if "Zeran continues apprenticeship" in status and "helped Zeran" not in ada.asked:
+        $ adaAngryCounterargumentOptionsRemaining += 1
+    if "rumelin exposed" in status and "rumelin exposed" not in ada.asked:
+        $ adaAngryCounterargumentOptionsRemaining += 1
+    if "join forces victim approves" in status and "join forces njal approves" in status and "join forces" not in ada.asked:
+        $ adaAngryCounterargumentOptionsRemaining += 1
+    if "help promised" in aachim.asked and "aachim help promised" not in ada.asked:
+        $ adaAngryCounterargumentOptionsRemaining += 1
+    if "father son confrontation successful" in status and "aachim successful" not in ada.asked:
+        $ adaAngryCounterargumentOptionsRemaining += 1
+    if "think about relationship" in victim.asked and "parents relationship" not in ada.asked:
+        $ adaAngryCounterargumentOptionsRemaining += 1
     return

@@ -309,6 +309,22 @@ label victimOptions:
                     $ mc.say("Lotte, bydlí na konci ulice.")
                     $ victim.say("Ta Lotta, jejíž manžel mi dodal šmejd? No to se dalo čekat. Budu muset Karstenovi vysvětlit, že ji má zfackovat, ať s těmi pomluvami přestane.")
                     $ victim.say("Kdyby radši přemýšlela, jak sehnat pořádné zboží a nedělat si ostudu.")
+        "Ada se mnou odmítá mluvit, nemohl byste jí domluvit?" if "Ada closed door" in status and "Ada closed door" not in victim.asked:
+            hide mcPic
+            $ victim.asked.append("Ada closed door")
+            $ victim.say("A co od ní potřebuješ? Do dílny nechodí a v noci spí, těžko si mohla něčeho všimnout.", "angry")
+            show mcPic at menuImage
+            menu:
+                "Máte pravdu, asi to nebude tak důležité.":
+                    hide mcPic
+                    $ victim.say("Přemýšlej taky trochu, než se začneš vyptávat, slavnosti jsou za rohem a svoje boty pořád nevidím.", "angry")
+                "Zajímaly mě podrobnosti o tom, jak to ve vašem domě chodí.":
+                    hide mcPic
+                    $ victim.trust -= 2
+                    $ victim.say("Proč se vyptáváš na moji rodinu? Nemáš snad pátrat po mém mistrovském výrobku? Co má tohle znamenat?", "angry")
+                    $ mc.say("Mohlo by to osvětlit některé okolnosti té krádeže.")
+                    $ victim.say("Tak aby bylo jasno, my jsme slušná domácnost a nikdo tady nekrade, a jestli ten bídák Zeran, Kaspar nebo někdo podobný něco spáchal, nikdo z nás o tom nic neví.", "angry")
+                    $ victim.say("Tak nech moji dceru napokoji a mě neotravuj s podobnými nesmysly.", "angry")
         "Mohl by tenhle kousek stuhy být od vašich střevíců?" if "burned evidence" in clues and "shoes description" in clues and "burned evidence seen" not in victim.asked:
             hide mcPic
             "Mistr Heinrich si ohořelý útržek prohlédne a zamračí se."
@@ -682,11 +698,10 @@ label zeranLettersResponse:
         $ victim.say("A taky to mohlo mé holčičce zničit život a na tom mi záleží víc, než na nějakých důkazech.", "angry")
     else:
         "Mistr Heinrich se dlouze zamyslí."
-        $ victim.say("Dobře, přinesu je. Ale ber je jako přísně důvěrnou věc, která může zničit život nevinné holce. Jestli zjistím, že je viděl někdo další, ještě o tom uslyšíš.")
+        $ victim.say("Dobře, přinesu je. Ale ber je jako přísně důvěrnou věc, která může zničit život nevinné holce. Jestli zjistím, že se o nich dozvěděl někdo další, ještě o tom uslyšíš.")
         $ mc.say("To samozřejmě chápu a budu na to myslet.")
         "Mistr Heinrich přikývne a po chvíli ti přinese několik listů papíru svázaných tenkou koženou šňůrkou."
         call loveLetters
-        $ status.append("letters for Ada seen")
         $ victim.asked.append("letters for Ada shown")
         label loveLettersVictimMenu:
         menu:
@@ -694,9 +709,38 @@ label zeranLettersResponse:
                 call loveLetters
                 jump loveLettersVictimMenu
             "{i}(Nechat si dopisy u sebe){i}":
-                pass
+                $ victim.trust -= 2
+                $ rauvin.trust -= 1
+                "Než stihneš dopisy schovat, přeruší tě mistr Heinrich."
+                $ victim.say("A teď děláš co? Ukázal jsem ti něco, co by mohlo mé holčičce zničit život. Vážně si myslíš, že ti dovolím si je odnést?", "angry")
+                label heinrichLoveLettersReaction:
+                show mcPic at menuImage
+                menu:
+                    "{i}(Vrátit dopisy mistru Heinrichovi){i}":
+                        hide mcPic
+                        $ victim.say("No proto.", "angry")
+                        "Mistr Heinrich dopisy převezme a schová u sebe."
+                        $ victim.say("A rozumíme si. Jestli Adě zkusíš jakkoli poškodit pověst, vyřídím si to s tebou.", "angry")
+                    "Jestli je mám použít jako důkaz, potřebuji mít u sebe originál." if "need original letters" not in victim.asked:
+                        hide mcPic
+                        $ victim.asked.append("need original letters")
+                        $ victim.say("Důkaz čeho? Jaký je Zeran zmetek? Nebo že jsme si tady hřáli na prsou hada? Nic jiného ta snůška lží nedokazuje.", "angry")
+                        $ victim.say("A jestli bys je chtěl[a] někomu ukázat, tak na to rovnou zapomeň.")
+                        call heinrichLoveLettersReaction
+                    "Můžu si aspoň opsat tu báseň?":
+                        call heinrichLoveLettersCopyPoem
+            "Můžu si tu báseň opsat?":
+                label heinrichLoveLettersCopyPoem:
+                hide mcPic
+                $ mc.say("Jenom pro případ, že by mohla být nějak důležitá.")
+                $ victim.say("Důležitá? Mně přijde prostě jako hloupé cukrování.")
+                $ victim.say("Ale pro mě za mě... můžeš si to i vydávat za vlastní, to je mi jedno.")
+                $ victim.say("Ale jestli mojí holčičce zkusíš jakkoli poškodit pověst, vyřídím si to s tebou.", "angry")
+                "Rychle si báseň opíšeš a pak vrátíš celý balíček dopisů mistru Heinrichovi."
+                $ status.append("poem for Ada copied")
             "{i}(Vrátit dopisy mistru Heinrichovi){i}":
-                pass
+                "Mistr Heinrich dopisy převezme a schová u sebe."
+                $ victim.say("A rozumíme si. Jestli Adě zkusíš jakkoli poškodit pověst, vyřídím si to s tebou.", "angry")
     return
 
 label heinrichMaritalRelationship:
@@ -710,11 +754,12 @@ label heinrichMaritalRelationship:
                 $ victim.say("Tak se koukej vrátit k vyšetřování a přestaň řešit moje soukromí.", "angry")
             "Jak často jí to říkáte?":
                 hide mcPic
+                $ victim.asked.append("think about relationship")
                 if victim.trust < 5:
                     $ victim.say("Co je ti do toho? Jsi tady jenom od toho, abys na[sel] můj ztracený výrobek, tak sebou pohni a nenavážej se do mého soukromí, nebo si budu stěžovat u tvého velitele.", "angry")
                 else:
                     "Mistr Heinrich se zamračí a chvíli nad odpovědí přemýšlí."
-                    $ victim.say("Možná…")
+                    $ victim.say("Možná...")
                     if "burned evidence seen" in victim.asked:
                         $ victim.say("Do toho ti nic není. Vrať se k pátrání a přines mi moje ztracené střevíce. Nebo aspoň toho vandala v zubech.")
                     else:
@@ -1267,6 +1312,8 @@ label victimOptionsRemainingCheck:
     if "zeran innocent" not in victim.asked and "zeran cleared" not in status and zeranInnocentOptionsRemaining > 0:
         $ victimOptionsRemaining += 1
     if "zairis guilty" not in victim.asked and "zeran cleared" not in status and zairisGuiltyOptionsRemaining > 0:
+        $ victimOptionsRemaining += 1
+    if "Ada closed door" in status and "Ada closed door" not in victim.asked:
         $ victimOptionsRemaining += 1
     return
 

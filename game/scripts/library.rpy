@@ -1,7 +1,8 @@
 label libraryPreparation:
-    default literatureTopics = ["wellWrittenTrash", "farawayTravels"]
+    default literatureTopics = ["wellWrittenTrash", "farawayTravels", "fables", "saucyTales", "seriousHistory"]
     default lawTopics = ["lawIntro"]
-    default historyTopics = []
+    default historyTopics = ["historyIntro"]
+    default pastTrialsTopics = ["pastTrialsIntro"]
     return
 
 label libraryController:
@@ -32,7 +33,7 @@ label libraryIntro:
             "I přes provizorní umístění je knihovna očividně vedená s láskou. Knih ve vysokých policích je možná méně, než jsi doufal[a], ale neujde ti šíře záběru. Od krásné literatury přes filozofii po vědecké spisy... máš chuť strávit tu celý den."
         $ status.append("library visited")
     else:
-        "TBD: knihovna znovu"
+        "Znovu tě přivítá příjemná vůně knih, a jak procházíš mezi regály, mladý elf, který tu vypomáhá, ti kývne na pozdrav."
     return
 
 label libraryOptions:
@@ -51,12 +52,17 @@ label libraryOptions:
                 $ chosenTopic = "lawIntro"
             else:
                 $ chosenTopic = renpy.random.choice(lawTopics)
-            $ library.checked.append("law " + chosenTopic)
+            $ library.checked.append(chosenTopic)
             $ lawTopics.remove(chosenTopic)
             scene bg books
+        "{i}(Projít zápisy soudních procesů){/i}" if pastTrialsTopics != []:
+            $ chosenTopic = pastTrialsTopics[0]
+            $ library.checked.append(chosenTopic)
+            $ pastTrialsTopics.remove(chosenTopic)
+            scene bg books
         "{i}(Nastudovat si městskou historii){/i}" if historyTopics != []:
-            $ chosenTopic = renpy.random.choice(historyTopics)
-            $ library.checked.append("history " + chosenTopic)
+            $ chosenTopic = historyTopics[0]
+            $ library.checked.append(chosenTopic)
             $ historyTopics.remove(chosenTopic)
             scene bg books
         "{i}(Vrátit se na strážnici){/i}":
@@ -66,15 +72,21 @@ label libraryOptions:
 
 label libraryRepeat:
     scene bg library
-    if time.hours > 21:
-        "Je čas jít spát"
-        return
+
+    if literatureTopics == [] and lawTopics == [] and pastTrialsTopics == [] and historyTopics == []:
+        if not achievement.has(achievement_name['bookworm'].name):
+            $ Achievement.add(achievement_name['bookworm'])
+
     call libraryOptionsRemaining
     if optionsRemaining == 0:
         "Vše přečteno"
         return
+    elif time.hours > 21:
+        "Je čas jít spát"
+        return
+
     call libraryOptions
-    if chosenTopic = "leave":
+    if chosenTopic == "leave":
         return
     else:
         call expression chosenTopic
@@ -97,6 +109,8 @@ label libraryConsultLettersForAda:
     $ status.append("letters for Ada checked in library")
     return
 
+### random books and lore
+### literature
 label wellWrittenTrash:
     "Ze své volby se cítíš trochu rozpačitě. Mohlo tě asi napadnout, že “příběhy k poučení” budou klást důraz hlavně na kázání o morálce před zajímavostí zápletky. Tuto knihu ale napsal kněz Einiona, boha všech řemeslníků a umělců - a autor, nutno přiznat, byl v řemesle skládání vět dobře zběhlý."
     "Než si uvědomíš, jak hloupý děj většiny příběhů je, máš už za sebou notný kus knihy a až zpětně si uvědomíš, že tě ze sezení ve strnulé poloze bolí záda."
@@ -109,10 +123,39 @@ label farawayTravels:
     "Jako písaře tě navíc zaujme, jakou váhu má v některých zemích kaligrafické umění. Kdyby tomu tak bylo i zde, mohl tvůj život možná vypadat jinak. Takto musíš knihu brzy opět zavřít a vrátit se do Marendaru."
     return
 
+label fables:
+    "Zalistuješ útlou knihou bajek a neubráníš se úsměvu. Je to spíš levný výtisk na nepříliš drahém papíře, ale jsou tu všechny příběhy, které znáš velmi dobře z dětství. Jak liška lstí připravila havrana o kořist, jak se liška s čápem navzájem pozvali na večeři, jak se pes chtěl servat se svým odrazem v řece a přišel o kořist, o vychytralém oslu, kterému se nechtělo nosit náklad..."
+    "Než tě kratičká jednoduchá vyprávění omrzí, jsi skoro na konci knihy."
+    return
+
+label saucyTales:
+    "Pro odreagování sis vybral[a] knihu zábavných příběhů a začetl[a] se do vyprávění o manželovi, který pro neustálé modlení zapomínal na své manželské povinnosti, a jak ho chytrý kněz dostal z domu a užil si s manželkou sám."
+    "V druhém příběhu se sluha zamiluje do ženy svého pána a domluví si s ní tajné dostaveníčko. Paní ale tuší, že její žárlivý manžel by mohl mít podezření. Radši mu proto poví, k čemu se ji jeho služebník snažil přesvědčit, a aby ho mohl potrestat, pošle manžela čekat na něj v jejím oděvu."
+    "Milenci si spolu užijí a hned na to jde sluha do zahrady "dát za vyučenou" své nevěrné paní - tedy ve skutečnosti jejímu manželovi v šatech své ženy. Manžel se tak dostatečně přesvědčí o věrnosti své ženy i svého služebníka a ti dva se spolu můžou dál tajně scházet."
+    "Když se dostaneš ke třetímu příběhu o mladíkovi, kterému hrozí smrt láskou, pokud se mu nepodaří strávit aspoň jednu noc s vdanou dámou svého srdce, nedá ti to a prolistuješ zbytek knihy."
+    "I ostatní vyprávění se nesou v podobném duchu, samí záletníci a paroháči, roztoužené dívky a nevěrné manželky. Až se divíš, že se něco takového dá najít v knihovně vedené mladou šlechtičnou."
+    return
+
+label seriousHistory:
+    "Od knihy s názvem Vojenské úspěchy Armanda de Teyron sis sliboval[a] napínavé popisy bitev, případně drama dlouhého tažení a konflikt lásky k vlasti a touhy po domově. Místo toho se Romaine de Chatevin věnuje politickým vztahům mezi jednotlivými šlechtici, které popisuje tím nejsušším možným způsobem, a detailnímu rozboru strategie jednotlivých bitev."
+    "Po chvíli začneš přeskakovat odstavce a celé stránky, ale ani v popisu vzpoury části armády a jejího potlačení nenacházíš sebemenší stopu jakékoli emoce."
+    "Až na konci, u výčtu kronik a jiných dokumentů, ze kterých Romaine při zpracování díla vycházel, ti dojde, že máš zřejmě v ruce historickou práci, kterou někdo uložil do špatné police."
+    return
+### law
 label lawIntro:
     "Stejně jako jinde, i v Marendaru se soudci řídí především zvykem a jako vodítko často používají rozsudky svých předchůdců. Nic jako soupis městských zákonů neexistuje, najdeš ale přepisy několika různých nařízení."
     "Ve městě je přísně zakázáno nošení otevřeného ohně na ulici včetně loučí a pochodní a jakékoli neopatrné zacházení s ohněm. Pod zákazem jsou podepsaní Gerfried a Etrian, podle všeho ale v tomto případě potvrzují nařízení vydané ještě Velinem."
     "Ze stejné doby a se stejným podpisem je i podrobně rozepsaný zákaz jakkoli rozdílného zacházení na základě rasy, bez ohledu na původ kteréhokoli z aktérů."
+    return
+### past trials
+label pastTrialsIntro:
+    "Snadno najdeš několik tlustých svazků s opisy soudních protokolů, velmi rychle ale získáš pocit, že by se snadno daly zkrátit na méně než desetinu. Naprostá většina soudů za poslední rok se týká náhodných rvaček v hospodě nebo drobných krádeží."
+    "Tresty si bývají podobné, nejčastěji zůstává jen u vyplacení odškodného a podle zápisů snad vždy došlo k usmíření obou stran."
+    return
+### history
+label historyIntro:
+    "Oficiální marendarská kronika sídlí na radnici, kde ji má ve správě městský písař. To byla ostatně tvá první zastávka během hledání práce. Paní Luisa ale pro svou knihovnu nechala pořídit opis, a tak se můžeš seznámit s historií města bez přísného písařova dohledu."
+    return
 
 ###
 
@@ -125,6 +168,8 @@ label libraryOptionsRemaining:
     if literatureTopics != []:
         $ optionsRemaining += 1
     if lawTopics != []:
+        $ optionsRemaining += 1
+    if pastTrialsTopics != []:
         $ optionsRemaining += 1
     if historyTopics != []:
         $ optionsRemaining += 1

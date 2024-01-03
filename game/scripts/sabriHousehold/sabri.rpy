@@ -176,8 +176,9 @@ label sabriOptions:
                             $ sabri.say("S tím se dá souhlasit. Jestli budete potřebovat něco rozumného, někdo odtud najde chvíli, aby s tím pomohl.")
                     $ sabri.say("Teď chci slyšet ty důkazy.")
                     jump sabriToldProofZeranInnocent
-        "Byla Hayfa v Marendaru během požáru?" if "Hayfa experienced fire" in globalClues or "Killian encounter" in status:
+        "Byla Hayfa v Marendaru během požáru?" if "Hayfa experienced fire" in globalClues or "Killian encounter" in status and "Hayfa experienced fire" not in sabri.asked:
             hide mcPic
+            $ sabri.asked.append("Hayfa experienced fire")
             $ sabri.say("Ne, přišli jsme asi o rok po něm. Proč?")
             if "Hayfa experienced fire" in globalClues:
                 $ mc.say("Hayfa říkala, že požár města zažila.")
@@ -187,6 +188,33 @@ label sabriOptions:
                 $ sabri.say("A přesně tak to je. Zažila požár později a jiným způsobem než všichni ostatní, ale o nic méně skutečně.")
             $ mc.say("Tomu nerozumím, jakým způsobem?")
             $ sabri.say("To si nechám pro sebe.")
+        "Slyšel[a] jsem, že jste se s Hayfou pokusili ovládnout celé město." if "hayfa's past" in globalClues and "past crimes" not in sabri.asked:
+            hide mcPic
+            $ sabri.asked.append("past crimes")
+            $ sabri.say("A co dalšího jsi slyšel[a]?")
+            show mcPic at menuImage
+            menu:
+                "Že to už je dlouho a od té doby městu oba pomáháte.":
+                    hide mcPic
+                "Že váš vůdce chtěl celý Marendar podpálit.":
+                    hide mcPic
+                "Že jste málem zabili purkmistra.":
+                    hide mcPic
+                "Že jste obalamutili spoustu slušných lidí.":
+                    hide mcPic
+                "Ne dost, proto se ptám vás.":
+                    hide mcPic
+                    $ sabri.say("Co myslíš, že uslyšíš, aby to změnilo tvůj názor?")
+            $ sabri.say("Říká se toho hodně a většina je pravda.")
+            $ sabri.say("Naši tehdejší vůdcové vytyčili cestu a my ji pomáhali projít. Oni jsou teď mrtví, naše původní společenství se rozpadlo, Hayfa si Marendar zamilovala nade vše a i já se tu rozhodl zůstat.")
+            $ sabri.say("O moc víc nemá smysl dodávat. Názor na to celé si tvoříš [sam] a já nemám v úmyslu se tě v tom pokoušet ovlivňovat.")
+        "Jak je možné, že vás město nepotrestalo?" if "past crimes" in sabri.asked and "not punished" not in sabri.asked:
+            hide mcPic
+            $ sabri.asked.append("not punished")
+            $ sabri.say("Potrestalo. Ridiana oběsili, to byl ten, kdo nás tehdy vedl, a já a Hayfa jsme strávili hodně času prací pro město.")
+            $ sabri.say("A už nám to zůstalo.")
+            $ mc.say("To se nikdo nebál, že prostě utečete?")
+            $ sabri.say("Původní trest mělo být vyhnanství, Hayfa hodně prosila, aby tu mohla zůstat.")
 
         "Už vás dál nebudu zdržovat. Děkuji vám za pomoc.":
             hide mcPic
@@ -267,11 +295,51 @@ label sabriOptions:
                         $ mc.say("Nebudu přece dělat nic, co smysl nemá.")
                         $ sabri.say("Hodně řemeslníků a umělců se stejně jako Heinrich honí jenom za precizní technikou. Pro jiné je jediný smysl jejich práce to, že za ni dostanou pár mincí, a veškerý další účel jim uniká.")
                         $ sabri.say("Myslím, že stojí za to se ptát, k jakému cíli která činnost vede.")
+            "Chci hlavně chránit ostatní a Saral mi k tomu pomáhá najít sílu a neústupnost.":
+                hide mcPic
+                $ personality.append("faith - Saral")
+                $ sabri.say("A kdo přesně to je, ti ostatní, které chceš chránit?")
+                show mcPic at menuImage
+                menu:
+                    "Všichni, kdo to potřebují.":
+                        hide mcPic
+                        $ cultistMaterial -= 1
+                        $ sabri.say("A počítáš mezi ty všechny i sebe sama?")
+                    "Všichni mé rasy.":
+                        hide mcPic
+                        $ cultistMaterial -= 1
+                        $ sabri.say("S tímto přístupem můžeš zrovna v Marendaru hodně ošklivě narazit. V minulosti vedl k mnoha mrtvým.")
+                        $ sabri.say("Co je důležitější, leckdo tvé rasy má oproti tobě úplně rozdílnou povahu, přesvědčení, bohatství nebo možnosti, někteří dokonce uctívají jiné bohy. Z čeho tedy tvá sounáležitost pramení?")
+                    "Všichni, kdo si to zaslouží.":
+                        hide mcPic
+                        $ cultistMaterial += 1
+                        $ sabri.say("A kdo to je? Ti, do dodržují zákony, které jsi nepsal[a]? Ti, kdo jednají podle tvé vlastní morálky, aniž byste o tom spolu mluvili?")
+                    "Moje rodina a přátelé.":
+                        hide mcPic
+                        $ sabri.say("Působíš, že ve městě nejsi dlouho. Kolik opravdu blízkých lidí tady máš?")
+                $ sabri.say("Ne každý věřící přemýšlí o tom, co jejich odpověď znamená. Doufám, že ty ano.")
 
+            "Snažím se žít hlavně podle svého svědomí a s úctou ke všem bohům.":
+                hide mcPic
+                $ sabri.say("Svědomí různých lidí se může hodně lišit. Nakolik se to tvé dostává do sporu s očekáváním tvého okolí?")
+                show mcPic at menuImage
+                menu:
+                    "Málokdy. Většinou se s lidmi docela shodnu.":
+                        hide mcPic
+                        $ cultistMaterial -= 1
+                        $ sabri.say("Pak máš buď velké štěstí, nebo nad slovy svého svědomí příliš nepřemýšlíš.")
+                    "Velmi často. Většina lidí si nevidí na špičku nosu.":
+                        hide mcPic
+                        $ cultistMaterial += 1
+                        $ sabri.say("S tím lze souhlasit. To těžké je uvědomit si to, ale nestat se zároveň jedním z nich.")
             "Ve skutečnosti mě neoslovil žádný z bohů, které znám.":
                 hide mcPic
                 $ cultistMaterial += 1
                 $ sabri.say("Pak jsi možná zatím jen nepotkal[a] toho pravého.")
+            "To si raději nechám pro sebe.":
+                hide mcPic
+                $ sabri.say("Většinou si lidé stejně brzy všimnou, do jakých chrámů kdo chodí. Je tvá víra tak neobvyklá, že ji raději tajíš, nebo nemáš odpověď, za kterou si stojíš?")
+                $ sabri.say("Ale rozumím, nebudu naléhat.")
 
     jump sabriOptions
 
@@ -352,6 +420,10 @@ label sabriOptionsRemainingCheck:
         $ sabriOptionsRemaining += 1
     if "letters for Ada seen" in status and "zeran cleared" not in status and "zeran innocent" not in sabri.asked:
         $ sabriOptionsRemaining += 1
-    if "Hayfa experienced fire" in globalClues or "Killian encounter" in status:
+    if "Hayfa experienced fire" in globalClues or "Killian encounter" in status and "Hayfa experienced fire" not in sabri.asked:
+        $ sabriOptionsRemaining += 1
+    if "hayfa's past" in globalClues and "past crimes" not in sabri.asked:
+        $ sabriOptionsRemaining += 1
+    if "past crimes" in sabri.asked and "not punished" not in sabri.asked:
         $ sabriOptionsRemaining += 1
     return

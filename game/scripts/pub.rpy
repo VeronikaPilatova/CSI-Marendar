@@ -313,6 +313,40 @@ label salmaOptions:
             $ salma.say("Na to potřebujete najít někoho, kdo sám viděl, jestli se něčeho dopustila.")
             $ mc.say("A napadá vás někdo takový?")
             $ salma.say("Bohužel. Samozřejmě se tu o tom požáru už mluvilo, ale samé zveličené historky ze třetí ruky a opilecké tlachy. Nic, co by vám pomohlo.")
+        "Můžete u soudu s Katrin aspoň poukázat na to, že o její odsouzení nejvíc usiluje Hayfa." if "testify for dancer" in salma.asked and "testify for dancer 2" not in salma.asked:
+            hide mcPic
+            $ salma.asked.append("testify for dancer 2")
+            $ salma.say("Myslíte, že to pomůže?")
+            show mcPic at menuImage
+            menu:
+                "Hayfa je pochybná sektářka, možná tím sleduje vlastní zájmy." if "hayfa's past" in globalClues:
+                    hide mcPic
+                    $ salma.say("Myslíte? Co ji znám, dělá pro město první poslední a dost mu tím pomáhá. To je pro mě to hlavní.")
+                    $ mc.say("To je možné. Ale není to zvláštní, takový výrazný obrat?")
+                    $ mc.say("Původně měla s městem úplně jiné plány a změnila je, až když ji chytili a poslali před soud.")
+                    $ mc.say("Sekta jako taková sice padla, ale Hayfa pořád může usilovat o co největší moc pro sebe.")
+                    $ salma.say("To ano. Je pravda, že už jsem nad jejím chováním přemýšlela i dřív.")
+                    $ salma.say("Městu pomáhá a to je dobře, ale co ji k tomu vede, těžko říct.")
+                    $ mc.say("Právě. Nechme ji tedy pomáhat, ale nemyslím si, že by měla rozhodovat o něčím životě. Ani že by někdo měl být odsouzený jen na základě obžaloby od ní.")
+                    $ salma.say("To by raději neměl, ano. Zkusím soudu připomenout, ať na to myslí.")
+                    $ salma.asked.appen("testimony promised")
+                    $ katrin.cluesAgainst += 1
+                "Všiml[a] jsem si, že Hayfa oheň prožívá nezvykle silně.":
+                    hide mcPic
+                    if "Hayfa experienced fire" in sabri.asked:
+                        $ mc.say("To by se dalo chápat u někoho, kdo místní požár zažil, Hayfa ale přišla do města až asi rok po něm.")
+                        $ salma.say("To je vlastně pravda... myslíte, že město mohla i v tomhle tak rychle vzít za vlastní?")
+                        $ mc.say("Možná. Nebo ho za vlastní nevzala a jen se snaží zalíbit.")
+                        $ salma.say("Co nejsilněji vystoupit proti Katrin je rozhodně způsob, jak se zalíbit. A určitě by chudák holka neměla být potrestaná jen kvůli tomu.")
+                        $ salma.say("Zkusím soudu připomenout, že by se neměl nechat unést.")
+                        $ salma.asked.appen("testimony promised")
+                        $ katrin.cluesAgainst += 1
+                    else:
+                        $ salma.say("To v tomhle městě není nic zvláštního.")
+                        $ salma.say("Hayfa má velmi pochybnou minulost a ne každý věří její proklamované lásce k Marendaru, ale zrovna přístup k ohni jí tu nikdo vyčítat nebude.")
+                "Vlastně asi ne, jen mne to napadlo.":
+                    hide mcPic
+                    $ salma.say("Máte trochu zvláštní nápady, ale dobře, nechme to být.")
 
         "Děkuji, velmi jste mi pomohla.":
             hide mcPic
@@ -374,5 +408,7 @@ label salmaOptionsRemainingCheck:
     if "searching for Kilian" in salma.asked and "about Katrin and Kilian" not in salma.asked:
         $ optionsRemaining += 1
     if "about Katrin and Kilian" in salma.asked and "testify for dancer" not in salma.asked:
+        $ optionsRemaining += 1
+    if "testify for dancer" in salma.asked and "testify for dancer 2" not in salma.asked:
         $ optionsRemaining += 1
     return

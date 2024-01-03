@@ -37,6 +37,7 @@ label dinnerWithColleaguesOptions:
             $ hayfa.say("Jen jsem nechtěla, aby %(mcName)s od Soliana získal[a] špatný dojem. Když už tomu tady skoro velím.")
             $ rauvin.say("Řekl jsem, že se o tom nebudeme dál bavit.", "angry")
             $ rauvin.say("%(mcName)s se nemůže účastnit rozhovoru a to od nás není slušné.")
+            $ globalClues.append("hayfa's past")
             call askMc
         "Jak dlouho jste v hlídce?" if "time employed" not in colleaguesAsked:
             hide mcPic

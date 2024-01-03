@@ -199,10 +199,7 @@ label kasparOptions:
             $ kaspar.say("Ne, je pro mne příjemnější mít tu na výpomoc jen tovaryše, kteří už něco umí. Ti u mne samozřejmě nebydlí.")
             $ kaspar.say("Můžu vám ukázat svůj vlastní nedokončený pár bot, pokud by to něco znamenalo.")
             $ mc.say("To asi nebude nutné.")
-        "Zeptal jsem se U Salmy a hostinská včera výrobek mistra Heinricha neviděla." if "lost shoes in pub" in salma.asked and "lost shoes in pub" not in kaspar.asked and gender == "M":
-            hide mcPic
-            call kasparLostShoesInPub
-        "Zeptala jsem se U Salmy a hostinská včera výrobek mistra Heinricha neviděla." if "lost shoes in pub" in salma.asked and "lost shoes in pub" not in kaspar.asked and gender == "F":
+        "Zeptal[a] jsem se U Salmy a hostinská včera výrobek mistra Heinricha neviděla." if "lost shoes in pub" in salma.asked and "lost shoes in pub" not in kaspar.asked:
             hide mcPic
             call kasparLostShoesInPub
         "Tušíte, jak by město vzalo, kdyby dva mistři předložili na Einionových slavnostech společný výrobek?" if "join forces victim pending" in status and "join forces" not in kaspar.asked:
@@ -219,6 +216,35 @@ label kasparOptions:
             $ kaspar.say("Mají snad něco podobného v úmyslu?")
             $ mc.say("Nevím, jestli to skutečně mají v úmyslu. Někdo podobný nápad zmínil a já chtěl[a] zjistit od někoho znalého věci, co by to znamenalo.")
             $ kaspar.say("Jistě, rozumím. Jsem hlídce samozřejmě kdykoli k službám.")
+        "Budete ochotný svědčit ve prospěch té tanečnice s ohněm?" if "fireshow" in status and "testify for dancer" not in kaspar.asked:
+            hide mcPic
+            $ kaspar.asked.append("testify for dancer")
+            $ kaspar.say("Jistě, ale proč? Na její usvědčení mě přece nepotřebujete, vždyť to je jasný případ.")
+            $ mc.say("Asi jste se přeslechl, mám na mysli v její prospěch. Aby nebyla potrestaná nebo alespoň ne tak přísně.")
+            $ kaspar.say("Ve prospěch... Proč? Vždyť je to zločinec!", "surprised")
+            $ mc.say("To si právě nemyslím a mám pro to rozumné důvody.")
+            $ kaspar.say("Tyhle rozumné důvody vás tam nikdo ani nenechá říct. Do takového podniku se mi vážně jít nechce.", "angry")
+            show mcPic at menuImage
+            menu:
+                "Jestli jí pomůžete, zatknu Heinricha za to, jak vás napadl." if kaspar.imageParameter == "beaten" and victim not in arrested:
+                    hide mcPic
+                    $ kaspar.say("Ale to je přece vaše povinnost bez ohledu na cokoli. Od čeho bychom hlídku měli, kdyby nebránila slušné lidi před podobně sprostými útoky?", "surprised")
+                    $ kaspar.say("Jestli to pořád nechápete, zajděte konečně za tím Rauvinem, ať vám to vysvětlí.", "angry")
+                "A co když vám zaručím, že Heinrich nebude mít na slavnostech žádný pořádný výrobek?":
+                    hide mcPic
+                    $ kaspar.say("To už přece víme, když ho ztratil.", "angry")
+                    $ kaspar.say("Bude tam muset dát něco, co mu zrovna leží na polici. To mi docela stačí, po tom, jak se svým úžasným dílem chvástal.")
+                "Je to mladá dívka, co nepřeje nikomu nic špatného. A potřebuje vás, protože jiné zastání nemá.":
+                    hide mcPic
+                    $ kaspar.say("Tedy mám sám bránit cizí holku, co málem znovu zapálila město, proti všem příčetným lidem, se kterými se celý život potkávám na ulici?", "angry")
+                    $ kaspar.say("Odpusťte, ale to mi nepřipadá jako nejlepší nápad.", "angry")
+                "Byl[a] bych vám potom zavázan[y].":
+                    hide mcPic
+                    $ kaspar.say("Nic proti tomu mít přítele v hlídce, ale upřímně, nevím, jak moc bych stál o přítele, co mě bude hnát do podniků, ve kterých nejspíš ztratím tvář.", "angry")
+                    $ kaspar.say("Naštěstí my přátelé jsme, a tak nic takového dělat nebudete, že ano?")
+                "Rozumím, nebudu vás s tím dále zdržovat.":
+                    hide mcPic
+            $ kaspar.say("Neberte to špatně. Jste ve městě nově, rád vám pomůžu se v něm správně pohybovat. Hlídka se mnou vždy může počítat.", "happy")
         "Jste zatčen za krádež výrobku mistra Heinricha." (badge="handcuffs") if "confession" in kaspar.asked and kaspar not in arrested:
             hide mcPic
             $ kaspar.say("Vždyť jsem jasně řekl, že jsem v dílně ty boty ani nenašel.", "angry")
@@ -298,5 +324,7 @@ label kasparOptionsRemainingCheck:
     if "lost shoes in pub" in salma.asked and "lost shoes in pub" not in kaspar.asked:
         $ optionsRemaining += 1
     if "join forces victim pending" in status and "join forces" not in kaspar.asked:
+        $ optionsRemaining += 1
+    if "fireshow" in status and "testify for dancer" not in kaspar.asked:
         $ optionsRemaining += 1
     return
