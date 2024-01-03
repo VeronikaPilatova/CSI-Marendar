@@ -18,6 +18,7 @@ init python:
         "universalCulprit": Achievement(name=_("Univerzální viník"), message=_("Zeran byl zatčen ze tří různých důvodů."), image="images/achievements/trophy handcuffs.png", priority="hidden"),
         "fistfight": Achievement(name=_("Rváč"), message=_("Někdy pouhá slova nestačí a musí přijít ke slovu pěsti."), image="images/achievements/trophy fistfight.png", priority="hidden"),
         "heinrichTools": Achievement(name=_("Heinrichovi navzdory"), message=_("Na jeho nástroje prý nesmí nikdo jiný sahat. No to určitě."), image="images/achievements/trophy tools.png", priority="hidden"),
+        "bookworm": Achievement(name=_("Knihomol"), message=_("Velikost marendarské knihovny se nemůže měřit s tvým čtenářským nadšením."), image="images/achievements/trophy books.png", priority="hidden"),
     }
 
     ## Here we are simply registering the achievements.
