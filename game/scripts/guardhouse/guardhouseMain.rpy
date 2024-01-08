@@ -74,6 +74,9 @@ label guardhouseIntro:
     if time.days == 2 and "Killian encounter" not in status:
         call kilianEncounter
         $ sceneWitnessed = True
+    elif time.days == 2 and "Hayfa's past encounter" not in status:
+        call hayfasPastEncounter
+        $ sceneWitnessed = True
     elif "Rovien house visited" in status and "racism encounter" not in status and "out of office" not in rauvin.status:
         call racismEncounter
         $ sceneWitnessed = True

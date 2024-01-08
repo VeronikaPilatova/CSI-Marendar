@@ -333,7 +333,7 @@ label salmaOptions:
                     $ katrin.cluesAgainst += 1
                 "Všiml[a] jsem si, že Hayfa oheň prožívá nezvykle silně.":
                     hide mcPic
-                    if "Hayfa experienced fire" in sabri.asked:
+                    if "Hayfa's arrival to Marendar" in globalClues:
                         $ mc.say("To by se dalo chápat u někoho, kdo místní požár zažil, Hayfa ale přišla do města až asi rok po něm.")
                         $ salma.say("To je vlastně pravda... myslíte, že město mohla i v tomhle tak rychle vzít za vlastní?")
                         $ mc.say("Možná. Nebo ho za vlastní nevzala a jen se snaží zalíbit.")
@@ -341,6 +341,7 @@ label salmaOptions:
                         $ salma.say("Zkusím soudu připomenout, že by se neměl nechat unést.")
                         $ salma.asked.appen("testimony promised")
                         $ katrin.cluesAgainst += 1
+                        $ hayfa.trust -= 6
                     else:
                         $ salma.say("To v tomhle městě není nic zvláštního.")
                         $ salma.say("Hayfa má velmi pochybnou minulost a ne každý věří její proklamované lásce k Marendaru, ale zrovna přístup k ohni jí tu nikdo vyčítat nebude.")

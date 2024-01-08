@@ -45,7 +45,9 @@ label dinnerWithColleaguesOptions:
             $ solian.say("Já něco přes dva roky, Rauvin tu je necelý rok a Hayfa asi pět měsíců.")
             $ hayfa.say("Šest.")
             $ mc.say("Tak krátce?")
+            $ solian.say("Hayfa teprve před rokem vůbec přišla do města a Rauvin se tu sice narodil, ale potom byl dlouho pryč.")
             $ solian.say("Služebně starší bys spočítal na prstech jedné ruky. Většina staré gardy byla až moc spojená s Velinem na to, aby mohla zůstat. Já nastoupil jako jeden z prvních poté, co Velin padl.")
+            $ globalClues.append("Hayfa's arrival to Marendar")
         "Rauvine, jestli jsi sloužil v Eichenau, co tě přimělo se vrátit do Marendaru?" if ("reasons" in colleaguesAsked or "origin" in mc.asked) and "Rauvin's return" not in colleaguesAsked:
             hide mcPic
             $ colleaguesAsked.append("Rauvin's return")

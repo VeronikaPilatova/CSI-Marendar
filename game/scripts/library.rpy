@@ -2,7 +2,7 @@ label libraryPreparation:
     default literatureTopics = ["wellWrittenTrash", "farawayTravels", "fables", "saucyTales", "seriousHistory"]
     default lawTopics = ["lawIntro"]
     default historyTopics = ["historyIntro"]
-    default pastTrialsTopics = ["pastTrialsIntro"]
+    default pastTrialsTopics = ["pastTrialsIntro", "cultistsTrial"]
     return
 
 label libraryController:
@@ -67,7 +67,6 @@ label libraryOptions:
             scene bg books
         "{i}(Vrátit se na strážnici){/i}":
             $ chosenTopic = "leave"
-
     return
 
 label libraryRepeat:
@@ -151,6 +150,13 @@ label lawIntro:
 label pastTrialsIntro:
     "Snadno najdeš několik tlustých svazků s opisy soudních protokolů, velmi rychle ale získáš pocit, že by se snadno daly zkrátit na méně než desetinu. Naprostá většina soudů za poslední rok se týká náhodných rvaček v hospodě nebo drobných krádeží."
     "Tresty si bývají podobné, nejčastěji zůstává jen u vyplacení odškodného a podle zápisů snad vždy došlo k usmíření obou stran."
+    return
+label cultistsTrial:
+    "Poslední zajímavý soudní proces se odehrál asi před rokem, kdy byl za spiknutí proti městu a pokus otrávit purkmistra Oswalda souzen člen městské rady Ridian spolu se svými spolupachateli Sabrim a Hayfou."
+    "Ridian se ani nepokoušel zapírat, naopak se podle záznamu hrdě přihlásil k vedení celé skupiny, vystupoval po celou dobu líčení povýšeně a přál městu, aby znovu vyhořelo. To vzbudilo velké pobouření všech přítomných a Ridian byl oběšen “jako obyčejný sprostý zločinec”."
+    "Hayfa a Sabri byli nejprve odsouzeni k vyhnanství, nicméně Hayfa prosila, aby mohla zůstat a odčinit svou vinu prací pro město, a Sabri vyjádřil přání zůstat s ní."
+    "Městská rada se nechala obměkčit, trest tedy byl změněn: oba mají svou vinu odčinit prací pro město a do té doby ho naopak opustit nesmí. Sabri bude trest vykonávat po dobu dvou let. Hayfě, protože projevila upřímnou lítost, byl trest snížen na jeden rok."
+    "Rychle spočítáš, že toto období uplynulo jen před několika týdny. Dohledem a zadáváním práce byl pověřen městský úředník Janis."
     return
 ### history
 label historyIntro:

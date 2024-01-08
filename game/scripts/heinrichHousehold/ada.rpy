@@ -169,8 +169,6 @@ label adaConfrontationZairis:
 label adaAngryCounterargumentOptions:
     call adaAngryCounterargumentOptionsRemainingCheck
     if adaAngryCounterargumentOptionsRemaining == 0:
-        $ mc.say("Proto jsem v hlídce. Nevím, co jiného chceš slyšet.")
-        $ ada.say("To by mohl říct každý. Tak hledej ty tátovy zatracené boty a nech naši rodinu na pokoji.", "angry")
         return
 
     show mcPic at menuImage
@@ -214,9 +212,12 @@ label adaAngryCounterargumentOptions:
                 $ ada.say("Tak už nikdy nikomu nepomáhej, jestli to děláš takhle.", "angry")
             else:
                 $ ada.say("Možná, ale bez úspěchu. To mě vážně neohromí.")
-        "Proto jsem v hlídce. Nevím, co jiného chceš slyšet.":
+        "Proto jsem v hlídce":
             hide mcPic
             $ ada.say("To by mohl říct každý. Tak hledej ty tátovy zatracené boty a nech naši rodinu na pokoji.", "angry")
+        "To je teď asi jedno.":
+            hide mcPic
+            $ ada.say("Chápu. Tak jestli ti to je jedno, tak mě prosím nezdržuj.", "angry")
             return
     if "Ada closed door" in status:
         jump adaAngryCounterargumentOptions

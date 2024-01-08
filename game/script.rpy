@@ -98,38 +98,39 @@ label preparation:
     default festivalStart = "za čtyři dny"
 
     # characters
-    default erle = Person("Žebračka Erle", "erle")
-    default kaspar = Person("Mistr Kaspar", "kaspar")
     default ada = Person("Ada", "ada")
+    default angryWoman = Person("Žena", "angry woman")
+    default assistant = Person("Pomocník v knihovně", "assistant")
     default eckhard = Person("Eckhard", "eckhard", "hungover")
+    default erle = Person("Žebračka Erle", "erle")
     default gerd = Person("Gerd", "gerd")
-    default rumelin = Person("Cechmistr Rumelin", "rumelin")
-    default rovien = Person("Rovien", "rovien")
-    default nirevia = Person("Nirevia", "nirevia")
     default hayfa = Person("Hayfa", "hayfa")
-    default salma = Person("Hostinská Salma", "salma")
-    default njal = Person("Mistr Njal", "njal")
+    default kaspar = Person("Mistr Kaspar", "kaspar")
+    default laris = Person("Laris", "laris")
     default liese = Person("Liese", "liese")
+    default lisbeth = Person("Lisbeth", "lisbeth")
     default locksmith = Person("Zámečník", "locksmith")
     default lotte = Person("Lotte", "lotte")
     default merchant = Person("Karsten", "merchant")
     default messenger = Person("Melien", "messenger")
+    default nirevia = Person("Nirevia", "nirevia")
+    default njal = Person("Mistr Njal", "njal")
     default optimist = Person("Ferdi", "apprentice1", "hungover")
     default rauvin = Person("Rauvin", "rauvin")
+    default rovien = Person("Rovien", "rovien")
+    default rumelin = Person("Cechmistr Rumelin", "rumelin")
     default sabri = Person("Sabri", "sabri")
+    default salma = Person("Hostinská Salma", "salma")
+    default solian = Person("Solian", "solian")
     default son = Person("Aachim", "son", "hungover")
     default victim = Person("Mistr Heinrich", "victim")
-    default lisbeth = Person("Lisbeth", "lisbeth")
     default yesman = Person("Rudi", "apprentice2", "hungover")
     default zairis = Person("Zairis", "zairis")
     default zeran = Person("Zeran", "zeran")
-    default solian = Person("Solian", "solian")
-    default laris = Person("Laris", "laris")
     default racist = Person("Obchodník", "angry merchant")
     default katrin = Person("Tanečnice", "katrin")
     default kilian = Person("Hráč na lyru", "kilian")
     default runa = Person("Runa", "runa")
-    default assistant = Person("Pomocník v knihovně", "assistant")
 
     default anon1 = Person("Měšťan", "anon1")
     default anon2 = Person("Mešťan", "anon2")
@@ -187,6 +188,11 @@ label preparation:
     default sel = "šel/šla"
     default sam = "sám/sama"
 
+    # variables - future of the watch
+    default watchScores = {}
+    $ watchScores["rauvin"] = 0
+    $ watchScores["hayfa"] = 0
+    $ watchScores["solian"] = 0
     # variables - investigation progress
     default clues = []
     default globalClues = []

@@ -306,59 +306,84 @@ label boysOptions:
                 menu:
                     "Mistr Kaspar":
                         hide mcPic
-                        $ victim.say("Ten šašek, který mi chce konkurovat ve volbě cechmistra? Jak se ten dostal do mé dílny?", "surprised")
                         label workshopWitnessMenu2:
-                        show mcPic at menuImage
-                        menu:
-                            "Bohužel opravdu nemůžu nic říct." if "part of investigation how" in victim.asked:
-                                hide mcPic
-                                $ victim.say("Tak to bych se asi měl zeptat tvých nadřízených. Nepředpokládám, že jestli mě někdo stejným způsobem vykrade, dokážeš mi to všechno zaplatit.", "angry")
-                            "Pustila ho tam vaše manželka.":
-                                hide mcPic
-                                $ victim.say("Co to plácáš za nesmysly?", "angry")
-                                $ mc.say("Můžete se jí zeptat sám.")
-                                $ victim.say("To udělám. A jestli mi lžeš do očí, budu si na tebe stěžovat.", "angry")
-                                $ status.append("kaspar and lisbeth ratted out")
-                            "Pustili ho tam vaši učedníci.":
-                                hide mcPic
-                                $ victim.trust -= 1
-                                "Kluci se po sobě zmateně podívají."
-                                $ son.say("Cože?", "surprised")
-                                $ yesman.say("Co?", "surprised")
-                                $ optimist.say("Nepustili!", "surprised")
-                                $ yesman.say("Nepustili!", "surprised")
-                                $ son.say("Proč bychom to prosím vás dělali?", "surprised")
-                                $ mc.say("Aspoň to mistr Kaspar říkal.")
-                                $ victim.say("Asi se budu muset Kaspara zeptat.", "angry")
-                            "Vloupal se tam.":
-                                hide mcPic
-                                $ victim.trust -= 1
-                                $ victim.say("To je pitomost. Kdyby někdo vylomil zámek, přece bych si toho všiml.")
-                                if "doors" in workshop.checked:
-                                    $ victim.say("A ty taky, viděl jsem, jak jsi dveře prohlížel[a].", "angry")
-                                $ mc.say("Je možné, že se dostal do dílny, protože bylo odemčeno.")
-                                $ victim.say("To se mi hodně nezdá.", "angry")
-                            "To bohužel nevím." if "part of investigation how" not in victim.asked:
-                                hide mcPic
-                                $ victim.trust -= 2
-                                $ victim.say("To ses ho ani nezeptal[a]?", "angry")
-                                $ mc.say("No...")
-                                $ victim.say("Co je tohle za neschopnost?", "angry")
-                                $ victim.say("A jak si můžeš být jist[y], že moje střevíce nevzal on?", "angry")
-                                $ mc.say("Nebojte se, pracuji se všemi variantami.")
-                                $ victim.say("No jen jestli. Zatím jsi mě moc nepřesvědčil[a].")
-                            "To je součást vyšetřování a nemůžu vám to nyní říct." if not any("part of investigation" in str for str in victim.asked):
-                                hide mcPic
-                                $ victim.asked.append("part of investigation how")
-                                $ victim.trust -= 1
-                                $ victim.say("To mám jen čekat, až se sem stejným způsobem dostane nějaký další špinavec?", "angry")
-                                jump workshopWitnessMenu2
-                            "Tohle vám už opravdu říct nemůžu." if "part of investigation who" in victim.asked:
-                                hide mcPic
-                                $ victim.asked.append("part of investigation how")
-                                $ victim.trust -= 1
-                                $ victim.say("To mám jen čekat, až se sem stejným způsobem dostane nějaký další špinavec?", "angry")
-                                jump workshopWitnessMenu2
+                        if "secret lover identity" in victim.asked:
+                            $ victim.say("Ten zmetek! Nejenom, že mi chodí za ženou, ale ještě si dávají dostaveníčka v mé vlastní dílně?", "furious")
+                            show mcPic at menuImage
+                            menu:
+                                "Nebylo na tom nic milostného":
+                                    hide mcPic
+                                    $ victim.say("Takže tvrdíš, že ho Lisbeth do dílny pustila jen proto, že slušně poprosil? Nebo že ten kašpar zvládne projít zamčenými dveřmi?", "angry")
+                                "{i}(Neříct nic){/i}":
+                                    hide mcPic
+                            if "burned evidence seen" in victim.asked:
+                                $ victim.say("A víš vůbec jistě, že moje střevíce nezničil on?", "angry")
+                            else:
+                                $ victim.say("A víš vůbec jistě, že moje střevíce nevzal on?", "angry")
+                            show mcPic at menuImage
+                            menu:
+                                "Možné to samozřejmě je.":
+                                    hide mcPic
+                                    $ victim.say("Možné? Jestli mi ten slizký had leze do dílny, tak k tomu měl nejlepší příležitost! A moc dobře ví, že proti mně nemá ve volbě šanci.", "furious")
+                                    $ mc.say("Na zatčení musím mít jasné důkazy, které obstojí před soudem.")
+                                    $ victim.say("Tak s těmi důkazy pohni, ať ho co nejdřív vidím na pranýři, zmetka jednoho.", "angry")
+                                "Toho by si vaše žena určitě všimla.":
+                                    hide mcPic
+                                    $ victim.say("No jen jestli. A jestli mi zase nelže.", "angry")
+                                    $ victim.say("Asi si s nimi s oběma budu muset promluvit ještě jednou.", "angry")
+                        else:
+                            $ victim.say("Ten šašek, který mi chce konkurovat ve volbě cechmistra? Jak se ten dostal do mé dílny?", "surprised")
+                            show mcPic at menuImage
+                            menu:
+                                "Bohužel opravdu nemůžu nic říct." if "part of investigation how" in victim.asked:
+                                    hide mcPic
+                                    $ victim.say("Tak to bych se asi měl zeptat tvých nadřízených. Nepředpokládám, že jestli mě někdo stejným způsobem vykrade, dokážeš mi to všechno zaplatit.", "angry")
+                                "Pustila ho tam vaše manželka.":
+                                    hide mcPic
+                                    $ victim.say("Co to plácáš za nesmysly?", "angry")
+                                    $ mc.say("Můžete se jí zeptat sám.")
+                                    $ victim.say("To udělám. A jestli mi lžeš do očí, budu si na tebe stěžovat.", "angry")
+                                    $ status.append("kaspar and lisbeth ratted out")
+                                "Pustili ho tam vaši učedníci.":
+                                    hide mcPic
+                                    $ victim.trust -= 1
+                                    "Kluci se po sobě zmateně podívají."
+                                    $ son.say("Cože?", "surprised")
+                                    $ yesman.say("Co?", "surprised")
+                                    $ optimist.say("Nepustili!", "surprised")
+                                    $ yesman.say("Nepustili!", "surprised")
+                                    $ son.say("Proč bychom to prosím vás dělali?", "surprised")
+                                    $ mc.say("Aspoň to mistr Kaspar říkal.")
+                                    $ victim.say("Asi se budu muset Kaspara zeptat.", "angry")
+                                "Vloupal se tam.":
+                                    hide mcPic
+                                    $ victim.trust -= 1
+                                    $ victim.say("To je pitomost. Kdyby někdo vylomil zámek, přece bych si toho všiml.")
+                                    if "doors" in workshop.checked:
+                                        $ victim.say("A ty taky, viděl jsem, jak jsi dveře prohlížel[a].", "angry")
+                                    $ mc.say("Je možné, že se dostal do dílny, protože bylo odemčeno.")
+                                    $ victim.say("To se mi hodně nezdá.", "angry")
+                                "To bohužel nevím." if "part of investigation how" not in victim.asked:
+                                    hide mcPic
+                                    $ victim.trust -= 2
+                                    $ victim.say("To ses ho ani nezeptal[a]?", "angry")
+                                    $ mc.say("No...")
+                                    $ victim.say("Co je tohle za neschopnost?", "angry")
+                                    $ victim.say("A jak si můžeš být jist[y], že moje střevíce nevzal on?", "angry")
+                                    $ mc.say("Nebojte se, pracuji se všemi variantami.")
+                                    $ victim.say("No jen jestli. Zatím jsi mě moc nepřesvědčil[a].")
+                                "To je součást vyšetřování a nemůžu vám to nyní říct." if not any("part of investigation" in str for str in victim.asked):
+                                    hide mcPic
+                                    $ victim.asked.append("part of investigation how")
+                                    $ victim.trust -= 1
+                                    $ victim.say("To mám jen čekat, až se sem stejným způsobem dostane nějaký další špinavec?", "angry")
+                                    jump workshopWitnessMenu2
+                                "Tohle vám už opravdu říct nemůžu." if "part of investigation who" in victim.asked:
+                                    hide mcPic
+                                    $ victim.asked.append("part of investigation how")
+                                    $ victim.trust -= 1
+                                    $ victim.say("To mám jen čekat, až se sem stejným způsobem dostane nějaký další špinavec?", "angry")
+                                    jump workshopWitnessMenu2
                     "To je součást vyšetřování a nemůžu vám to nyní říct.":
                         hide mcPic
                         $ victim.asked.append("part of investigation who")
@@ -367,7 +392,6 @@ label boysOptions:
                         menu:
                             "Máte asi pravdu. Ten svědek je mistr Kaspar.":
                                 hide mcPic
-                                $ victim.say("Ten šašek, který mi chce konkurovat ve volbě cechmistra? Jak se ten dostal do mé dílny?", "surprised")
                                 jump workshopWitnessMenu2
                             "I tak vám to říct nemůžu.":
                                 hide mcPic

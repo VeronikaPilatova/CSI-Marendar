@@ -68,11 +68,14 @@ label workshopNightOptions:
                     call loveLetters
                     jump loveLettersBurglaryMenu
                 "{i}(Vzít s sebou jako důkaz všechny){/i}":
-                    "Schováš si celý baliček do taštičky na opasku v přesvědčení, že nikomu nebude chybět."
+                    "Schováš si celý balíček do taštičky na opasku v přesvědčení, že nikomu nebude chybět."
                     $ status.append("all love letters kept")
                 "{i}(Vzít s sebou jako důkaz jen jeden z papírů){/i}":
                     "Vybereš jeden z dopisů, schováš ho do taštičky na opasku a zbytek vrátíš na místo. Mistr Heinrich přece nemůže mít spočítané, kolik dopisů celkem bylo."
                     $ status.append("one love letter kept")
+                "{i}(Opsat si jednu z básní){/i}":
+                    "Opíšeš si jednu z básní na vlastní kousek papíru a potom celý balíček dopisů vrátíš na místo. Takhle máš aspoň něco v ruce, ale neodnášíš nic, co by někomu mohlo chybět nebo co by u tebe nikdo neměl vidět."
+                    $ status.append("poem for Ada copied")
                 "{i}(Vrátit dopisy zpět do účetní knihy){/i}":
                     "Pečlivě všechno vrátíš zpět na původní místo."
         "{i}(Prohlédnout si Heinrichovy nástroje){/i}" if "tools" in workshop.checked and "tools touched" not in workshop.checked:

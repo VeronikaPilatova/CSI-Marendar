@@ -100,3 +100,34 @@ label kilianEncounter:
             hide mcPic
     $ status.append("Killian encounter")
     return
+
+label hayfasPastEncounter:
+    "Rauvin je právě zabraný do hovoru s jakousi dobře oblečenou ženou, kterou neznáš. Zatímco tvůj velitel se snaží působit klidně, jeho společnice ho probodává pohledem a mírně zvyšuje hlas."
+    "Jiní hlídkaři se alespoň zdánlivě věnují své práci a do rozhovoru nezasahují, neujde ti ale, že většina z nich dobře poslouchá."
+    $ rauvin.say("“Jak říkám, takové rozhodnutí je plně v kompetenci každého člena hlídky a Hayfa jím své pravomoce nijak nepřekročila.")
+    $ angryWoman.say("Vy mě pořád nechápete. Když něco rozhodnete vy nebo kdokoli v téhle místnosti, tak dobře. Ale jak něco podobného můžete dovolit zrovna jí?", "angry")
+    $ rauvin.say("Je to členka hlídky stejně jako všichni ostatní.")
+    $ angryWoman.say("Není! Nikdo z vás ostatních se nepokusil zabít purkmistra!", "angry")
+    $ rauvin.say("Za to byla souzená a potrestaná.")
+    $ angryWoman.say("Potrestaná? Vždyť vyvázla s tím, že jen pár měsíců opravovala škody po požáru, a teď je najednou zřejmě skoro nejdůležitější v celé hlídce. Copak je tohle trest?", "surprised")
+    $ rauvin.say("Pracovat bez nároku na odměnu vám připadá málo?")
+    $ angryWoman.say("Kdyby zůstala u stavění domů, budiž. Ale pustit ji do hlídky?", "angry")
+    $ angryWoman.say("Nezapomínejte, že přivandrovala kdo ví odkud a uctívá nějakého pochybného boha. Nikdo z nás nemůže tušit, co dalšího ještě plánuje.", "angry")
+    $ rauvin.say("Naše zákony vstup do hlídky nikomu nezakazují a Hayfa mnohokrát prokázala jak schopnosti, tak lásku k městu.")
+    $ angryWoman.say("A co vaše soudnost, ta vám nic neříká? Co když to všechno jen hraje? Vždyť tu je tak krátce, že ani nezažila požár, co ona o městě ví, aby ho mohla opravdu tak milovat?", "angry")
+    $ rauvin.say("Zřejmě dost na to, aby pro hlídku byla neocenitelná.")
+    $ rauvin.say("Podívejte, rozhodnutí soudu ani jeden z nás nemůže zvrátit. Hayfina služba městu teď je příkladná. A snad vás může ubezpečit, že vzhledem k její minulosti je vyloučené, aby v hlídce získala výrazně vyšší postavení, než má teď.")
+    $ rauvin.say("Nicméně aby mohla městu co nejlépe sloužit, potřebuji pomoc i od vás.")
+    $ rauvin.say("Jestli se začne podezřele, potřebuji to hned vědět. A dokud dělá přesně to, co se od hlídkařů očekává, potřebuji naopak, abyste to od ní přijímala stejně jako od libovolného jiného hlídkaře.")
+    $ angryWoman.say("... já jen doufám, že neděláte chybu, které budeme všichni litovat.", "sad")
+    $ rauvin.say("“Já věřím tomu, že kdyby měla opravdu nekalé úmysly, odešla by do města, kde ji nikdo nezná, a nezůstala by tady, kde už byla souzená a kde všichni znají její tvář.")
+    $ rauvin.say("Je tu ještě něco, s čím vám může hlídka pomoci?")
+    "Žena si povzdychne."
+    $ angryWoman.say("... asi ne. Budu spoléhat na váš úsudek. Ostatně město vám věří, že hlídku dokážete vést správně. Snad víte, co děláte.")
+    "S tím se žena rozloučí a vyjde ven ze strážnice. Rauvin jí otevře dveře a chvíli za ní hledí."
+    "Když se otočí zpět do místnosti, zůstává na jeho tváři stále stopa zmatení a možná únavy, kterou ale brzy opět vystřídá věcná přímost, na kterou jste od něj zvyklí."
+    $ rauvin.say("Kde jsme to byli. Jak pokračujete se svojí prací? Objevilo se mezitím něco, co se mnou někdo potřebujete probrat?")
+    $ globalClues.append("hayfa's past")
+    $ globalClues.append("Hayfa's arrival to Marendar")
+    $ status.append("Hayfa's past encounter")
+    return

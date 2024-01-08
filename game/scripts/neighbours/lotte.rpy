@@ -205,7 +205,7 @@ label lotteOptions:
         "Zdůvodnil to mistr Rumelin nějak?" if "AML" in lotte.asked and "rumelin reasons" not in lotte.asked:
             hide mcPic
             call lotteRumelinReasons
-        "Proč jste s tím nešli za hlídkou?" if "AML" in lotte.asked and "why not call police" not in lotte.asked:
+        "Nenapadlo vás jít s tím za hlídkou?" if "rumelin reasons" in lotte.asked and "why not call police" not in lotte.asked:
             hide mcPic
             call lottePoliceBusiness
         "Všimla jste si, jak včera kousek odtud hořelo?" if "fireshow" in status and "fireshow" not in lotte.asked:
@@ -224,7 +224,7 @@ label lotteOptions:
             $ lotte.say("Vytáhla na ulici oheň a málem způsobila požár. Jestli zaslouží potrestat, to je na soudu, ne na mně, ale nemyslím, že ji městská rada jen tak pustí.")
             if "dancer arsonist" not in lotte.asked:
                 call lotteArsonist
-        "Byla byste ochotná svědčit v její prospěch?" if "dancer arrested" in lotte.asked and "testify for dancer" not in lotte.asked:
+        "Byla byste ochotná svědčit v její prospěch?" if "dancer arrested" in lotte.asked and ("dancer arsonist" not in lotte.asked or "dancer innocent" in lotte.asked) and "testify for dancer" not in lotte.asked:
             hide mcPic
             $ lotte.asked.append("testify for dancer")
             $ status.append("helping Katrin")
@@ -232,8 +232,6 @@ label lotteOptions:
                 "Lotte zaváhá."
                 $ lotte.say("Pořád ji za žhářku považuje většina mých sousedů. Jestli se za ni postavím, mohlo by se to obrátit proti mně.")
                 $ lotte.asked.append("peer pressure")
-            elif "dancer arsonist" in lotte.asked:
-                "TODO"
             else:
                 $ lotte.say("Prosím? Svědčit ve prospěch žhářky?")
                 show mcPic at menuImage
@@ -256,6 +254,7 @@ label lotteOptions:
                     $ lotte.asked.append("peer pressure")
             if "peer pressure" in lotte.asked and "secret lover identity" in lotte.asked:
                 $ lotte.say("Proč je to pro vás tak důležité?")
+                label lotteDancerImportantToMc
                 show mcPic at menuImage
                 menu:
                     "Hlídka by přece měla bojovat za spravedlnost. Trestat zločince, ale chránit nevinné.":
@@ -328,6 +327,7 @@ label lotteArsonist:
         "Není vám jí líto?":
             hide mcPic
             $ lotte.say("Nevím, nepřemýšlela jsem o tom. Určitě má za sebou pohnutý osud, ale ten může v tomhle hrabství vyprávět každý druhý.")
+            $ lotte.say("Můžu vám ještě nějak pomoct?")
         "Rozumím a děkuji vám.":
             hide mcPic
             $ lotte.say("Beze všeho. Můžu vám ještě nějak pomoct?")
@@ -340,11 +340,7 @@ label loverRevealedToLotte:
     $ lotte.say("Co na to říkal Heinrich?")
     show mcPic at menuImage
     menu:
-        "Zatím nic, ještě jsem se k němu nedostal" if "secret lover identity" not in victim.asked and gender == "M":
-            hide mcPic
-            "Lotte trochu zklamaně pokrčí rameny."
-            $ lotte.say("Chápu, hlídka musí mít spoustu práce.", "sad")
-        "Zatím nic, ještě jsem se k němu nedostala." if "secret lover identity" not in victim.asked and gender == "F":
+        "Zatím nic, ještě jsem se k němu nedostal[a]" if "secret lover identity" not in victim.asked:
             hide mcPic
             "Lotte trochu zklamaně pokrčí rameny."
             $ lotte.say("Chápu, hlídka musí mít spoustu práce.", "sad")
@@ -356,16 +352,13 @@ label loverRevealedToLotte:
             hide mcPic
             "Lotte trochu zklamaně pokrčí rameny."
             $ lotte.say("Chápu, hlídka musí mít spoustu práce.", "sad")
-    if "peer pressure" in lotte.asked:
-        "TODO"
     return
 
 label lotteAML:
     $ lotte.say("Myslíte, že mistr Rumelin by chtěl poškodit svůj vlastní cech?")
     $ mc.say("Za těmi zrušenými obchody stojí on?")
-    $ lotte.say("Ano. Zdálo se nám to s manželem zvláštní, ale prý chtěl některý materiál kupovat pro celý cech dohromady. A je to vlivný muž, manžel se neodvažoval otevřeně nesouhlasit.")
-    $ mc.say("Co přesně mistr Rumelin chtěl? Neprodávat materiál jiným mistrům?")
-    $ lotte.say("Jen Njalovi. Právě proto nám to přišlo zvláštní, ale nevěděli jsme, co s tím dělat.")
+    $ lotte.say("Ano, skoupil veškeré zásoby některých druhů materiálu a požádal, aby manžel odmítl přesně tyhle věci komukoliv jinému před slavnostmi dovézt.")
+    $ lotte.say("Zdálo se nám to s manželem trochu zvláštní, ale je to vlivný muž, manžel se neodvažoval otevřeně nesouhlasit.")
     return
 
 label lotteAmlOptions:
@@ -378,7 +371,7 @@ label lotteAmlOptions:
         "Zdůvodnil to mistr Rumelin nějak?" if "AML" in lotte.asked and "rumelin reasons" not in lotte.asked:
             hide mcPic
             call lotteRumelinReasons
-        "Proč jste s tím nešli za hlídkou?" if "AML" in lotte.asked and "why not call police" not in lotte.asked:
+        "Nenapadlo vás jít s tím za hlídkou?" if "rumelin reasons" in lotte.asked and "why not call police" not in lotte.asked:
             hide mcPic
             call lottePoliceBusiness
         "Děkuji vám za pomoc.":
@@ -388,31 +381,36 @@ label lotteAmlOptions:
 label lotteRumelinReasons:
     $ lotte.asked.append("rumelin reasons")
     $ rumelin.cluesAgainst += 1
-    $ lotte.say("Společnými nákupy materiálu. Ale proč zrovna mistr Njal, to myslím nevysvětlil.")
-    $ mc.say("Mistr Njal o společných nákupech věděl?")
-    $ lotte.say("Rozhodně o nich vědět měl. Mistr Rumelin říkal, že s ním všechno vyřeší osobně a my nemáme říkat pokud možno vůbec nic.")
+    $ lotte.say("Prý chce zavést něco jako společný sklad na věci, které většina ševců potřebuje jen občas.")
+    $ mc.say("A ten zákaz dovozu nového materiálu?")
+    $ lotte.say("Tady si to spíš domýšlím, ale možná chtěl, aby ten sklad byl hned užitečný?")
+    $ lotte.say("V každém případě nás mistr Rumelin prosil, ať celý plán udržíme v tajnosti až do slavností, kdy ho představí sám. Předpokládám, že tam to všem podrobně vysvětlí.")
     return
 
 label lottePoliceBusiness:
     $ lotte.asked.append("why not call police")
-    $ lotte.say("Manžel rozhodně nemá takový vliv a bohatství, aby se mohl otevřeně postavit cechmistrovi. Bylo by to slovo proti slovu, navíc jsem si jistá, že mistr Rumelin má v městské hlídce přátele ještě z Velinových dob.")
-    $ lotte.say("Co byste na jeho místě dělal[a] vy?")
-    show mcPic at menuImage
+    $ lotte.say("Kvůli tajnému projektu, kterým si chce mistr Rumelin pojistit znovuzvolení?","surprised")
+    $ mc.say("Pořád tím zabránil jednomu ze členů svého cechu získat materiál, který potřeboval. To by mělo stát alespoň za prověření.")
+    $ lotte.say("Upřímně řečeno nás nenapadlo, že by výpadek v dovážení materiálu mohl někomu tolik vadit. Vždyť šlo jen o pár dní do slavností.")
+    $ lotte.say("A jestli to mistru Njalovi opravdu výrazně zkřížilo plány, určitě to řekne, až mistr Rumelin bude svůj plán představovat, a dost možná tím jeho naděje na znovuzvolení hodně utrpí.")
+    $ lotte.say("Vy si myslíte, že by se hlídka o podobné věci měla zajímat?")
+    show mcPic att menuImage
     menu:
-        "Máte pravdu, asi bych neudělal[a] nic. Bylo by to zbytečné nebezpečí.":
+        "Vlastně spíš ne. O obchodech by si měli měšťané rozhodovat sami.":
             hide mcPic
-            $ rauvin.trust -= 1
-            $ hayfa.trust -= 1
+            $ solian.trust += 1
+            $ watchScores["solian"] += 1
             $ lotte.say("Tak vidíte.")
-        "Rozhodně bych to nahlásil[a]. Tvář hlídky určují hlavně Rauvin a Hayfa a ti by se nikým ovlivnit nenechali.":
-            hide mcPic
-            $ rauvin.trust += 1
-            $ lotte.say("Možná... ale vy asi nemáte rodinu.")
-        "Byl[a] bych opatrn[y], ale zkusil[a] bych zjistit, co za tím vězí, pro případ, že by to ohrožovalo i mě.":
+        "Určitě. Hlídka by se měla zajímat o vše, v čem může vězet nějaká špinavost.":
             hide mcPic
             $ hayfa.trust += 1
-            $ mc.say("A až bych se ujistil[a], že to je dobrý nápad, nahlásil[a] bych to.")
-            $ lotte.say("To jsme chtěli, ale nestihli jsme to.")
+            $ watchScores["hayfa"] += 1
+            $ lotte.say("To by ovšem měla hlídka najmout mnohem víc členů a já nevím, z čeho je všechny budeme platit.")
+        "Nevím. Nelíbí se mi to, ale zákon proti tomu asi není.":
+            hide mcPic
+            $ rauvin.trust += 1
+            $ watchScores["rauvin"] += 1
+            $ lotte.say("Není a asi máme důležitější věci, kterými by se rada měla zabývat. Tohle si opravdu nejlépe vyřídí ševci sami mezi sebou.")
     return
 
 label lotteDancerDealOptions:
@@ -427,8 +425,13 @@ label lotteDancerDealOptions:
         "Prozradím vám, kdo byl ten tajemný milenec, který šel předevčírem k paní Lisbeth." if "offered gossip" not in lotte.asked:
             hide mcPic
             $ lotte.asked.append("offer gossip")
-            "Lotte se krátce rozzáří oči, potom se ale vrátí k napjatému výrazu."
-            $ lotte.say("Nebudu přece riskovat svou a manželovu pověst jen kvůli drbu, jakkoli zajímavému.")
+            if "secret lover identity" in victim.asked:
+                $ lotte.say("Předpokládám, že to byl mistr Kaspar?")
+                $ mc.say("Ano...")
+                $ lotte.say("To teď ví už celé město. Když se Heinrich vzteká, je to obvykle dost slyšet.", "happy")
+            else:
+                "Lotte se krátce rozzáří oči, potom se ale vrátí k napjatému výrazu."
+                $ lotte.say("Nebudu přece riskovat svou a manželovu pověst jen kvůli drbu, jakkoli zajímavému.")
         "Ten drb by právě mohl vaši pověst podpořit." if "offered gossip" in lotte.asked and "gossip worth" not in lotte.asked:
             hide mcPic
             $ lotte.asked.append("gossip worth")
@@ -436,7 +439,13 @@ label lotteDancerDealOptions:
             $ mc.say("A teď si představte, co kdyby se k němu doneslo, co se šušká, a on udělal něco unáhleného.")
             $ lotte.say("To by nejspíš udělal, to je pravda. Přemýšlení nikdy nebyla jeho silná stránka, natož předtím, než něco udělá.")
         "Milenec paní Lisbeth je zřejmě mistr Kaspar, prý tráví s paní Lisbeth hodně času a rozumí si." if "gossip worth" in lotte.asked and "secret lover" in nirevia.asked and "secret lover identity" not in clues:
-            call loverRevealedToLotte
+            call lotteDealLoverRevealed
+        "Milenec paní Lisbeth je mistr Kaspar, dokonce to i přiznal." if "gossip worth" in lotte.asked and "confession" in kaspar.asked and "confession" not in lisbeth.asked:
+            call lotteDealLoverRevealed
+        "Milenec paní Lisbeth je mistr Kaspar, Lisbeth to dokonce přiznala." if "gossip worth" in lotte.asked and "confession" not in kaspar.asked and "confession" in lisbeth.asked:
+            call lotteDealLoverRevealed
+        "Milenec paní Lisbeth je mistr Kaspar, dokonce to oba přiznali." if "gossip worth" in lotte.asked and "confession" in kaspar.asked and "confession" in lisbeth.asked:
+            call lotteDealLoverRevealed
         "Co by tak pomohlo vašemu obchodu?" if "offered favour" not in lotte.asked:
             hide mcPic
             $ lotte.asked.append("offered favour")
@@ -445,7 +454,6 @@ label lotteDancerDealOptions:
             $ lotte.say("Pak se ale také hodí vědět, jaké známosti mají ostatní. Jaké zboží přesně kdo dováží z jiných měst a za jakou cenu. A to byste už možná zjistit mohl[a].")
             $ lotte.say("Samozřejmě vás nenabádám, abyste pro mě opisoval[a] záznamy o vybraných clech. To by byl zločin. Ale jestli mi informace sdělíte, protože jsme přátelé a protože je náhodou víte od svých známých mimo město, budu velmi ráda.")
             $ lotte.say("Chci říct, rád bude hlavně manžel. On je tady ten obchodník.")
-
             label lotteDancerFavourOptions:
             show mcPic at menuImage
             menu:
@@ -453,10 +461,7 @@ label lotteDancerDealOptions:
                     hide mcPic
                     $ lotte.asked.append("favour too risky")
                     $ lotte.say("Mít dobré známé mimo město snad není nic špatného? Ale ano, zrovna on by se o tom asi neměl dozvědět. Zbytečně by do toho šťoural a má určitě mnohem důležitější práci, jako třeba hledat Heinrichovo smetí.")
-                "Nejsem si jistý, jestli mám k těm... známým... přístup." if "favour hard" not in lotte.asked and gender == "M":
-                    hide mcPic
-                    $ lotte.say("Můžete se zkusit poptat i jiných hlídkařů. Pán de Vito to asi nepochopí, ale někdo jiný třeba ano.")
-                "Nejsem si jistá, jestli mám k těm... známým... přístup." if "favour hard" not in lotte.asked and gender == "M":
+                "Nejsem si jist[y], jestli mám k těm... známým... přístup." if "favour hard" not in lotte.asked:
                     hide mcPic
                     $ lotte.say("Můžete se zkusit poptat i jiných hlídkařů. Pán de Vito to asi nepochopí, ale někdo jiný třeba ano.")
                 "Dohodnuto. Zjistím, co potřebujete.":
@@ -473,6 +478,13 @@ label lotteDancerDealOptions:
             $ lotte.say("Škoda, začínalo to vypadat, že se možná dostaneme k něčemu zajímavému.")
             return
     jump lotteDancerDealOptions
+
+label lotteDealLoverRevealed:
+    call loverRevealedToLotte
+    $ lotte.say("Hm, tohle je věc, kterou byste neřekl[a] jen tak někomu, že ne?", "happy")
+    $ lotte.say("Přátelé si mají pomáhat vzájemně. Ale řekněte mi nejdřív, proč je pro vás vůbec tak důležitá", "happy")
+    call lotteDancerImportantToMc
+    return
 
 ###
 
@@ -496,7 +508,7 @@ label lotteOptionsRemainingCheck:
         $ lotteOptionsRemaining += 1
     if "AML" in lotte.asked and "rumelin reasons" not in lotte.asked:
         $ lotteOptionsRemaining += 1
-    if "AML" in lotte.asked and "why not call police" not in lotte.asked:
+    if "rumelin reasons" in lotte.asked and "why not call police" not in lotte.asked:
         $ lotteOptionsRemaining += 1
     if "fireshow" in status and "fireshow" not in lotte.asked:
         $ lotteOptionsRemaining += 1
@@ -504,7 +516,7 @@ label lotteOptionsRemainingCheck:
         $ lotteOptionsRemaining += 1
     if "dancer arrested" in lotte.asked and "dancer arrest deserved" not in lotte.asked and "peer pressure" not in lotte.asked:
         $ lotteOptionsRemaining += 1
-    if "dancer arrested" in lotte.asked and "testify for dancer" not in lotte.asked:
+    if "dancer arrested" in lotte.asked and ("dancer arsonist" not in lotte.asked or "dancer innocent" in lotte.asked) and "testify for dancer" not in lotte.asked:
         $ lotteOptionsRemaining += 1
     if "peer pressure" in lotte.asked and "peer pressure important" not in lotte.asked and "secret lover identity" not in lotte.asked and "testimony promised" not in lotte.asked:
         $ lotteOptionsRemaining += 1
@@ -518,7 +530,7 @@ label lotteAmlOptionsRemainingCheck:
     $ optionsRemaining = 0
     if "AML" in lotte.asked and "rumelin reasons" not in lotte.asked:
         $ optionsRemaining += 1
-    if "AML" in lotte.asked and "why not call police" not in lotte.asked:
+    if "rumelin reasons" in lotte.asked and "why not call police" not in lotte.asked:
         $ optionsRemaining += 1
     return
 

@@ -8,8 +8,13 @@ label dancerController:
 
 label dancerCellsIntro:
     scene bg cell
-    "Dívka sedí na kavalci u stěny naproti mřížím a rukama si objímá kolena a ramena. Sukni má těsně přitaženou k tělu a ruce má holé až na několik blyštivých náramků. V přítmí cel to není snadné poznat s jistotou, ale zdá se, že se jemně chvěje."
-    "Když k ní přijdeš, vzhlédne, ale nic neříká a jen tě pozoruje."
+    if katrin.alreadyMet == False:
+        "Dívka sedí na kavalci u stěny naproti mřížím a rukama si objímá kolena a ramena. Sukni má těsně přitaženou k tělu a ruce má holé až na několik blyštivých náramků. V přítmí cel to není snadné poznat s jistotou, ale zdá se, že se jemně chvěje."
+        "Když k ní přijdeš, vzhlédne, ale nic neříká a jen tě pozoruje."
+    elif "received cloak" in katrin.asked:
+        "Katrin sedí na kavalci a choulí se do pláště, který od tebe dostala. Když se přiblížíš, vzhlédne a nepatrně se na tebe usměje."
+    else:
+        "Katrin sedí na kavalci s nohama přitaženýma k tělu a mírně se opírá o stěnu. Když se přiblížíš, vystrašeně na tebe pohlédne."
     return
 
 label dancerOptions:
@@ -23,7 +28,7 @@ label dancerOptions:
         "Kdo jsi?" if "introductions" not in katrin.asked:
             hide mcPic
             $ katrin.asked.append("introductions")
-            $ katrin.say("Na to už jste se mě ptali. Jmenuju se Katrin, pocházím z X u Y a snažím se dostat do Eichenau nebo prostě někam, kde se dá bezpečně žít.")
+            $ katrin.say("Na to už jste se mě ptali. Jmenuju se Katrin, pocházím z Hochbrunnu u Mossaurachu a snažím se dostat do Eichenau nebo prostě někam, kde se dá bezpečně žít.")
             $ katrin.say("A žádnou Luisu opravdu neznám. Kdo to vůbec je? Ta... ta tmavovlasá hlídkařka, co mě sem přivedla, ji zmínila několikrát.", "surprised")
             show mcPic at menuImage
             menu:

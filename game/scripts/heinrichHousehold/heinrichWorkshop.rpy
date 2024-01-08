@@ -61,10 +61,17 @@ label straightToWorkshop:
     menu:
         "Proč jste si neodemkl sám?" if flag is True:
             hide mcPic
+            $ flag = False
             $ victim.trust -= 1
             $ victim.say("Asi jsem měl plné ruce. Co je tohle za výslech?", "angry")
-            $ flag = False
-            jump whyNotUnlockHimself
+            show mcPic at menuImage
+            menu:
+                "Každý detail může být důležitý.":
+                    pass
+                "Omlouvám se.":
+                    $ victim.trust += 0.5
+            hide mcPic
+            jump frontOfWorkshopReaction
         "Můžu vám od něj klíč vyzvednout, pokud by to pomohlo?":
             hide mcPic
             if victim.trust < -2:
@@ -76,6 +83,16 @@ label straightToWorkshop:
                 $ victim.trust += 1
                 $ solian.trust += 1
                 $ status.append("retrieving workshop key")
+        "{i}(Vzít za kliku){/i}" if "door tried" not in workshop.checked:
+            hide mcPic
+            $ flag = False
+            $ workshop.checked.append("door tried")
+            $ clues.append("workshop unlocked")
+            "Když mistr Heinrich od dveří poodstoupí, sáhneš po klice od dveří a zatlačíš. Stačí jen trocha síly a dveře se otevřou."
+            $ victim.say("Jak to?", "surprised")
+            $ victim.say("Chci říct, ehm… no to je jedno. Ale za tím Eckhardem stejně budu muset zajít.", "angry")
+            $ victim.say("Tak pojďme, ať tu nestojíme celý den.")
+            jump frontOfWorkshopReaction
         "{i}(Jít dovnitř){/i}":
             hide mcPic
     $ flag = ""
@@ -133,18 +150,18 @@ label workshopOptions:
         "Jste si opravdu jistý, že se ze zásuvky nic neztratilo?" if "missing stuff1" in workshop.checked and "missing stuff2" not in workshop.checked:
             $ workshop.checked.append("missing stuff2")
             $ victim.say("To si sedíš na uších, nebo mě máš za pitomce?", "angry")
-            $ mc.say("Násilím otevřená je jenom ta jedna a…")
+            $ mc.say("Násilím otevřená je jenom ta jedna a...")
             $ victim.say("Říkám, že nic nechybí, tak nic nechybí.", "angry")
             $ victim.trust -= 1
 
         "{i}(Zkontrolovat dveře do místnosti){/i}" if "doors" not in workshop.checked:
             $ workshop.checked.append("doors")
             "Jedny dveře z dílny vedou na ulici, druhé do mistrova domu. Oboje jsou v dobrém stavu a ani na jedněch z nich nejsou jakékoli stopy násilného vniknutí. Dveře vedoucí do domu jsou čerstvě promazané."
-            if "straight to workshop" in status:
+            if "straight to workshop" in status and "door tried" not in workshop.checked:
                 "Ty směrem na ulici se bez problému otevřou. Zřejmě byly celou dobu odemčené. Mistr Heinrich předstírá, že si toho nevšiml."
-                $ clues.append("workshop unlocked")
+            $ clues.append("no forced entry")
             if "workshop unlocked" not in clues:
-                $ clues.append("no forced entry")
+                $ clues.append("workshop unlocked")
         "Mohla být dílna celou noc odemčená?" if "workshop unlocked" in clues and "no forced entry" not in workshop.checked:
             $ workshop.checked.append("no forced entry")
             "Mistr Heinrich se zamračí ještě víc."
@@ -246,16 +263,6 @@ label burnedEvidenceSeenVictim:
     $ optimist.pressure += 1
     $ yesman.pressure += 1
     return
-
-label whyNotUnlockHimself:
-    show mcPic at menuImage
-    menu:
-        "Každý detail může být důležitý.":
-            pass
-        "Omlouvám se.":
-            $ victim.trust += 0.5
-    hide mcPic
-    jump frontOfWorkshopReaction
 
 ###
 

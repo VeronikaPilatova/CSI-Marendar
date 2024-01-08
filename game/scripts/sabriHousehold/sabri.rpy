@@ -179,6 +179,7 @@ label sabriOptions:
         "Byla Hayfa v Marendaru během požáru?" if "Hayfa experienced fire" in globalClues or "Killian encounter" in status and "Hayfa experienced fire" not in sabri.asked:
             hide mcPic
             $ sabri.asked.append("Hayfa experienced fire")
+            $ globalClues.append("Hayfa's arrival to Marendar")
             $ sabri.say("Ne, přišli jsme asi o rok po něm. Proč?")
             if "Hayfa experienced fire" in globalClues:
                 $ mc.say("Hayfa říkala, že požár města zažila.")

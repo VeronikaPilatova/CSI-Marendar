@@ -405,10 +405,10 @@ label victimOptions:
             $ mc.say("Věděl jste, že je kradený?")
             $ victim.say("Na podrobnosti jsem se neptal.")
             $ victim.say("Původně jsem si ho ani nechtěl vzít, ale pak jsem si ho prohlédl a musel jsem dát Eckhardovi za pravdu. Opravdu skvělá práce. A velmi náročná práce, opravdu dobře to ušít by nezvládl hned tak někdo.")
-        "Víte, že za krádež střihu bych měl Eckharda zatknout?" if "stolen idea" in victim.asked and "should arrest eckhard" not in victim.asked and gender == "M":
+        "Víte, že za krádež střihu bych měl[a] Eckharda zatknout?" if "stolen idea" in victim.asked and "should arrest eckhard" not in victim.asked:
             call victimArrestEckhard
-        "Víte, že za krádež střihu bych měla Eckharda zatknout?" if "stolen idea" in victim.asked and "should arrest eckhard" not in victim.asked and gender == "F":
-            call victimArrestEckhard
+            if leaveOption == "none":
+                return
         "Nechtěl byste se na Einionovy slavnosti spojit s mistrem Njalem?" if "own work" in njal.asked and "plan B" in clues and "join forces" not in victim.asked:
             call victimJoinForces
         "Zjišťoval jsem, jak by se lidi ve městě tvářili, kdybyste na slavnosti přinesl výrobek společně s mistrem Njalem." if "join forces victim pending" in status and "join forces survey" in status and gender == "M":
@@ -448,6 +448,8 @@ label victimOptions:
                 $ mc.say("I když je nevinný?")
                 $ victim.say("Nevinný nebo ne, málem zničil život mojí malé holčičce.", "angry")
                 call zeranInnocentOptions
+                if leaveOption == "none":
+                    return
         "Mám důkaz, že ty milostné dopisy psal vaší dceři Rovienův syn Zairis."  if "zairis guilty" not in victim.asked and "zeran cleared" not in status and zairisGuiltyOptionsRemaining > 0:
             label zairisGuilty:
             hide mcPic
@@ -474,6 +476,8 @@ label victimOptions:
                     patience = max(victim.trust - 4, 0)
 
                 call zairisGuiltyOptions
+                if leaveOption == "none":
+                    return
         "Děkuji, to je všechno.":
             hide mcPic
             $ victim.say("Tak hlavně pohni, slavnosti jsou už za chvíli a já tam pořád nemám co představit.")
@@ -515,12 +519,20 @@ label zairisGuiltyOptions:
                 $ victim.say("Ale také přece mohl Zeran schválně napodobit Zairisovo písmo. To není žádný důkaz.", "angry")
                 $ mc.say("To ve skutečnosti není tak jednoduché.")
                 $ victim.say("Nepodceňuj toho špinavce.")
+            if "letters for Ada shown" not in victim.asked and "letters for Ada slip up" not in victim.asked:
+                call lettersForAdaSlipUp
+                if leaveOption == "none":
+                    return
         "Dopisy se hodně odkazují na Amadise a popisují návštěvu jeho hrobu. Zairis Amadise velmi obdivuje a u jeho hrobu byl." if "Amadis grave" in zairis.asked and "zairis guilty amadis grave" not in victim.asked:
             hide mcPic
             $ victim.asked.append("zairis guilty amadis grave")
             $ patience -= 1
             $ victim.say("Tam ale mohla být spousta elfů. A obdivuje ho taky každý lajdák a nekňuba, co místo práce chodí koukat na komedianty.", "angry")
             $ victim.say("A potom o tom velmi rádi povykládají každému podvodníkovi, co se chce tvářit, že tam byl také.", "angry")
+            if "letters for Ada shown" not in victim.asked and "letters for Ada slip up" not in victim.asked:
+                call lettersForAdaSlipUp
+                if leaveOption == "none":
+                    return
         "V těch dopisech jsou docela dobré básně. Ty by nedokázal napsat každý, ale Zairis se o poezii hodně zajímá." if "letters for Ada seen" and "poetry" in zairis.asked and "zairis guilty poetry" not in victim.asked:
             hide mcPic
             $ victim.asked.append("zairis guilty poetry")
@@ -543,17 +555,29 @@ label zairisGuiltyOptions:
                 else:
                     $ mc.say("Na jarmarcích jsem slyšel[a] už spoustu písní od různých pěvců.")
                 $ victim.say("To je ale něco dost jiného než tohle hloupé cukrování. To neberu.", "angry")
+            if "letters for Ada shown" not in victim.asked and "letters for Ada slip up" not in victim.asked:
+                call lettersForAdaSlipUp
+                if leaveOption == "none":
+                    return
         "Ty dopisy jsou psané vytříbeným stylem, který vyžaduje určité vzdělání. Zairis ho má, ale kde by k němu přišel Zeran? " if "letters for Ada seen" and "zairis guilty style" not in victim.asked:
             hide mcPic
             $ victim.asked.append("zairis guilty style")
             $ patience -= 1
             $ victim.say("Se vzděláním se tady vytahuje každý druhý elf, oni si na to potrpí. A hlavně rodina toho špinavce bývala dřív docela bohatá.", "angry")
             $ victim.say("Ten si mohl sehnat všechny knížky, co potřeboval, aby mohl slušným mladým holkám plést hlavu.", "angry")
+            if "letters for Ada shown" not in victim.asked and "letters for Ada slip up" not in victim.asked:
+                call lettersForAdaSlipUp
+                if leaveOption == "none":
+                    return
         "Ty dopisy jsou psané na velmi drahém papíře, který si Zeran těžko může dovolit. Zairis mi ale napsal nějakou poznámku na přesně stejný druh papíru."  if "Zairis handwriting checked" in status and "zairis guilty paper" not in victim.asked:
             hide mcPic
             $ victim.asked.append("zairis guilty paper")
             $ zeran.cluesAgainst += 1
             $ victim.say("Ten kašpar mohl ten papír ukradnout, nepotřeboval ho tolik. Ani to nemuselo být od Zairise, tolik druhů zdobeného papíru se přece ve městě sehnat nedá.", "angry")
+            if "letters for Ada shown" not in victim.asked and "letters for Ada slip up" not in victim.asked:
+                call lettersForAdaSlipUp
+                if leaveOption == "none":
+                    return
         "To je všechno, co mám.":
             hide mcPic
             $ victim.trust -= 1
@@ -577,6 +601,7 @@ label zairisGuiltyOptions:
         scene bg heinrich outside
         "Venku před domem potom znovu spatříš mistra Heinricha, jak vyrazí ze dveří a rázným krokem se vydá pryč. Na tebe se ani nepodívá."
         $ status.append("zairis dealt with")
+        $ leaveOption = "none"
         jump victimEnd
     elif patience < 1:
         $ victim.say("Upřímně, mám dojem, že jsme těmi dopisy už ztratili až moc času.", "angry")
@@ -613,12 +638,16 @@ label zeranInnocentOptions:
             $ victim.say("Nepodceňuj toho špinavce.", "angry")
             if "letters for Ada shown" not in victim.asked and "letters for Ada slip up" not in victim.asked:
                 call lettersForAdaSlipUp
+                if leaveOption == "none":
+                    return
         "V jednom z dopisů se mluví o Amadisově hrobě, tam se přece Zeran nemohl nikdy dostat." if "Amadis grave" in zeran.asked and "zeran innocent amadis grave" not in victim.asked:
             hide mcPic
             $ victim.asked.append("zeran innocent amadis grave")
             $ victim.say("A tebe překvapuje, že ten zmetek Adě lhal? Stejně jako nám všem ostatním?", "angry")
             if "letters for Ada shown" not in victim.asked and "letters for Ada slip up" not in victim.asked:
                 call lettersForAdaSlipUp
+                if leaveOption == "none":
+                    return
             else:
                 $ mc.say("Já si myslím, že nelhal...")
                 $ victim.say("A máš i nějaký opravdový důkaz? Nebo si to jenom myslíš?", "angry")
@@ -629,6 +658,8 @@ label zeranInnocentOptions:
             $ victim.say("Nezapomeň, že ten špinavec dal všanc svoje učednické místo a porušil zákony pohostinství a veškerou slušnost. Dát si práci se sehnáním papíru už je to nejmenší.", "angry")
             if "letters for Ada shown" not in victim.asked and "letters for Ada slip up" not in victim.asked:
                 call lettersForAdaSlipUp
+                if leaveOption == "none":
+                    return
         "Navíc vím, kdo za Adou chodil opravdu - byl to Rovienův syn Zairis." if "zairis guilty" not in victim.asked and "zeran cleared" not in status and zairisGuiltyOptionsRemaining > 0:
             jump zairisGuilty
         "To je všechno, co mám.":
@@ -644,6 +675,57 @@ label lettersForAdaSlipUp:
     $ mc.say("O těch pro vaši dceru...")
     $ victim.say("A ty jsi měl[a] dopisy pro Adu někdy v ruce?", "angry")
     $ victim.say("Nebo se ze mě snažíš dělat vola?")
+    show mcPic at menuImage
+    menu:
+        "Adě jeden nebo dva dopisy zůstaly a ukázala mi je.":
+            hide mcPic
+            $ victim.say("Ona si ještě něco schovává? Nebo si s tím kašparem pořád dopisuje?", "angry")
+            $ victim.say("Jasně jsem přece řekl, ať na toho prolhaného floutka zapomene.", "angry")
+            $ victim.say("Tohle si s ní ještě vyřídím.", "angry")
+            $ mc.say("Počkejte alespoň, než se celá věc vyjasní.")
+            $ victim.say("Na tom není, co vyjasňovat. Ada na toho chlípníka nemá, co vzpomínat. Jestli to nepochopila na poprvé, musím jí to zopakovat.", "angry")
+            $ mc.say("Ty dopisy jsou ale právě důkaz, že to nebyl Zeran.")
+            $ victim.say("I kdyby, je to jedno. Je moc malá na to, aby se nechávala takhle obelhávat od kohokoli.", "angry")
+            $ victim.asked.append("angry at Ada")
+        "Náhodou jsem je na[sel] ve vaší dílně.":
+            hide mcPic
+            $ victim.say("Cože? A to jako kdy? Vždycky jsem tě v dílně hlídal.", "surprised")
+            show mcPic at menuImage
+            menu:
+                "Pustili mě tam učedníci.":
+                    hide mcPic
+                "Pustila mě tam paní Lisbeth.":
+                    hide mcPic
+                    $ victim.trust -= 4
+                    $ victim.say("Co je tohle za nesmysl?", "angry")
+                    $ victim.say("Ta ví, že tam nesmí ani ona, natož pak nějaký chytrák s glejtem. Ta by tohle nikdy neudělala.", "angry")
+                    $ victim.say("Tak mi přestaň lhát do očí a koukej konečně dělat svoji práci.", "angry")
+                    $ victim.say("Mimo můj dům.", "angry")
+                    "Mistr Heinrich velmi nesmlouvavě ukáže na dveře a tobě nezbyde, než se poroučet a doufat, že další rozhovor bude úspěšnější."
+                    $ refusedBy = "victim"
+                    $ leaveOption = "none"
+                "Dal jste mi přece klíč." if "key delivered" in status:
+                    hide mcPic
+                    $ victim.say("... jaký klíč?", "surprised")
+                    $ victim.say("Jo ty myslíš... a to myslíš vážně?", "angry")
+                    $ victim.say("Ten jsem ti nedal a už vůbec ne proto, aby ses mi vloupal[a] do dílny!", "furious")
+                    call mcAdmitsBurglary
+                "No dobře, ve skutečnosti jsem nic nena[sel].":
+                    hide mcPic
+                    $ victim.trust -= 3
+                    $ victim.say("... to jsem si mohl myslet. Tak už nic nezkoušej a koukej konečně dělat svoji práci.", "angry")
+                    $ victim.say("Mimo můj dům.", "angry")
+                    "Mistr Heinrich velmi nesmlouvavě ukáže na dveře a tobě nezbyde, než se poroučet a doufat, že další rozhovor bude úspěšnější."
+                    $ refusedBy = "victim"
+                    $ leaveOption = "none"
+        "Odhalil jste mě, jen jsem to zkusil[a].":
+            hide mcPic
+            $ victim.trust -= 3
+            $ victim.say("... to jsem si mohl myslet. Tak už nic nezkoušej a koukej konečně dělat svoji práci.", "angry")
+            $ victim.say("Mimo můj dům.", "angry")
+            "Mistr Heinrich velmi nesmlouvavě ukáže na dveře a tobě nezbyde, než se poroučet a doufat, že další rozhovor bude úspěšnější."
+            $ refusedBy = "victim"
+            $ leaveOption = "none"
     return
 
 label heinrichFireshow:
@@ -687,7 +769,7 @@ label rumelinReminder:
 label apologyForLateness:
     $ mc.say("Omlouvám se, zabral[a] jsem se do vyšetřování…")
     $ victim.say("Znamená to, že zloděje už máš?", "angry")
-    $ mc.say("Ještě ne, ale…")
+    $ mc.say("Ještě ne, ale...")
     $ victim.say("Tak se přestaň flákat a najdi ho.", "angry")
     return
 
@@ -1243,9 +1325,61 @@ label heinrichDealMischief1:
                     "Ano, za ztrátu vašich bot může Aachim." if "accusing son" in victim.asked:
                         hide mcPic
                         $ victim.asked("A proč jsi ho ještě nezatkl[a]?")
+                        show mcPic at menuImage
+                        menu:
+                            "Nebyl[a] jsem si jist[y], jestli byste to chtěl.":
+                                hide mcPic
+                                $ mc.say("Přeci jen by to mohlo poškodit vaši pověst. Navíc teď, před slavnostmi a volbou nového cechmistra...")
+                                $ victim.say("To je vlastně pravda. Možná bude lepší, když si Aachima srovnám sám.")
+                                $ victim.say("Nebo tebe, jestli ho obviňuješ neprávem.", "angry")
+                                $ mc.say("Jen jsem chtěl[a], abyste na něj nebyl moc tvrdý...")
+                                $ victim.say("Kvůli Eckhardovi? Ten by byl první, kdo by mi poradil, ať si to s tím holomkem pořádně vyříkám.", "angry")
+                                $ victim.say("A taky by mi poradil, ať se tu s tebou nevybavuju o pochybných dohodách a okamžitě tě vyhodím.", "angry")
+                                $ victim.say("S tím musím souhlasit. Dveře najdeš.", "angry")
+                            "Ještě nemám dost důkazů.":
+                                hide mcPic
+                                $ victim.say("Tak na zatčení nemáš důkazy, ale na obvinění ano?")
+                                $ victim.say("Asi bych si měl jít promluvit s tvým velitelem. Protože můj syn je možná budižkničemu, ale rozhodně ne zloděj. A nikdo nebude tvrdit opak a už vůbec ne bez důkazů.", "angry")
+                                $ mc.say("Jen jsem chtěl[a], abyste na něj nebyl moc tvrdý...")
+                                $ victim.say("Hlavně by někdo měl být tvrdší na tebe, aby ses přestal[a] navážet do mé rodiny.", "angry")
+                                $ victim.say("O Aachima se postarám sám. Hned po tom, co si na tebe dojdu stěžovat.", "angry")
+                                $ victim.say("A teď se koukej vrátit k vyšetřování.", "angry")
+                        $ refusedBy = "victim"
+                        $ leaveOption = "none"
                     "Ano, za ztrátu vašich bot můžou učedníci." if "accusing apprentices" in victim.asked:
                         hide mcPic
                         $ victim.asked("A proč jsi je ještě nezatkl[a]?")
+                        show mcPic at menuImage
+                        menu:
+                            "Nebyl[a] jsem si jist[y], jestli byste to chtěl.":
+                                hide mcPic
+                                $ mc.say("Přeci jen by to mohlo poškodit vaši pověst. Navíc teď, před slavnostmi a volbou nového cechmistra...")
+                                $ victim.say("To je vlastně pravda. Možná bude lepší, když si je srovnám sám.")
+                                $ victim.say("Nebo tebe, jestli je obviňuješ neprávem.", "angry")
+                                $ mc.say("Jen jsem chtěl[a], abyste na ně nebyl moc tvrdý...")
+                                $ victim.say("Kvůli Eckhardovi? Ten by byl první, kdo by mi poradil, ať si to s těmi holomky pořádně vyříkám.", "angry")
+                                $ victim.say("A taky by mi poradil, ať se tu s tebou nevybavuju o pochybných dohodách a okamžitě tě vyhodím.", "angry")
+                                $ victim.say("S tím musím souhlasit. Dveře najdeš.", "angry")
+                            "Ještě nemám dost důkazů.":
+                                hide mcPic
+                                $ victim.say("Tak na zatčení nemáš důkazy, ale na obvinění ano?")
+                                $ victim.say("Asi bych si měl jít promluvit s tvým velitelem. Protože my jsme slušná domácnost a nikdo tady nekrade. A nikdo nebude tvrdit opak a už vůbec ne bez důkazů.", "angry")
+                                $ mc.say("Jen jsem chtěl[a], abyste na ně nebyl moc tvrdý...")
+                                $ victim.say("Hlavně by někdo měl být tvrdší na tebe, aby ses přestal[a] navážet do mé rodiny.", "angry")
+                                $ victim.say("O učedníky se postarám sám. Hned po tom, co si na tebe dojdu stěžovat.", "angry")
+                                $ victim.say("A teď se koukej vrátit k vyšetřování.", "angry")
+                    $ refusedBy = "victim"
+                    $ leaveOption = "none"
+    return
+
+label mcAdmitsBurglary:
+    "Heinrich bez dalšího varování udělá rychlý krok směrem k tobě a vystřelí pěstí. Vzápětí ucítíš otřes a bolest na tváři."
+    $ victim.say("A takhle si představuješ práci hlídky?", "furious")
+    "Než se stihneš rozhodnout, jestli se hájit, bránit, nebo utéct, dopadnou na tebe další tvrdé údery, které mistr Heinrich doprovází nadávkami."
+    $ mc.imageParameter = "beaten"
+    "Brzy je jasné, že ševcovského mistra nezastavíš ani mu nedokážeš vyklouznout. Všimneš si, že rámus rvačky přiláká další členy domácnosti, ale nikdo z nich nezasahuje."
+    "Po chvíli se tvé modřiny začnou slévat dohromady a mistr Heinrich konečně přestane."
+    $ victim.say("Tak a teď se půjdeme zeptat, co si o tom celém myslí tví nadřízení.", "angry")
     return
 
 ###

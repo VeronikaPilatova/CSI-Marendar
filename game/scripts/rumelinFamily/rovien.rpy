@@ -48,9 +48,9 @@ label rovienOptions:
             $ rovien.say("To nebylo... nic osobního. Jen...")
             if "AML" in lotte.asked:
                 $ mc.say("Je možné, že to byl nápad vašeho bratra?")
-                $ rovien.say("Ano, přesně. Rumelin se rozhodl, že některý luxusní materiál bude lepší nakupovat pro celý cech najednou. To je všechno.")
+                $ rovien.say("Ano, přesně. Rumelin se rozhodl, že některý luxusní materiál bude lepší nakupovat pro celý cech najednou, do společného skladu. To je všechno.")
             else:
-                $ rovien.say("Rumelin se rozhodl, že některý luxusní materiál bude lepší nakupovat pro celý cech najednou. To je všechno.")
+                $ rovien.say("Rumelin se rozhodl, že některý luxusní materiál bude lepší nakupovat pro celý cech najednou, do společného skladu. To je všechno.")
             $ mc.say("Takže mistr Njal není jediný, komu jste přestal materiál dodávat?")
             "Rovien na chvíli zaváhá."
             $ rovien.say("Mistr Njal je jediný, kdo si stěžoval.")

@@ -41,7 +41,7 @@ label zairisOptions:
                     hide mcPic
                     "Zairis rozhodně zavrtí hlavou."
                     $ zairis.say("To by všechno jenom zhoršilo. Můj otec by se nejspíš postavil na Heinrichovu stranu, velká část města také... tahle hloupá doba nemá žádné pochopení pro upřímné city.", "sad")
-        "Zajímáš se i o psaní poezie?" if "poetry" not in zairis.asked:
+        "Zajímáš se i o psaní poezie?" if "letters for Ada seen" in status and "poetry" not in zairis.asked:
             call poetry
         "Kolik toho víš o obchodech svého otce?" if "less deals details" in njal.asked and "business knowledge" not in zairis.asked:
             hide mcPic
@@ -340,7 +340,7 @@ label zairisExpensivePaperProof:
 
 label zairisOptionsRemainingCheck:
     $ zairisOptionsRemaining = 0
-    if "poetry" not in zairis.asked:
+    if if "letters for Ada seen" in status and "poetry" not in zairis.asked:
         $ zairisOptionsRemaining += 1
     if "less deals details" in njal.asked and "business knowledge" not in zairis.asked:
         $ zairisOptionsRemaining += 1
