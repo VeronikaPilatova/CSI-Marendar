@@ -125,10 +125,10 @@ label zairisOptions:
             $ zairis.say("Samozřejmě. O tom tehdy v ševcovském cechu klevetili všichni.")
             show mcPic at menuImage
             menu:
-                "Ada prý říkala, že ji nesváděl Zeran, ale ty." if "Ada's boyfriend" in lisbeth.asked:
+                "Ada prý říkala, že ji nesváděl Zeran, ale ty." if "Zairis mentioned" in lisbeth.asked:
                     hide mcPic
                     $ zairis.say("Já že jsem někoho sváděl? Za koho mě máte? Myslíte snad, že bych jen tak z rozmaru ohrozil čest mladé dívky? To si vyprošuji!", "angry")
-                "Ada prý říkala, že ty básně dostala od tebe, a ne od Zerana." if "Ada's boyfriend" in lisbeth.asked:
+                "Ada prý říkala, že ty básně dostala od tebe, a ne od Zerana." if "Zairis mentioned" in lisbeth.asked:
                     hide mcPic
                     $ zairis.asked.append("letters for Ada")
                     $ zairis.say("...")

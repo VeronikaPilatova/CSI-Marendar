@@ -134,7 +134,7 @@ label aachimAloneOptions:
                     $ hayfa.trust -= 1
                     $ son.trust -= 3
                     $ son.say("Jasně, hlavně splnit úkol, proč se zajímat o lidi.", "angry")
-            $ arrested.append(son)
+            $ newlyArrested.append(son)
             $ status.append("arrest in progress")
             return
 

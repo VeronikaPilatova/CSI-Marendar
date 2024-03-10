@@ -92,7 +92,7 @@ label rovienHouseFirst:
         "Vyšetřuji krádež v dílně mistra Heinricha." if "investigation reason" not in zairis.asked:
             hide mcPic
             $ zairis.asked.append("investigation reason")
-            $ zairis.say("Heinricha? To je… jeden z ševcovských mistrů, myslím?")
+            $ zairis.say("Heinricha? Myslíte toho ševce?")
             $ mc.say("Ano, to je on.")
             $ zairis.say("A jak můžeme pomoci my?")
             jump rovienHouseIntroductionMenu

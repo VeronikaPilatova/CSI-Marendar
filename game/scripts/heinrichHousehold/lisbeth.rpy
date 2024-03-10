@@ -105,12 +105,22 @@ label lisbethOptions:
                     $ mc.say("Takže nikdo jiný nebyl ani v podezření?")
                 "To dává smysl. Takže nikdo jiný ani nebyl v podezření?":
                     hide mcPic
-            $ lisbeth.say("Ada se to pokoušela hodit na Rovienova syna, ale to až ve chvíli, kdy Heinrich Zerana opravdu vyhodil.")
-            $ lisbeth.say("Kdyby to byla pravda a ne jenom snaha najít někoho, koho nebudeme moct potrestat, proč by něco neřekla dřív?")
-            $ mc.say("Možná se jen bála, že ten vztah nebudete schvalovat?")
-            $ lisbeth.say("No to bychom neschvalovali, s ním ani s žádným jiným elfem. Ale právě proto je dobře, že je Zeran z domu.", "angry")
-            $ lisbeth.say("Je mi ho líto, ale na Adě mi záleží mnohem víc. Nemůžu nic riskovat.")
-            $ zairisNote.isActive = True
+            if lisbeth.trust > 2:
+                $ lisbeth.asked.append("Zairis mentioned")
+                $ clues.append("Zairis suggested as Ada's boyfriend")
+                $ lisbeth.say("Ada se to pokoušela hodit na Rovienova syna, ale to až ve chvíli, kdy Heinrich Zerana opravdu vyhodil.")
+                $ lisbeth.say("Kdyby to byla pravda a ne jenom snaha najít někoho, koho nebudeme moct potrestat, proč by něco neřekla dřív?")
+                $ mc.say("Možná se jen bála, že ten vztah nebudete schvalovat?")
+                $ lisbeth.say("No to bychom neschvalovali, s ním ani s žádným jiným elfem. Ale právě proto je dobře, že je Zeran z domu.", "angry")
+                $ lisbeth.say("Je mi ho líto, ale na Adě mi záleží mnohem víc. Nemůžu nic riskovat.")
+                $ zairisNote.isActive = True
+            else:
+                $ lisbeth.say("Rozhodně ne dost na to, abychom si mohli dovolit riskovat. Zerana je mi líto, ale na Adě mi záleží mnohem víc.")
+        "Takže Rovienova syna jste nijak neřešili?" if "Zairis mentioned" in lisbeth.asked and "Zairis investigated" not in lisbeth.asked:
+            hide mcPic
+            $ lisbeth.asked.append("Zairis investigated")
+            $ lisbeth.say("Jistě, že ne. Přece nepůjdeme za váženým obchodníkem kvůli něčemu, co Ada vyhrkla jen proto, že na ni něco vyplavalo.")
+            $ lisbeth.say("Tohle je záležitost naší rodiny a v ní by měla zůstat.")
         "Jaký je váš manžel, když se napije?" if kaspar.alreadyMet == True and "alcoholic" not in lisbeth.asked:
             hide mcPic
             $ lisbeth.asked.append("alcoholic")
@@ -308,5 +318,7 @@ label lisbethOptionsRemainingCheck:
     if "fireshow" in status and "fireshow" not in lisbeth.asked:
         $ lisbethOptionsRemaining += 1
     if "fireshow" in lisbeth.asked and "fireshow 2" not in lisbeth.asked:
+        $ lisbethOptionsRemaining += 1
+    if "Zairis mentioned" in lisbeth.asked and "Zairis investigated" not in lisbeth.asked:
         $ lisbethOptionsRemaining += 1
     return

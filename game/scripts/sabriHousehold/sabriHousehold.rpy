@@ -23,14 +23,15 @@ label sabriHouseholdController:
         $ currentLocation = "sabri's house"
 
     # visit itself
-    # if Zeran is a prisoner, skip Sabri
-    if chosenChar == "zeran" and zeran in cells:
-        jump zeranController
     if "sabri's house visited" not in status:
         call sabriHouseFirst
     else:
         call sabriHouseAgain
-    call sabriController
+    # if Zeran already met, skip Sabri
+    if chosenChar == "zeran" and zeran.alreadyMet == True:
+        jump zeranController
+    else:
+        call sabriController
 
     # adjust status
     if "sabri's house visited" not in status:

@@ -1,16 +1,26 @@
 label njalController:
     $ origAsked = njal.asked.copy()
-    if njal.alreadyMet == False:
+    # intro
+    if njal in cells:
+        call njalCellsIntro
+    elif gerd in cells:
+        call njalIntroGerdArrested
+    elif njal.alreadyMet == False:
         call njalFirst
     else:
         call njalAgain
-    if njal.alreadyMet == False:
-        $ njal.alreadyMet = True
-    call njalOptions
-    call leavingNjal
-
+    # questions and goodbye
+    if leaveOption != "none":
+        call njalOptions
+    if njal not in cells and gerd not in cells and "arrest in progress" not in status:
+        call leavingNjal
     # adjust time spent and create events
     $ time.addMinutes((len(njal.asked) - len(origAsked)) * 3)
+    if njal.alreadyMet == False:
+        $ njal.alreadyMet = True
+    if leaveOption == "none":
+        $ leaveOption = "normal"
+
     if "add awaiting AML merchant list" in status:
         $ status.remove("add awaiting AML merchant list")
         $ newEvent = Event(copy.deepcopy(time), "STATUS", 0, "awaiting AML merchant list", 3, "info")
@@ -26,6 +36,113 @@ label njalFirst:
 label njalAgain:
     "Mistr Njal se prohrábne ve vlasech tužkou, kterou právě držel v ruce, a pak ti pokyne směrem k jedné ze židlí v místnosti."
     "Můžu vám pomoct ještě s něčím?"
+    return
+
+label njalIntroGerdArrested:
+    $ njal.say("To jste vy. Kdy propustíte Gerda?", "angry")
+    label njalIntroGerdArrestedMenu:
+    show mcPic at menuImage
+    menu:
+        "Také byste mohl pozdravit." if "no greeting" not in njal.asked:
+            hide mcPic
+            $ njal.asked.append("no greeting")
+            $ njal.say("To si nechávám pro lidi, kteří se chovají slušně ke mně. Moje otázka stále trvá.", "angry")
+            jump njalIntroGerdArrestedMenu
+        "Nejdřív se vás potřebuju zeptat na pár věcí.":
+            hide mcPic
+            $ njal.say("Nerozumím, co je na tom pořád ke zkoumání. Ten kluk neudělal nic špatného a není důvod, aby byl někde zavřený.", "angry")
+            $ njal.say("Tak rychle, než začnu mít dojem, že tu jen ztrácíme čas.", "angry")
+        "Brzy ho propustím, jen nejdřív potřebuji sehnat ještě nějaké důkazy.":
+            hide mcPic
+            $ njal.say("Nerozumím, co je na tom pořád ke zkoumání. Ten kluk neudělal nic špatného a není důvod, aby byl někde zavřený.", "angry")
+            $ njal.say("Tak rychle, ať tu povinnost odbudete a Gerd může konečně na svobodu.", "angry")
+    return
+
+label njalCellsIntro:
+    scene bg cell
+    "Mistr Njal sedí opřený o stěnu, zamyšleně se kouká na protější zeď a něco si k tomu mumlá. Když ho oslovíš, obrátí se k tobě, ale zamyšlený výraz mu zůstává."
+    $ njal.say("Myslíte, že by boty méně propouštěly vodu, kdyby se napustily voskem před ušitím i po něm?")
+    show mcPic at menuImage
+    menu:
+        "V tom se bohužel nevyznám.":
+            hide mcPic
+            "Mistr na tebe pohlédne o něco soustředěněji."
+            $ njal.say("... očividně... a kvůli čemu tedy jdete?")
+        "Určitě ano!":
+            hide mcPic
+            $ njal.say("Myslíte? Já si pořád nejsem jistý...")
+            "Trpaslík se zarazí a podívá se na tebe soustředěněji."
+            $ njal.say("Ale kvůli tomu tady asi nejste. O co jde?")
+        "O tom pochybuji.":
+            hide mcPic
+            $ njal.say("Myslíte? Byly by i důvody...")
+            "Trpaslík se zarazí a podívá se na tebe soustředěněji."
+            $ njal.say("Ale kvůli tomu tady asi nejste. O co jde?")
+        "Kvůli tomu tady nejsem.":
+            hide mcPic
+            "Mistr na tebe pohlédne o něco soustředěněji."
+            $ njal.say("... očividně... a kvůli čemu tedy jdete?")
+    show mcPic at menuImage
+    menu:
+        "Potřebuju se na něco zeptat.":
+            hide mcPic
+            $ njal.say("Vám jde pořád o ten samý případ? To mě nemůžete nechat aspoň přemýšlet, když už nemůžu pracovat?", "surprised")
+            $ njal.say("Tak já vám odpovím rovnou na všechno. Ukradl jsem já nebo Gerd Heinrichovy boty? Ne. Byl Gerd v jeho dílně? Ano. Ukradl tam jeho střih? Ne, protože to byl můj střih. Udělal tam cokoli jiného? Ne, neměl důvod.")
+            $ njal.say("Co víc k tomu potřebujete slyšet?")
+            return
+        "Jdu vás propustit na svobodu.":
+            hide mcPic
+            $ njal.say("To se mi zrovna hodí. Potřeboval bych něco vyzkoušet.", "happy")
+            $ njal.say("Tak zároveň pusťte i Gerda. Tomu klukovi prospěje, když bude u toho.")
+            if gerd in cells:
+                show mcPic at menuImage
+                menu:
+                    "To také udělám." if gerd in cells:
+                        hide mcPic
+                        $ njal.say("Výborně!", "happy")
+                        scene bg cells entrance
+                        "Odemkneš celu a odvedeš mistra Njala s Gerdem k východu ze strážnice."
+                        $ cells.remove(njal)
+                        $ cells.remove(gerd)
+                        $ leaveOption = "none"
+                        return
+                    "Ne, ten si tu ještě posedí.":
+                        hide mcPic
+                        $ njal.say("Tak to hodně rychle změňte názor. Tímhle si můžete tak nanejvýš uříznout ostudu.", "angry")
+                        $ mc.say("Chcete pustit, nebo ne?")
+                        $ njal.say("Chci, abyste pustili nás oba. Ale dobře, když to nejde najednou, tak postupně lepší než vůbec.")
+                        $ njal.say("Jen to prosím zbytečně neprotahujte, ten kluk má práci.")
+                        scene bg cells entrance
+                        "Odemkneš celu a odvedeš mistra Njala k východu ze strážnice."
+                        $ cells.remove(njal)
+                        $ leaveOption = "none"
+                        return
+            else:
+                $ mc.say("Ten už na vás čeká.")
+                $ njal.say("Výborně!", "happy")
+                scene bg cells entrance
+                "Odemkneš celu a odvedeš mistra Njala k východu ze strážnice."
+                $ cells.remove(njal)
+                $ leaveOption = "none"
+                return
+        "Můžu vás pustit, pokud budete svědčit proti Gerdovi." if "testify against Gerd" not in njal.asked:
+            hide mcPic
+            $ njal.asked.append("testify against Gerd")
+            $ njal.trust -= 3
+            $ rauvin.trust -= 2
+            $ njal.say("Cože? Nevím, jestli mě má víc urážet to, jak nízké to je, nebo jaký je to nesmysl.", "angry")
+            $ njal.say("Je to slušný kluk a já proti němu neřeknu slovo. A jestli mě opravdu chcete poslat před soud a ukázat celému městu, jak výborně vyšetřujete, tak prosím.", "angry")
+            $ njal.say("Jestli mě kvůli tomuhle rušíte v přemýšlení...", "angry")
+            show mcPic at menuImage
+            menu:
+                "Ještě mám ve skutečnosti pár otázek.":
+                    hide mcPic
+                    $ njal.say("No tak ale rychle.", "angry")
+                    return
+                "{i}(Odejít){/i}":
+                    hide mcPic
+                    $ leaveOption = "none"
+                    return
     return
 
 label njalOptions:
@@ -219,14 +336,24 @@ label njalOptions:
             hide mcPic
             $ njal.asked.append("traditions")
             call traditions
+        "Zatýkám vás i s Gerdem za krádež výrobku mistra Heinricha." (badge="handcuffs") if "workshop visit" in njal.asked and njal not in allArrested and gerd not in allArrested:
+            hide mcPic
+            $ gerd.arrestReason.append("stolen shoes")
+            $ njal.arrestReason.append("stolen shoes")
+            $ newlyArrested.append(gerd)
+            $ newlyArrested.append(njal)
+            $ status.append("arrest in progress")
+            return
+        "Zatýkám vás za krádež výrobku mistra Heinricha." (badge="handcuffs") if "workshop visit" in njal.asked and njal not in allArrested and gerd in allArrested:
+            hide mcPic
+            $ njal.arrestReason.append("stolen shoes")
+            $ newlyArrested.append(njal)
+            $ status.append("arrest in progress")
+            return
 
-        "Mohl bych ještě mluvit s vaším učedníkem?" if gerdOptionsRemaining > 0 and gender == "M":
+        "Mohl[a] bych ještě mluvit s vaším učedníkem?" if gerdOptionsRemaining > 0 and njal not in cells and gerd not in cells:
             hide mcPic
-            " Njal kývne na chlapce, který se celou dobu držel kus stranou a snažil se na sebe neupozorňovat."
-            jump gerdController
-        "Mohla bych ještě mluvit s vaším učedníkem?" if gerdOptionsRemaining > 0 and gender == "F":
-            hide mcPic
-            " Njal kývne na chlapce, který se celou dobu držel kus stranou a snažil se na sebe neupozorňovat."
+            "Njal kývne na chlapce, který se celou dobu držel kus stranou a snažil se na sebe neupozorňovat."
             jump gerdController
         "To je všechno, na co jsem se chtěl[a] zeptat. Děkuji za váš čas.":
             hide mcPic
@@ -542,5 +669,9 @@ label njalOptionsRemainingCheck:
     if "join forces njal pending" in status and eckhard in cells and "stolen idea" in eckhard.arrestReason:
         $ njalOptionsRemaining += 1
     if "join forces njal pending" in status and zeran in cells and "stolen idea" in zeran.arrestReason:
+        $ njalOptionsRemaining += 1
+    if "workshop visit" in njal.asked and njal not in allArrested:
+        $ njalOptionsRemaining += 1
+    if njal in cells:
         $ njalOptionsRemaining += 1
     return

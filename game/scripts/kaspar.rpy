@@ -226,7 +226,7 @@ label kasparOptions:
             $ kaspar.say("Tyhle rozumné důvody vás tam nikdo ani nenechá říct. Do takového podniku se mi vážně jít nechce.", "angry")
             show mcPic at menuImage
             menu:
-                "Jestli jí pomůžete, zatknu Heinricha za to, jak vás napadl." if kaspar.imageParameter == "beaten" and victim not in arrested:
+                "Jestli jí pomůžete, zatknu Heinricha za to, jak vás napadl." if kaspar.imageParameter == "beaten" and victim not in allArrested:
                     hide mcPic
                     $ kaspar.say("Ale to je přece vaše povinnost bez ohledu na cokoli. Od čeho bychom hlídku měli, kdyby nebránila slušné lidi před podobně sprostými útoky?", "surprised")
                     $ kaspar.say("Jestli to pořád nechápete, zajděte konečně za tím Rauvinem, ať vám to vysvětlí.", "angry")
@@ -245,32 +245,32 @@ label kasparOptions:
                 "Rozumím, nebudu vás s tím dále zdržovat.":
                     hide mcPic
             $ kaspar.say("Neberte to špatně. Jste ve městě nově, rád vám pomůžu se v něm správně pohybovat. Hlídka se mnou vždy může počítat.", "happy")
-        "Jste zatčen za krádež výrobku mistra Heinricha." (badge="handcuffs") if "confession" in kaspar.asked and kaspar not in arrested:
+        "Jste zatčen za krádež výrobku mistra Heinricha." (badge="handcuffs") if "confession" in kaspar.asked and kaspar not in allArrested:
             hide mcPic
             $ kaspar.say("Vždyť jsem jasně řekl, že jsem v dílně ty boty ani nenašel.", "angry")
             $ mc.say("To je ale přesně to, co by řekl zloděj.")
             $ kaspar.say("Zloděj by se hlavně nepřiznal, že v té dílně vůbec byl. Koho to dnes do té hlídky berou?", "angry")
             $ mc.say("Půjdete se mnou.")
             $ kaspar.arrestReason.append("stolen shoes")
-            $ arrested.append(kaspar)
+            $ newlyArrested.append(kaspar)
             $ status.append("arrest in progress")
             return
-        "Jste zatčen za zničení výrobku mistra Heinricha." (badge="handcuffs") if "confession" in kaspar.asked and kaspar not in arrested:
+        "Jste zatčen za zničení výrobku mistra Heinricha." (badge="handcuffs") if "confession" in kaspar.asked and kaspar not in allArrested:
             hide mcPic
             $ kaspar.say("Vždyť jsem jasně řekl, že jsem v dílně ty boty ani nenašel.", "angry")
             $ mc.say("To je ale přesně to, co by řekl pachatel.")
             $ kaspar.say("Ten by se hlavně nepřiznal, že v té dílně vůbec byl. Koho to dnes do té hlídky berou?", "angry")
             $ mc.say("Půjdete se mnou.")
             $ kaspar.arrestReason.append("destroyed shoes")
-            $ arrested.append(kaspar)
+            $ newlyArrested.append(kaspar)
             $ status.append("arrest in progress")
             return
-        "Jste zatčen za úmysl poškodit výrobek mistra Heinricha." (badge="handcuffs") if "confession" in kaspar.asked and kaspar not in arrested:
+        "Jste zatčen za úmysl poškodit výrobek mistra Heinricha." (badge="handcuffs") if "confession" in kaspar.asked and kaspar not in allArrested:
             hide mcPic
             $ kaspar.say("Vždyť jsem jasně řekl, že... cože? Zatčen za úmysl? Co je zase tohle za pitomost?", "surprised")
             $ mc.say("Půjdete se mnou.")
             $ kaspar.arrestReason.append("destroyed shoes")
-            $ arrested.append(kaspar)
+            $ newlyArrested.append(kaspar)
             $ status.append("arrest in progress")
             return
         "Děkuji vám za pomoc.":

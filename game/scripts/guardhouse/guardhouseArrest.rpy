@@ -2,7 +2,7 @@
 label guardhouseArrestMenu:
     show mcPic at menuImage
     menu:
-        "Chci zatknout mistra Kaspara, za krádež Heinrichova výrobku." if "confession" in kaspar.asked and kaspar not in arrested:
+        "Chci zatknout mistra Kaspara, za krádež Heinrichova výrobku." if "confession" in kaspar.asked and kaspar not in allArrested:
             hide mcPic
             $ rauvin.asked.append("arrest Kaspar for theft")
             $ mc.say("Mistr Kaspar se přiznal, že byl v Heinrichově dílně, a naznačil, že ho chtěl znemožnit na slavnostech.")
@@ -12,7 +12,7 @@ label guardhouseArrestMenu:
             $ rauvin.say("Potřebujeme buď plné přiznání nebo nezvratný důkaz.")
             $ rauvin.say("Neříkám, že nemáš pravdu, ale pokračuj v pátrání, dokud toho nebudeš mít v rukou víc.")
             $ rauvin.say("A buď prosím opatrn[y], aby se to podezření nedostalo nejen ke Kasparovi, ale ani k mistru Heinrichovi. Nechceme vztahy v cechu zhoršit ještě víc.")
-        "Chci zatknout mistra Kaspara, za zničení Heinrichova výrobku." if "confession" in kaspar.asked and kaspar not in arrested and "burned evidence" in clues:
+        "Chci zatknout mistra Kaspara, za zničení Heinrichova výrobku." if "confession" in kaspar.asked and kaspar not in allArrested and "burned evidence" in clues:
             hide mcPic
             $ rauvin.asked.append("arrest Kaspar for sabotage")
             $ mc.say("Mistr Kaspar se přiznal, že byl v Heinrichově dílně, a naznačil, že ho chtěl znemožnit na slavnostech.")
@@ -22,7 +22,7 @@ label guardhouseArrestMenu:
             $ rauvin.say("Potřebujeme buď plné přiznání nebo nezvratný důkaz.")
             $ rauvin.say("Neříkám, že nemáš pravdu, ale pokračuj v pátrání, dokud toho nebudeš mít v rukou víc.")
             $ rauvin.say("A buď prosím opatrn[y], aby se to podezření nedostalo nejen ke Kasparovi, ale ani k mistru Heinrichovi. Nechceme vztahy v cechu zhoršit ještě víc.")
-        "Chci zatknout mistra Kaspara, za úmysl poškodit Heinrichův výrobek." if "confession" in kaspar.asked and kaspar not in arrested and "burned evidence" in clues:
+        "Chci zatknout mistra Kaspara, za úmysl poškodit Heinrichův výrobek." if "confession" in kaspar.asked and kaspar not in allArrested and "burned evidence" in clues:
             hide mcPic
             $ rauvin.asked.append("arrest Kaspar for intentions")
             "Rauvin se zamračí."
@@ -33,7 +33,7 @@ label guardhouseArrestMenu:
             $ rauvin.say("Nemyslím si, že je možné zatknout váženého mistra jen za úmysl něco udělat, i kdybychom pro ten úmysl měli naprosto nezvratný důkaz. A já si moc nedokážu představit, jak by takový důkaz mohl vypadat, Kaspar může kdykoli všechno popřít.")
             $ rauvin.say("Kdyby něco skutečně udělal, třeba se do té dílny vloupal nebo si na to ničení aspoň přinesl nějaké nástroje, mělo by to větší pádnost, ale ani potom by se tím soudce nemusel chtít vůbec zabývat.")
             $ rauvin.say("Pokračuj tedy prosím v pátrání, jestli najdeš něco dalšího, co proti mistru Kasparovi směřuje. A buď prosím opatrn[y], aby se to podezření nedostalo nejen ke Kasparovi, ale ani k mistru Heinrichovi. Nechceme vztahy v cechu zhoršit ještě víc.")
-        "Chci zatknout mistra Rumelina, za podvod a snahu poškodit jiného mistra jeho cechu." if "confession" in rumelin.asked and rumelin not in arrested:
+        "Chci zatknout mistra Rumelina, za podvod a snahu poškodit jiného mistra jeho cechu." if "confession" in rumelin.asked and rumelin not in allArrested:
             hide mcPic
             $ rauvin.asked.append("arrest Rumelin")
         "Chci zatknout Zerana, za krádež střihu mistra Njala." if zeranNote.isActive and "join forces njal pending" in status and "stolen idea" not in zeran.arrestReason:

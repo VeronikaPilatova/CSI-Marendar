@@ -23,12 +23,17 @@ label njalHouseController:
         $ currentLocation = "njal house"
 
     # visit itself
-    play music audio.njal fadeout 0.5 if_changed
-    scene bg njal outside
-    if "njal house visited" not in status:
-        call njalHouseFirst
+    if gerd in cells and chosenChar == "gerd":
+        jump gerdController
+    elif njal in cells and chosenChar == "njal":
+        jump njalController
     else:
-        call njalHouseAgain
+        play music audio.njal fadeout 0.5 if_changed
+        scene bg njal outside
+        if "njal house visited" not in status:
+            call njalHouseFirst
+        else:
+            call njalHouseAgain
 
     # adjust status
     $ njalNote.isActive = True
@@ -80,11 +85,17 @@ label speakToNjal:
     jump njalController
 
 label njalHouseAgain:
-    if time.hours < 18:
+    if gerd in cells:
+        "Před domem tentokrát nikoho nepotkáš a ani neslyšíš žádné zvuky zevnitř. Když ale zabušíš na dveře, ozve se brzy zaskřípění pantů a před tebou se objeví mistr Njal."
+        jump njalController
+    elif njal in cells:
+        "Před domem tentokrát nikoho nepotkáš a dům je tichý. Zabušíš na dveře a po chvíli ti otevře Gerd a ostražitě si tě změří."
+        jump gerdController
+    elif time.hours < 18:
         "Dům mistra Njala vypadá stejně, jako když jsi tu byl[a] poprvé. Učedník Gerd sedí na trojnožce před domem a napíná na kopyto připravený základ budoucí boty. Z domu je slyšet tlumené prozpěvování, ale konkrétní slova se ti nedaří zachytit."
         "Gerd zvedne hlavu od práce."
     else:
-        "Dům mistra Njala vypadá stejně příjemně, jako když jsi tu byl[a] poprvé. Okno je stále otevřené a když se zastavíš přede dveřmi, dolétne k tobě tlumený zvuk smíchu."
+        "Dům mistra Njala vypadá stejně příjemně, jako když jsi tu byl[a] poprvé. Okno je stále otevřené, a když se zastavíš přede dveřmi, dolétne k tobě tlumený zvuk smíchu."
         "Zaklepeš a otevře ti Njalův učedník Gerd se svým typickým bezstarostným úsměvem."
     $ gerd.say("Potřebujete ještě něco?")
     if chosenChar == "gerd":

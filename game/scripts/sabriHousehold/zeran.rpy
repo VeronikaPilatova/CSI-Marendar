@@ -445,7 +445,7 @@ label zeranOptions:
                 $ persistent.zeranArrestReasons.append("stolen shoes")
                 call universalCulpritAchievementCheck
             $ zeran.arrestReason.append("stolen shoes")
-            $ arrested.append(zeran)
+            $ newlyArrested.append(zeran)
             $ status.append("arrest in progress")
             return
         "Zatýkám tě za krádež střihu mistra Njala." (badge="handcuffs") if "join forces njal pending" in status and "stolen idea" not in zeran.arrestReason:
@@ -459,7 +459,7 @@ label zeranOptions:
                 $ persistent.zeranArrestReasons.append("stolen idea")
                 call universalCulpritAchievementCheck
             $ zeran.arrestReason.append("stolen idea")
-            $ arrested.append(zeran)
+            $ newlyArrested.append(zeran)
             $ status.append("arrest in progress")
             return
         "To jsou všechny moje otázky.":
@@ -564,7 +564,7 @@ label zeranMistrust:
                 $ persistent.zeranArrestReasons.append("vagrancy")
                 call universalCulpritAchievementCheck
             $ zeran.arrestReason.append("vagrancy")
-            $ arrested.append(zeran)
+            $ newlyArrested.append(zeran)
             $ status.append("arrest in progress")
             return
         "Pojďme se raději vrátit k případu.":

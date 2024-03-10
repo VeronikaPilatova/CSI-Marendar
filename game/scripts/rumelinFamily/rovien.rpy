@@ -54,6 +54,34 @@ label rovienOptions:
             $ mc.say("Takže mistr Njal není jediný, komu jste přestal materiál dodávat?")
             "Rovien na chvíli zaváhá."
             $ rovien.say("Mistr Njal je jediný, kdo si stěžoval.")
+        "Našel si váš syn děvče?" if "Zairis suggested as Ada's boyfriend" in clues and "Zairis and Ada" not in rovien.asked and "Zairis girlfriend" not in rovien.asked:
+            hide mcPic
+            $ rovien.asked.append("Zairis girlfriend")
+            $ rovien.say("Zairis? Vlastně nevím. Pořád píše básně, ale jestli nějaké dívce, nebo třeba měsíci, těžko říct.")
+            $ rovien.say("Proč se vlastně ptáte? Můj syn je slušný mladý muž, rozhodně by nedělal žádné nepřístojnosti.")
+            show mcPic at menuImage
+            menu:
+                "Nepřímo to souvisí s případem, na kterém teď pracuji.":
+                    hide mcPic
+                    $ rovien.say("S botami mistra Heinricha?")
+                    if "njal deals" in rovien.asked:
+                        $ rovien.say("Nebo s vaším podezřením ohledně mistra Njala, ať už tím míříte kamkoli?")
+                        $ mc.say("Jde hlavně o ty boty.")
+                    $ mc.say("Snažím se pochopit, kdo se kde pohyboval a kdo s kým mluvil a tím zúžit okruh podezřelých.")
+                    $ rovien.say("To zní složitě. Napadlo vás, že možná jen Heinrich slavil předčasně, jeho výrobek měl nějakou vadu a teď se to snaží zakrýt?")
+                    $ mc.say("I to je samozřejmě možnost, se kterou pracuji.")
+                "Mám podezření, že kvůli jedné dívce způsobil malér.":
+                    hide mcPic
+                    $ rovien.say("Prosím? Tak to by mě hodně zajímalo, o co se má jednat.", "angry")
+                    $ rovien.say("O rvačku určitě nejde, o tom by se mluvilo, a jestli s ním někdo čeká dítě, není to žádný malér, ale dar od bohů. Spousta elfů se o dítě musí snažit mnoho let.")
+                    $ mc.say("Je to složitější a možná se také vůbec nic nestalo.")
+                    $ rovien.say("A nebylo by potom lepší se věnovat nějaké skutečné práci?")
+        "Mohlo by něco být mezi vaším synem a dcerou mistra Heinricha?" if "Zairis suggested as Ada's boyfriend" in clues and "Zairis and Ada" not in rovien.asked:
+            hide mcPic
+            $ rovien.asked.append("Zairis and Ada")
+            $ rovien.say("To by rozhodně nemohlo.", "angry")
+            $ rovien.say("Nejenom, že bych něco takového v žádném případě nedovolil, ale Zairis je sice romantik posedlý Amadisem, ale není úplný blázen. A už vůbec ne úplný hlupák. Moc dobře ví, že se od něj bude čekat založení rodiny.", "angry")
+            $ rovien.say("A kdyby přeci jen... promluvím si s ním a pak už mezi nimi nic nebude.")
         "Můžu si ještě promluvit s vaším synem?" if zairisOptionsRemaining > 0:
             hide mcPic
             $ rovien.say("Pokud to pomůže vašemu vyšetřování, tak jistě.")
@@ -71,5 +99,9 @@ label rovienOptionsRemainingCheck:
     if ("alibi details" in rumelin.asked or "rumelin alibi" in salma.asked) and "rumelin alibi" not in rovien.asked:
         $ rovienOptionsRemaining += 1
     if "less deals details" in njal.asked and "njal deals" not in rovien.asked:
+        $ rovienOptionsRemaining += 1
+    if "Zairis suggested as Ada's boyfriend" in clues and "Zairis and Ada" not in rovien.asked and "Zairis girlfriend" not in rovien.asked:
+        $ rovienOptionsRemaining += 1
+    if "Zairis suggested as Ada's boyfriend" in clues and "Zairis and Ada" not in rovien.asked:
         $ rovienOptionsRemaining += 1
     return

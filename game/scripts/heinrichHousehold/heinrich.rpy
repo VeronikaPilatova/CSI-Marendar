@@ -694,6 +694,15 @@ label lettersForAdaSlipUp:
             menu:
                 "Pustili mě tam učedníci.":
                     hide mcPic
+                    $ victim.trust -= 2
+                    $ ada.trust -= 3
+                    $ son.trust -= 4
+                    $ victim.say("Učedníci. Tomu se těžko věří.", "angry")
+                    $ mc.say("Nejdřív nechtěli, že byste byl proti, ale vysvětlil[a] jsem jim, že to je v zájmu vyšetřování a hledání vašeho výrobku.")
+                    $ victim.say("... ti holomci. Vědí přece moc dobře, že v dílně se nesmí dít nic, o čem bych nevěděl.", "furious")
+                    $ victim.say("Těm to ještě spočítám.", "furious")
+                    $ victim.say("Jestli máš něco dalšího, tak radši zrychli, než mi dojde sebeovládání, protože tímhle mě vážně rozčílili.", "angry")
+                    $ status.append("Heinrich angry apprentices opened workshop")
                 "Pustila mě tam paní Lisbeth.":
                     hide mcPic
                     $ victim.trust -= 4
@@ -718,6 +727,28 @@ label lettersForAdaSlipUp:
                     "Mistr Heinrich velmi nesmlouvavě ukáže na dveře a tobě nezbyde, než se poroučet a doufat, že další rozhovor bude úspěšnější."
                     $ refusedBy = "victim"
                     $ leaveOption = "none"
+        "Náhodou jsme se s tím ctitelem potkali ve městě.":
+            hide mcPic
+            $ victim.trust -= 3
+            # already talking about Zairis
+            if "zairis guilty" in victim.asked:
+                call adasLoverRandomMeetingZairis
+            # talking about Zeran, but knows about Zairis
+            elif zairisGuiltyOptionsRemaining > 0:
+                $ victim.say("A kdo to tedy byl?", "angry")
+                show mcPic at menuImage
+                menu:
+                    "Na jméno nebyla příležitost se vyptat.":
+                        hide mcPic
+                        call adasLoverRandomMeetingUnknown
+                    "Zairis, syn obchodníka Roviena.":
+                        hide mcPic
+                        call adasLoverRandomMeetingZairis
+            # no idea who else it could be
+            else:
+                $ victim.say("A kdo to tedy byl?", "angry")
+                $ mc.say("Na jméno nebyla příležitost se vyptat.")
+                call adasLoverRandomMeetingUnknown
         "Odhalil jste mě, jen jsem to zkusil[a].":
             hide mcPic
             $ victim.trust -= 3
@@ -727,6 +758,20 @@ label lettersForAdaSlipUp:
             $ refusedBy = "victim"
             $ leaveOption = "none"
     return
+
+label adasLoverRandomMeetingUnknown:
+    $ victim.say("Aha, takže ty náhodou potkáš elfa, kterého ani neznáš, on ti vypráví o tvojí tajné lásce, ale ani se nepředstaví.", "angry")
+    $ victim.say("Nevím, jestli jsi tak špatn[y] ve vyšetřování, nebo ve lhaní, ale je mi to jedno.", "angry")
+    $ victim.say("Jestli pro mě máš něco důležitého, koukej to vysypat. Jestli ne, přestaň mě konečně zdržovat hloupostmi.", "angry")
+    return
+
+label adasLoverRandomMeetingZairis:
+    $ victim.say("A to jste se prostě jenom tak potkali a on ti začal jenom tak ukazovat milostné dopisy, které zrovna psal?", "angry")
+    $ mc.say("Měl[a] jsem podezření a zeptal[a] se... mám opravdu přesvědčivé důkazy.")
+    $ victim.say("Které jsi s sebou měl[a] náhodou s sebou. A podezření jsi měl[a] předtím, než ty dopisy ukázal. Určitě.", "angry")
+    $ victim.say("Jestli se mi ten floutek přijde sám přiznat, můžeme se o něčem bavit, ale do té doby o něm už nechci slyšet.", "angry")
+    return
+
 
 label heinrichFireshow:
     "TODO"
@@ -1368,8 +1413,8 @@ label heinrichDealMischief1:
                                 $ victim.say("Hlavně by někdo měl být tvrdší na tebe, aby ses přestal[a] navážet do mé rodiny.", "angry")
                                 $ victim.say("O učedníky se postarám sám. Hned po tom, co si na tebe dojdu stěžovat.", "angry")
                                 $ victim.say("A teď se koukej vrátit k vyšetřování.", "angry")
-                    $ refusedBy = "victim"
-                    $ leaveOption = "none"
+                $ refusedBy = "victim"
+                $ leaveOption = "none"
     return
 
 label mcAdmitsBurglary:

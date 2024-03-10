@@ -8,6 +8,7 @@ label guardhouseAgain:
     label guardhouseMainMenu:
         if "arrest in progress" in status:
             scene bg cells entrance
+            play music audio.cells fadeout 0.5 if_changed
         else:
             scene bg guardhouse
         call cluesOptionsRemainingCheck
@@ -42,7 +43,7 @@ label guardhouseAgain:
                 call cellsController
             "{i}(Vrátit se k vězeňským celám){/i}" if currentLocation == "cells":
                 call cellsController
-            "{i}(Promluvit si se zatčeným){/i}" if "arrest in progress" in status:
+            "{i}(Promluvit si se zatčeným){/i}" if "arrest in progress" in status and len(cells) != 0:
                 call cellsController
             "{i}(Flákat se){/i}": #FOR DEBUG PURPOSES
                 menu:
@@ -95,7 +96,8 @@ label guardhouseIntro:
     elif time.hours > 16 and "report given" not in dailyStatus and "out of office" not in rauvin.status and optionsRemaining != 0:
         call reportWantedIntro
     elif sceneWitnessed == False:
-        "Rauvin sedí u stolu a prochází nějaké papíry, ale když se přiblížíš, zvedne hlavu a otočí se na tebe."
+        $ intro = renpy.random.choice(guardhouseIntros)
+        "[intro]"
     return
 
 label backToEvidenceWall:
@@ -511,9 +513,9 @@ label nervousSolian:
 
 label guardhouseArrestOptionsAvailable:
     $ arrestOptionsAvailable = 0
-    if "confession" in rumelin.asked and rumelin not in arrested and "arrest Rumelin" not in rauvin.asked:
+    if "confession" in rumelin.asked and rumelin not in allArrested and "arrest Rumelin" not in rauvin.asked:
         $ arrestOptionsAvailable += 1
-    if "confession" in kaspar.asked and kaspar not in arrested:
+    if "confession" in kaspar.asked and kaspar not in allArrested:
         $ arrestOptionsAvailable += 1
     if zeranNote.isActive and "join forces njal pending" in status and "stolen idea" not in zeran.arrestReason and "arrest Zeran for stolen idea" not in rauvin.asked:
         $ arrestOptionsAvailable += 1

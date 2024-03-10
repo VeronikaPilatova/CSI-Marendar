@@ -1,22 +1,25 @@
 label arrest:
     python:
-        cells.append(arrested[-1])
-        newlyArrested = arrested[-1]
-        arrestReason = arrested[-1].arrestReason[-1]
-        if newlyArrested not in persistent.arrestedPeople:
-            persistent.arrestedPeople.append(newlyArrested)
+        cells += newlyArrested
+        allArrested += newlyArrested
+        newlyArrestedPerson = newlyArrested[-1]
+        arrestReason = newlyArrested[-1].arrestReason[-1]
+        for x in newlyArrested:
+            if x.code not in persistent.arrestedPeople:
+                persistent.arrestedPeople.append(x.code)
 
     scene bg guardhouse
     call arrestedEveryoneAchievementCheck
-    if newlyArrested == rumelin:
+    if newlyArrestedPerson == rumelin:
         "TBD: Odvedeš Rumelina do cely."
-    elif newlyArrested == eckhard:
+    elif newlyArrestedPerson == eckhard:
         "TBD: Odvedeš Eckharda do cely."
-    elif newlyArrested == zeran:
+    elif newlyArrestedPerson == zeran:
         "TBD: Odvedeš Zerana do cely."
         if arrestReason == "vagrancy":
             call zeranVagrancyArrestReaction
 
+    play music audio.cells fadeout 0.5 if_changed
     scene bg cells entrance
     $ currentLocation = "cells"
     if "cells visited" not in status:
@@ -26,8 +29,10 @@ label arrest:
     jump guardhouseAgain
 
 label endArrest:
+    $ newlyArrested.clear()
     if "arrest in progress" in status:
         $ status.remove("arrest in progress")
+        stop music
         scene bg guardhouse
         call guardhouseIntro
     return

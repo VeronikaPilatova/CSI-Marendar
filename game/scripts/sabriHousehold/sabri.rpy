@@ -224,7 +224,6 @@ label sabriOptions:
     if len(sabri.asked) - len(origAsked) > 3 and "mc faith" not in sabri.asked:
         $ sabri.say("Teď se zeptám pro změnu já. Jaký bůh je ti nejbližší?")
         $ sabri.asked.append("mc faith")
-        $ mc.say("To se vlastně budu muset zamyslet... (TBD)")
 
         show mcPic at menuImage
         menu:
@@ -319,9 +318,77 @@ label sabriOptions:
                         hide mcPic
                         $ sabri.say("Působíš, že ve městě nejsi dlouho. Kolik opravdu blízkých lidí tady máš?")
                 $ sabri.say("Ne každý věřící přemýšlí o tom, co jejich odpověď znamená. Doufám, že ty ano.")
+            "Carys, protože bez lásky nic dalšího nemá význam":
+                hide mcPic
+                $ personality.append("faith - Carys (love)")
+                $ sabri.say("Carys ti může dát šťastnou lásku, ale nebude se zajímat, o co přijdeš výměnou. Nebojíš se, že pro lásku ztratíš svoje další touhy?")
+                show mcPic at menuImage
+                menu:
+                    "I kdyby k tomu došlo, bude to podružné.":
+                        hide mcPic
+                        $ cultistMaterial -= 1
+                        $ sabri.say("Stavět život jen na lásce je nebezpečné. Jestli ji z jakéhokoli důvodu ztratíš, nemáš pak vůbec nic.")
+                    "Nic obětovat nemám v úmyslu. Lásce poručit nemůžu, ale vše ostatní si dokážu získat vlastní silou.":
+                        hide mcPic
+                        $ cultistMaterial += 1
+                        $ sabri.say("Carys ani její kněží nejsou známí tím, že by pomáhali získat například uznání druhých nebo dostatečné živobytí. Dokážeš všechny své touhy naplnit [sam] jen prací v hlídce?")
+                        show mcPic at menuImage
+                        menu:
+                            "Jsem o tom přesvědčen[y].":
+                                hide mcPic
+                                $ sabri.say("Potom máš zřejmě velmi vysoké sebevědomí, nebo velmi skromné touhy. Když si nedáš pozor, obojí ti může ublížit.")
+                            "Nic lepšího nemám.":
+                                hide mcPic
+                                $ sabri.say("Když se budeš dobře dívat, možná něco lepšího najdeš.")
+            "Carys, protože je to i bohyně štěstí a to nakonec stejně rozhoduje.":
+                hide mcPic
+                $ personality.append("faith - Carys (luck)")
+                $ sabri.say("Rozhoduje štěstí, které si [sam] připravíš, nebo štěstí, které tě potká bez tvého přičinění?")
+                show mcPic at menuImage
+                menu:
+                    "Jen ti nejlépe připravení dokážou štěstí patřičně využít.":
+                        hide mcPic
+                        $ cultistMaterial += 1
+                        $ sabri.say("Jiný bůh by ti dokázal dát nejen příležitost, ale právě i sílu se jí chopit. Jestli od Carys chceš pouze štěstí, věříš, že vše ostatní získáš [sam]?")
+                    "Příprava nemá ve výsledku význam, stejně bude vše nakonec jinak.":
+                        hide mcPic
+                        $ cultistMaterial -= 2
+                        $ sabri.say("Náhoda může všechno změnit, ale přesto se teď staví široké ulice a nehořlavé domy.")
+                        $ sabri.say("Stejně tak život by neměl být jen shluk chatrných stavení se slaměnou střechou.")
+            "Olwen. Kdo jiný než bůh cesty mi pomůže projít životem?":
+                hide mcPic
+                $ personality.append("faith - Olwen")
+                $ sabri.say("Není ale cesta, kterou nabízí, předem vytyčená? To největší bohatství se často nachází mimo cesty, tam, kam běžně nikdo nezavítá.")
+                $ mc.say("Olwen dává podporu na každé cestě, ne jen na těch, které už někdo vydláždil.")
+                $ sabri.say("Olwen sám možná. U jeho kněží to může být něco jiného.")
+                $ sabri.say("Olwena následuje spousta lidí a vést je všechny stejným směrem ke stejnému cíli je mnohem jednodušší.")
+                $ mc.say("Ty pro každého, kdo věří v tvého boha, hledáš jeho vlastní cestu?")
+                $ sabri.say("Samozřejmě. Každého provázím na cestě, kterou potřebuje projít on sám.")
+                $ mc.say("To můžeš jen proto, že tady nemáš skoro žádné věřící.")
+                $ sabri.say("Jestli jejich počet někdy přeroste moje síly, seženu pro ně další kněze.")
+                $ sabri.say("Jaká je tvá zkušenost z kněžími Olwena? Podporují tě na té cestě, která je správná přímo pro tebe?")
+                show mcPic at menuImage
+                menu:
+                    "Jdu stejnou cestou jako každý, tedy ano.":
+                        hide mcPic
+                        $ cultistMaterial -= 1
+                        $ sabri.say("A je ta cesta opravdu tvá, nebo jsi jen přejal[a] cizí představu, protože ti chybí odvaha vytyčit si vlastní?")
+                    "Samozřejmě, a to i přesto, že je oproti cestám ostatních odlišná.":
+                        hide mcPic
+                        $ sabri.say("A jsou ti kněží opravdu tak schopní, nebo jen nežádáš nijak mnoho?")
+                    "Moc ne, ale to přece nemůžu čekat, když si razím cestu vlastní.":
+                        hide mcPic
+                        $ cultistMaterial += 1
+                        $ sabri.say("Možná to od nich nemůžeš čekat, ale rozhodně to můžeš požadovat. Pokud kněz nedokáže věřícího provázet, jaká je tedy jeho úloha?")
+                    "Vůbec, mám pocit, že se o mě vůbec nezajímají.":
+                        hide mcPic
+                        $ cultistMaterial += 1
+                        $ sabri.say("Pokud pro kněží nic neznamenáš, setrváváš tedy ve víře díky osobnímu spojení přímo s Olwenem, nebo jen ze zvyku?")
+                $ sabri.say("Klást si podobné otázky je důležité. Bez toho můžeš místo procházení své osobní cesty snadno ustrnout na místě a ani si to neuvědomit.")
 
             "Snažím se žít hlavně podle svého svědomí a s úctou ke všem bohům.":
                 hide mcPic
+                $ personality.append("faith - own conscience")
                 $ sabri.say("Svědomí různých lidí se může hodně lišit. Nakolik se to tvé dostává do sporu s očekáváním tvého okolí?")
                 show mcPic at menuImage
                 menu:
@@ -335,8 +402,25 @@ label sabriOptions:
                         $ sabri.say("S tím lze souhlasit. To těžké je uvědomit si to, ale nestat se zároveň jedním z nich.")
             "Ve skutečnosti mě neoslovil žádný z bohů, které znám.":
                 hide mcPic
+                $ personality.append("faith - still searching")
                 $ cultistMaterial += 1
                 $ sabri.say("Pak jsi možná zatím jen nepotkal[a] toho pravého.")
+                $ sabri.say("Není to ale obvyklé. Znamená to, že ti nestačí bůh řemeslníků, bůh zamilovaných, bůh všech, kteří svůj život vidí jako neustálý pohyb vpřed, ani žádný jiný. Co tedy u bohů očekáváš a nenacházíš?")
+                show mcPic at menuImage
+                menu:
+                    "Bohové mi nemůžou dát nic, co si nedokážu opatřit vlastními silami.":
+                        hide mcPic
+                        $ sabri.say("Víra v sebe sama je také víra. Jen je jí na rozdíl od víry v sílu boha snazší otřást.")
+                    "Víra mi připadá příliš svazující.":
+                        hide mcPic
+                        $ cultistMaterial += 1
+                        $ sabri.say("Víra omezuje jen tolik, jak jí dovolíš. Pokud na tebe působila jako vězení, možná jsi jen potkal[a] špatné kněze.")
+                        $ sabri.say("Ale jestli je pro tebe opravdu svoboda ta nejvyšší hodnota, bohyně volnosti a svobody tu je také. Není to ovšem příliš známé božstvo a já ti cestu k ní neumím ukázat.")
+                    "Co vím, žádný z bohů neříká dost jasně, jak se tedy mám správně chovat.":
+                        hide mcPic
+                        $ cultistMaterial += 1
+                        $ sabri.say("To je asi pravda. Hodně nároků mívají kněží nebo obyčejní sousedé, ale často to je jen jejich snaha člověka ovládnout. Ne vedení, které přichází přímo od boha.")
+                        $ sabri.say("Takové snahy je potřeba odvrhnout.")
             "To si raději nechám pro sebe.":
                 hide mcPic
                 $ sabri.say("Většinou si lidé stejně brzy všimnou, do jakých chrámů kdo chodí. Je tvá víra tak neobvyklá, že ji raději tajíš, nebo nemáš odpověď, za kterou si stojíš?")

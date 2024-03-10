@@ -38,8 +38,9 @@ label racismEncounter:
 
 label kilianEncounter:
     $ kilian.rename("Kilian")
-    "V místnosti téměř nikdo není, jen Hayfa právě něco probírá s Rauvinem a jeden z hlídkařů u stolu sepisuje cosi o clech."
-    "Zvenčí se ozve nesmělé zaklepání na dveře, tak slabé, že možná šlo jen o klam. Hayfa jde přesto okamžitě otevřít a venku skutečně nalezne asi dvanáctiletého kluka."
+    "Zvenčí se ozve nesmělé zaklepání na dveře, tak slabé, že možná šlo jen o klam."
+    $ rauvin.say("... a už je to tady.")
+    "Hayfa dojde otevřít a venku skutečně nalezne asi dvanáctiletého kluka."
     $ hayfa.say("Vítej na strážnici městské hlídky Marendaru. Jsem Hayfa. S čím můžeme pomoct?")
     "Kluk při pohledu na ni ucukne o krok a kousne se do rtu. Pak se nadechne."
     $ kilian.say("Dobrý den. Já… můžu prosím mluvit s panem velitelem?", "surprised")

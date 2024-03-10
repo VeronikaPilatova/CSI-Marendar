@@ -273,7 +273,7 @@ label eckhardOptions:
             hide mcPic
             $ eckhard.say("Snad to pomohlo…")
             return
-        "Zatýkám vás za krádež střihu mistra Njala." (badge="handcuffs") if "stolen idea 2" in eckhard.asked and eckhard not in arrested:
+        "Zatýkám vás za krádež střihu mistra Njala." (badge="handcuffs") if "stolen idea 2" in eckhard.asked and eckhard not in allArrested:
             hide mcPic
             $ eckhard.say("Cože? To můžete? Vždyť to je jenom střih.", "surprised")
             $ eckhard.say("Jestli to je opravdu zločin, tak mi můžete vyměřit nějakou pokutu, ale rozhodně není potřeba mě zatýkat.")
@@ -290,7 +290,7 @@ label eckhardOptions:
                     $ eckhard.trust -= 2
                     $ victim.trust -= 2
                     $ eckhard.arrestReason.append("stolen idea")
-                    $ arrested.append(eckhard)
+                    $ newlyArrested.append(eckhard)
                     jump arrest
 
     if "eckhard introductions" not in status:
@@ -420,7 +420,7 @@ label eckhardOptionsRemainingCheck:
         $ optionsRemaining += 1
     if "stolen idea" in eckhard.asked and "stolen idea 2" not in eckhard.asked:
         $ optionsRemaining += 1
-    if "stolen idea 2" in eckhard.asked and eckhard not in arrested:
+    if "stolen idea 2" in eckhard.asked and eckhard not in allArrested:
         $ optionsRemaining += 1
     if "join forces victim pending" in status and "join forces" not in eckhard.asked:
         $ optionsRemaining += 1

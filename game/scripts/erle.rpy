@@ -193,7 +193,7 @@ label erleOptions:
                 "Na tom vlastně něco bude.":
                     hide mcPic
                     "Erle mlčky přikývne a dál už se k tématu nevrací."
-        "Zatýkám tě za krádež mistrovského výrobku mistra Heinricha." (badge="handcuffs") if erle not in arrested:
+        "Zatýkám tě za krádež mistrovského výrobku mistra Heinricha." (badge="handcuffs") if erle not in allArrested:
             hide mcPic
             $ erle.say("Za krádež čeho?", "surprised")
             $ mc.say("Těch bot, které jsi pak zahodila.")
@@ -201,7 +201,7 @@ label erleOptions:
             $ mc.say("Žádné výmluvy, prostě půjdeš se mnou.")
             "Erle mírně zmateně zavrtí hlavou a nechá se odvést na strážnici."
             $ erle.arrestReason.append("stolen shoes")
-            $ arrested.append(erle)
+            $ newlyArrested.append(erle)
             $ status.append("arrest in progress")
             return
         "To jsou všechny moje otázky.":
@@ -272,6 +272,6 @@ label erleOptionsRemainingCheck:
         $ optionsRemaining += 1
     if "bottles 2" in erle.asked and "see who threw bottles away" not in erle.asked:
         $ optionsRemaining += 1
-    if erle not in arrested:
+    if erle not in allArrested:
         $ optionsRemaining += 1
     return

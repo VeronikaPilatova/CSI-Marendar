@@ -112,7 +112,7 @@ label rumelinClosedDoor:
                     hide mcPic
                     $ rumelin.say("To bude nejlepší.")
                     "Cechmistr Rumelin s nekompromisním výrazem ukáže na dveře."
-                "Zatýkám vás za podvod a snahu poškodit jiného mistra vašeho cechu." (badge="handcuffs") if "confession" in rumelin.asked and rumelin not in arrested:
+                "Zatýkám vás za podvod a snahu poškodit jiného mistra vašeho cechu." (badge="handcuffs") if "confession" in rumelin.asked and rumelin not in allArrested:
                     call arrestRumelin
         if "rumelin closed door" not in status:
             $ status.append("rumelin closed door")
@@ -304,7 +304,7 @@ label rumelinOptions:
             hide mcPic
             return
 
-        "Zatýkám vás za podvod a snahu poškodit jiného mistra vašeho cechu." (badge="handcuffs") if "confession" in rumelin.asked and rumelin not in arrested:
+        "Zatýkám vás za podvod a snahu poškodit jiného mistra vašeho cechu." (badge="handcuffs") if "confession" in rumelin.asked and rumelin not in allArrested:
             label arrestRumelin:
             hide mcPic
             if "rumelin threatened" in status and "rumelin exposed" not in status:
@@ -323,8 +323,9 @@ label rumelinOptions:
                         "To není potřeba, půjdete se mnou.":
                             hide mcPic
                 "Mistr Rumelin se velmi neochotně nechá odvést na strážnici."
+                $ status.append("rumelin exposed")
             $ rumelin.arrestReason.append("AML")
-            $ arrested.append(rumelin)
+            $ newlyArrested.append(rumelin)
             $ status.append("arrest in progress")
             $ leaveOption = "none"
             return
@@ -552,7 +553,7 @@ label rumelinOptionsRemainingCheck:
         $ optionsRemaining += 1
     if "join forces victim pending" in status and "join forces" not in rumelin.asked:
         $ optionsRemaining += 1
-    if "confession" in rumelin.asked and rumelin not in arrested:
+    if "confession" in rumelin.asked and rumelin not in allArrested:
         $ optionsRemaining += 1
     if katrin in cells and "testify for dancer" not in rumelin.asked:
         $ optionsRemaining += 1

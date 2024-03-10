@@ -188,11 +188,14 @@ label preparation:
     default sel = "šel/šla"
     default sam = "sám/sama"
 
-    # variables - future of the watch
+    # variables - guardhouse and watch
     default watchScores = {}
     $ watchScores["rauvin"] = 0
     $ watchScores["hayfa"] = 0
     $ watchScores["solian"] = 0
+    $ guardhouseIntros = []
+    $ guardhouseIntros.append("Rauvin sedí u stolu a prochází nějaké papíry, ale když se přiblížíš, zvedne hlavu a otočí se na tebe.")
+    $ guardhouseIntros.append("V místnosti téměř nikdo není, jen Hayfa právě něco probírá s Rauvinem a jeden z hlídkařů u stolu sepisuje cosi o clech.")
     # variables - investigation progress
     default clues = []
     default globalClues = []
@@ -204,7 +207,8 @@ label preparation:
     default colleaguesAsked = []
     default mcAsked = []
     default evidenceWallCount = 0
-    default arrested = []
+    default newlyArrested = []
+    default allArrested = []
     default cells = []
     # variables - gameplay helpers
     call libraryPreparation

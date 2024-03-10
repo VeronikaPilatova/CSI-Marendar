@@ -28,12 +28,17 @@ label cellsController:
                 $ chosenChar = "erle"
             "Promluvit si s Aachimem" if son in cells:
                 $ chosenChar = "son"
+            "Promluvit si s mistrem Njalem" if njal in cells:
+                $ chosenChar = "njal"
+            "Promluvit si s Gerdem" if gerd in cells:
+                $ chosenChar = "gerd"
             "Vrátit se zpět":
                 call leavingCells
                 return
     scene bg cell
     call expression chosenChar + "Notes"
     call expression chosenLocation
+    $ chosenChar = ""
 
     call leavingCells
     stop music

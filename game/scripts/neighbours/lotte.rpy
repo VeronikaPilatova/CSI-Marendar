@@ -254,7 +254,7 @@ label lotteOptions:
                     $ lotte.asked.append("peer pressure")
             if "peer pressure" in lotte.asked and "secret lover identity" in lotte.asked:
                 $ lotte.say("Proč je to pro vás tak důležité?")
-                label lotteDancerImportantToMc
+                label lotteDancerImportantToMc:
                 show mcPic at menuImage
                 menu:
                     "Hlídka by přece měla bojovat za spravedlnost. Trestat zločince, ale chránit nevinné.":
@@ -328,9 +328,9 @@ label lotteArsonist:
             hide mcPic
             $ lotte.say("Nevím, nepřemýšlela jsem o tom. Určitě má za sebou pohnutý osud, ale ten může v tomhle hrabství vyprávět každý druhý.")
             $ lotte.say("Můžu vám ještě nějak pomoct?")
-        "Rozumím a děkuji vám.":
+        "Rozumím, už vás s ní tedy nebudu obtěžovat.":
             hide mcPic
-            $ lotte.say("Beze všeho. Můžu vám ještě nějak pomoct?")
+            $ lotte.say("V pořádku. Můžu vám ještě nějak pomoct?")
     return
 
 label loverRevealedToLotte:
