@@ -160,6 +160,8 @@ label workshopNightAlarm:
             if skill == "combat":
                 "Brzy zjistíš, že na rozdíl od tebe se tvůj soupeř moc neumí prát. Snadno ho strhneš pod sebe, uštědříš mu několik tvrdých ran a zaklekneš ho tak, aby nemohl uniknout."
                 "Než ale stihneš udělat cokoli dalšího, vběhne do dílny mistr Heinrich a okamžitě se vrhne synovi na pomoc. Oproti Aachimovi je větší a nerozpakuje se ti ublížit a ty brzy zjistíš, že ti je vyrovnaným soupeřem. Když potom do dílny dorazí i zbylí dva učedníci, společnými silami tě přemůžou a ty krátce poté skončíš pevně svázan[y]."
+                $ victim.imageParameter = "beaten"
+                $ son.imageParameter = "beaten"
             else:
                 "Nepovažuješ se zrovna za rváče, brzy ale zjistíš, že tvůj soupeř se moc neumí prát. Podaří se ti ho dostat na zem a zakleknout ho tak, aby pro něj bylo těžké uniknout."
                 "Než ale stihneš udělat cokoli dalšího, vběhne do dílny mistr Heinrich a okamžitě se vrhne synovi na pomoc. Oproti Aachimovi je větší a nerozpakuje se ti ublížit a ty brzy zjistíš, že zápas s ním je nad tvé síly. Když potom do dílny dorazí i zbylí dva učedníci, snadno tě společnými silami udrží na zemi a ty brzy skončíš pevně svázan[y]."
@@ -217,6 +219,7 @@ label workshopNightArrest:
     jump mcArrested
 
 label workshopNightMeetingAachim:
+    $ status.append("Aachim seen during break-in")
     # trust too low - Aachim sets the alarm
     if son.trust < 0:
         "Pak si tě lépe prohlédne a s nevírou na tebe zazírá."
