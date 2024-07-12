@@ -214,7 +214,7 @@ label forgottenKeyScene:
     $ friend.say("Počkej tady.")
     "" "(Přítel) se vrátí do domu a po chvíli zase vyjde se zmateným výrazem a masivním klíče v ruce."
     $ friend.say("To jsem blázen… budu ho muset (okradenému) vrátit.")
-    show mcPic at menuImage:
+    show mcPic at menuImage
     menu:
         "To byste asi měl.":
             hide mcPic

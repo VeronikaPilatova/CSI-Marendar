@@ -320,7 +320,7 @@ label forgottenKeyScene:
     $ eckhard.say("Počkej tady.")
     "Eckhard se vrátí do domu a po chvíli zase vyjde se zmateným výrazem a masivním klíče v ruce."
     $ eckhard.say("To jsem blázen… budu ho muset Heinrichovi vrátit.")
-    show mcPic at menuImage:
+    show mcPic at menuImage
     menu:
         "To byste asi měl.":
             hide mcPic
