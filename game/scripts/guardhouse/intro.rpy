@@ -48,7 +48,7 @@ $ hayfa.say("Dobrá. Kde bydlíš a čím ses zatím živil[a]?")
 $ mc.say("Bydlím na půdě u vdovy Gertrudy a živím se porůznu, čím se zrovna naskytne.")
 show mcPic at menuImage
 menu:
-    "Chtěl[a] bych něco, kde můžu udělat něco dobrého.":
+    "Chtěl[a] bych práci, kde můžu udělat něco dobrého.":
         hide mcPic
         $ personality.append("motivation: positive change")
         $ rauvin.say("Toho se jistě dá dosáhnout i jinak. Co tě přimělo hledat štěstí právě v hlídce?")
@@ -173,7 +173,7 @@ menu:
     "Půjdu si promluvit s mistrem Kasparem" if kasparNote.isActive == True:
         hide mcPic
         jump kasparController
-    "Rád bych si promluvil s Eckhardem" if eckhardNote.isActive == True:
+    "Rád[a] bych si promluvil[a] s Eckhardem" if eckhardNote.isActive == True:
         hide mcPic
         jump eckhardController
 return

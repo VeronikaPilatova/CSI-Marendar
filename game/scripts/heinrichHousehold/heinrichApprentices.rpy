@@ -115,7 +115,7 @@ label boysOptions:
             $ boysAsked.append("fired apprentices contacts")
             $ son.say("Zerana jsem neviděl od toho dne, kdy odtud vypadl, a doufám, že to tak i zůstane.", "angry")
             $ yesman.say("Také jsem ho dlouho neviděl.")
-            $ optimist.say("Asi před týdnem jsem ale viděl Gerda. Šel jsem pro nějaké věci k panu Rovinovi a potkal jsem ho tam. Vypadal spokojeně.")
+            $ optimist.say("Před pár dny jsem ale viděl Gerda. Šel jsem pro nějaké věci k panu Rovienovi a potkal jsem ho tam. Vypadal spokojeně.")
             if "no privacy" not in status:
                 $ son.say("Aby ne.", "angry")
             $ optimist.say("Prý ho mistr Njal dokonce poslouchá, když má nějaký nápad. A když to je hloupost, tak mu to vysvětlí.")
@@ -125,6 +125,11 @@ label boysOptions:
             else:
                 $ son.say("On říká spoustu věcí.", "angry")
             $ yesman.say("Také říkal, že to vlastně Gerd už teď umí až moc dobře, takže se tam nenaučí vůbec nic.")
+            $ optimist.say("Rudi, neviděl ty ses s Gerdem před pár dny také?")
+            $ yesman.say("No, jo. Ale nic zajímavého neříkal.")
+            $ yesman.say("Mluvili jsme hlavně o holkách.", "blushing")
+            $ yesman.say("Prý se určitě líbí hrnčířovic Mirce, ale podle mě si vymýšlí. Vždyť je o rok mladší než ona.")
+            $ son.say("Já se s ním moc nevídám. Přeci jen odešel z dílny mého otce, je to trochu nepříjemné.")
         "Jak dlouho jste u mistra Heinricha?" if "how long here" not in boysAsked:
             hide mcPic
             $ boysAsked.append("how long here")
@@ -400,6 +405,10 @@ label boysOptions:
             $ optimist.say("Ty střevíce tady určitě byly. Dost jsem je obdivoval, doufám, že jednou budu také takhle zručný.")
             if "no privacy" in status:
                 $ victim.say("Tak o tom silně pochybuju.", "angry")
+        "Viděli jste včera vystoupení té tanečnice s ohněm?" if "fireshow" in status and "fireshow" not in boysAsked:
+            hide mcPic
+            $ boysAsked.append("fireshow")
+            call boysAboutFireshow
         "Mistře Heinrichu, můžete nás nechat o samotě?" if "no privacy" in status:
             hide mcPic
             if "Heinrich sent away" in boysAsked:
@@ -416,9 +425,12 @@ label boysOptions:
             "Mistra Heinricha ani nemusíš hledat. Stojí téměř hned za dveřmi do dílny a připojí se k vám více než ochotně."
         "To je všechno, můžete zase jít.":
             hide mcPic
+            if "Heinrich sent away" in boysAsked:
+                $ boysAsked.remove("Heinrich sent away")
             call boysReleased
             return
     jump boysOptions
+
 
 label burnedEvidenceSeenBoys:
     "Kluci si ohořelý útržek prohlédnou."
@@ -514,6 +526,271 @@ label boysReleased:
             $ victim.say("Potřebujete tady ještě něco?")
     return
 
+label boysAboutFireshow:
+    $ yesman.say("Té hezké hnědovlasé?", "blushing")
+    $ optimist.say("Tobě se líbila?", "happy")
+    if "no privacy" in status:
+        "Mistr Heinrich se na kluky zamračí a s přísným pohledem čeká na odpověď."
+    $ son.say("Neviděli.")
+    $ yesman.say("...", "blushing")
+    $ son.say("No dobře, viděli.")
+    $ optimist.say("Kousek. Náhodou jsme šli kolem.")
+    $ son.say("Opravdu bude souzená za žhářství?", "surprised")
+    $ yesman.say("Ale dostane se z toho, že ano?", "surprised")
+    label fireshowBoys1:
+    show mcPic at menuImage
+    menu:
+        "To záleží na tom, jestli bude někdo svědčit v její prospěch.":
+            hide mcPic
+            $ yesman.say("... a bude?", "surprised")
+            $ mc.say("Snažím se sehnat pár lidí. Chcete se přidat?")
+            $ son.say("K tomu svědčení?", "surprised")
+            $ optimist.say("To by bylo něco!", "susprised")
+        "To záleží na tom, jestli to udělala." if "katrin guilty" not in boysAsked:
+            hide mcPic
+            $ boysAsked.append("katrin guilty")
+            $ yesman.say("Samozřejmě, že neudělala.", "angry")
+            $ optimist.say("No, ten vůz zapálila ona...")
+            $ son.say("Jen protože se na ni vrhli.")
+            $ yesman.say("Přesně. Jinak by dál tančila, my bychom ji tleskali, pak by šla domů a všechno by bylo v pořádku.")
+            $ optimist.say("Takže ji soud propustí?")
+            jump fireshowBoys1
+        "To záleží na vás.":
+            hide mcPic
+            $ yesman.say("Jak? Máme ji vysvobodit z vězení?", "surprised")
+            $ son.say("[mcName] je z hlídky, vážně myslíš, že navrhuje zrovna tohle?")
+            $ optimist.say("Rozhodně by to nikdo nečekal!", "happy")
+            $ yesman.say("... v tom případě nevím, co můžeme udělat.", "sad")
+            $ mc.say("Můžete svědčit v její prospěch.")
+        "Asi ne.":
+            hide mcPic
+            $ yesman.say("To přece… musí být něco, co se dá udělat!", "angry")
+            show mcPic at menuImage
+            menu:
+                "Můžete svědčit v její prospěch.":
+                    hide mcPic
+                "Myslím, že se nic dělat nedá.":
+                    hide mcPic
+                    $ yesman.say("...", "sad")
+                    $ optimist.say("Zapomeň na ni, na slavnostech bude spousta jiných kejklířek.")
+                    $ yesman.say("Takže je v pořádku, když tuhle zabijou?", "angry")
+                    $ optimist.say("Tak jsem to… promiň?", "surprised")
+                    $ son.say("Asi bychom měli změnit téma. Potřebujete od nás ještě něco, nebo můžeme jít pracovat?")
+                    return            
+    $ son.say("Poslouchal by nás tam vůbec někdo?", "surprised")
+    if "Heinrich supports boys' testimony" in status:
+        $ mc.say("Už jsem mluvil[a] s mistrem Heinrichem, prý jestli budete mít, co říct, tak vám pozornost zajistí.")
+    else:
+        $ mc.say("To zařídím.")
+    $ son.say("...", "surprised")
+    $ optimist.say("...", "surprised")
+    $ yesman.say("... vážně máme mluvit před celým soudem?", "surprised")
+    $ son.say("To zní trochu děsivě.", "surprised")
+    $ convincingWitness = 0
+    show mcPic at menuImage
+    menu:
+        "To není nic hrozného. Jsou to jenom lidi z města, které znáte.":
+            hide mcPic
+            $ convincingWitness -= 1
+            $ son.say("No já nevím, tím to je možná ještě horší. Jestli si udělám ostudu, budu je pak každý den potkávat.", "sad")
+            $ optimist.say("Ale každý den je budeš potkávat, i jestli je uchvátíš.", "happy")
+            $ mc.say("Důležité je, že víte, že to jsou lidé jako vy a nemusíte z nich mít strach.")
+            $ yesman.say("Já třeba z pana Oswalda trochu strach mám. Vždyť vedl dvě povstání.", "surprised")
+        "Soustřeďte se na to, že to je pro dobrou věc, a půjde to snadno.":
+            hide mcPic
+            $ convincingWitness -= 1
+            $ yesman.say("To je pravda! Ona žádný zločin nespáchala.", "happy")
+            $ optimist.say("No, městské zákony jsou v tomhle...")
+            $ yesman.say("A jestli někdo bude tvrdit opak, tak mu to pořádně vysvětlím!", "angry")
+            $ optimist.say("... chci říct, jistě že nespáchala. Zákony proti tanci určitě nejsou.", "surprised")
+            $ mc.say("Jen se nenechte unést.")
+            $ son.say("Možná by nebylo chytré se tam se všemi pohádat.")
+            $ yesman.say("Když oni ji budou chtít odsoudit a my nechceme, aby ji odsoudili?", "surprised")
+            $ mc.say("Soudci se právě teprve během soudu budou rozhodovat.")
+            $ yesman.say("Ti možná, ale ta sektářka z hlídky v tom má asi hodně jasno.", "angry")
+            $ yesman.say("Jak ji tam vlekla... to jí nedaruju.", "angry")
+        "Dobře si to nacvičte.":
+            hide mcPic
+            $ convincingWitness += 1
+            $ mc.say("Nejdřív to všechno řekněte sobě navzájem, potom třeba mně nebo Adě a nakonec mistru Heinrichovi.")
+            $ mc.say("Tím si na to zvyknete a potom už budete vypovídat klidně i před vévodou.")
+            $ son.say("A co když po pár větách přijde nějaká otázka, která mě vyvede z míry?", "surprised")
+            $ yesman.say("Přesně. Mě vyvede z míry už jenom to, když se mě mistr při práci zeptá, co to zase dělám.", "sad")
+            $ son.say("Tak hrozný ten soud snad nebude...")
+            $ mc.say("Na otázky se můžete připravit úplně stejně. Prostě si představte, že jste nějaký šťoural, ptejte se sebe navzájem a pak společně vymyslete dobrou odpověď.")
+            $ optimist.say("Šťourání tady Aachimovi jde.", "happy")
+            $ son.say("Já ti nevím. To šlo hlavně Gerdovi.")
+            $ optimist.say("Tak zajdeme za Gerdem. Ať nepřijde o všechnu zábavu jen proto, že se nechal vyhodit.", "happy")
+            if "pastTrialsIntro" in pastTrialsTopics:
+                $ mc.say("To udělejte. A nejsou v knihovně nebo na radnici záznamy z minulých soudů? To vám pomůže si představit, jak to celé může probíhat.")
+                $ yesman.say("Myslím, že jsou. Celé stohy.")
+            else:
+                $ mc.say("To udělejte. A v knihovně si můžete najít záznamy z minulých soudů. To vám pomůže si představit, jak to celé může probíhat.")
+            $ son.say("A pustí nás táta, abychom si četli v knihovně?", "surprised")
+            $ mc.say("Nepotřebujete toho přečíst moc, stačí několik případů pro představu.")
+            $ optimist.say("To bude hned.")
+    $ son.say("Co tam ale vůbec máme říkat?")
+    $ optimist.say("Já myslím, že tam se vždycky někdo ze soudců vyptává a ty jen odpovídáš?")
+    show mcPic at menuImage
+    menu:
+        "Je to tak. Stačí počkat na otázky.":
+            hide mcPic
+            $ mc.say("Oni si sami řeknou, co je zrovna zajímá.")
+        "Lepší je, když je k ptaní vůbec nepustíte.":
+            hide mcPic
+            $ convincingWitness -= 1
+            $ mc.say("Prostě začněte vyprávět od začátku do konce.")
+            $ son.say("A nebudou se chtít někdy doptat na podrobnosti?", "surprised")
+            $ mc.say("Tak řekněte, že k tomu se dostanete, a pak se vraťte, kde jste byli.")
+            $ mc.say("To je nejlepší způsob, jak se v tom neztratit.")
+            $ son.say("A co když se zeptají na něco, na co už došlo, nebo něco napoprvé nepochopí a budou si to potřebovat ujasnit?", "surprised")
+            $ mc.say("Úplně ze všech otázek se samozřejmě nevyvlečete a některé určitě přijdou i na konci, ale aspoň jich takhle nebude tolik.")
+        "Myslím, že budete moct začít sami a oni se potom doptají.":
+            hide mcPic
+            $ convincingWitness += 1
+            $ mc.say("Asi vás nenechají mluvit nepřerušeně. Určitě je bude zajímat nějaká podrobnost, kterou na první vyprávění vynecháte.")
+            $ mc.say("Ale zároveň by nebyli rádi, kdyby z vás museli úplně všechno tahat.")
+            $ yesman.say("To musím něco nejdřív sám vyprávět a potom se ještě budou ptát a hledat v tom mezery? To zní strašně.", "surprised")
+            $ mc.say("Ber to tak, že si o tom prostě popovídáte. Jako kdybys to vyprávěl Gerdovi.")
+            $ optimist.say("Tomu by asi vyprávěl hlavně jiné věci...", "happy")
+            $ yesman.say("Nech toho!", "surprised")
+            $ mc.say("A hlavně se nebojte dodat něco, na co se třeba nezeptají, když to bude důležité.")
+    $ yesman.say("A jak poznáme, co soudce zajímá?")
+    show mcPic at menuImage
+    menu:
+        "Hlavně nich nevynechte.":
+            hide mcPic
+            $ mc.say("Ta dívka nic nespáchala, a jestli soudci uslyší celou pravdu, musí to poznat.")
+            $ yesman.say("... jste si jist[y]?", "surprised")
+            $ optimist.say("V radě máme docela slušné lidi, na ty se dá spolehnout.")
+            $ yesman.say("V tom případě jim musíme podrobně vylíčit i to, jak ji Hayfa zatýkala. Ať všichni poznají, co je zač.", "angry")
+            show mcPic at menuImage
+            menu:
+                "To je dobrý nápad. Soud uvidí, že žaloba je zaujatá.":
+                    hide mcPic
+                    $ convincingWitness -= 1
+                    $ son.say("A nebudeme potom vypadat zaujatě my?", "surprised")
+                    $ yesman.say("Ale my máme pravdu!", "angry")
+                "Raději ne. Toho se soud netýká a působilo by to jako zbytečné pomlouvání.":
+                    hide mcPic
+                    $ yesman.say("Zbytečné? Takhle bych nezatýkal ani hrdlořeza!", "angry")
+                    $ mc.say("Tak potom po soudu zkusíme dát stížnost k veliteli.")
+                    $ yesman.say("... no dobře, zkusím se držet.", "sad")
+                    $ son.say("Nech tuhle část na nás.")
+        "Říkejte jen to nejdůležitější, abyste se neztratili v podrobnostech.":
+            hide mcPic
+            $ optimist.say("... a to je co? Tančila, potom vytáhla oheň, strhla se mela a začal hořet vůz?")
+            $ yesman.say("A je nevinná!", "angry")
+            $ son.say("... to nezní příliš přesvědčivě.", "sad")
+            $ optimist.say("A co je tedy to nejdůležitější?")
+            show mcPic at menuImage
+            menu:
+                "Že na ni lidé zaútočili a hořet začalo jen kvůli tomu.":
+                    hide mcPic
+                    $ convincingWitness += 1
+                    $ optimist.say("To bylo hodně děsivé, to by utekl každý.")
+                    $ yesman.say("A ten hrubián na ni sahal a kdo ví, co jí chtěl udělat!", "angry")
+                    $ son.say("Kdyby ji nechali utéct, nic by se nestalo, ale někdo jí zkusil nadběhnout.")
+                    $ yesman.say("Určitě nějaký další hrubián.", "angry")
+                    $ son.say("A hlavně ten první jí pořád byl v patách. Musela utíkat rychle.")
+                    $ optimist.say("A nemohla ty vějíře radši zahodit?")
+                    $ son.say("Mohla a běželo by se jí pak snáz. Ale to by nemohla dát pozor, že tím něco nezapálí! I při útěku dobře věděla, co dělá!")
+                "Že tančit opravdu umí, a nic tedy nehrozilo.":
+                    hide mcPic
+                    $ yesman.say("No to ona umí", "blushing")
+                    $ mc.say("A umíte k tomu dát příklad, aby si to soudci dokázali představit?")
+                    $ optimist.say("Třeba jak hýbala každou rukou jinak a ještě se u toho všelijak vlnila.")
+                    $ yesman.say("A mrkala na publikum. Jednou i na mě!", "blushing")
+                    $ son.say("Nebo jak se vždycky rychle otočila, ale stejně skončila přesně na stejném místě.")
+                    $ yesman.say("A vždycky se jí u toho rozevlály vlasy.", "blushing")
+                    $ son.say("Tyhle dodatky možná radši soudu neříkej. Chceme působit vážně a nezaujatě.")
+                    $ yesman.say("Ale vypadat takhle dobře, to musí dát hroznou práci!", "surprised")
+                    $ yesman.say("To není, jako když ty ses sice naučil tu Zairisovu novou figuru, ale vypadal jsi u toho, že si zlomíš obě nohy.")
+                    $ son.say("No dovol...", "angry")
+                    $ optimist.say("Na to, že se musel při cvičení schovávat, aby ho neviděla Ada a nesmála se mu, to ještě dopadlo docela dobře.")
+                    $ son.say("... myslel jsem, že tady řešíme důležité věci.")
+                    $ yesman.say("To je pravda! Co dál?")
+                "Že ten oheň vytáhla na bezpečném místě.":
+                    hide mcPic
+                    $ convincingWitness += 1
+                    $ optimist.say("... uprostřed města!", "surprised")
+                    $ son.say("Ne. Ve čtvrti, kde jsou zděné stěny.")
+                    $ mc.say("A daleko od všeho hořlavého, jestli se nepletu?")
+                    $ yesman.say("Ten vůz byl rozhodně pěkných pár kroků.")
+                    $ son.say("Některé části domů jsou dřevěné, ale ty byly daleko a tak snadno to dřevo také nechytne.")
+                    $ optimist.say("Doškové střechy už ve městě nikdo nemá. Některé požár nezasáhl, ale všichni se jich co nejrychleji zbavili.")
+                    $ yesman.say("Takže jediné ohrožení způsobil ten hrubián, co ji vyhnal na vůz.", "angry")
+                "Že ji do té doby všichni obdivovali a povzbuzovali.":
+                    hide mcPic
+                    $ convincingWitness -= 1
+                    $ son.say("Aby ne, tančila dobře, ale jak to souvisí s ohněm?")
+                    $ optimist.say("Tak, že pořád chtěli další a další čísla.")
+                    $ yesman.say("Ještě zajímavější a neobvyklejší.")
+                    $ mc.say("A zároveň vypadali, že jí důvěřují a chtějí od ní vidět všechno, co umí.")
+                    $ optimist.say("Přesně! Přesvědčili ji, že může, že to je v pořádku.", "happy")
+                    $ yesman.say("Také bylo. Já bych její vystoupení s ohněm velmi rád viděl. Všiml sis, jak se jí odrážel ve vlasech? A to ani ještě nestihla tančit!", "blushing")
+                    $ son.say("Já bych to možná radši viděl někde mimo město...", "sad")
+                    $ optimist.say("Ale tam bychom ji nenašli a zbytek obecenstva také ne, tak musela ve městě!")
+                "Že tam měla hudebníka, který ji k tomu určitě navedl.":
+                    hide mcPic
+                    $ convincingWitness -= 1
+                    $ yesman.say("To je pravda! Co ten je vůbec zač?", "angry")
+                    $ optimist.say("Nějaký jiný komediant? Upřímně, na něj jsem se moc nedíval.")
+                    $ mc.say("Když k tomu hraje, nejspíš vybírá skladbu.")
+                    $ yesman.say("A tím i druh tance. Takže ten oheň vůbec nebyl její nápad!")
+                    $ son.say("No že teď přijde něco nového, to vyhlásila ona...")
+                    $ yesman.say("Ale určitě na znamení od něj!", "angry")
+        "Hlavně zdůrazněte to, co té dívce pomůže.":
+            hide mcPic
+            $ yesman.say("Takže neříkej nic o zákonech, Ferdi!", "angry")
+            $ optimist.say("... není nějaký zákon o tom, že se nemá na ulici útočit na jiné lidi?")
+            $ yesman.say("No vidíš! Ten tam vytáhni!", "happy")
+            $ son.say("Já bych to nedělal, stihl do ní jen strčit a to většinou nikdo neřeší.")
+            $ optimist.say("A to, že potom začal hořet ten vůz, taky radši nemám říkat?", "surprised")
+            show mcPic at menuImage
+            menu:
+                "Radši ne, on to zmíní někdo jiný.":
+                    hide mcPic
+                    $ convincingWitness -= 1
+                    $ son.say("A nebudeme potom vypadat nedůvěryhodně?", "surprised")
+                    $ yesman.say("Máme té tanečnici pomoct, ne? Jak bychom jí pomohli, kdybychom schválně vytahovali věci proti ní?", "angry")
+                    $ optimist.say("To dává smysl. Mistrovi taky nebudu říkat, když se nám něco nepovede.")
+                    $ son.say("Ale stejně to většinou pozná.", "sad")
+                    $ optimist.say("Oni ale neuvidí naši botu... co když se na to zeptají?")
+                    $ mc.say("Lhát nemůžete, ale zkuste to zamluvit nebo aspoň odvést pozornost někam jinam.")
+                "To říct musíte, když se to stalo. Jenom na to nepřitahujte tolik pozornosti.":
+                    hide mcPic
+                    $ convincingWitness += 1
+                    $ mc.say("Kdybyste to zkusili zamlčet úplně, nebyli byste důvěryhodní.")
+                    $ mc.say("Naopak dobře popište, co k tomu vedlo. Co ti lidé vypadali, že by jí mohli chtít udělat.")
+                    $ optimist.say("To si snad nechci představovat.", "sad")
+                    $ yesman.say("Jeden ji chytil tak hrubě, že se málem nedokázala vykroutit.", "angry")
+                    $ son.say("ěch lidí, co po ní vyběhlo, rozhodně nebylo málo.")
+                    $ optimist.say("Vypadalo to, že ji budou chtít přímo na místě zlynčovat a ani nepočkají na někoho z hlídky.", "angry")
+                    $ son.say("A to je teprve něco, co by se tu nemělo dít. Ještě, že utekla.", "angry")
+    $ yesman.say("Ještě něco, co by pomohlo?")
+    $ son.say("Ať už té tanečnici, nebo nám v přesvědčování soudu?")
+    $ mc.say("Možná ještě jedna rada na závěr.")
+    show mcPic at menuImage
+    menu:
+        "Snažte se působit co nejvíc sebejistě.":
+            hide mcPic
+            $ mc.say("Mluvte co nejvíc nahlas a celou dobu se dívejte soudcům do očí.")
+        "Jestli budete nervózní, dejte si před soudem loka kořalky. To pomáhá.":
+            hide mcPic
+            $ convincingWitness -= 1
+            $ mc.say("Uvolní vás to a budete si víc věřit a díky tomu budete mnohem přesvědčivější.")
+        "Dejte si pozor, abyste nemluvili přes sebe a neskákali si do řeči.":
+            hide mcPic
+            $ convincingWitness += 1
+            $ mc.say("Doplňovat se můžete, ale nejdřív vždy v klidu počkejte, než ten před vámi domluví.")
+    $ optimist.say("Tak jo, to zvládneme!", "happy")
+    $ yesman.say("Děkujeme za pomoc. To se budou u soudu divit.", "happy")
+    $ son.say("Můžeme nějak pomoct my vám?")
+    if "Heinrich supports boys' testimony" in status and convincingWitness > 0:
+        $ katrin.cluesAgainst += 1
+    return
+
 ###
 
 label boysOptionsRemainingCheck:
@@ -539,5 +816,7 @@ label boysOptionsRemainingCheck:
     if "lost bottles 2" in boysAsked and "lost bottles 3" in boysAsked and "confession" not in boysAsked:
         $ boysOptionsRemaining += 1
     if "confession" in kaspar.asked and "shoes in workshop" not in boysAsked:
+        $ boysOptionsRemaining += 1
+    if "fireshow" in status and "fireshow" not in boysAsked:
         $ boysOptionsRemaining += 1
     return

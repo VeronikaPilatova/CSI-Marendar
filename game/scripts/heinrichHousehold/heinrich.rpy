@@ -868,6 +868,8 @@ label heinrichFireshow:
                 $ victim.say("No co, práci hotovou měli a vzpomenout si, kdo s těmi pochodněmi jak mával, snad zvládnou i oni.")
                 $ victim.say("Jestli u soudu přijdou s něčím, co má hlavu a patu, rád se postarám, aby si to ostatní poslechli.")
                 $ status.append("Heinrich supports boys' testimony")
+                if convincingWitness > 0:
+                    $ katrin.cluesAgainst += 1
     return
 
 label afterApologyReaction:
@@ -1337,8 +1339,32 @@ label victimArrestEckhard:
                         hide mcPic
                         if "zeran's name cleared" in status:
                             $ victim.say("No zpátky ho brát nebudu. To by nedělalo dobrotu. Ale... no... dobře, asi mu můžu vrátit jeho peníze. Ať to zkusí jinde.")
-                            $ victim.say("Ale do domu mi nesmí. Pořád si myslím, že se s Adou bavili nějak moc často.", "angry")
-                            $ status.append("zeran gets money")
+                            $ status.append("Zeran got his money back")
+                            show mcPic at menuImage
+                            menu:
+                                "To mu určitě pomůže a mělo by mu to stačit.":
+                                    hide mcPic
+                                    $ victim.say("Doufám, že to bude stačit i mně, abych už měl od toho holomka jednou pro vždy pokoj.", "angry")
+                                "To byste měl v každém případě, to není projev dobré vůle.":
+                                    hide mcPic
+                                    $ victim.say("A co víc by si představoval?", "angry")
+                                    show mcPic at menuImage
+                                    menu:
+                                        "Aspoň mu najít jiného mistra.":
+                                            hide mcPic
+                                            $ mc.say("Musíte mít v cechu spoustu známých, od vás to vezmou lépe, než od Zerana.")
+                                            $ victim.say("Dobře, asi můžu za někým zajít a říct mu, že ten lunt je sice nemehlo jako všichni učedníci, ale vzít si ho pod střechu není nic nebezpečného.")
+                                            $ victim.say("Vanya teď myslím někoho hledá, je to elfka a v tomhle městě je z těch lepších. Můžeš Zeranovi říct, ať se za ní staví. A Njalovi, že se o toho holomka postarám.")
+                                            $ status.append("Vanya can take Zeran")
+                                        "Peníze navíc jako odškodné.":
+                                            hide mcPic
+                                            $ victim.say("Co je tohle za nesmysl? Peníze se mají vydělávat poctivou prací, ne jen tak dostávat za nic.", "angry")
+                                            $ victim.say("Jako učedník bude mít živobytí a bude si moct vydělat malé kapesné. Aspoň bude mít důvod se snažit.", "angry")
+                                        "Veřejnou omluvu.":
+                                            hide mcPic
+                                            $ victim.trust -= 1
+                                            $ victim.say("A k čemu mu to bude? Jen bych byl celému městu pro smích a jemu by to nepomohlo.", "angry")
+                                            $ victim.say("Navíc já si za svými činy stojím. Že to nebyl on, to jsem tehdy nemohl vědět a rozhodně jsem ho ve svém domě nemohl nechat, když to také on klidně být mohl.", "angry")
                         else:
                             $ victim.trust -= 5
                             "Mistr Heinrich na pár okamžiků není překvapením schopen slova."
@@ -1351,7 +1377,7 @@ label victimArrestEckhard:
                             $ refusedBy = "victim"
                     "Aspoň Njalovi za ten střih zaplatit. Můžu mu peníze rovnou donést.":
                         hide mcPic
-                        $ victim.say("To by možná mohlo být fér… tedy podle toho, kolik ten trpaslík chce, samozřejmě.")
+                        $ victim.say("To by možná mohlo být fér... tedy podle toho, kolik ten trpaslík chce, samozřejmě.")
                         $ victim.say("Zase tak dobrý ten střih není.", "angry")
                         $ mc.say("Co třeba cena jednoho páru bot, které byste podle něj vyrobil?")
                         "Mistr Heinrich se na chvíli zamyslí."
@@ -1523,61 +1549,74 @@ label heinrichDealMischief1:
 label mcAdmitsBurglary:
     "Heinrich bez dalšího varování udělá rychlý krok směrem k tobě a vystřelí pěstí. Vzápětí ucítíš otřes a bolest na tváři."
     $ victim.say("A takhle si představuješ práci hlídky?", "furious")
-    "Než se stihneš rozhodnout, jestli se hájit, bránit, nebo utéct, dopadnou na tebe další tvrdé údery, které mistr Heinrich doprovází nadávkami."
-    $ mc.imageParameter = "beaten"
-    "Brzy je jasné, že ševcovského mistra nezastavíš ani mu nedokážeš vyklouznout."
-    if lisbeth.trust > 3:
-        "I přes rámus rvačky uslyšíš rychlé kroky."
-        $ lisbeth.say("Heinrichu, co to děláš? V našem domě! Co Olwenův zákon pohostinství?", "surprised")
-        "Její manžel se zastaví s pěstí zdviženou k úderu, ale neotočí se k ní ani nepovoluje sevření, kterým ti znemožňuje cokoli podniknout."
-        $ victim.say("Zákon pohostinství tady porušil[a] on[a]. Zneužil[a] moji důvěru a vloupal[a] se mi do dílny.", "furious")
-        $ lisbeth.say("Opravdu? Nemůže to být jen nějaká mýlka?", "surprised")
-        $ victim.say("[sam].capitalize() se právě přiznal[a].", "furious")
-        "Paní Lisbeth se nadechne, ale poté ti jen věnuje smutný a zklamaný pohled a odejde z místnosti."
-    elif ada.trust > 3:
-        "I přes rámus rvačky uslyšíš rychlé kroky."
-        $ ada.say("Co to zase děláš? To už musíš mlátit lidi i ve vlastním domě?", "surprised")
-        "Její otec se zastaví s pěstí zdviženou k úderu, ale neotočí se k ní ani nepovoluje sevření, kterým ti znemožňuje cokoli podniknout."
-        $ victim.say("Takhle se se mnou neopovažuj mluvit, nebo budeš další na řadě.", "furious")
-        $ ada.say("Proč nám pořád jenom děláš ostudu?", "angry")
-        if gender == "M":
-            $ victim.say("Tenhle podrazák zneužil[a] moji důvěru a vloupal[a] se mi do dílny.")
-        else:
-            $ victim.say("Tahle podrazačka zneužil[a] moji důvěru a vloupal[a] se mi do dílny.")
-        $ ada.say("Určitě? Nebo to tak jenom trochu vypadalo a to ti stačilo?", "angry")
-        $ victim.say("Ukradl[a] odtamtud tvoje milostné dopisy a potom je ukazoval[a] kdo ví komu.", "furious")
-        $ ada.say("Cože? Co to je za nesmysl?", "surprised")
-        $ victim.say("Právě se k tomu přiznal[a].", "furious")
-        "Ada několik okamžiků zůstane nerozhodně stát a poté se prudce otočí na patě a rázným krokem opět odejde."
-        "Heinrich si tě chvíli měří a potom přidá ještě několik tvrdých ran."
-    elif son.trust > 3:
-        "I přes rámus rvačky uslyšíš rychlé kroky a několik tlumených slov a potom do místnosti vejde Heinrichův syn."
-        $ son.say("Co se děje? Proč... v čem jste se nepohodli?", "surprised")
-        "Jeho otec se zastaví s pěstí zdviženou k úderu, ale neotočí se ani nepovoluje sevření, kterým ti znemožňuje cokoli podniknout."
-        if gender == "M":
-            $ victim.say("Tenhle podrazák zneužil[a] moji důvěru a vloupal[a] se mi do dílny.")
-        else:
-            $ victim.say("Tahle podrazačka zneužil[a] moji důvěru a vloupal[a] se mi do dílny.")
-        $ son.say("... aha... určitě? Co tam dělal[a]?", "surprised")
-        $ victim.say("Nic, o čem má smysl mluvit.", "angry")
-        if "Aachim seen during break-in" in status:
-            show mcPic at menuImage
-            menu:
-                "Aachim v té dílně byl také.":
-                    hide mcPic
-                    $ victim.say("Nejen že se mi vloupáš do dílny, ale ještě mi chceš namluvit takhle nehorázný nesmysl? Za co mě máš?", "furious")
-                    $ son.say("Asi už neví, jak se zachránit, tak se snaží odvést pozornost.", "angry")
-                    $ victim.say("Špína.", "furious")
-                "Jen jsem pátral[a] po tom zloději...":
-                    hide mcPic
-                    $ victim.say("V noci a v mojí dílně bez mého vědomí. O tom už jsme mluvili.", "furious")
-                    $ victim.say("Špíno.")
-                "{i}(neříct nic){/i}":
-                    hide mcPic
-        "Heinrich si tě chvíli měří a potom přidá ještě několik tvrdých ran. Aachim mezitím odejde z místnosti."
+
+    if victim.trust > 3:
+        "Než se stihneš rozhodnout, jestli se hájit, bránit, nebo utéct, mistr tě chytí pod krkem a přiřazí tě ke stěně. Drží tě pevně a navzdory očividnému hněvu dobře hlídá tvoje ruce i další způsoby, jak by ses snad mohl[a] pokusit uniknout."
+        $ victim.say("Tohle považuju za hodně velkou zradu. Buď rád[a], že doteď ses choval[a] celkem slušně, protože to je ten jediný důvod, proč odtud odejdeš po svých.", "furious")
+        "Mistr Heinrich přivolá Aachima a společně tě pevně sevřou a vyvedou ven z domu."
     else:
-        "Všimneš si, že rámus rvačky přiláká další členy domácnosti, ale nikdo z nich nezasahuje. Po chvíli se tvé modřiny začnou slévat dohromady a mistr Heinrich konečně přestane."
-    $ victim.say("Tak a teď se půjdeme zeptat, co si o tom celém myslí tví nadřízení.", "angry")
+        "Než se stihneš rozhodnout, jestli se hájit, bránit, nebo utéct, dopadnou na tebe další tvrdé údery, které mistr Heinrich doprovází nadávkami."
+        $ mc.imageParameter = "beaten"
+        "Brzy je jasné, že ševcovského mistra nezastavíš ani mu nedokážeš vyklouznout."
+        if lisbeth.trust > 3:
+            "I přes rámus rvačky uslyšíš rychlé kroky."
+            $ lisbeth.say("Heinrichu, co to děláš? V našem domě! Co Olwenův zákon pohostinství?", "surprised")
+            "Její manžel se zastaví s pěstí zdviženou k úderu, ale neotočí se k ní ani nepovoluje sevření, kterým ti znemožňuje cokoli podniknout."
+            $ victim.say("Zákon pohostinství tady porušil[a] on[a]. Zneužil[a] moji důvěru a vloupal[a] se mi do dílny.", "furious")
+            $ lisbeth.say("Opravdu? Nemůže to být jen nějaká mýlka?", "surprised")
+            $ victim.say("[sam].capitalize() se právě přiznal[a].", "furious")
+            "Paní Lisbeth se nadechne, ale poté ti jen věnuje smutný a zklamaný pohled a odejde z místnosti."
+        elif ada.trust > 3:
+            "I přes rámus rvačky uslyšíš rychlé kroky."
+            $ ada.say("Co to zase děláš? To už musíš mlátit lidi i ve vlastním domě?", "surprised")
+            "Její otec se zastaví s pěstí zdviženou k úderu, ale neotočí se k ní ani nepovoluje sevření, kterým ti znemožňuje cokoli podniknout."
+            $ victim.say("Takhle se se mnou neopovažuj mluvit, nebo budeš další na řadě.", "furious")
+            $ ada.say("Proč nám pořád jenom děláš ostudu?", "angry")
+            if gender == "M":
+                $ victim.say("Tenhle podrazák zneužil[a] moji důvěru a vloupal[a] se mi do dílny.")
+            else:
+                $ victim.say("Tahle podrazačka zneužil[a] moji důvěru a vloupal[a] se mi do dílny.")
+            $ ada.say("Určitě? Nebo to tak jenom trochu vypadalo a to ti stačilo?", "angry")
+            $ victim.say("Ukradl[a] odtamtud tvoje milostné dopisy a potom je ukazoval[a] kdo ví komu.", "furious")
+            $ ada.say("Cože? Co to je za nesmysl?", "surprised")
+            $ victim.say("Právě se k tomu přiznal[a].", "furious")
+            "Ada několik okamžiků zůstane nerozhodně stát a poté se prudce otočí na patě a rázným krokem opět odejde."
+            "Heinrich si tě chvíli měří a potom přidá ještě několik tvrdých ran."
+        elif son.trust > 3:
+            "I přes rámus rvačky uslyšíš rychlé kroky a několik tlumených slov a potom do místnosti vejde Heinrichův syn."
+            $ son.say("Co se děje? Proč... v čem jste se nepohodli?", "surprised")
+            "Jeho otec se zastaví s pěstí zdviženou k úderu, ale neotočí se ani nepovoluje sevření, kterým ti znemožňuje cokoli podniknout."
+            if gender == "M":
+                $ victim.say("Tenhle podrazák zneužil[a] moji důvěru a vloupal[a] se mi do dílny.")
+            else:
+                $ victim.say("Tahle podrazačka zneužil[a] moji důvěru a vloupal[a] se mi do dílny.")
+            $ son.say("... aha... určitě? Co tam dělal[a]?", "surprised")
+            $ victim.say("Nic, o čem má smysl mluvit.", "angry")
+            if "Aachim seen during break-in" in status:
+                show mcPic at menuImage
+                menu:
+                    "Aachim v té dílně byl také.":
+                        hide mcPic
+                        $ victim.say("Nejen že se mi vloupáš do dílny, ale ještě mi chceš namluvit takhle nehorázný nesmysl? Za co mě máš?", "furious")
+                        $ son.say("Asi už neví, jak se zachránit, tak se snaží odvést pozornost.", "angry")
+                        $ victim.say("Špína.", "furious")
+                    "Jen jsem pátral[a] po tom zloději...":
+                        hide mcPic
+                        $ victim.say("V noci a v mojí dílně bez mého vědomí. O tom už jsme mluvili.", "furious")
+                        $ victim.say("Špíno.","furious")
+                    "{i}(neříct nic){/i}":
+                        hide mcPic
+            "Heinrich si tě chvíli měří a potom přidá ještě několik tvrdých ran. Aachim mezitím odejde z místnosti."
+        else:
+            "Všimneš si, že rámus rvačky přiláká další členy domácnosti, ale nikdo z nich nezasahuje. Po chvíli se tvé modřiny začnou slévat dohromady a mistr Heinrich konečně přestane."
+        $ victim.say("Tak a teď se půjdeme zeptat, co si o tom celém myslí tví nadřízení.", "angry")
+        "Mistr Heinrich přivolá Aachima a společně tě pevně sevřou, zvednou na nohy a vyvedou ven z domu." 
+    scene bg heinrich outside
+    "Na ulici tě potom začnou táhnout směrem ke strážnici."
+    "Vaše skupinka brzy vzbudí pozornost dalších měšťanů. Ptají se, co se děje, a mistr Heinrich procedí krátkou odpověď o vloupání do dílny. Brzy si tuto zprávu přihlížející začínají předávat sami. Někteří z nich jdou s vámi - zřejmě se nestává často, že by došlo k zatčení člena hlídky."
+    scene bg guardhouse
+    "Dovnitř na strážnici jsou však vpuštěni jen Heinrich a Aachim - a samozřejmě ty [sam]. I tam vzbudíte značný rozruch a brzy se do hloučku kolem vás sejdou nejspíš všichni, kdo zrovna se na strážnici nachází."
+    
     return
 
 ###

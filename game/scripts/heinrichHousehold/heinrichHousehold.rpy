@@ -82,7 +82,10 @@ label victimHouseIntro:
             if not achievement.has(achievement_name['flowers'].name):
                 $ Achievement.add(achievement_name['flowers'])
         else:
-            $ lisbeth.say("Dobrý den… aha, vy jste ten strážný, co hledá manželův výrobek. Můžu vám nějak pomoct?")
+            if gender == "M":
+                $ lisbeth.say("Dobrý den... aha, vy jste ten strážný, co hledá manželův výrobek. Já jsem Lisbeth.")
+            else:
+                $ lisbeth.say("Dobrý den... aha, vy jste ta strážná, co hledá manželův výrobek. Já jsem Lisbeth.")
     if lisbethNote.isActive == False:
         call victimHouseholdOptions
     elif chosenChar == "workshop":

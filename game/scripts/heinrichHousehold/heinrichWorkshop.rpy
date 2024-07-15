@@ -114,7 +114,7 @@ label workshopNotCleaned:
 label workshopCleanedFirst:
     scene bg workshop
     "Mistr Heinrich tě pustí dovnitř a postaví se se založenýma rukama ke stěně, aby na tebe mohl dohlížet."
-    "Dílna je plná bot všech druhů a velikostí v různém stavu dokončení, od sotva začatých po plně připravené k prodeji. Až na jeden pár, nejspíš právě rozdělaný, jsou všechny narovnané v policích, které sahají až téměř ke stropu. Pod botami jsou připravená dřevěná kopyta různých tvarů a velikostí."
+    "Dílna je plná bot všech druhů v různém stavu dokončení, od sotva začatých po plně připravené k prodeji. Až na jeden pár, nejspíš právě rozdělaný, jsou všechny narovnané v policích, které sahají až téměř ke stropu. Pod botami jsou připravená dřevěná kopyta různých tvarů a velikostí."
     "U jedné stěny stojí stolek se dvěma zásuvkami plný nejrůznějších nástrojů, vedle něj je trojnohé sedátko a o kus dál zvláštní stolice s dřevěnými čelistmi na jednom konci.\nV rohu místnosti je čistě vymetené ohniště."
     return
 
@@ -183,7 +183,7 @@ label workshopOptions:
 
         "{i}(Prohlédnout si nástroje a vybavení dílny){/i}" if "tools" not in workshop.checked:
             $ workshop.checked.append("tools")
-            "Na stole je vyrovnaná řada nejrůznějších kleští, šídel a nožů různých tvarů, stejně jako dalších věcí, jejich použití ti uniká. Než ale stihneš vzít cokoli z toho do ruky, mistr Heinrich tě okřikne."
+            "Na stole je vyrovnaná řada ševcovských kopyt a dále nejrůznějších kleští, šídel a nožů různých tvarů, stejně jako dalších věcí, jejichž použití ti uniká. Než ale stihneš vzít cokoli z toho do ruky, mistr Heinrich tě okřikne."
             $ victim.say("Na moje nástroje nesmí sahat ani můj vlastní syn, natož nějaký náhodný strážný!", "angry")
 
         "{i}(Prozkoumat popel v krbu){/i}" if time.days == 1 and time.hours < 14 and "fireplace" not in workshop.checked:
