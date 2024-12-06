@@ -65,7 +65,7 @@ label lotteAgain:
         $ lotte.say("Jak jde vaše pátrání? Už víte, kdo je ten záhadný milenec?", "happy")
         show mcPic at menuImage
         menu:
-            "Zatím ne." if "secret lover" not in nirevia.asked:
+            "Zatím ne.":
                 hide mcPic
                 $ lotte.say("Škoda.")
             "Zřejmě mistr Kaspar, prý tráví s paní Lisbeth hodně času a rozumí si." if "secret lover" in nirevia.asked and "secret lover identity" not in clues:
@@ -76,7 +76,6 @@ label lotteAgain:
         $ lotte.say("Můžu pro vás udělat něco jiného?")
     else:
         $ lotte.say("Jak vám můžu pomoci tentokrát?", "happy")
-
     return
 
 label merchantFirst:
@@ -214,7 +213,7 @@ label lotteOptions:
             $ lotte.say("Samozřejmě, to představení jsem viděla a pak jsem pomáhala hasit.")
             $ lotte.say("Ta holka měla docela úspěch, než vytáhla oheň. Kdyby si to takhle hloupě nezkazila, mohla si přes slavnosti pěkně vydělat nebo si najít bohatého patrona.")
             $ lotte.say("Co ale potřebujete ode mě?")
-        "Víte, že teď je ve vězení a bude souzena za žhářství?" if "fireshow" in lotte.asked and "dancer arrested" not in lotte.asked:
+        "Víte, že teď je ta tanečnce ve vězení a bude souzena za žhářství?" if "fireshow" in lotte.asked and "dancer arrested" not in lotte.asked:
             hide mcPic
             $ lotte.asked.append("dancer arrested")
             $ lotte.say("To je dobře. Nemůžeme přece dovolit, aby si každý ve městě hrál s ohněm, jak ho napadne.")

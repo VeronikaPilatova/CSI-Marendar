@@ -207,12 +207,7 @@ label salmaOptions:
             if "lost bottles" in lisbeth.asked:
                 $ clues.append("lost bottles")
             $ salma.say("Modrozelené jakoby mramorované sklo, některé vysoké a spíš úzké a několik kulatých s úzkým hrdlem. Vlastně vám je můžu i ukázat, pořád tady jsou.")
-        "Kde bych mohl tu žebračku najít?" if "lost bottles" in clues and "erle" not in salma.asked and  gender == "M":
-            hide mcPic
-            $ salma.asked.append("erle")
-            $ salma.say("Přespává obvykle pod starým mostem, myslím, že ji najdete někde kolem řeky.")
-            $ erleNote.isActive = True
-        "Kde bych mohla tu žebračku najít?" if "lost bottles" in clues and "erle" not in salma.asked and gender == "F":
+        "Kde bych mohl[a] tu žebračku najít?" if "lost bottles" in clues and "erle" not in salma.asked:
             hide mcPic
             $ salma.asked.append("erle")
             $ salma.say("Přespává obvykle pod starým mostem, myslím, že ji najdete někde kolem řeky.")
@@ -316,20 +311,22 @@ label salmaOptions:
         "Můžete u soudu s Katrin aspoň poukázat na to, že o její odsouzení nejvíc usiluje Hayfa." if "testify for dancer" in salma.asked and "testify for dancer 2" not in salma.asked:
             hide mcPic
             $ salma.asked.append("testify for dancer 2")
+            $ hayfa.trust -= 6
             $ salma.say("Myslíte, že to pomůže?")
             show mcPic at menuImage
             menu:
                 "Hayfa je pochybná sektářka, možná tím sleduje vlastní zájmy." if "hayfa's past" in globalClues:
                     hide mcPic
-                    $ salma.say("Myslíte? Co ji znám, dělá pro město první poslední a dost mu tím pomáhá. To je pro mě to hlavní.")
+                    $ salma.say("Myslíte?", "surprised")
+                    $ salma.say("Co ji znám, dělá pro město první poslední a dost mu tím pomáhá. To je pro mě to hlavní.")
                     $ mc.say("To je možné. Ale není to zvláštní, takový výrazný obrat?")
                     $ mc.say("Původně měla s městem úplně jiné plány a změnila je, až když ji chytili a poslali před soud.")
                     $ mc.say("Sekta jako taková sice padla, ale Hayfa pořád může usilovat o co největší moc pro sebe.")
-                    $ salma.say("To ano. Je pravda, že už jsem nad jejím chováním přemýšlela i dřív.")
+                    $ salma.say("To ano. Je pravda, že už jsem nad jejím chováním přemýšlela i dřív.", "angry")
                     $ salma.say("Městu pomáhá a to je dobře, ale co ji k tomu vede, těžko říct.")
                     $ mc.say("Právě. Nechme ji tedy pomáhat, ale nemyslím si, že by měla rozhodovat o něčím životě. Ani že by někdo měl být odsouzený jen na základě obžaloby od ní.")
-                    $ salma.say("To by raději neměl, ano. Zkusím soudu připomenout, ať na to myslí.")
-                    $ salma.asked.appen("testimony promised")
+                    $ salma.say("To by raději neměl, ano. Zkusím soudu připomenout, ať na to myslí.", "angry")
+                    $ salma.asked.append("testimony promised")
                     $ katrin.cluesAgainst += 1
                 "Všiml[a] jsem si, že Hayfa oheň prožívá nezvykle silně.":
                     hide mcPic
@@ -337,7 +334,7 @@ label salmaOptions:
                         $ mc.say("To by se dalo chápat u někoho, kdo místní požár zažil, Hayfa ale přišla do města až asi rok po něm.")
                         $ salma.say("To je vlastně pravda... myslíte, že město mohla i v tomhle tak rychle vzít za vlastní?")
                         $ mc.say("Možná. Nebo ho za vlastní nevzala a jen se snaží zalíbit.")
-                        $ salma.say("Co nejsilněji vystoupit proti Katrin je rozhodně způsob, jak se zalíbit. A určitě by chudák holka neměla být potrestaná jen kvůli tomu.")
+                        $ salma.say("Co nejsilněji vystoupit proti Katrin je rozhodně způsob, jak se zalíbit. A určitě by chudák holka neměla být potrestaná jen kvůli tomu.", "angry")
                         $ salma.say("Zkusím soudu připomenout, že by se neměl nechat unést.")
                         $ salma.asked.appen("testimony promised")
                         $ katrin.cluesAgainst += 1

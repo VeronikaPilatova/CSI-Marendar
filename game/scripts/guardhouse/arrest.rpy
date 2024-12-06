@@ -75,6 +75,7 @@ label rumelinArrestReaction:
             "On ji pohrdavě přehlédne, vejde dovnitř a beze slova tě sleduje, zatímco zamykáš a odcházíš pryč."
             scene bg guardhouse
             "Nahoře už tě čeká Rauvin a pokyne ti, ať s ním vejdeš do malé boční místnosti - stejné, v jaké jsi prve mluvil[a] s mistrem Heinrichem."
+            scene bg interviewRoom
 
         if "arrest Rumelin" not in rauvin.asked and "rumelin threatened" in status:
             $ rauvin.say("Mistře Rumeline. Co se stalo, snad proti vám nikdo nespáchal zločin?", "surprised")
@@ -106,4 +107,55 @@ label rumelinArrestReaction:
             $ rauvin.say("Pranýř nemusí být těžký trest, ale když vůči odsouzenému celé město cítí zášť...")
             $ rauvin.say("Ale proč by zrovna o tom cechmistr lhal, že ano? Kdyby neměl dobrý důvod, jen by si tím zbytečně zkazil pověst.")
             "S tím se otočí a ponechá tě představám, jak asi bude tvůj osud vypadat."
+
+        if "arrest Rumelin" in rauvin.asked and "rumelin threatened" not in status:
+            $ rauvin.say("Mistře Rumeline, nečekal jsem, že se setkáme za těchto okolností.")
+            if gender == "M":
+                $ rumelin.say("Váš podřízený mě zatkl.", "angry")
+            else:
+                $ rumelin.say("Vaše podřízená mě zatkla.", "angry")
+            $ rauvin.say("[callingMc], to je ta věc, o které jsme mluvili?")
+            $ mc.say("Přesně ta.")
+            $ rauvin.say("Ta, o které jsem jasně říkal, že zatčení není na místě?", "angry")
+            show mcPic at menuImage
+            menu:
+                "...":
+                    hide mcPic
+                "Hlídka ale přece má povinnost zatýkat všechny zločince.":
+                    hide mcPic
+                    $ rauvin.say("Zaprvé, jestli je někdo zločinec, to rozhoduje až soud, ne my.")
+                    $ rauvin.say("Zadruhé, podle toho, co vím, není mistr Rumelin nařčený ze žádného zločinu, pouze se dostal do sporu s jiným měšťanem.")
+                    $ rauvin.say("Zatřetí, i kdyby jeho obchody byly zločin, zrovna v tomto případě mám naprostou důvěru, že se k soudu dostaví o vlastní vůli a nepokusí se utéct z města, k zatčení tedy není důvod.")
+                    $ rauvin.say("Jak jsem už myslím vysvětloval.", "angry")
+                "Asi jsem se unáhlil[a]...":
+                    hide mcPic
+                    $ rauvin.say("Asi.", "angry")
+            if gender == "M":
+                $ rauvin.say("Mistře Rumeline, omlouvám se, že tady hlídkař byl příliš zapálený pro věc. Věřím, že se to již nestane.")
+            else:
+                $ rauvin.say("Mistře Rumeline, omlouvám se, že tady hlídkařka byla příliš zapálená pro věc. Věřím, že se to již nestane.")
+            $ rauvin.say("Na to zatčení zapomeňte. Můžete jít za svými záležitostmi.")
+            $ rumelin.say("Doufám, že něco podobného se nestane vaším zvykem. Už takto to bylo poněkud únavné.")
+            "Cechmistr Rumelin ti věnuje pohrdavý pohled a poté se otočí a odejde ze strážnice."
+            $ rauvin.say("A teď mi prosím vysvětli, co sis myslel[a], že tímhle dokážeš.", "angry")
+            $ mc.say("Především jsem…")
+            $ rauvin.say("Nebo ne, nevysvětluj mi to, nechci to vědět. Prostě to nedělej.")
+            $ rauvin.say("Příležitost mě přesvědčit jsi dostal[a] a já jsem řekl ne. To sis myslel[a], že změním názor jen tím, že tady Rumelina uvidím?")
+            $ rauvin.say("Takovouhle unáhlenost si nemůžeme dovolit.")
+            $ mc.cluesAgainst += 1
+            if mc.cluesAgainst < 2:
+                $ rauvin.say("Budu věřit, že to byla jen jedna chyba, ze které se poučíš.")
+                $ rauvin.say("Tak mě nezklam, protože podruhé už bych tomu věřit nemusel.")
+                $ rauvin.say("Teď je myslím vhodná doba, abys místo zatýkání náhodných lidí [sel] dělat něco užitečného.")
+                "Rauvin se odvrátí, zavrtí hlavou, vezme ze stolu prázdnou číši a dolije si ze džbánu čistou vodu. Potom se vrátí zpět ke svému stolu a nevěnuje ti další pozornost."
+            else:
+                $ rauvin.say("O něčem podobném už jsme se ale nedávno bavili a ty ses zřejmě nepoučil[a].", "angry")
+                $ rauvin.say("Já potřebuji hlídkaře, kteří dělají svou práci a na které se mohu spolehnout. Ne hlídkaře, kteří zatýkají, koho je napadne.")
+                $ rauvin.say("Vrať mi tedy glejt a pak si můžeš jít hledat nějaké vhodnější zaměstnání.")
+                "Nadechneš se k odpovědi, Rauvinův pohled je ale nesmlouvavý a ty pochopíš, že jeho rozhodnutí je nezvratné."
+                "Nepříliš ochotně odevzdáš glejt a s ním se vzdáš i naděje, že ti hlídka přinese obživu a budoucnost."
+                scene bg door01
+                "Na ulici před strážnicí potom přemýšlíš, kam jinam v tomto městě nebo někde jinde můžeš patřit."
+                jump thrownOut
+
     return

@@ -258,8 +258,8 @@ label adaOptions:
         "Tušíš, jaký vztah mají tví rodiče?" if lotte.alreadyMet == True and "parents relationship" not in ada.asked:
             hide mcPic
             $ ada.asked.append("parents relationship")
-            $ ada.say("Táta si myslí, že když občas mámě koupí drahý šperk, spraví se tím to všechno ostatní. Vůbec nechápe, že žena občas potřebuje třeba báseň, nebo něco jiného od srdce.")
-            "Dívka se mírně začervená."
+            $ ada.say("Táta si myslí, že když občas mámě koupí drahý šperk, spraví se tím to všechno ostatní.")
+            $ ada.say("Vůbec nechápe, že žena občas potřebuje třeba báseň, nebo něco jiného od srdce.", "blushing")
         "To je ze zkušenosti?" if "parents relationship" in ada.asked and "experience" not in ada.asked:
             hide mcPic
             $ ada.asked.append("experience")
@@ -303,7 +303,7 @@ label adaOptions:
                 "Prý vás spolu viděli a někdo ti posílal dopisy...":
                     hide mcPic
                     $ ada.trust -= 1
-                    $ ada.say("Ale to nebyl...")
+                    $ ada.say("Ale to nebyl...", "surprised")
                     "Dívka se zamračí a pokrčí rameny."
                     $ ada.say("Stejně mi tady nikdo nevěří.", "angry")
                 "Já ti věřím.":

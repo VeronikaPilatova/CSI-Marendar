@@ -10,3 +10,4 @@ game/saves/navigation.json
 game/saves/persistent
 .gitattributes
 errors.txt
+game/tl/None/common.rpymc

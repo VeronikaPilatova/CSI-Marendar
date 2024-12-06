@@ -97,44 +97,45 @@ label preparation:
     default investigationStart = "dnes"
     default festivalStart = "za čtyři dny"
 
-    # characters
+    # characters - watch
+    default hayfa = Person("Hayfa", "hayfa")
+    default rauvin = Person("Rauvin", "rauvin")
+    default runa = Person("Runa", "runa")
+    default solian = Person("Solian", "solian")
+    default messenger = Person("Melien", "messenger")
+    # characters - case 1
     default ada = Person("Ada", "ada")
-    default angryWoman = Person("Žena", "angry woman")
-    default assistant = Person("Pomocník v knihovně", "assistant")
     default eckhard = Person("Eckhard", "eckhard", "hungover")
     default erle = Person("Žebračka Erle", "erle")
     default gerd = Person("Gerd", "gerd")
-    default hayfa = Person("Hayfa", "hayfa")
     default kaspar = Person("Mistr Kaspar", "kaspar")
     default laris = Person("Laris", "laris")
     default liese = Person("Liese", "liese")
     default lisbeth = Person("Lisbeth", "lisbeth")
-    default locksmith = Person("Zámečník", "locksmith")
     default lotte = Person("Lotte", "lotte")
     default merchant = Person("Karsten", "merchant")
-    default messenger = Person("Melien", "messenger")
     default nirevia = Person("Nirevia", "nirevia")
     default njal = Person("Mistr Njal", "njal")
     default optimist = Person("Ferdi", "apprentice1", "hungover")
-    default rauvin = Person("Rauvin", "rauvin")
     default rovien = Person("Rovien", "rovien")
     default rumelin = Person("Cechmistr Rumelin", "rumelin")
     default sabri = Person("Sabri", "sabri")
     default salma = Person("Hostinská Salma", "salma")
-    default solian = Person("Solian", "solian")
     default son = Person("Aachim", "son", "hungover")
     default victim = Person("Mistr Heinrich", "victim")
     default yesman = Person("Rudi", "apprentice2", "hungover")
     default zairis = Person("Zairis", "zairis")
     default zeran = Person("Zeran", "zeran")
+    # characters - other
+    default angryWoman = Person("Žena", "angry woman")
+    default assistant = Person("Pomocník v knihovně", "assistant")
     default racist = Person("Obchodník", "angry merchant")
     default katrin = Person("Tanečnice", "katrin")
     default kilian = Person("Hráč na lyru", "kilian")
-    default runa = Person("Runa", "runa")
-
     default anon1 = Person("Měšťan", "anon1")
     default anon2 = Person("Mešťan", "anon2")
     default anon3 = Person("Měšťanka", "anon3")
+    default locksmith = Person("Zámečník", "locksmith")
 
     # character initial relationships
     $ lisbeth.relationships["victim"] = 2

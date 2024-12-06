@@ -12,15 +12,15 @@ label workshopController:
 
     # visit itself
     if "straight to workshop" in status:
-        call straightToWorkshop from _call_straightToWorkshop
-    elif time.days == 1 and time.hours < 14:
-        call workshopNotCleaned from _call_workshopNotCleaned
+        call straightToWorkshop
+    if time.days == 1 and time.hours < 14 and time.minutes < 20:
+        call workshopNotCleaned
     elif "workshop visited" not in status:
-        call workshopCleanedFirst from _call_workshopCleanedFirst
+        call workshopCleanedFirst
     else:
-        call workshopAgain from _call_workshopAgain
-    call workshopOptions from _call_workshopOptions
-    call leavingWorkshop from _call_leavingWorkshop
+        call workshopAgain
+    call workshopOptions
+    call leavingWorkshop
 
     # adjust time and status
     $ time.addMinutes((len(workshop.checked) - len(origAsked)) * 5)
@@ -96,6 +96,7 @@ label straightToWorkshop:
         "{i}(Jít dovnitř){/i}":
             hide mcPic
     $ flag = ""
+    return
 
 label workshopNotCleaned:
     scene bg workshop

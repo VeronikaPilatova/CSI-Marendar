@@ -112,12 +112,14 @@ menu:
         hide mcPic
         $ victim.say("Jsou to nádherné dámské střevíce z nejjemnější kůže. Precizně tvarované, složité šněrování, barvené drahou fialovou barvou. Zlaté stuhy a jemné zdobení. Druhé takové ve městě určitě nejsou.")
         $ clues.append("shoes description")
+        $ victim.asked.append("shoes description")
         jump firstInterviewStart
 
 label firstInterview1:
 $ victim.say("Včera jsem střevíce dokončil, bylo to už dost k večeru. Tak jsem to šel oslavit k Salmě. Dobře jsme se bavili s Eckhardem, dokonce jsem na oslavu zaplatil rundu celé hospodě.")
 $ victim.say("Ale pak se do toho vložil Rumelin. Že prý na vedení cechu nemám… jak on to… přístup. Otřásá se pod ním židle, tak by mě rád odstrašil.")
 $ victim.say("Tak jsem si dal ještě něco na vztek… a pak mě Eckhard doprovodil domů a šel jsem rovnou spát.")
+$ time.addMinutes(8)
 $ eckhardNote.isActive = True
 if "Eckhard" not in clues:
     $ clues.append("Eckhard")
@@ -130,9 +132,9 @@ $ flag = True
 label firstInterviewReaction:
 show mcPic at menuImage
 menu:
-    "Měl jste všechno nechat tak, jak to bylo." if flag is True:
+    "Měl jste všechno nechat tak, jak to bylo." if "disturbed crime scene" not in victim.asked:
         hide mcPic
-        $ flag = False
+        $ victim.asked.append("disturbed crime scene")
         $ victim.say("To jsem tam měl nechat ten chlívek? To stejně nebude po zloději, takhle to tam vypadá vždycky, když jdu ven a nedohlídnu na to, aby tam kluci uklidili.", "angry")
         $ victim.trust -= 1
         jump firstInterviewReaction
@@ -155,7 +157,7 @@ menu:
         hide mcPic
 
 label whereToStart:
-$ flag = ""
+$ time.addMinutes(len(victim.asked)* 4)
 $ victim.say("Tak kde začnete?")
 show mcPic at menuImage
 menu:
@@ -185,6 +187,7 @@ label firstInterviewQuestions:
     menu:
         "Můžete mi popsat ztracenou věc?" if "shoes description" not in clues:
             hide mcPic
+            $ victim.asked.append("shoes description")
             $ victim.say("Jsou to nádherné dámské střevíce z nejjemnější kůže. Precizně tvarované, složité šněrování, barvené drahou fialovou barvou. Zlaté stuhy a jemné zdobení. Druhé takové ve městě určitě nejsou.")
             $ clues.append("shoes description")
         "Kdo další byl U Salmy, kdo se mohl o vaše dílo zajímat?" if "people in pub" not in victim.asked:

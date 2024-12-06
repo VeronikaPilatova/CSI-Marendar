@@ -47,7 +47,7 @@ label lieseOptions:
 
     show mcPic at menuImage
     menu:
-        "Na jaké pochůzce mohl být tak pozdě v noci?" if "errand" not in liese.asked:
+        "Na jaké pochůzce mohl ten učedník být tak pozdě v noci?" if "errand" not in liese.asked:
             hide mcPic
             $ liese.asked.append("errand")
             $ liese.say("Omlouvám se, ale to opravdu netuším.")

@@ -84,7 +84,7 @@ label rumelinAgain:
 label rumelinClosedDoor:
     # closed door at work - able to use favour when owed
     if time.hours < 18:
-        scene bg  inside
+        scene bg inside
         "Cechmistr Rumelin při pohledu na tebe nijak nezmění výraz, ale za jeho chladnou zdvořilostí můžeš jasně číst nepřátelství."
         if "rumelin exposed" in status:
             $ rumelin.say("Nečekal jsem, že se tu ještě ukážete.")
@@ -180,9 +180,7 @@ label rumelinOptions:
             $ rumelin.asked.append("main suspect")
             $ rumelin.trust -= 1
             $ rumelin.say("Dnes možná, zítra to bude možná někdo jiný. Co se mě týče, uznávám ho jako mistra oboru a rozhodně bych mu neukradl dílo, jakkoli se mi nelíbí jeho přístup k lidem.")
-        "Víte, kde bych našel ty zbývající učedníky?" if "enemies" in rumelin.asked and "fired apprentices" not in clues and gender == "M":
-            call firedApprentices
-        "Víte, kde bych našla ty zbývající učedníky?" if "enemies" in rumelin.asked and "fired apprentices" not in clues and gender == "F":
+        "Víte, kde bych na[sel] ty zbývající učedníky?" if "enemies" in rumelin.asked and "fired apprentices" not in clues:
             call firedApprentices
         "S kým má mistr Heinrich spory mimo svou dílnu?" if "enemies" in rumelin.asked and "enemies2" not in rumelin.asked:
             hide mcPic
@@ -210,12 +208,11 @@ label rumelinOptions:
                 $ rumelin.say("Proč bych něco takového dělal?")
                 if "less deals checked" in status:
                     $ mc.say("Poslední dva týdny vás nikdo neviděl uzavírat smlouvu na nákup materiálu v žádné hospodě ve městě.")
-                    $ rumelin.say("Musel bych se podívat do svého účetnictví, ale je možné, že mi zrovna žádný nechyběl. Nebo si možná hostinští nepamatují každou smlouvu.")
                 else:
                     $ mc.say("Hostinská Salma se zmínila, že vás už dlouho neviděla uzavírat vaše obvyklé smlouvy na nákup materiálu.")
-                    $ rumelin.say("Musel bych se podívat do svého účetnictví, ale je možné, že mi zrovna žádný nechyběl. Nebo si možná Salma nepamatuje každou smlouvu.")
-                $ mc.say("Neměl by si právě svědek smlouvu pamatovat?")
-                $ rumelin.say("To bohužel nemám možnost ovlivnit. Je to všechno?")
+                $ rumelin.say("To je možné. Myslím, že se mi všechny obchody podařilo uzavřít přímo s dotyčnými obchodníky u nich nebo v cechovní budově a nebylo potřeba kvůli tomu nikam chodit.")
+                $ mc.say("Nebývá zvykem uzavírat smlouvy přede svědky?")
+                $ rumelin.say("Když se s partnerem dobře známe, není to nutné. Navíc to je pouze pro naše bezpečí a vám do toho nic není. Je to všechno?", "angry")
                 if rumelin.cluesAgainst == 4:
                     call rumelinConfession
         "Tušíte, jak by město vzalo, kdyby dva mistři předložili na Einionových slavnostech společný výrobek?" if "join forces victim pending" in status and "join forces" not in rumelin.asked:
@@ -239,8 +236,8 @@ label rumelinOptions:
                 return
             else:
                 $ mc.say("Podle ní Karsten jednal podle vašich instrukcí.")
-                $ rumelin.say("A jaké instrukce tom podle ní měly být?")
-                $ mc.say("Neprodávat konkrétní materiál mistru Njalovi, bez rozumného důvodu. Tak se pochopitelně zajímám, co jste tím sledoval.")
+                $ rumelin.say("A jaké instrukce to podle ní měly být?")
+                $ mc.say("Neprodávat konkrétní materiál nikomu jinému než vám, bez rozumného důvodu. Tak se pochopitelně zajímám, co jste tím sledoval.")
                 $ rumelin.say("Mě by zase zajímalo, co podobným očerňováním sleduje paní Lotte. Může se snažit rozeštvat náš cech, ale přineslo by jí to něco?")
         "Takže když se zeptám dalších obchodníků, řeknou mi něco jiného než paní Lotte?" if "Lotte info" in rumelin.asked and "confession" not in rumelin.asked and "other merchants" not in rumelin.asked:
             hide mcPic
@@ -389,6 +386,7 @@ label rumelinTooManyQuestions:
     menu:
         "Omlouvám se.":
             hide mcPic
+            $ rumelin.trust += 1
         "Mám povinnost vyšetřit jakékoliv podezření na možný zločin.":
             hide mcPic
             $ rumelin.say("A také je vaší povinností krotit svůj zápal a neplýtvat časem počestných lidí ani časem hlídky, kterou platíme ze svých daní.", "angry")
@@ -399,11 +397,11 @@ label rumelinTooManyQuestions:
 
 label rumelinConfession:
     $ mc.say("Takže si to shrňme.")
-    $ mc.say("Salma si všimla, že jste přestal uzavírat obchody tak, jak jste byl zvyklý, aniž by k tomu byl známý důvod. Tvrdíte, že šlo o společné nákupy materiálu, ale k Njalovi se žádný materiál nedostal a ostatní mistři pořád nakupují sami za sebe.")
-    $ mc.say("Karsten dostal přímo od vás instrukce, že s Njalem nemá obchodovat, ale nesměl říct žádné vysvětlení.")
+    $ mc.say("Takže si to shrňme. Salma si všimla, že jste přestal uzavírat obchody tak, jak jste byl zvyklý, aniž by k tomu byl známý důvod. Místo toho jste vykoupil všechny zásoby určitého materiálu a zajistil, že se k němu jiní mistři nedokážou dostat.")
+    $ mc.say("Tvrdíte, že jde o nějaký plán, jak pomoci celému cechu, ale mistra Njala tyto obchody přímo poškozují a Karsten dostal přímo od vás instrukci, že o tomto obchodu nesmí s nikým mluvit ani ho na vás odkázat.")
     if "bulk orders" in zairis.asked:
         $ mc.say("Navíc váš synovec Zairis říká, že myšlenku společných nákupů jste sám už dávno zavrhl jako neuskutečnitelnou.")
-    $ mc.say("Určitě pochopíte, že mě zajímá, co za tím stojí, a že pokud se to nedozvím od vás, budu se muset vyptávat mnohem více lidí. Je naše povinnost vyšetřit jakékoli podezření na snahu někoho poškodit.")
+    $ mc.say("Určitě pochopíte, že mě zajímá, co za tím stojí, a že pokud se to nedozvím od vás, budu se muset vyptávat mnohem více lidí. Je naše povinnost vyšetřit jakékoli podezření na snahu někoho poškodit. V tomto případě přinejmenším mistra Njala.")
     $ rumelin.say("Snaha někoho poškodit? Njal chtěl poškodit celý cech. Ten tvrdohlavý trpaslík mi nenechal žádnou jinou možnost, jak zachovat tvář všem.", "angry")
     $ mc.say("Poslouchám.")
     $ rumelin.say("Njal chtěl… přijít na Einionovy slavnosti se stejným výrobkem, jako jiný mistr. Jen proto, aby toho druhého zesměšnil.")
@@ -415,7 +413,9 @@ label rumelinConfession:
         $ rumelin.say("Měl s Heinrichem nějaký spor o autorství střihu na střevíce, které Heinrich šil na slavnosti. Chtěl, abych to vyřešil, ale jak, když s Heinrichem se nedá rozumně mluvit?")
         $ rumelin.say("A místo toho, aby si to nechal vysvětlit, si Njal musel postavit hlavu také.", "angry")
     $ rumelin.say("Zpomalit Njala bylo nejmenší zlo.")
-    $ rumelin.say("Už měl i rozpracovaný jiný výrobek, doufal jsem, že se prostě vrátí ke svému původnímu nápadu. Opravdu nechápu, proč to neudělal, pak by tu žádný problém nebyl.")
+    $ rumelin.say("Už měl i rozpracovaný jiný výrobek, doufal jsem, že se prostě vrátí ke svému původnímu nápadu. Opravdu nechápu, proč to neudělal, pak by tu žádný problém nebyl.", "angry")
+    $ rumelin.say("Myslíte, že mě to celé těší? Pořídit ty společné zásoby mě stálo spoustu peněz a stejně se může snadno stát, že mě v cechu nepochopí a já kvůli tomu prohraju volbu.", "angry")
+    $ rumelin.say("Ale kdyby udělal na slavnostech ten svůj skandál, vyčítali by mi to úplně stejně.", "angry")
     $ rumelin.asked.append("confession")
     return
 
