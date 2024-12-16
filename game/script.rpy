@@ -102,7 +102,7 @@ label preparation:
     default rauvin = Person("Rauvin", "rauvin")
     default runa = Person("Runa", "runa")
     default solian = Person("Solian", "solian")
-    default messenger = Person("Melien", "messenger")
+    default melien = Person("Melien", "melien")
     # characters - case 1
     default ada = Person("Ada", "ada")
     default eckhard = Person("Eckhard", "eckhard", "hungover")
@@ -184,8 +184,10 @@ label preparation:
     default a = "/a" # additional letter for female
     default e = "/e" # additional letter for female
     default y = "ý/á" # gendering some adjectives
+    default pronoun3 = "mu/jí" # personal pronoun, 3rd case
     default pronoun4 = "ho/ji" # personal pronoun, 4th case
     default pronoun7 = "ním/ní" # personal pronoun, 7th case
+    default pronounPossessive = "jeho/její" # personal pronoun, possessive
     default sel = "šel/šla"
     default sam = "sám/sama"
 
@@ -215,6 +217,7 @@ label preparation:
     call libraryPreparation
     default chosenChar = ""
     default chosenTopic = ""
+    default readingTopic = ""
     default currentLocation = ""
     default lastSpokenWith = ""
     default refusedBy = ""
@@ -222,6 +225,7 @@ label preparation:
     default visitGuardhouseReminder = ""
     default njalOptionsRemaining = 1
     default gerdOptionsRemaining = 1
+    default timeOfDay = "day"
     # variables - achievement helpers
     default persistent.zeranArrestReasons = []
     default persistent.arrestedPeople = []

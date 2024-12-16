@@ -93,7 +93,7 @@ label straightToWorkshop:
             $ victim.say("Chci říct, ehm… no to je jedno. Ale za tím Eckhardem stejně budu muset zajít.", "angry")
             $ victim.say("Tak pojďme, ať tu nestojíme celý den.")
             jump frontOfWorkshopReaction
-        "{i}(Jít dovnitř){/i}":
+        "{i}(Jít dovnitř přes dům){/i}":
             hide mcPic
     $ flag = ""
     return

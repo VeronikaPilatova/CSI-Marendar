@@ -27,10 +27,6 @@ label endOfDay:
     if "seen during break in" in status:
         jump workshopNightArrestAfter
 
-    show bg hayloft dawn
-    with Fade(0.5, 1.0, 0.5)
-    "Probudí tě nemilosrdné ranní slunce. Chce se ti obrátit na druhý bok, zahrabat do sena a spát dál, ale brzy se máš hlásit na strážnici na strážnici."
-
     # technical
     if time.days == 1:
         if son.imageParameter == "hungover":
@@ -69,4 +65,20 @@ label endOfDay:
         $ dayOfCrime = "v den krádeže"
         $ investigationStart = "den po krádeži"
         $ festivalStart = "dnes"
+
+    # start of day
+    show bg hayloft dawn
+    with Fade(0.5, 1.0, 0.5)
+    "Probudí tě nemilosrdné ranní slunce. Chce se ti obrátit na druhý bok, zahrabat do sena a spát dál, ale brzy se máš hlásit na strážnici."
+
+    if time.days == 2:
+        call firstStandUp
+        call kilianEncounter
+    elif time.days == 3:
+        call secondStandup
+    elif time.days == 4:
+        call thirdStandup
+    $ timeOfDay = "standup"
+    call guardhouseAgain
+
     return

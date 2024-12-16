@@ -203,7 +203,7 @@ label leavingRovienHouse:
                 call writingComparisonZairis
                 $ chosenTopic = "stealPoetry"
                 call libraryController
-            "{i}(Vrátit se na strážnici){i}":
+            "{i}(Vrátit se na strážnici a poezií se dále nezabývat){i}":
                 call writingComparisonZairis
     return
 

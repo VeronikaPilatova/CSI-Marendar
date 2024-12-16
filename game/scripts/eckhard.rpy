@@ -163,7 +163,7 @@ label eckhardOptions:
             $ eckhard.asked.append("coming home")
             $ eckhard.say("Až úplně doma.")
             if "carrying key" in status or time.days > 1 or time.hours > 16:
-                $ eckhard.say("Až úplně doma. Já Heinricha dovedl k domu a on trval na tom, že dovnitř musíme přes dílnu, aby se nevzbudila ta jeho semetrika. Chvíli se pral s klíčem, pak jsem nějak odemkl já a on potom…")
+                $ eckhard.say("Já Heinricha dovedl k domu a on trval na tom, že dovnitř musíme přes dílnu, aby se nevzbudila ta jeho semetrika. Chvíli se pral s klíčem, pak jsem nějak odemkl já a on potom…")
                 $ eckhard.say("...a potom jsem ten klíč asi zapomněl vrátit.")
                 if "carrying key" in status:
                     $ eckhard.say("A teď ho máte vy.")

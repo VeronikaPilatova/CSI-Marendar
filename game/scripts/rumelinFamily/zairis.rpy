@@ -303,8 +303,42 @@ label mcBadPoet:
 label mcPoemReaction:
     "Podáš Zairisovi list papíru a ten se dychtivě pustí do čtení."
     if "poem stolen" in status:
+        $ zairis.trust -= 4
         "Skoro okamžitě se ale jeho výraz změní."
-        $ zairis.say("To je Théodore de Banville. Jeho básně znám velmi dobře.", "angry")
+        $ zairis.say("To je Théodore de Banville.", "angry")
+        $ zairis.say("To tě přece muselo napadnout, že básně tady z knihovny nejspíš budu znát. Tolik jich tam bohužel ještě není.", "angry")
+        $ zairis.say("Ale hlavně… proč? To se mi tak moc pokoušíš zalíbit? Co doufáš, že ti řeknu nebo pro tebe udělám?", "surprised")
+        $ zairis.say("A má vůbec smysl ti vysvětlovat, že tohle je také krádež, stejně jako sebrat někomu mistrovský výrobek? Jak mám důvěřovat strážným, když ani nepoznají zlodějinu a sami se jí dopouští?", "angry")
+        $ zairis.say("Já tě asi nechápu. Co tedy doopravdy potřebuješ?", "angry")
+        return
+    elif "poem watch" in status:
+        $ zairis.say("Myslím, že jsem se ještě nesetkal s tím, že by v básni někdo tímhle způsobem k někomu promlouval. V milostné lyrice se hovoří k dámě, ale pochopitelně výrazně jiným způsobem.")
+        $ zairis.say("Říkám si, nechceš zkusit napsat divadlo? Tam by se to výborně hodilo.")
+        $ zairis.say("Nebo jenom scénku, divadelní hra je přece jenom dlouhá.")
+    elif "poem hope" in status:
+        $ zairis.say("Hm, tolik víry v budoucnost se v poezii jen tak nenajde. Možná to je škoda, dává to hodně příjemný pocit a přiměje to jednoho uvědomit si, že na světě není tak špatně.", "happy")
+        $ zairis.say("Přijde mi to jako pěkná volba. Možná bych něco takového také měl někdy zkusit.", "happy")
+    elif "poem poverty" in status:
+        $ zairis.say("Vážně je to tak špatné? Měl jsem za to, že je tu snaha věci zlepšit.", "surprised")
+        $ zairis.say("Přinejmenším už v zemi není tolik banditů jako ještě před pár lety. Nebo to má být poetická nadsázka?")
+        show mcPic at menuImage
+        menu:
+            "Pro někoho se možná věci lepší, ale rozhodně ne pro všechny.":
+                hide mcPic
+            "Nemá poezie hlavně vyvolávat emoce?":
+                hide mcPic
+            "To nic neznamená, prostě jsem zrovna měl[a] hlad.":
+                hide mcPic
+        $ zairis.say("Nemůžu tomu upřít působivost, byť to asi není druh poezie, kterým by někdo chtěl trávit každý večer.")
+    $ zairis.say("Rozhodně oceňuji rytmus a rýmy. Ne každý je udrží celou báseň takhle dobré.", "happy")
+    $ zairis.say("Co by mě ale zajímalo, nejsem zvyklý na to, že bývají myšlenky řečené takhle zpříma. Většinou bývají víc zabalené do metafor. Je to úmysl, aby to působilo úderněji?")
+    "Zairis má podobných dotazů více a rychle z nich vyklíčí živý rozhovor, v němž hledáte nejvýstižnější možná slova, zvažujete použití nejrůznějších básnických obratů a občas se vracíte k celkovému toku myšlenek a pocitů v celé básni."
+    "Ačkoli si uvědomuješ, že ti v literární tvorbě chybí zkušenost, netrvá dlouho a cítíš se skoro jako básník."
+    "Potom doba pokročí, téma se na určitou chvíli vyčerpá a ty se rozhlédneš kolem sebe."
+    $ time.addHours(1)
+    $ mc.say("Jakkoli bych s tebou takhle mluvil[a] klidně ještě dlouho, bojím se, že toho ještě dnes musím docela dost oběhnout.")
+    $ zairis.say("Pravda je, že mě otec asi také brzy začne podezřívat, jestli se nevyhýbám práci...", "sad")
+    $ zairis.say("Potřebuješ ještě něco ke svému případu?")
     return
 
 label zairisLettersForAdaFirstMention:

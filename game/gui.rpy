@@ -64,7 +64,7 @@ define gui.name_text_font = "fonts/Kalam-Regular.ttf"
 define gui.interface_text_font = "fonts/Kalam-Regular.ttf"
 
 ## The size of normal dialogue text.
-define gui.text_size = 33
+define gui.text_size = 30
 
 ## The size of character names.
 define gui.name_text_size = 45

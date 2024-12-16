@@ -397,14 +397,14 @@ label rumelinTooManyQuestions:
 
 label rumelinConfession:
     $ mc.say("Takže si to shrňme.")
-    $ mc.say("Takže si to shrňme. Salma si všimla, že jste přestal uzavírat obchody tak, jak jste byl zvyklý, aniž by k tomu byl známý důvod. Místo toho jste vykoupil všechny zásoby určitého materiálu a zajistil, že se k němu jiní mistři nedokážou dostat.")
+    $ mc.say("Salma si všimla, že jste přestal uzavírat obchody tak, jak jste byl zvyklý, aniž by k tomu byl známý důvod. Místo toho jste vykoupil všechny zásoby určitého materiálu a zajistil, že se k němu jiní mistři nedokážou dostat.")
     $ mc.say("Tvrdíte, že jde o nějaký plán, jak pomoci celému cechu, ale mistra Njala tyto obchody přímo poškozují a Karsten dostal přímo od vás instrukci, že o tomto obchodu nesmí s nikým mluvit ani ho na vás odkázat.")
     if "bulk orders" in zairis.asked:
-        $ mc.say("Navíc váš synovec Zairis říká, že myšlenku společných nákupů jste sám už dávno zavrhl jako neuskutečnitelnou.")
+        $ mc.say("Navíc váš synovec Zairis říká, že myšlenku společných nákupů jste sám už dávno zavrhl jako neuskutečnitelnou. Tvorba společného skladu přitom přece musí být ještě těžší, to jsou také společné nákupy, ale navíc do zásoby.")
     $ mc.say("Určitě pochopíte, že mě zajímá, co za tím stojí, a že pokud se to nedozvím od vás, budu se muset vyptávat mnohem více lidí. Je naše povinnost vyšetřit jakékoli podezření na snahu někoho poškodit. V tomto případě přinejmenším mistra Njala.")
     $ rumelin.say("Snaha někoho poškodit? Njal chtěl poškodit celý cech. Ten tvrdohlavý trpaslík mi nenechal žádnou jinou možnost, jak zachovat tvář všem.", "angry")
     $ mc.say("Poslouchám.")
-    $ rumelin.say("Njal chtěl… přijít na Einionovy slavnosti se stejným výrobkem, jako jiný mistr. Jen proto, aby toho druhého zesměšnil.")
+    $ rumelin.say("Njal chtěl… přijít na Einionovy slavnosti se stejným výrobkem jako jiný mistr. Jen proto, aby toho druhého zesměšnil.")
     if "police business" in njal.asked:
         $ mc.say("Nepožadoval ještě předtím vrácení svého střihu, podle kterého mistr Heinrich své dílo vytvořil?")
         $ rumelin.say("To ale na celém problému nic nemění. Co jsem mohl dělat, když s Heinrichem se nedá rozumně mluvit?", "angry")

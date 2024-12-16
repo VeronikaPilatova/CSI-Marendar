@@ -33,19 +33,23 @@ label gender:
             $ a = ""
             $ e = ""
             $ y = "ý"
+            $ pronoun3 = "mu"
             $ pronoun4 = "ho"
             $ pronoun7 = "ním"
             $ sel = "šel"
             $ sam = "sám"
+            $ pronounPossessive = "jeho"
         "Žena":
             $ gender = "F"
             $ a = "a"
             $ e = "e"
             $ y = "á"
+            $ pronoun3 = "jí"
             $ pronoun4 = "ji"
             $ pronoun7 = "ní"
             $ sel = "šla"
             $ sam = "sama"
+            $ pronounPossessive = "její"
 
 $ pic = 1
 label looks:
