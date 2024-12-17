@@ -3,6 +3,7 @@ label boysMain:
     $ apprentice1Note.isActive = True
     $ apprentice2Note.isActive = True
     $ lastSpokenWith = "boys"
+    $ heinrichHouseholdSpokenWith.append("boys")
 
     $ origAsked = boysAsked.copy()
     if "boys met" not in status:
@@ -130,6 +131,84 @@ label boysOptions:
             $ yesman.say("Mluvili jsme hlavně o holkách.", "blushing")
             $ yesman.say("Prý se určitě líbí hrnčířovic Mirce, ale podle mě si vymýšlí. Vždyť je o rok mladší než ona.")
             $ son.say("Já se s ním moc nevídám. Přeci jen odešel z dílny mého otce, je to trochu nepříjemné.")
+        "Gerd prý byl v noci tady v dílně, když se ty boty ztratily. Víte o tom něco?" if "fired apprentices" in clues and "which apprentice" in liese.asked and "Gerd in workshop" not in boysAsked:
+            hide mcPic
+            $ boysAsked.append("Gerd in workshop")
+            if "no privacy" in status:
+                $ optimist.trust -= 2
+                $ yesman.trust -= 2
+                $ son.trust -= 2
+                $ ada.trust -= 2
+                "Učedníci se po sobě překvapeně podívají, než však stihnou odpovědět, ozve se jejich mistr."
+                $ victim.say("Jak, že byl tady v dílně? Co si dovoluje sem lézt?", "angry")
+                $ optimist.say("Víte to jistě?", "surprised")
+                show mcPic at menuImage
+                menu:
+                    "Nevím, proto se vás ptám.":
+                        hide mcPic
+                        $ victim.trust -= 1
+                        $ optimist.say("No já ho tady rozhodně neviděl.")
+                        $ yesman.say("Ani já.")
+                        $ son.say("Já také ne.")
+                        $ victim.say("Tak kdo s tím tedy přišel?", "angry")
+                        $ son.say("Někdo se musel splést.")
+                        $ yesman.say("Proč by sem chodil? U mistra Njala mu je dobře.")
+                        $ optimist.say("... protože se tam může jít vyspat po dni plném dřiny, takže určitě nebude někde trajdat. To jsi chtěl říct, že jo?")
+                        $ yesman.say("... ano, přesně to.")
+                        $ victim.say("Tak proč tady řešíme něco, co nikdo neviděl a co ani nedává smysl, aby se stalo? Všichni máme důležitější práci než tohle.", "angry")
+                    "Gerd to sám přiznal." if "stolen idea" in clues:
+                        hide mcPic
+                        $ boysAsked.append("Gerd in workshop - confession")
+                        $ victim.say("A ještě má tu drzost to přiznat!", "angry")
+                        call heinrichLearnsAboutGerdInWorkshop
+                    "Viděla ho jedna ze sousedek.":
+                        hide mcPic
+                        $ victim.say("Která?", "angry")
+                        show mcPic at menuImage
+                        menu:
+                            "Lotte.":
+                                hide mcPic
+                                $ victim.say("Tak to ses nechal nachytat. Je to drbna a navíc mě nemá ráda.", "angry")
+                                $ victim.say("Radši jdi po nějaké lepší stopě.")
+                                jump boysOptions
+                            "Liese.":
+                                hide mcPic
+                                $ victim.say("To dává smysl, pořád jí řve děcko, tak může v noci koukat z okna.", "angry")
+                            "To musím nechat v tajnosti.":
+                                hide mcPic
+                                $ victim.say("Stejně na tom nezáleží, jsou jedna jako druhá.", "angry")
+                        call heinrichLearnsAboutGerdInWorkshop
+            else:
+                "Učedníci se po sobě překvapeně podívají."
+                $ yesman.say("Co by tady dělal?", "surprised")
+                $ optimist.say("Není to nějaká mýlka?", "surprised")
+                $ mc.say("Viděla ho jedna ze sousedek.")
+                $ optimist.say("To se musela splést. Většinu večera jsme tu… uklízeli a Gerd sem rozhodně nepřišel. To bychom si pamatovali.")
+                $ yesman.say("No, mně se některé věci trochu ztrácejí...")
+                $ optimist.say("Tohle bychom nezapomněli.")
+                $ son.say("Myslíte... že by mohl Gerd stát za tou krádeží?", "surprised")
+                show mcPic at menuImage
+                menu:
+                    "Připadá mi to pravděpodobné.":
+                        hide mcPic
+                        $ son.trust -= 1
+                        $ optimist.trust -= 1
+                        $ yesman.trust -= 1
+                        $ optimist.say("Ale proč? Vždyť by tím nic nezískal.", "surprised")
+                        $ mc.say("Určité indicie k němu vedou. Další vyšetřování stále může ukázat, že je nevinný. Nebo také ne.")
+                    "Spíše tomu nevěřím.":
+                        hide mcPic
+                    "Teprve se snažím udělat si obrázek.":
+                        hide mcPic
+                    "To je podrobnost případu, kterou nemůžu říkat.":
+                        hide mcPic
+                "Učedníci si vymění pohledy a trochu nervózně pokývnou."
+                $ optimist.say("Ale vážně nevidím důvod, proč by Gerd ty boty kradl.")
+                $ yesman.say("Přesně. Vždyť by mu ani nebyly.")
+                $ yesman.say("Jedině že by je chtěl dát nějaké holce...")
+                $ yesman.say("Ale to by neudělal.")
+                $ son.say("Možná kdyby byl pod nějakým tlakem.")
+                $ optimist.say("To jedině. Ale co já vím, žije se mu teď dobře.")
         "Jak dlouho jste u mistra Heinricha?" if "how long here" not in boysAsked:
             hide mcPic
             $ boysAsked.append("how long here")
@@ -431,6 +510,54 @@ label boysOptions:
             return
     jump boysOptions
 
+label heinrichLearnsAboutGerdInWorkshop:
+    $ victim.say("Toho spratka si podám a jeho povedeného mistra také.", "angry")
+    $ victim.say("Nebo k tomu máš ještě něco?", "angry")
+    $ son.say("Kdy jste se to vlastně dozvěděl[a]?")
+    show mcPic at menuImage
+    menu:
+        "Prý odnesl střih, podle kterého byly zhotovené ty ukradené boty.":
+            hide mcPic
+            $ victim.say("Aha.", "furious")
+            $ victim.say("A přemýšlel[a] jsi nad tím, k čemu by to bylo?", "angry")
+            $ victim.say("Střihy se nekradou, střihy nejsou žádná cennost. To každý ví.", "angry")
+            $ victim.say("Zjisti si něco o ševcovině a nevěř každé pohádce, co ti někdo nakuká.", "angry")
+            return
+        "Zjistil[a] jsem to dnes." if gerdInWorkshopDiscovered.days == time.days:
+            hide mcPic
+            label gerdInWorkshopDiscoveredRecently:
+            if gerdInWorkshopDiscovered.days > 1 and "Gerd in workshop - neighbour" in boysAsked:
+                $ victim.trust -= 2
+                $ rauvin.trust -= 1
+                $ hayfa.trust -= 1
+                $ son.say("Ale sousedů jste se přece musel[a] ptát hned na začátku, nebo ne? Kromě nás z domu měli největší naději, že si něčeho všimnou.", "surprised")
+                $ victim.say("To je pravda! To jsi to pátrání hned od začátku tak flinkal[a], nebo mi teď lžeš?", "angry")
+                $ mc.say("Nejdřív jsem musel[a]...")
+                $ victim.say("Víš co? Mě to nezajímá. Očividně máš v pátrání co dohánět, tak to mazej dohnat a přestaň nás všechny zdržovat.")
+            elif len(boysAsked) - len(origAsked) < 3 and len(heinrichHouseholdSpokenWith) == 1:
+                $ victim.say("To je dobře, že s tím jdeš hned. Mně do dílny bez pozvání nikdo lézt nebude.", "angry")
+                $ son.say("Ale jak potom... ne, počkat...", "surprised")
+                $ victim.say("Co?", "angry")
+                $ son.say("Nic, myslel jsem, že mě něco napadlo, ale byla to hloupost.")
+                $ victim.say("Kdybys radši přemýšlel u šití.", "angry")
+                $ victim.say("[callingMc].capitalize(), máš ještě nějaké otázky, nebo můžeme jít zase pracovat?")
+            else:
+                $ victim.trust -= 1
+                $ son.say("Ale tady v domě jste už pěknou dobu a takhle důležitou věci si schováváte? Vždyť se tátovi mohla objevit nějaká neodkladná záležitost, kdy by se to potom dozvěděl?", "surprised")
+                $ victim.say("Přesně! Řešíš tady kdovíco a na takhle důležitou novinu málem vůbec nedošlo. Tak si představuješ dobrou práci?", "angry")
+                $ victim.say("Očekávám, že když se hrabeš ve věcech mojí rodiny a mého domu, tak mi aspoň okamžitě řekneš, kdykoli se dozvíš něco důležitého.", "angry")
+                $ victim.say("Tak co, máš ještě něco podstatného, nebo se můžeme konečně všichni vrátit ke svojí práci?", "angry")
+        "Zjistil[a] jsem to zrovna včera večer." if gerdInWorkshopDiscovered.days == time.days - 1 and time.hours < 13:
+            hide mcPic
+            jump gerdInWorkshopDiscoveredRecently
+        "Zjistil[a] jsem to na začátku vyšetřování, když jsem obe[sel] sousedy." if time.days > 1:
+            hide mcPic
+            $ son.say("A proč jste to neřekl hned? Jak si to s ním potom můžu vyřídit?", "angry")
+            $ son.say("A to to ještě ani není moje dílna. Jak se musí cítit táta, nevědět, co se děje pod jeho střechou?", "angry")
+            $ victim.say("Přesně! Pobíháš po městě, řešíš kdovíco a s takhle důležitou novinou si dáš na čas. Tak si představuješ dobrou práci?", "angry")
+            $ victim.say("Očekávám, že když se hrabeš ve věcech mojí rodiny a mého domu, tak mi aspoň okamžitě řekneš, kdykoli se dozvíš něco důležitého.", "angry")
+            $ victim.say("Tak co, máš ještě něco podstatného, nebo se můžeme konečně všichni vrátit ke svojí práci?")
+    return
 
 label burnedEvidenceSeenBoys:
     "Kluci si ohořelý útržek prohlédnou."

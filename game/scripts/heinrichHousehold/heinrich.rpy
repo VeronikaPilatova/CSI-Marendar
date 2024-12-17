@@ -6,6 +6,7 @@ label victimMain:
         $ lisbeth.say("Dojdu pro něj.")
 
     $ lastSpokenWith = "victim"
+    $ heinrichHouseholdSpokenWith.append("victim")
     call victimIntro
 
     label victimQuestions:
@@ -105,6 +106,7 @@ label victimIntro:
 
 label returningKey:
     $ lastSpokenWith = "victim"
+    $ heinrichHouseholdSpokenWith.append("victim")
     if "retrieving workshop key" in status:
 
         if time.isBefore(keySlightlyLateAfter):
@@ -201,14 +203,10 @@ label victimOptions:
             $ victim.say("S každým, kdo si dostatečně neváží mé práce. Rumelin ví, že ho chci nahradit v čele cechu a bojí se o svoje teplé místečko, Kaspar si brousí zuby na tu samou židli, i když na to nemá schopnosti… no a potom kdokoli mi hází klacky pod nohy.")
             $ victim.say("Ale největší důvod znemožnit mě na slavnostech mají myslím tihle dva.")
             $ kasparNote.isActive = True
-        "Slyšel jsem, že jste vyhodil několik učedníků?" if "enemies" in rumelin.asked and "fired apprentices" not in victim.asked and gender == "M":
+        "Slyšel[a] jsem, že jste vyhodil několik učedníků?" if "enemies" in rumelin.asked and "fired apprentices" not in victim.asked:
             hide mcPic
             $ victim.asked.append("fired apprentices")
             $ victim.say("A co jiného jsem s nimi měl dělat, když nebyli schopní žádné pořádné práce? Tak dobře mi jejich rodiče nezaplatili.")
-        "Slyšela jsem, že jste vyhodil několik učedníků?" if "enemies" in rumelin.asked and "fired apprentices" not in victim.asked and gender == "F":
-            hide mcPic
-            $ victim.asked.append("fired apprentices")
-            $ victim.say("A co jiného jsem s nimi měl dělat, když nesplnili ani základní očekávání? Tak dobře mi jejich rodiče nezaplatili.")
         "Co přesně provedli?" if "fired apprentices" in victim.asked and "fired apprentices offense" not in victim.asked:
             hide mcPic
             $ victim.asked.append("fired apprentices offense")
@@ -370,18 +368,11 @@ label victimOptions:
             $ mc.say("Ne, zloději jsem na stopě. Jen si nemůžeme být jistí, co s vaším výrobkem provedl.")
             $ victim.say("Spoléhám na to, že mi ty střevíce v pořádku přineseš.")
             $ victim.say("Náhradní výrobek nemám, ale ať vezmu ve své dílně cokoli, bude to lepší práce, než přinese půlka cechu.")
-        "Zjistil jsem, kdo vám vypil velkou část vašich zásob vína." if "confession" in boysAsked and "lost bottles solved rumelin" not in victim.asked and "lost bottles solved boys" not in victim.asked and gender == "M":
+        "Zjistil[a] jsem, kdo vám vypil velkou část vašich zásob vína." if "confession" in boysAsked and "lost bottles solved rumelin" not in victim.asked and "lost bottles solved boys" not in victim.asked:
             call victimLostBottlesSolved
             if leaveOption == "none":
                 return
-        "Zjistila jsem, kdo vám vypil velkou část vašich zásob vína." if "confession" in boysAsked and "lost bottles solved rumelin" not in victim.asked and "lost bottles solved boys" not in victim.asked and gender == "F":
-            call victimLostBottlesSolved
-            if leaveOption == "none":
-                return
-        "Zjistil jsem, že cechmistr Rumelin se snažil poškodit jednoho z ostatních mistrů." if "confession" in rumelin.asked and "rumelin exposed" not in victim.asked and gender == "M":
-            hide mcPic
-            call rumelinExposedVictim
-        "Zjistila jsem, že cechmistr Rumelin se snažil poškodit jednoho z ostatních mistrů." if "confession" in rumelin.asked and "rumelin exposed" not in victim.asked and gender == "F":
+        "Zjistil[a] jsem, že cechmistr Rumelin se snažil poškodit jednoho z ostatních mistrů." if "confession" in rumelin.asked and "rumelin exposed" not in victim.asked:
             hide mcPic
             call rumelinExposedVictim
         "Zajímalo by mne, jak jste se dostal ke střihu mistra Njala." if "stolen idea" in clues and "stolen idea" not in victim.asked:
@@ -411,23 +402,15 @@ label victimOptions:
                 return
         "Nechtěl byste se na Einionovy slavnosti spojit s mistrem Njalem?" if "own work" in njal.asked and "plan B" in clues and "join forces" not in victim.asked:
             call victimJoinForces
-        "Zjišťoval jsem, jak by se lidi ve městě tvářili, kdybyste na slavnosti přinesl výrobek společně s mistrem Njalem." if "join forces victim pending" in status and "join forces survey" in status and gender == "M":
+        "Zjišťoval[a] jsem, jak by se lidi ve městě tvářili, kdybyste na slavnosti přinesl výrobek společně s mistrem Njalem." if "join forces victim pending" in status and "join forces survey" in status:
             call joinForcesSurveyResults
-        "Zjišťovala jsem, jak by se lidi ve městě tvářili, kdybyste na slavnosti přinesl výrobek společně s mistrem Njalem." if "join forces victim pending" in status and "join forces survey" in status and gender == "F":
-            call joinForcesSurveyResults
-        "Mluvil jsem s mistrem Njalem ohledně vaší spolupráce." if "join forces victim approves" in status and "join forces" in njal.asked and "join forces go-ahead" not in victim.asked and gender == "M":
+        "Mluvil[a] jsem s mistrem Njalem ohledně vaší spolupráce." if "join forces victim approves" in status and "join forces" in njal.asked and "join forces go-ahead" not in victim.asked:
             $ victim.asked.append("join forces go-ahead")
             call joinForcesGoAhead
-        "Mluvila jsem s mistrem Njalem ohledně vaší spolupráce." if "join forces victim approves" in status and "join forces" in njal.asked and "join forces go-ahead" not in victim.asked and gender == "F":
-            $ victim.asked.append("join forces go-ahead")
-            call joinForcesGoAhead
-        "Mluvil jsem s mistrem Njalem ohledně vaší spolupráce." if "join forces victim approves" in status and "join forces clueless" in njal.asked and "join forces" not in njal.asked and "join forces go-ahead clueless" not in victim.asked and gender == "M":
+        "Mluvil[a] jsem s mistrem Njalem ohledně vaší spolupráce." if "join forces victim approves" in status and "join forces clueless" in njal.asked and "join forces" not in njal.asked and "join forces go-ahead clueless" not in victim.asked:
             $ victim.asked.append("join forces go-ahead clueless")
             call joinForcesGoAhead
-        "Mluvila jsem s mistrem Njalem ohledně vaší spolupráce." if "join forces victim approves" in status and "join forces clueless" in njal.asked and "join forces" not in njal.asked and "join forces go-ahead clueless" not in victim.asked and gender == "F":
-            $ victim.asked.append("join forces go-ahead clueless")
-            call joinForcesGoAhead
-        "Rád bych s vámi mluvil o tom, jak kousek odtud byl oheň na ulici." if "fireshow" in status and "fireshow" not in victim.asked:
+        "Rád bych s vámi mluvil[a] o tom, jak kousek odtud byl oheň na ulici." if "fireshow" in status and "fireshow" not in victim.asked:
             hide mcPic
             $ victim.asked.append("fireshow")
             $ victim.say("No dobře, o co jde?")
@@ -1616,8 +1599,54 @@ label mcAdmitsBurglary:
     "Vaše skupinka brzy vzbudí pozornost dalších měšťanů. Ptají se, co se děje, a mistr Heinrich procedí krátkou odpověď o vloupání do dílny. Brzy si tuto zprávu přihlížející začínají předávat sami. Někteří z nich jdou s vámi - zřejmě se nestává často, že by došlo k zatčení člena hlídky."
     scene bg guardhouse
     "Dovnitř na strážnici jsou však vpuštěni jen Heinrich a Aachim - a samozřejmě ty [sam]. I tam vzbudíte značný rozruch a brzy se do hloučku kolem vás sejdou nejspíš všichni, kdo zrovna se na strážnici nachází."
-    
-    return
+    "Jakmile vás spatří Solian, zpozorní, rychle vstane a kmitne pohledem mezi vámi dvěma."
+    $ solian.say("Co se to děje? Snad [mcName] nic neprovedl[a]?", "surprised")
+    $ victim.say("Ta vaše nová naděje se ke mně vloupala. Takhle se hlídka chová?", "furious")
+    show mcPic at menuImage
+    menu:
+        "To je lež!":
+            hide mcPic
+        "Pomozte mi někdo!":
+            hide mcPic
+        "Nesahej na mě, bídáku!":
+            hide mcPic
+        "{i}(Mlčet){/i}":
+            hide mcPic
+    $ solian.say("Runo, hlídej dveře. Nikdo nesmí dovnitř ani ven.", "angry")
+    $ solian.say("Mistře Heinrichu, buďte bez obav, to určitě vyšetříme.")
+    $ victim.say("Přivedl jsem vám [pronoun4] až sem. Doufám, že odtud neodejde jinak než v řetězech.", "furious")
+    $ solian.say("To je dobře možné. Co tedy přesně provedl[a]?")
+    $ victim.say("Vloupal[a] se do mojí dílny, ukradl[a] tam dopisy, které moje dcera dostala od toho elfského kašpara, a pak mi to ještě drze přizná do očí!", "furious")
+    $ victim.say("Jestli ta špína okamžitě neskončí aspoň na pranýři, postarám se, aby se všichni dozvěděli, co si to naše nová hlídka dovoluje. A schválně, jak se jim to bude líbit.", "furious")
+    $ solian.say("To nebude nutné. Můžu vás ujistit, že hlídka se do ničích domů nevloupává, a pokud to nějaký hlídkař kdy udělal, čeká ho náležitý trest.", "angry")
+    $ runa.say("[callingMc].capitalize(), co k tomu můžeš říct ty?")
+    show mcPic at menuImage
+    menu:
+        "Je to lež, v dílně jsem nikdy nebyl[a] jinak než pod dozorem!":
+            hide mcPic
+            $ solian.say("To by mohl říct každý. Důkazy mluví proti tobě.", "angry")
+        "Dal mi klíč, co čekal?":
+            hide mcPic
+            "Mistr Heinrich zrudne a pohne se směrem k tobě. Tušíš, že před další ranou pěstí tě zachránila jen přítomnost dalších členů hlídky."
+            $ runa.say("Takže jsi tam vážně byl[a]? Doufala jsem, že ne.", "surprised")
+        "Bylo to nutné pro vyšetřování.":
+            hide mcPic
+            $ runa.say("Takže jsi tam vážně byl[a]? Doufala jsem, že ne.", "surprised")
+            $ solian.say("Prozkoumat dílnu jistě bylo na místě, ale pouze se svolením mistra Heinricha. Cokoli jiného je překročení našich pravomocí a navíc neodpustitelná drzost.")
+        "Hayfa by na mém místě jednala stejně.":
+            hide mcPic
+            $ solian.say("To je možné, ale teď mluvíme o tvém případu a odváděním pozornosti na jiné členy hlídky si nijak nepomůžeš.", "angry")
+    $ solian.say("[mcName].capitalize() teď umístíme do jedné z našich cel a zasadíme se, aby co nejdříve proběhl soud a náležitě [pronoun4] potrestal.")
+    $ solian.say("Mistře Heinrichu, uděláme vše pro to, aby vyšetřování krádeže vašich bot tímto zatčením nijak neutrpělo. Osobně se o to zasadím.")
+    "Solian k tobě dojde, uchopí tě za paži a začne tě směrovat směrem ke schodům do sklepa. Neochotně ho následuješ, v místnosti plné lidí by odpor neměl naději na úspěch."
+    scene bg cell
+    "Brzy tedy spatříš jednu z pověstných cel zevnitř a zaklapne za tebou mříž, kterou Solian pečlivě zamkne."
+    play sound audio.prisonDoorClose
+    $ solian.say("A takhle to dopadá, když Rauvin až moc poslouchá Hayfu. A kdo to teď bude muset vysvětlovat? Já.", "angry")
+    $ solian.say("Doufám, že městská rada nebude zbytečně měkká. V případě obyčejného vloupání by mohlo zůstat u peněžitého trestu a potom vyhnání z města nebo něčeho podobného, ale na člena hlídky by u podobného zločinu měli být mnohem přísnější.", "angry")
+    $ solian.say("Protože tohle jde přímo proti tomu, od čeho hlídka v tomhle městě je.", "angry")
+    "Solian se otočí a rychlým krokem se vrátí nahoru ke své práci. Ty tak zůstaneš [sam] a můžeš nerušeně přemítat, jaký trest tě nejspíše čeká."
+    jump thrownOut
 
 ###
 

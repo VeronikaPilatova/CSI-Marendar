@@ -57,6 +57,7 @@ label victimHouseholdController:
     $ lisbethNote.isActive = True
     call neighboursController
     $ refusedBy = ""
+    $ heinrichHouseholdSpokenWith = []
     if "kaspar and lisbeth ratted out" in status and kaspar.imageParameter != "beaten":
         $ kaspar.imageParameter = "beaten"
         $ lisbeth.imageParameter = "beaten"
@@ -74,18 +75,25 @@ label victimHouseIntro:
         "Cestu k domu mistra Heinricha už znáš, a tak ani nemusíš přemýšlet, který z výstavních domů v ulici je ten správný."
         if lisbethNote.isActive == False:
             "Zaklepeš na dveře a otevře ti upravená žena s milým úsměvem."
+            if gender == "M":
+                $ lisbeth.say("Dobrý den... aha, vy jste ten strážný, co hledá manželův výrobek. Já jsem Lisbeth.")
+            else:
+                $ lisbeth.say("Dobrý den... aha, vy jste ta strážná, co hledá manželův výrobek. Já jsem Lisbeth.")
+        elif ada.status == "angry":
+            $ lisbeth.say("Dobře, že jdete, chtěla s vámi mluvit Ada. Nevím, o čem přesně, možná si na něco vzpomněla?")
+            $ lisbeth.say("Jestli vám to nevadí, hned ji zavolám.")
+            jump adaMain
+        elif "kaspar and lisbeth ratted out" in status:
+            $ lisbeth.say("Můžu vám nějak pomoct?")
         elif "fresh flowers" in status:
             "U vchodu tě zase přivítá paní domu s úsměvem, který je v něčem vřelejší a upřímnější než obvykle. Uvnitř si všimneš čerstvých květin ve váze."
-            $ lisbeth.say("Vítejte, zrovna peču jablečný závin. Co pro vás můžu udělat?")
+            $ lisbeth.say("Vítejte, zrovna peču jablečný závin. Co pro vás můžu udělat?", "happy")
             $ status.remove("fresh flowers")
             $ status.append("flowers")
             if not achievement.has(achievement_name['flowers'].name):
                 $ Achievement.add(achievement_name['flowers'])
         else:
-            if gender == "M":
-                $ lisbeth.say("Dobrý den... aha, vy jste ten strážný, co hledá manželův výrobek. Já jsem Lisbeth.")
-            else:
-                $ lisbeth.say("Dobrý den... aha, vy jste ta strážná, co hledá manželův výrobek. Já jsem Lisbeth.")
+            $ lisbeth.say("Vítejte zpátky. Jak vám mohu pomoci tentokrát?")
     if lisbethNote.isActive == False:
         call victimHouseholdOptions
     elif chosenChar == "workshop":
@@ -170,6 +178,9 @@ label victimHouseholdOptions:
         "Můžu mluvit s vaším synem?" if boysOptionsRemaining != 0 and aachimOptionsRemaining != 0 and sonNote.isActive == True and aachim not in cells and lastSpokenWith != "boys" and lastSpokenWith != "aachim":
             hide mcPic
             jump sonIntro
+        "Rád[a] bych mluvil[a] s vaším synem o samotě." if aachimOptionsRemaining != 0 and sonNote.isActive == True and aachim not in cells and lastSpokenWith != "aachim":
+            hide mcPic
+            jump aachimMain
         "Můžu mluvit s vaší dcerou?" if adaOptionsRemaining != 0 and adaNote.isActive == True and lastSpokenWith != "ada":
             hide mcPic
             jump adaMain
@@ -217,6 +228,7 @@ label apprenticesIntro:
 label workshopIntro:
     $ lisbeth.say("Tam vás musí pustit manžel, já tam nesmím ani uklízet. Dojdu mu říct.")
     $ lastSpokenWith = "workshop"
+    $ heinrichHouseholdSpokenWith.append("workshop")
     jump workshopController
     return
 

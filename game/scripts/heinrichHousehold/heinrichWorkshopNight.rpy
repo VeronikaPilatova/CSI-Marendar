@@ -125,9 +125,15 @@ label workshopNightIntruder:
                 "{i}(Čekat na příležitost zmizet){/i}":
                     "Nějakou dobu pozoruješ Aachima při práci a téměř nedýcháš, aby ses náhodou neprozradil[a]."
                     "Aachim chvíli sešívá, pak zamumlá nadávku a část čerstvých stehů zas vytáhne. Přisune si lampu o něco blíž a pokračuje v práci. To se ještě několikrát opakuje."
-                    "Už skoro nedoufáš, že Aachim vůbec někdy odejde, když se konečně zvedne a zamíří ke dveřím do domu. Rozdělanou botu nechá na místě."
-                    "Na nic nečekáš, tiše vyklouzneš z dílny a zamkneš za sebou vchodové dveře. Pak zmizíš z místa tak rychlým krokem, jak se jen odvažuješ."
-                    return
+                    "Už skoro nedoufáš, že Aachim vůbec někdy odejde, když se konečně zvedne a zamíří ke dveřím do domu. Rozdělanou botu i nářadí nechá rozložené na stole."
+                    menu:
+                        "{i}(Opatrně vyklouznout z místnosti.){/i}":
+                            "Na nic nečekáš, tiše vyklouzneš z dílny a zamkneš za sebou vchodové dveře. Pak zmizíš z místa tak rychlým krokem, jak se jen odvažuješ."
+                            return
+                        "{i}(Čekat, co se bude dít dál.){/i}":
+                            "Aarchim se po chvíli vrátí  a ty znovu dostaneš příležitost ho sledovat při práci, včetně všech povzdechů, zamračení a oprav. Brzy si všimneš, že ti začínají dřevěnět nohy."
+                            "Potom se Aachim narovná a udělá několik kroků směrem k tobě. Sáhne po nějakém nástroji, pak ale strne uprostřed pohybu a s nevírou zazírá přímo na tebe."
+                            jump mcFoundHidden
         "{i}(Utéct ven z dílny){/i}":
             if lastAction == "rubbish":
                 "Vrhneš se ke dveřím, které máš naštěstí téměř za zády. Nahmatáš kliku, pootevřeš je na tak velkou skulinu, aby ses mohl[a] protáhnout, a vyklouzneš ven."
@@ -223,6 +229,7 @@ label workshopNightMeetingAachim:
     # trust too low - Aachim sets the alarm
     if son.trust < 0:
         "Pak si tě lépe prohlédne a s nevírou na tebe zazírá."
+        label mcFoundHidden:
         $ son.say("Co tady děláte?", "angry")
         show mcPic at menuImage
         menu:
@@ -248,7 +255,7 @@ label workshopNightMeetingAachim:
                 hide mcPic
                 $ son.asked.append("workshop unlocked")
                 $ son.trust -= 1
-                $ son.say("To určitě nebylo, po včerejší krádeži táta dveře dvakrát zkontroloval.", "angry")
+                $ son.say("To určitě nebylo, po té krádeži táta dveře vždycky dvakrát zkontroluje.", "angry")
                 $ son.say("Takže proč se sem zatraceně vloupáváte jako nějaký vyvrhel?", "angry")
             "Na tom asi tak moc nezáleží." if "doesn't matter" not in son.asked:
                 hide mcPic
@@ -328,7 +335,7 @@ label workshopNightMeetingAachim:
                         $ son.say("Tak to jste vedle, sem si vodí nanejvýš Eckharda a k tomu se hrdě přiznává.")
                         $ son.say("Jestli něco takového dělá, tak někde, kam mu nemůže náhodou vběhnout nějaký učedník a kde nemá manželku jednu stěnu od sebe.")
                         $ son.say("Vážně, co mi to tu vykládáte? Že táta sukničkaří, dělá to na tom nejhloupějším možném místě a ještě se u toho nejspíš nechal okrást?", "angry")
-                        $ son.say("To si jděte vyprávět kamarádům do hospody, ale mě s tím neotravuj.", "angry")
+                        $ son.say("To si jděte vyprávět kamarádům do hospody, ale mě z toho vynechte.", "angry")
                         jump workshopNightAachimNotConvinced
             "Myslím si, že někdo v domě něco tají." if "someone keeping secrets" not in son.asked:
                 hide mcPic

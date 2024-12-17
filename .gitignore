@@ -11,3 +11,4 @@ game/saves/persistent
 .gitattributes
 errors.txt
 game/tl/None/common.rpymc
+.vscode/settings.json

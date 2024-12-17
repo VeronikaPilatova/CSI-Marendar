@@ -1,5 +1,6 @@
 label aachimMain:
     $ lastSpokenWith = "aachim"
+    $ heinrichHouseholdSpokenWith.append("aachim")
     $ origAsked = son.asked.copy()
 
     if son in cells:
@@ -25,9 +26,17 @@ label aachimCellsIntro:
 
 label aachimAloneFirst:
     $ son.asked.append("spoken alone")
+    "Lisbeth se zarazí a na chvíli vypadá, ze se chce na něco zeptat, ale pak přikývne."
+    $ lisbeth.say("Samozřejmě, dojdu pro něj.")
+    "Bez svých dvou kamarádů je Aachim viditelně nervózní, a když vám Lisbeth nechá soukromí, ještě se za ní krátce ohlédne."
+    $ son.say("Proč... co pro vás můžu udělat?", "surprised")
     return
 
 label aachimAloneAgain:
+    "Lisbeth se zarazí a na chvíli vypadá, ze se chce na něco zeptat, ale pak přikývne."
+    $ lisbeth.say("Samozřejmě, dojdu pro něj.")
+    "Aachim si tě ostražitě změří."
+    $ son.say("O co jde? Nemůžu se zdržet moc dlouho...")
     return
 
 label aachimAloneOptions:

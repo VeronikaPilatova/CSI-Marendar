@@ -213,9 +213,11 @@ label preparation:
     default newlyArrested = []
     default allArrested = []
     default cells = []
+    default gerdInWorkshopDiscovered = False
     # variables - gameplay helpers
     call libraryPreparation
     default chosenChar = ""
+    default heinrichHouseholdSpokenWith = []
     default chosenTopic = ""
     default readingTopic = ""
     default currentLocation = ""
@@ -225,6 +227,7 @@ label preparation:
     default visitGuardhouseReminder = ""
     default njalOptionsRemaining = 1
     default gerdOptionsRemaining = 1
+    default adaAngry = False
     default timeOfDay = "day"
     # variables - achievement helpers
     default persistent.zeranArrestReasons = []

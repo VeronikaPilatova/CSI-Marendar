@@ -7,7 +7,7 @@ label workshopController:
     # walk over
     if currentLocation != "victim house" and currentLocation != "victim street":
         $ time.addMinutes(15)
-        $ currentLocation = "workshop"
+    $ currentLocation = "workshop"
     $ origAsked = workshop.checked.copy()
 
     # visit itself
@@ -192,6 +192,11 @@ label workshopOptions:
             "Jen pro jistotu prohrábneš popel v krbu. Po chvíli prosévání mezi prsty najdeš mezi ohořelými zbytky dřeva v zadním rohu nepatrný útržek stuhy, která snad bývala zlatá"
             "Mistr Heinrich na tebe vrhne nechápavý pohled."
             $ clues.append("burned evidence")
+        "{i}(Prozkoumat koš s odpadky u dveří){/i}" if "rubbish" not in workshop.checked:
+            $ workshop.checked.append("rubbish")
+            $ victim.trust -= 1
+            "V koši jsou různé odřezky a zbytky kůže. Co můžeš posoudit, jen malou část tvoří pokažené kusy."
+            $ victim.say("A teď prosím tě zkoumáš co? To si myslíš, že jsem svoje mistrovské dílo vyhodil mezi odpadky a pak to zapomněl?", "angry")
         "Můžete mi popsat ztracené střevíce?" if "burned evidence" in clues and "shoes description" not in clues:
             $ victim.say("Jsou to nádherné dámské střevíce z nejjemnější kůže. Precizně tvarované, složité šněrování, barvené drahou fialovou barvou. Zlaté stuhy a jemné zdobení. Druhé takové ve městě určitě nejsou.")
             $ clues.append("shoes description")

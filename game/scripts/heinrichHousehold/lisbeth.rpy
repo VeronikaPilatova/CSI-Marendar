@@ -5,6 +5,7 @@ label lisbethMain:
         call victimHouseInterior
 
     $ lastSpokenWith = "lisbeth"
+    $ heinrichHouseholdSpokenWith.append("lisbeth")
     $ origAsked = lisbeth.asked.copy()
     call lisbethOptions
     $ time.addMinutes((len(lisbeth.asked) - len(origAsked)) * 3)

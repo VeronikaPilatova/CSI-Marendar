@@ -143,7 +143,7 @@ label rumelinArrestReaction:
             $ rauvin.say("Pranýř nemusí být těžký trest, ale když vůči odsouzenému celé město cítí zášť...")
             $ rauvin.say("Ale proč by zrovna o tom cechmistr lhal, že ano? Kdyby neměl dobrý důvod, jen by si tím zbytečně zkazil pověst.")
             "S tím se otočí a ponechá tě představám, jak asi bude tvůj osud vypadat."
-            
+            jump thrownOut
     return
 
 label rumelinArrestedRauvinDecidesMcFate:

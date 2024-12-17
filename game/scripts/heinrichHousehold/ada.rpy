@@ -7,6 +7,7 @@ label adaMain:
         $ lisbeth.say("Nejsem si jistá, jestli bude zrovna ona něco vědět... ale jak chcete. Dojdu pro ni.")
 
     $ lastSpokenWith = "ada"
+    $ heinrichHouseholdSpokenWith.append("ada")
     $ origAsked = ada.asked.copy()
     call adaIntro
     if "Ada closed door" not in status:
@@ -18,7 +19,7 @@ label adaMain:
 label adaIntro:
     if "Ada closed door" in status:
         call adaIntroAngryAgain
-    elif ("zairis dealt with" in status and "ada confrontation zairis" not in status) or ("kaspar and lisbeth ratted out" in status and "ada confrontation lisbeth" not in status):
+    elif ada.status == "angry":
         call adaIntroAngry
     else:
         "Paní Lisbeth přivede asi čtrnáctiletou dívku se zvědavým výrazem."
@@ -429,4 +430,11 @@ label adaAngryCounterargumentOptionsRemainingCheck:
         $ adaAngryCounterargumentOptionsRemaining += 1
     if "think about relationship" in victim.asked and "parents relationship" not in ada.asked:
         $ adaAngryCounterargumentOptionsRemaining += 1
+    return
+
+label adaAngryCheck:
+    if "zairis dealt with" in status and "ada confrontation zairis" not in status:
+        $ ada.status = "angry"
+    if "kaspar and lisbeth ratted out" in status and "ada confrontation lisbeth" not in status:
+        $ ada.status = "angry"
     return

@@ -57,6 +57,7 @@ label lieseOptions:
             $ liese.say("Ten nejmladší, Gerd. Hnědovlasý usměvavý kluk.")
             $ liese.say("Ten vlastně od Heinricha nedávno odešel k jinému mistrovi a asi bych věděla, kdyby se zase vrátil, tak možná dostal za úkol mistru Heinrichovi něco donést. Nebo se šel jen podívat za ostatními kluky?")
             $ liese.say("To by mě vlastně vůbec nepřekvapilo, vždycky měli dobré vztahy.")
+            $ gerdInWorkshopDiscovered = copy.deepcopy(time)
         "Ničeho dalšího jste si nevšimla?" if "anything else" not in liese.asked:
             hide mcPic
             $ liese.asked.append("anything else")
