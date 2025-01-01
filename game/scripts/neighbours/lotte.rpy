@@ -33,6 +33,11 @@ label lotteController:
     if chosenChar == "merchant" and lotteNote.isActive == False:
         $ merchantNote.isActive = False
         $ lotteNote.isActive = True
+    if "secret lover identity" in lotte.asked and "gossip in progress" not in status:
+        $ status.append("gossip in progress")
+        $ newEvent = Event(copy.deepcopy(time), "STATUS", 0, "kaspar and lisbeth ratted out")
+        $ newEvent.when.addHours(6)
+        $ eventsList.append(newEvent)
     return
 
 label lotteFirst:

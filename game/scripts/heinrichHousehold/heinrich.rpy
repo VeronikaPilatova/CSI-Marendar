@@ -37,21 +37,33 @@ label victimIntro:
                 $ victim.asked.append("fireshow")
                 $ victim.say("No dobře, o co jde?")
                 call heinrichFireshow
-            "Ve skutečnosti jsem se vám přišel omluvit, pokud jsem vás nějak urazil." if "victim expects apology" in status and gender == "M":
+            "Ve skutečnosti jsem se vám při[sel] omluvit, pokud jsem vás nějak urazil[a]." if "victim expects apology" in status:
                 hide mcPic
                 $ victim.trust += 1
                 $ victim.say("No co si budeme povídat, choval ses jako hulvát. Ale po včerejšku ti jsem ochotný dát ještě šanci.")
-                call afterApologyReactionPositive
-            "Ve skutečnosti jsem se vám přišla omluvit, pokud jsem vás nějak urazila." if "victim expects apology" in status and gender == "F":
-                hide mcPic
-                $ victim.trust += 1
-                $ victim.say("No co si budeme povídat, chovala ses jako hulvát. Ale po včerejšku ti jsem ochotný dát ještě šanci.")
                 call afterApologyReactionPositive
             "To je pravda. Můžu vám ještě položit pár otázek?":
                 hide mcPic
                 $ victim.say("Bez toho to asi vyšetřit nemůžeš, tak do toho.")
         if "victim expects apology" in status:
             $ status.remove("victim expects apology")
+    elif "victim house visited" in status and "stolen alcohol" not in victim.asked:
+        $ victim.asked.append("stolen alcohol")
+        $ victim.say("Ještě jsem zapomněl říct jednu důležitou věc. Kromě bot se ztratila i velká část mých zásob vína a kořalek. Znamená to, že ten zatracený zloděj byl nejen v dílně, ale i v domě.")
+        $ victim.say("A ne, nevypil jsem to já, i když Lisbeth si to myslí. Včera jsem slavil, ale vím, co jsem pil, a vím, že tady už jsme si nic nedávali.", "angry")
+        $ victim.say("Vypadá to ale, že nezmizelo nic jiného. Rozhodně žádné peníze ani cennosti.")
+        show mcPic at menuImage
+        menu:
+            "To by mohlo zúžit okruh podezřelých.":
+                hide mcPic
+                $ mc.say("Děkuji a toho zloděje najdu.")
+            "Nejsem si jist[y], jak to pomůže v pátrání...":
+                hide mcPic
+                $ victim.trust -= 1
+                $ victim.say("Řekl jsem ti, co se ztratilo. Pátrání je tvoje práce, a jestli myslíš, že ji budu dělat za tebe...", "angry")
+                $ mc.say("Tak jsem to nemyslel[a]! Rozhodně dekuji, že mi to říkáte.")
+        $ mc.say("Můžu vám ještě položit pár otázek?")
+        $ victim.say("“Bez toho to asi vyšetřit nemůžeš, tak do toho.")
     else:
         if "burned evidence seen" in victim.asked:
             $ victim.say("Už víš, kdo se opovážil hodit moje dílo do mého vlastního krbu?")
@@ -203,6 +215,18 @@ label victimOptions:
             $ victim.say("S každým, kdo si dostatečně neváží mé práce. Rumelin ví, že ho chci nahradit v čele cechu a bojí se o svoje teplé místečko, Kaspar si brousí zuby na tu samou židli, i když na to nemá schopnosti… no a potom kdokoli mi hází klacky pod nohy.")
             $ victim.say("Ale největší důvod znemožnit mě na slavnostech mají myslím tihle dva.")
             $ kasparNote.isActive = True
+        "Jak vypadaly ty ztracené lahve?" if "stolen alcohol" in victim.asked and "bottles description" not in clues:
+            hide mcPic
+            $ victim.asked.append("bottles description")
+            $ victim.say("Hlavně vína, drahé druhy pro návštěvy, červené ze Sonnenstrahlen a chatevinské šedé a červené. V lahvích z modrozeleného mramorovaného skla.")
+            $ victim.say("A potom ještě zbytek místní hruškovice a slivovice, ale ty nebyly tak cenné.")
+            $ victim.say("Ale hledej hlavně ty boty. Že mi ještě ukradli víno, to je urážka a zasloužili by přetrhnout, ale pořád to je jenom pití, ne mistrovský výrobek.")
+            $ clues.append("bottles description")
+        "Bylo by pro zloděje těžké se dostat z dílny do domu?" if "stolen alcohol" in victim.asked and "from workshop to house" not in victim.asked:
+            hide mcPic
+            $ victim.asked.append("workshop to house")
+            $ victim.say("Nebylo, ty dveře se nezamykají.")
+            $ victim.say("Nejtěžší by bylo nikoho nevzbudit.")
         "Slyšel[a] jsem, že jste vyhodil několik učedníků?" if "enemies" in rumelin.asked and "fired apprentices" not in victim.asked:
             hide mcPic
             $ victim.asked.append("fired apprentices")
@@ -231,11 +255,7 @@ label victimOptions:
             hide mcPic
             $ victim.asked.append("proof against Zeran")
             $ victim.say("Kromě toho, že je spolu hned několik lidí vidělo? Našel jsem pár dopisů, které ten zmetek Adě psal. Samé sladké řečičky a sliby, dokonce ji chtěl vzít z města.")
-        "Mohl bych vidět ty dopisy, které Zeran psal vaší dceři?" if "proof against Zeran" in victim.asked and "Zeran's letters" not in victim.asked and gender == "M":
-            hide mcPic
-            $ victim.asked.append("Zeran's letters")
-            call zeranLettersResponse
-        "Mohla bych vidět ty dopisy, které Zeran psal vaší dceři?" if "proof against Zeran" in victim.asked and "Zeran's letters" not in victim.asked and gender == "F":
+        "Mohl[a] bych vidět ty dopisy, které Zeran psal vaší dceři?" if "proof against Zeran" in victim.asked and "Zeran's letters" not in victim.asked:
             hide mcPic
             $ victim.asked.append("Zeran's letters")
             call zeranLettersResponse
@@ -264,8 +284,8 @@ label victimOptions:
             $ victim.trust += 1
             $ victim.say("To nebylo.")
             $ victim.say("Mistr, u kterého jsme byli v učení, nám nic neodpustil. Vstávali jsme ještě za tmy, pracovali až do noci, a netoleroval nám žádné lajdáctví. Ale kromě řemesla nás to naučilo vážit si poctivé práce.")
-            $ victim.say("Během cesty na zkušenou jsem se naučil nové postupy a co nejvíc svoje schopnosti zdokonalil. To by mělo být normální, ale ne všichni to tak dělají.")
-            $ victim.say("Znal jsem jednoho, co cestoval spíš po hospodách než po dílnách a z města odcházel když nadělal moc velké dluhy... ten bude třeba tovaryš celý život, pokud neskončí ještě hůř.")
+            $ victim.say("Během cesty na zkušenou jsem se pak vždycky snažil najít ty nejlepší mistry, učit se od nich nové postupy a co nejvíc se zdokonalit. K tomu ty cesty také mají sloužit, ale ne všichni to tak berou.")
+            $ victim.say("Znal jsem jednoho, co cestoval spíš po hospodách než po dílnách a z města odcházel, když nadělal moc velké dluhy... ten bude třeba tovaryš celý život, pokud neskončí ještě hůř.")
             $ victim.say("Stát se mistrem v elfím městě znamenalo muset být lepší, než všichni místní elfové dohromady, když jsem nechal za sebe mluvit svou práci, nikdo mi nemohl upřít.")
             $ victim.say("Já vždycky říkám, že pokud se někdo nedokáže vyhrabat z bídy, tak asi nepracuje dost tvrdě.")
         "Kde by se vaše ukradené boty daly nejlépe prodat?" if "best sale" not in victim.asked:
@@ -321,7 +341,7 @@ label victimOptions:
                     $ victim.trust -= 2
                     $ victim.say("Proč se vyptáváš na moji rodinu? Nemáš snad pátrat po mém mistrovském výrobku? Co má tohle znamenat?", "angry")
                     $ mc.say("Mohlo by to osvětlit některé okolnosti té krádeže.")
-                    $ victim.say("Tak aby bylo jasno, my jsme slušná domácnost a nikdo tady nekrade, a jestli ten bídák Zeran, Kaspar nebo někdo podobný něco spáchal, nikdo z nás o tom nic neví.", "angry")
+                    $ victim.say("Tak aby bylo jasno, my jsme slušná domácnost a nikdo tady nekrade, a jestli ten bídák Zeran, Rumelin nebo někdo podobný něco spáchal, nikdo z nás o tom nic neví.", "angry")
                     $ victim.say("Tak nech moji dceru napokoji a mě neotravuj s podobnými nesmysly.", "angry")
         "Mohl by tenhle kousek stuhy být od vašich střevíců?" if "burned evidence" in clues and "shoes description" in clues and "burned evidence seen" not in victim.asked:
             hide mcPic
@@ -734,7 +754,7 @@ label lettersForAdaSlipUp:
             $ victim.say("Na tom není, co vyjasňovat. Ada na toho chlípníka nemá, co vzpomínat. Jestli to nepochopila na poprvé, musím jí to zopakovat.", "angry")
             $ mc.say("Ty dopisy jsou ale právě důkaz, že to nebyl Zeran.")
             $ victim.say("I kdyby, je to jedno. Je moc malá na to, aby se nechávala takhle obelhávat od kohokoli.", "angry")
-            $ victim.asked.append("angry at Ada")
+            $ victim.asked.append("letters from Ada")
         "Náhodou jsem je na[sel] ve vaší dílně.":
             hide mcPic
             $ victim.say("Cože? A to jako kdy? Vždycky jsem tě v dílně hlídal.", "surprised")
@@ -1155,6 +1175,7 @@ label victimLostBottlesSolved:
             show mcPic at menuImage
             menu:
                 "To už je záležitost vaší domácnosti, ve které vám nechci nijak radit. Chtěl[a] jsem jenom, abyste o tom věděl.":
+                    $ victim.say("To je také v pořádku. Teď mě ale omluv, jdu si to s nimi vyřídit.")
                     call victimPunishBoysForDrinking
                     return
                 "Nemohl byste si to ještě rozmyslet?":
@@ -1163,10 +1184,17 @@ label victimLostBottlesSolved:
                     $ mc.say("Jsou to mladí kluci, kteří jednou zapomněli přemýšlet. Vyhodit je z domu je velmi přísný trest.")
                     $ victim.say("Kradli pod mou střechou! Celé město by v tom stálo za mnou, jakkoli mě nemají rádi.", "angry")
                     $ mc.say("Určitě. Ale pořád to znamená, že by skončili jako věční nádeníci kvůli jednomu nerozumu. Možná si zaslouží dostat ještě příležitost.")
-                    $ victim.say("Aby to nebyla příležitost k další krádeži.", "angry")
-                    $ mc.say("Myslím, že rychle poznáte, jestli se učedníci snaží sekat dobrotu.")
-                    $ victim.say("Hm. Budiž, dám tomu pár dní. Aby se neřeklo.")
-                    $ victim.say("Doufám, že to aspoň Rumelinovi vezme vítr z plachet, až mě zase někde bude pomlouvat.")
+                    if victim.trust < 4:
+                        $ victim.say("Zaslouží si hlavně přetrhnout.", "angry")
+                        $ victim.say("Proč se do toho vůbec pleteš? Jsem rád, že jsi mi to řekl[a], ale od teď to je věc moje a mého domu a s tebou ji nemíním dál probírat.", "angry")
+                        $ victim.say("Teď mě omluv, jdu si to s nimi vyřídit.", "angry")
+                        call victimPunishBoysForDrinking
+                    else:
+                        $ victim.say("Aby to nebyla příležitost k další krádeži.", "angry")
+                        $ mc.say("Myslím, že rychle poznáte, jestli se učedníci snaží sekat dobrotu.")
+                        $ victim.say("Hm. Budiž, dám tomu pár dní. Aby se neřeklo.")
+                        $ victim.say("Doufám, že to aspoň Rumelinovi vezme vítr z plachet, až mě zase někde bude pomlouvat.")
+                        $ victim.asked.append("boys drinking - Heinrich appeased")
     return
 
 label victimPunishBoysForDrinking:
@@ -1178,7 +1206,6 @@ label victimPunishBoysForDrinking:
     $ yesman.trust -= 2
     $ ada.trust -= 1
     $ lisbeth.trust -= 1
-    $ victim.say("To je také v pořádku. Teď mě ale omluv, jdu si to s nimi vyřídit.")
     "Mistr Heinrich ti pokyne a ty vyjdeš ven na ulici. Krátce zahlédneš paní Lisbeth, která tě chtěla vyprovodit, jak se překvapeně a znepokojeně dívá na svého manžela. Pak za tebou dveře domu zapadnou."
     $ leaveOption ="none"
     return
@@ -1659,9 +1686,7 @@ label victimOptionsRemainingCheck:
         $ victimOptionsRemaining += 1
     if "enemies" not in victim.asked:
         $ victimOptionsRemaining += 1
-    if "enemies" in rumelin.asked and "fired apprentices" not in victim.asked and gender == "M":
-        $ victimOptionsRemaining += 1
-    if "enemies" in rumelin.asked and "fired apprentices" not in victim.asked and gender == "F":
+    if "enemies" in rumelin.asked and "fired apprentices" not in victim.asked:
         $ victimOptionsRemaining += 1
     if "fired apprentices" in victim.asked and "fired apprentices offense" not in victim.asked:
         $ victimOptionsRemaining += 1

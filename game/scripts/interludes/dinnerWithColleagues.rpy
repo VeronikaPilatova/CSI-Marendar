@@ -65,9 +65,7 @@ label dinnerWithColleaguesOptions:
             $ solian.say("Zato tady z tebe nejspíš brzy bude velitel hlídky. To pak není o čem přemýšlet.")
             $ rauvin.say("Tady hlavně dělám něco užitečného. Pojďme konečně řešit něco jiného, tak zajímavý přece nejsem.", "angry")
             call askMc
-        "Čekal bych, že svobodný pán bude chtít do lepší hospody..." if "pub choice" not in colleaguesAsked and gender == "M":
-            call betterPubForRauvin
-        "Čekala bych, že svobodný pán bude chtít do lepší hospody..." if "pub choice" not in colleaguesAsked and gender == "F":
+        "Čekal[a] bych, že svobodný pán bude chtít do lepší hospody..." if "pub choice" not in colleaguesAsked:
             call betterPubForRauvin
         "Jak vlastně vybíráte, do které hospody jít?" if "pub choice" not in colleaguesAsked:
             hide mcPic

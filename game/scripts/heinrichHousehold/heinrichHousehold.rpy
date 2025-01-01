@@ -47,6 +47,7 @@ label victimHouseholdController:
     # visit itself
     $ lastSpokenWith = ""
     $ refusedBy = ""
+    call adaAngryCheck
     call victimHouseIntro
     # actual visit and conversation happens via jump from intro options
     stop music fadeout 0.5
@@ -54,7 +55,6 @@ label victimHouseholdController:
     # adjust time and status
     if "victim house visited" not in status:
         $ status.append("victim house visited")
-    $ lisbethNote.isActive = True
     call neighboursController
     $ refusedBy = ""
     $ heinrichHouseholdSpokenWith = []
@@ -71,9 +71,11 @@ label victimHouseIntro:
         $ lisbeth.say("Dobrý den, potřebujete něco?")
         $ mc.say("Jsem %(mcName)s z městské hlídky a vyšetřuji krádež výrobku mistra Heinricha.")
         $ lisbeth.say("Já jsem Lisbeth, jeho žena. Můžu vám nějak pomoct?")
+        $ lisbeth.alreadyMet = True
+        $ lisbethNote.isActive = True
     else:
         "Cestu k domu mistra Heinricha už znáš, a tak ani nemusíš přemýšlet, který z výstavních domů v ulici je ten správný."
-        if lisbethNote.isActive == False:
+        if lisbeth.alreadyMet == False:
             "Zaklepeš na dveře a otevře ti upravená žena s milým úsměvem."
             if gender == "M":
                 $ lisbeth.say("Dobrý den... aha, vy jste ten strážný, co hledá manželův výrobek. Já jsem Lisbeth.")
@@ -152,14 +154,7 @@ label victimHouseholdOptions:
             $ lisbeth.say("To jste hodn[y]. Dojdu pro něj, pojďte zatím dál.", "happy")
             call victimHouseInterior
             jump returningKey
-        "Rád bych ještě jednou mluvil s vaším mužem." if victimOptionsRemaining != 0 and lastSpokenWith != "victim" and gender == "M":
-            hide mcPic
-            if refusedBy == "victim":
-                $ lisbeth.say("Nevím, co jste si předtím řekli, ale možná bych to na vašem místě radši nedělala. Zkuste přijít později, až Heinricha přejde vztek.")
-                jump victimHouseholdOptions
-            else:
-                jump victimMain
-        "Ráda bych ještě jednou mluvila s vaším mužem." if victimOptionsRemaining != 0 and lastSpokenWith != "victim" and gender == "F":
+        "Rád[a] bych ještě jednou mluvil[a] s vaším mužem." if victimOptionsRemaining != 0 and lastSpokenWith != "victim":
             hide mcPic
             if refusedBy == "victim":
                 $ lisbeth.say("Nevím, co jste si předtím řekli, ale možná bych to na vašem místě radši nedělala. Zkuste přijít později, až Heinricha přejde vztek.")
@@ -169,10 +164,7 @@ label victimHouseholdOptions:
         "Můžu vám položit pár otázek?" if lisbethOptionsRemaining != 0 and lastSpokenWith != "lisbeth":
             hide mcPic
             jump lisbethMain
-        "Chtěl bych si promluvit s učedníky." if boysOptionsRemaining != 0 and (apprentice1Note.isActive == True or apprentice2Note.isActive == True) and lastSpokenWith != "boys" and gender == "M":
-            hide mcPic
-            jump apprenticesIntro
-        "Chtěla bych si promluvit s učedníky." if boysOptionsRemaining != 0 and (apprentice1Note.isActive == True or apprentice2Note.isActive == True) and lastSpokenWith != "boys" and gender == "F":
+        "Chtěl[a] bych si promluvit s učedníky." if boysOptionsRemaining != 0 and (apprentice1Note.isActive == True or apprentice2Note.isActive == True) and lastSpokenWith != "boys":
             hide mcPic
             jump apprenticesIntro
         "Můžu mluvit s vaším synem?" if boysOptionsRemaining != 0 and aachimOptionsRemaining != 0 and sonNote.isActive == True and aachim not in cells and lastSpokenWith != "boys" and lastSpokenWith != "aachim":

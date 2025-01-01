@@ -946,4 +946,6 @@ label boysOptionsRemainingCheck:
         $ boysOptionsRemaining += 1
     if "fireshow" in status and "fireshow" not in boysAsked:
         $ boysOptionsRemaining += 1
+    if "fired apprentices" in clues and "which apprentice" in liese.asked and "Gerd in workshop" not in boysAsked:
+        $ boysOptionsRemaining += 1
     return

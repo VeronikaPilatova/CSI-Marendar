@@ -268,13 +268,9 @@ label njalOptions:
             $ njal.say("Opravdu? To je skvělá zpráva. Vrtalo mi hlavou, jestli jsem někoho přeci jen neurazil.", "happy")
             $ mc.say("Cechmistr Rumelin nechtěl dovolit, abyste na slavnostech představil stejný výrobek jako mistr Heinrich.")
             call njalLessDealsSolved
-        "Zjistil jsem, že vaše problémy s materiálem byly jen výsledek nedorozumění." if "confession" in rumelin.asked and "less deals solved" not in njal.asked and "less deals buried" not in njal.asked and gender == "M":
+        "Zjistil[a] jsem, že vaše problémy s materiálem byly jen výsledek nedorozumění." if "confession" in rumelin.asked and "less deals solved" not in njal.asked and "less deals buried" not in njal.asked:
             call njalLessDealsBuried
-        "Zjistila jsem, že vaše problémy s materiálem byly jen výsledek nedorozumění." if "confession" in rumelin.asked and "less deals solved" not in njal.asked and "less deals buried" not in njal.asked and gender == "F":
-            call njalLessDealsBuried
-        "Mohl bych vidět vaše rozdělané boty?" if "own work" in njal.asked and "show work" not in njal.asked and gender == "M":
-            call njalShowWork
-        "Mohla bych vidět vaše rozdělané boty?" if "own work" in njal.asked and "show work" not in njal.asked and gender == "F":
+        "Mohl[a] bych vidět vaše rozdělané boty?" if "own work" in njal.asked and "show work" not in njal.asked:
             call njalShowWork
         "Nechtěl byste se na dokončení vašeho díla na slavnosti spojit s mistrem Heinrichem?" if "own work" in njal.asked and "plan B" in clues and "join forces" not in njal.asked and "join forces clueless" not in njal.asked:
             hide mcPic
@@ -328,11 +324,7 @@ label njalOptions:
             if "join forces victim approves" in status:
                 if not achievement.has(achievement_name['jointMasterpiece'].name):
                     $ Achievement.add(achievement_name['jointMasterpiece'])
-        "Přiznám se, že jsem nečekal, že podivín pracující na různých vylepšeních bude zrovna trpaslík." if "guild relations" in nirevia.asked and "traditions" not in njal.asked and gender == "M":
-            hide mcPic
-            $ njal.asked.append("traditions")
-            call traditions
-        "Přiznám se, že jsem nečekala, že podivín pracující na různých vylepšeních bude zrovna trpaslík." if "guild relations" in nirevia.asked and "traditions" not in njal.asked and gender == "F":
+        "Přiznám se, že jsem nečekal[a], že podivín pracující na různých vylepšeních bude zrovna trpaslík." if "guild relations" in nirevia.asked and "traditions" not in njal.asked:
             hide mcPic
             $ njal.asked.append("traditions")
             call traditions
@@ -379,46 +371,27 @@ label leavingNjal:
         "Velmi rád[a].":
             hide mcPic
             call njalDinnerAccepted
-        "Bohužel už jsem jedl." if any("dinner with" in str for str in dailyStatus) and gender == "M":
-            hide mcPic
-            call njalDinnerRefused
-        "Bohužel už jsem jedla." if any("dinner with" in str for str in dailyStatus) and gender == "F":
+        "Bohužel už jsem jedl[a]." if any("dinner with" in str for str in dailyStatus):
             hide mcPic
             call njalDinnerRefused
         "Bohužel se nemůžu zdržet.":
             hide mcPic
             call njalDinnerRefused
-        "Myslel jsem, že tradice odmítáte." if race == "dwarf" and gender == "M":
+        "Myslel[a] jsem, že tradice odmítáte." if race == "dwarf":
             hide mcPic
             $ njal.say("Odmítám si jimi nechat diktovat život. Co rozhodně neodmítám, je můj národ.")
             $ njal.say("I když je pravda, že žít uprostřed něj, vidím to možná jinak.")
             show mcPic at menuImage
             menu:
-                "V tom případě rád přijímám.":
+                "V tom případě rád[a] přijímám.":
                     hide mcPic
                     call njalDinnerAccepted
-                "Bohužel už jsem jedl." if any("dinner with" in str for str in dailyStatus):
+                "Bohužel už jsem jedl[a]." if any("dinner with" in str for str in dailyStatus):
                     hide mcPic
                     call njalDinnerRefused
                 "Bohužel se nemůžu zdržet.":
                     hide mcPic
                     call njalDinnerRefused
-        "Myslela jsem, že tradice odmítáte." if race == "dwarf" and gender == "F":
-            hide mcPic
-            $ njal.say("Odmítám si jimi nechat diktovat život. Co rozhodně neodmítám, je můj národ.")
-            $ njal.say("I když je pravda, že žít uprostřed něj, vidím to možná jinak.")
-            show mcPic at menuImage
-            menu:
-                "V tom případě ráda přijímám.":
-                    hide mcPic
-                    call njalDinnerAccepted
-                "Bohužel už jsem jedla." if any("dinner with" in str for str in dailyStatus):
-                    hide mcPic
-                    call njalDinnerRefused
-                "Bohužel se nemůžu zdržet.":
-                    hide mcPic
-                    call njalDinnerRefused
-
     $ njal.say("Hodně štěstí ve vašem vyšetřování.")
     if "less deals" in njal.asked and "less deals solved" not in njal.asked and "less deals buried" not in njal.asked:
         $ njal.say("A jestli zjistíte víc o těch mých obchodech, rozhodně mě to zajímá.")

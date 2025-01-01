@@ -21,6 +21,10 @@ label lisbethOptions:
 
     show mcPic at menuImage
     menu:
+        "Stalo se vám něco?" if lisbeth.imageParameter == "beaten" and "beaten" not in lisbeth.asked:
+            hide mcPic
+            $ lisbeth.asked.append("beaten")
+            $ lisbeth.say("Ne, všechno je v pořádku. Hlavní je najít ten ukradený mistrovský výrobek.")
         "Všimla jste si včera v noci něčeho nebo někoho podezřelého?" if "anything suspicious" not in lisbeth.asked:
             hide mcPic
             $ lisbeth.asked.append("anything suspicious")
@@ -34,7 +38,7 @@ label lisbethOptions:
             call victimComingToBed
         "Takže váš manžel nešel hned po příchodu do postele?" if "anything suspicious" in lisbeth.asked and "coming home" not in eckhard.asked and "coming home" not in lisbeth.asked:
             call victimComingToBed
-        "Můžu se zeptat, jak vypadaly ty ztracené lahve?" if "anything suspicious" in lisbeth.asked and "anything suspicious" in salma.asked and "lost bottles" not in lisbeth.asked:
+        "Můžu se zeptat, jak vypadaly ty ztracené lahve?" if "anything suspicious" in lisbeth.asked and "bottles description" not in clues:
             hide mcPic
             $ lisbeth.asked.append("lost bottles")
             $ clues.append("bottles description")
@@ -198,6 +202,8 @@ label lisbethOptions:
         "Jedna ze sousedek vás včera v noci viděla jít do domu s cizím mužem. Kdo to byl?" if lotte.alreadyMet == True and "night meeting" not in lisbeth.asked:
             hide mcPic
             $ lisbeth.asked.append("night meeting")
+            if "Kaspar and Lisbeth" not in clues:
+                $ clues.append("Kaspar and Lisbeth")
             "Lisbeth se na moment zatváří poplašeně, pak se ale ovládne."
             $ lisbeth.say("To byl mistr Kaspar. Nesl mi vrátit jednu knihu, kterou si předtím půjčil. Olwenovu cestu.")
             if "lisbeth friends" in ada.asked:
@@ -205,6 +211,47 @@ label lisbethOptions:
                 "Lisbeth nasucho polkne a na chvili uhne očima."
                 $ lisbeth.say("Vlastně máte pravdu. Musela jsem se splést. Kaspar měl knih půjčených několik, muselo to být něco jiného.")
                 $ lisbeth.cluesAgainst += 1
+        "Je něco mezi vámi a mistrem Kasparem?" if "Kaspar and Lisbeth" in clues and "Kaspar and Lisbeth" not in lisbeth.asked:
+            hide mcPic
+            $ lisbeth.asked.append("Kaspar and Lisbeth")
+            "Lisbeth se rozšíří oči překvapením a možná strachem, pak se ale ovládne."
+            $ lisbeth.say("Co by mezi námi mělo být?")
+            if "night meeting" not in lisbeth.asked:
+                show mcPic at menuImage
+                menu:
+                    "Doufal[a] jsem, že to mi řeknete vy.":
+                        hide mcPic
+                    "Jedna sousedka vás včera v noci viděla vítat cizího muže.":
+                        hide mcPic
+                        $ lisbeth.say("To ale nebylo… jak to mohlo vypadat.", "surprised")
+                        $ mc.say("Můžete to v tom případě uvést na pravou míru?")
+                        $ lisbeth.say("K ničemu mezi námi nedošlo. Včera večer, ani nikdy jindy.")
+            else:
+                $ mc.say("Doufal[a] jsem, že to mi řeknete vy.")
+            $ lisbeth.say("Mistr Kaspar je velmi milý a pozorný člověk. Dalo by se říct, že jsme přátelé.")
+            $ mc.say("Přátelé?")
+            $ lisbeth.say("Několikrát jsme spolu mluvili, když Heinrich… nebyl poblíž. Myslím, že je také osamělý.")
+            $ lisbeth.say("Je jeden z mála lidí, s kým můžu hovořit o knihách. Je k nim velmi vnímavý. Neodsuzuje je jako zbytečnost ani nemá dojem, že kážou zbytečně upjatou morálku.")
+            $ lisbeth.say("Rozhodně by ho ani nenapadlo nic… nevhodného. Stejně jako mě.", "angry")
+        "Ví o vašem přátelství s mistrem Kasparem váš manžel?" if "Kaspar and Lisbeth" in lisbeth.asked and "Heinrich knows" not in lisbeth.asked:
+            hide mcPic
+            $ lisbeth.asked.append("Heinrich knows")
+            $ lisbeth.say("Neví. A byla bych ráda, kdyby to tak mohlo zůstat. Heinrich z nějakého důvodu nemá Kaspara rád, nemusel by to pochopit.")
+            show mcPic at menuImage
+            menu:
+                "Nevidím důvod mu cokoli říkat.":
+                    hide mcPic
+                    $ lisbeth.trust += 1
+                    $ lisbeth.say("To je rozumné. Nechci před svým manželem nic tajit, ale znám ho dobře a vím, že občas má sklony k ukvapeným závěrům.")
+                "Myslím, že váš manžel si zaslouží pravdu.":
+                    hide mcPic
+                    $ lisbeth.trust -= 1
+                    $ lisbeth.say("Pravdu o čem? Že jsou témata, o kterých ráda mluvím, ale jeho nezajímají? Že jsou ve městě lidé, se kterými si v některých ohledech rozumím lépe než s ním?")
+                    $ lisbeth.say("To všechno on ví a nevidím důvod, proč mu to připomínat. V lepším případě by ho to nezajímalo. V horším by ho to ranilo.")
+                "Je možné, že to bude muset vyjít na povrch během vyšetřování.":
+                    hide mcPic
+                    $ lisbeth.say("Jak to souvisí? Ale kdyby to bylo nutné, tak prosím dejte hned od začátku najevo, co to je a hlavně co to není.")
+                    $ lisbeth.say("Heinrich má občas sklony k ukvapeným závěrům.")
         "Tušíte, jak by město vzalo, kdyby dva mistři předložili na Einionových slavnostech společný výrobek?" if "join forces victim pending" in status and "join forces" not in lisbeth.asked:
             hide mcPic
             $ lisbeth.asked.append("join forces")
@@ -321,5 +368,11 @@ label lisbethOptionsRemainingCheck:
     if "fireshow" in lisbeth.asked and "fireshow 2" not in lisbeth.asked:
         $ lisbethOptionsRemaining += 1
     if "Zairis mentioned" in lisbeth.asked and "Zairis investigated" not in lisbeth.asked:
+        $ lisbethOptionsRemaining += 1
+    if "Kaspar and Lisbeth" in clues and "Kaspar and Lisbeth" not in lisbeth.asked:
+        $ lisbethOptionsRemaining += 1
+    if "Kaspar and Lisbeth" in lisbeth.asked and "Heinrich knows" not in lisbeth.asked:
+        $ lisbethOptionsRemaining += 1
+    if lisbeth.imageParameter == "beaten" and "beaten" not in lisbeth.asked:
         $ lisbethOptionsRemaining += 1
     return

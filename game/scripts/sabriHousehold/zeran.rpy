@@ -158,9 +158,7 @@ label zeranOptions:
             $ zeran.say("Takže nejspíš nějaký romantický pozér.")
             $ zeran.say("Co mě napadá, občas byla hodně otrávená z toho, k jak nudnému životu se ji rodiče snaží dotlačit. Asi by mohla skočit i po někom, kdo jí dá představu dobrodružství nebo jenom změny. Nebo vlastní volby.")
             $ zeran.say("Ale komedianti by jí spíš nepsali dlouhodobě dopisy, takže jsme zpátky u těch romantických pozérů.")
-        "Chtěl bych tě očistit. Víš, jak to udělat?" if "clear your name" not in zeran.asked and gender == "M":
-            call clearZeransName
-        "Chtěla bych tě očistit. Víš, jak to udělat?" if "clear your name" not in zeran.asked and gender == "F":
+        "Chtěl[a] bych tě očistit. Víš, jak to udělat?" if "clear your name" not in zeran.asked:
             call clearZeransName
         "Kdy jsi naposledy viděl mistra Heinricha?" if "last seen Heinrich" not in zeran.asked:
             hide mcPic

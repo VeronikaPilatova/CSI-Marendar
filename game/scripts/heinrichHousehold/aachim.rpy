@@ -91,10 +91,7 @@ label aachimAloneOptions:
                     $ son.say("Uvažoval. Dost často. A taky o změně města a ideálně i obličeje, aby mě táta nemohl přitáhnout zpátky.", "sad")
                     "Aachim nešťastně potřese hlavou."
                     $ son.say("Táta mi život naplánoval dopředu a žádné změny v něm nedovolí. Jenom si holt představoval větší talent a nadšení pro tu jeho zatracenou ševcovinu.", "sad")
-                "Řekl bych změnit řemeslo, ale..." if "change trade" in son.asked and gender == "M":
-                    hide mcPic
-                    $ son.say("Ale to mě táta nenechá. Jo.", "sad")
-                "Řekla bych změnit řemeslo, ale..." if "change trade" in son.asked and gender == "M":
+                "Řekl[a] bych změnit řemeslo, ale..." if "change trade" in son.asked:
                     hide mcPic
                     $ son.say("Ale to mě táta nenechá. Jo.", "sad")
                 "Nechat tátu, ať si nadává. Dílnu ti jednou předá stejně, nebo ne?":
@@ -154,21 +151,14 @@ label aachimAloneOptions:
             $ son.say("Vlastně bych vás asi neměl nechat moc se ve věcech hrabat... kdybyste je nevrátil[a] na přesně správné místo a tak...", "surprised")
             $ mc.say("Umím se chovat hodně opatrně.")
             $ son.say("O tom nepochybuju, ale... já nevím...", "sad")
-        "Asi bych měl zase jít" if currentLocation == "workshop night" and gender == "M":
+        "Asi bych měl[a] zase jít" if currentLocation == "workshop night":
             hide mcPic
             $ mc.say("Vážně nechci, aby mě tady někdo chytil.")
             $ son.say("To jsme dva.")
             "Aachim ti posvítí na cestu ke dveřím ven na ulici a zavře za tebou, spíš z nervozity než kvůli tomu, že bys to opravdu potřeboval."
             scene bg heinrich outside dark
             "Zmizíš z místa tak rychlým krokem, jak se jen odvažuješ."
-        "Asi bych měla zase jít" if currentLocation == "workshop night" and gender == "F":
-            hide mcPic
-            $ mc.say("Vážně nechci, aby mě tady někdo chytil.")
-            $ son.say("To jsme dva.")
-            "Aachim ti posvítí na cestu ke dveřím ven na ulici a zavře za tebou, spíš z nervozity než kvůli tomu, že bys to opravdu potřebovala."
-            scene bg heinrich outside dark
-            "Zmizíš z místa tak rychlým krokem, jak se jen odvažuješ."
-        "To je všechno, můžeš zase jít.":
+        "To je všechno, můžeš zase jít." if currentLocation != "workshop night":
             hide mcPic
             return
 

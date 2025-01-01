@@ -262,18 +262,10 @@ label workshopNightMeetingAachim:
                 $ son.asked.append("doesn't matter")
                 $ son.trust -= 1
                 $ son.say("Já si myslím, že na tom záleží.", "angry")
-            "Jednoduše, odemkl jsem si." if "workshop night conversation start" in status and "own key" not in son.asked and gender == "M":
+            "Jednoduše, odemkl[a] jsem si." if "workshop night conversation start" in status and "own key" not in son.asked:
                 hide mcPic
                 $ son.asked.append("own key")
                 $ mc.say("Vyzvedával jsem včera klíč od dílny u mistra Eckharda, tak jsem si nechal zhotovit duplikát.")
-                $ son.say("...cože? A... to se smí?", "surprised")
-                $ mc.say("Když to je kvůli vyšetřování, tak ano.")
-                $ son.say("A... co tady tedy vyšetřujete?", "surprised")
-                jump workshopNightAachimMeetingMenu
-            "Jednoduše, odemkla jsem si." if "workshop night conversation start" in status and "own key" not in son.asked and gender == "F":
-                hide mcPic
-                $ son.asked.append("own key")
-                $ mc.say("Vyzvedávala jsem včera klíč od dílny u mistra Eckharda, tak jsem si nechala zhotovit duplikát.")
                 $ son.say("...cože? A... to se smí?", "surprised")
                 $ mc.say("Když to je kvůli vyšetřování, tak ano.")
                 $ son.say("A... co tady tedy vyšetřujete?", "surprised")
@@ -411,11 +403,7 @@ label workshopNightAachimConversation:
                 $ son.asked.append("what about you")
                 $ son.say("Já se zkusím vyplížit taky, ale já tady aspoň bydlím.")
                 $ son.say("Ale jestli mě tady táta chytí s někým cizím, tak dost možná taky nebudu.")
-            "Ještě jsem nenašel, co hledám." if "not found enough" not in son.asked and gender == "M":
-                hide mcPic
-                $ son.asked.append("not found enough")
-                $ son.say("Tady už žádné stopy být nemůžou. Ne po tom, co jsme to tady s klukama prohledali asi desetkrát. A asi pětkrát uklidili, než nám dal táta konečně pokoj.")
-            "Ještě jsem nenašla, co hledám." if "not found enough" not in son.asked and gender == "F":
+            "Ještě jsem nena[sel], co hledám." if "not found enough" not in son.asked:
                 hide mcPic
                 $ son.asked.append("not found enough")
                 $ son.say("Tady už žádné stopy být nemůžou. Ne po tom, co jsme to tady s klukama prohledali asi desetkrát. A asi pětkrát uklidili, než nám dal táta konečně pokoj.")

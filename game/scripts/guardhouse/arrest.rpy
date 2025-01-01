@@ -120,10 +120,7 @@ label rumelinArrestReaction:
             else:
                 $ rumelin.say("Bohužel ano. Provedl jsem určité složitější obchody, které vaše podřízen[y] bohužel nepochopil[a], prohlásil[a] je za zločin a chtěl[a] o nich vykládat každému na potkání.")
             $ rumelin.say("Ačkoli jsem přesvědčený, že na těch obchodech není nic špatného, někdo by je mohl špatně pochopit, zvlášť v podání někoho, kdo je přehnaně nadšený do hledání zločinů, ale vůbec nerozumí obchodu ani ševcovině.")
-            if gender == "M":
-                $ rumelin.say("Tak jsem ve slabé chvíli nabídl, že si koupím jeho mlčení. On[a] přijal[a] a teď mě přesně za tyto obchody zatýká.", "angry")
-            else:
-                $ rumelin.say("Tak jsem ve slabé chvíli nabídl, že si koupím její mlčení. On[a] přijal[a] a teď mě přesně za tyto obchody zatýká.", "angry")
+            $ rumelin.say("Tak jsem ve slabé chvíli nabídl, že si koupím [pronounPossessive] mlčení. On[a] přijal[a] a teď mě přesně za tyto obchody zatýká.", "angry")
             $ mc.say("Ty obchody měly za cíl znemožnit mistru Njalovi, aby zhotovil mistrovský výrobek na slavnosti.")
             $ rumelin.say("Ty obchody měly chránit cech a mistr Njal výrobek na slavnosti má.", "angry")
             $ mc.say("Ne ten, pro který se nakonec rozhodl.")

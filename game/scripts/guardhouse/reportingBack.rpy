@@ -33,18 +33,11 @@ label reportingBack:
             $ mc.say("Nevím, neptal[a] jsem se.")
             $ rauvin.trust -= 1
             $ hayfa.trust -= 1
-        "V krbu v dílně mistra Heinricha jsem našel stužku, která odpovídala popisu ztracených střevíců." if "burned evidence" in clues and "shoes description" in clues and "burned evidence" not in cluesReported and gender == "M":
+        "V krbu v dílně mistra Heinricha jsem na[sel] stužku, která odpovídala popisu ztracených střevíců." if "burned evidence" in clues and "shoes description" in clues and "burned evidence" not in cluesReported:
             hide mcPic
             $ rauvin.asked.append("burned evidence")
             $ rauvin.say("Takže tvoje teorie není krádež, ale zničení toho výrobku?")
-            $ mc.say("Zatím si nejsem jistý, ale je to možnost.")
-            $ rauvin.trust += 1
-            $ hayfa.trust += 1
-        "V krbu v dílně mistra Heinricha jsem našla stužku, která odpovídala popisu ztracených střevíců." if "burned evidence" in clues and "shoes description" in clues and "burned evidence" not in cluesReported and gender == "F":
-            hide mcPic
-            $ rauvin.asked.append("burned evidence")
-            $ rauvin.say("Takže tvoje teorie není krádež, ale zničení toho výrobku?")
-            $ mc.say("Zatím si nejsem jistá, ale je to možnost.")
+            $ mc.say("Zatím si nejsem jist[y], ale je to možnost.")
             $ rauvin.trust += 1
             $ hayfa.trust += 1
 
@@ -148,10 +141,7 @@ label reportingBack:
             $ rauvin.say("A kde je získala?")
             show mcPic at menuImage
             menu:
-                "To nevím, Salma se jí neptala a já s ní ještě nemluvil." if erle.alreadyMet == False and gender == "M":
-                    hide mcPic
-                    $ rauvin.say("Tak se jí zeptej. Nevím, jestli to s krádeží bot souvisí, ale jestli chceš tuhle stopu sledovat, je to přirozený krok.")
-                "To nevím, Salma se jí neptala a já s ní ještě nemluvila." if erle.alreadyMet == False and gender == "M":
+                "To nevím, Salma se jí neptala a já s ní ještě nemluvil[a]." if erle.alreadyMet == False:
                     hide mcPic
                     $ rauvin.say("Tak se jí zeptej. Nevím, jestli to s krádeží bot souvisí, ale jestli chceš tuhle stopu sledovat, je to přirozený krok.")
                 "Tvrdí, že je našla v blátě u řeky." if "bottles 2" in erle.asked:
@@ -227,17 +217,10 @@ label reportingBack:
             $ rauvin.say("Pak může určitě na očištění počkat ještě týden. Střevíce mistra Heinricha nebo aspoň zloděje je nutné najít do začátku Einionových slavností.")
 
         # nothing
-        "Raději bych si to nechal pro sebe." if "provisional watchman" not in status and gender == "M":
+        "Raději bych si to nechal[a] pro sebe." if "provisional watchman" not in status:
             hide mcPic
             $ rauvin.trust -= 2
             $ status.append("not sharing")
-            "Rauvin pozdvihne obočí."
-            $ rauvin.say("Nejsem si jistý, že tomu rozhodnutí rozumím, ale beru to tak, že se chceš prokázat až vyřešeným případem.")
-            jump leaveReporting
-        "Raději bych si to nechala pro sebe." if "provisional watchman" not in status and gender == "F":
-            hide mcPic
-            $ status.append("not sharing")
-            $ rauvin.trust -= 2
             "Rauvin pozdvihne obočí."
             $ rauvin.say("Nejsem si jistý, že tomu rozhodnutí rozumím, ale beru to tak, že se chceš prokázat až vyřešeným případem.")
             jump leaveReporting

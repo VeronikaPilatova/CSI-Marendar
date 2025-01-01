@@ -128,9 +128,7 @@ label nireviaOptions:
             hide mcPic
             $ nirevia.asked.append("less deals 2")
             $ nirevia.say("Všimla jsem si, že tam asi došlo k nějakým neshodám, ale neznám detaily.")
-        "Slyšel jsem, že se mistr Njal dostal do nějakých potíží s dodavateli, víte o tom něco?" if "less deals" in salma.asked and "less deals 1" not in nirevia.asked and gender == "M":
-            call lessDealsNjal
-        "Slyšela jsem, že se mistr Njal dostal do nějakých potíží s dodavateli, víte o tom něco?" if "less deals" in salma.asked and "less deals 1" not in nirevia.asked and gender == "F":
+        "Slyšel[a] jsem, že se mistr Njal dostal do nějakých potíží s dodavateli, víte o tom něco?" if "less deals" in salma.asked and "less deals 1" not in nirevia.asked:
             call lessDealsNjal
         "A co váš manžel, u něj se něco změnilo?" if "less deals njal" in nirevia.asked and "less deals 2" not in nirevia.asked:
             hide mcPic
@@ -144,6 +142,8 @@ label nireviaOptions:
         "Pokud by měla paní Lisbeth milence, kdo by to mohl být?" if lotte.alreadyMet == True and "secret lover" not in nirevia.asked:
             hide mcPic
             $ nirevia.asked.append("secret lover")
+            if "Kaspar and Lisbeth" not in clues:
+                $ clues.append("Kaspar and Lisbeth")
             $ nirevia.say("Proč se vlastně městská hlídka zajímá o podobné věci?", "angry")
             $ mc.say("Je možné, že střevíce mistra Heinricha ukradl právě ten milenec. Měl by motiv i příležitost.")
             "Nirevia se na chvíli zamyslí, ale možná tím jen získává čas."

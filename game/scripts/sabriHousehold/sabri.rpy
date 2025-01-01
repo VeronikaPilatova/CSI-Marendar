@@ -285,9 +285,7 @@ label sabriOptions:
                     "Tím myslím své písařské umění.":
                         hide mcPic
                         $ sabri.say("Kterému se ale nevěnuješ. Místo toho nosíš glejt se znakem hlídky a hledáš cizí boty.")
-                    "Ano, tím myslím hlídku. Vždy jsem doufal[a] v práci, která bude něco znamenat, a teď jsem ji konečně našel." if gender == "M":
-                        call einionFollowerWatch
-                    "Ano, tím myslím hlídku. Vždy jsem doufal[a] v práci, která bude něco znamenat, a teď jsem ji konečně našla." if gender == "F":
+                    "Ano, tím myslím hlídku. Vždy jsem doufal[a] v práci, která bude něco znamenat, a teď jsem ji konečně na[sel].":
                         call einionFollowerWatch
                     "Jsem hrdý na každou práci, kterou dělám, a vždy ji dělám, jako by mělo vzniknout to nejdražší dílo.":
                         hide mcPic

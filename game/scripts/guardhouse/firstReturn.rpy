@@ -53,10 +53,7 @@ label guardhouseFirst:
         "Lepší se to, dneska jsem se ještě nemusel[a] ptát na cestu.":
             hide mcPic
             $ rauvin.say("To je dobře. A kdybys chtěl[a] poznat ulice a zákoutí, co často neznají ani místní, řekni někdy Hayfě.")
-        "Je to jako kdybych nikdy neodešel" if origin == "born here" and gender == "M":
-            hide mcPic
-            $ rauvin.say("To je dobře, na slavnosti přijedou i lidé z okolí, co se budou potřebovat ptát na cestu.")
-        "Je to jako kdybych nikdy neodešla" if origin == "born here" and gender == "F":
+        "Je to jako kdybych nikdy neode[sel]" if origin == "born here":
             hide mcPic
             $ rauvin.say("To je dobře, na slavnosti přijedou i lidé z okolí, co se budou potřebovat ptát na cestu.")
         "Už se tady cítím jako doma." if origin != "born here":

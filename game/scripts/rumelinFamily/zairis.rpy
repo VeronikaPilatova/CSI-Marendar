@@ -26,10 +26,7 @@ label zairisOptions:
                 $ zairis.say("Jak jsi říkal[a], že si s ním mám promluvit... tak ten surovec umí mluvit jen pěstmi. Ani mě nepustil ke slovu.", "angry")
             show mcPic at menuImage
             menu:
-                "Doufal jsem, že to vezme lépe." if "Ada confronts Zairis" not in status and gender == "M":
-                    hide mcPic
-                    $ zairis.say("To já také. Nechápu, jak může mít takový hrubián takovou dceru, jako je Ada.", "angry")
-                "Doufala jsem, že to vezme lépe." if "Ada confronts Zairis" not in status and gender == "F":
+                "Doufal[a] jsem, že to vezme lépe." if "Ada confronts Zairis" not in status:
                     hide mcPic
                     $ zairis.say("To já také. Nechápu, jak může mít takový hrubián takovou dceru, jako je Ada.", "angry")
                 "Dost mu na Adě záleží.":

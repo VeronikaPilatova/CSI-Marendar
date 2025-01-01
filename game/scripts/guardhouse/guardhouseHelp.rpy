@@ -10,11 +10,7 @@ label guardhouseHelpMenu:
             hide mcPic
             call helpWithAml
             $ helpAsked += 1
-        "Potřeboval bych ověřit, jestli Zeran včera v noci opravdu pracoval." if "alibi witnesses" in zeran.asked and not any("zeran witnesses" in str for str in status) and gender == "M":
-            hide mcPic
-            call helpWithZeranWitnesses
-            $ helpAsked += 1
-        "Potřebovala bych ověřit, jestli Zeran včera v noci opravdu pracoval." if "alibi witnesses" in zeran.asked and not any("zeran witnesses" in str for str in status) and gender == "F":
+        "Potřeboval[a] bych ověřit, jestli Zeran včera v noci opravdu pracoval." if "alibi witnesses" in zeran.asked and not any("zeran witnesses" in str for str in status):
             hide mcPic
             call helpWithZeranWitnesses
             $ helpAsked += 1
@@ -29,10 +25,7 @@ label guardhouseHelpMenu:
         "Vlastně si to ještě nechám projít hlavou." if helpAsked == 0:
             hide mcPic
             return
-        "Děkuji, to je všechno, co jsem chtěl." if helpAsked > 0 and gender == "M":
-            hide mcPic
-            return
-        "Děkuji, to je všechno, co jsem chtěla." if helpAsked > 0 and gender == "F":
+        "Děkuji, to je všechno, co jsem chtěl[a]." if helpAsked > 0:
             hide mcPic
             return
     jump guardhouseHelpMenu

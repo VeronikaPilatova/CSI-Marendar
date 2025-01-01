@@ -42,6 +42,7 @@ label erleFirst:
     menu:
         "{i}(Dát jí pár mincí){/i}":
             hide mcPic
+            $ erle.asked.append("given money")
             $ erle.trust += 1
             $ erle.say("Děkuju.", "happy")
             "Erle se na tebe usměje, podívá se na mince a pak ti jich asi polovinu vrátí."
@@ -174,9 +175,7 @@ label erleOptions:
             $ erle.say("Je hezký den a já měla k snídani moc dobrou teplou polívku. Nic mi nechybí a nic mi nepřebývá.", "happy")
             $ mc.say("Co střecha nad hlavou, ta ti opravdu nechybí?")
             $ erle.say("Aspoň se nemusím bát, že o ni zase přijdu. K čemu je pachtit se za věcmi, které ti potom stejně nezůstanou?")
-        "Mohla bys mě naučit, jak být spokojený v bídě?" if "teach me" not in erle.asked and gender == "M":
-            call erleTeachMe
-        "Mohla bys mě naučit, jak být spokojená v bídě?" if "teach me" not in erle.asked and gender == "F":
+        "Mohla bys mě naučit, jak být spokojen[y] v bídě?" if "teach me" not in erle.asked:
             call erleTeachMe
         "Myslíš, že takhle na tebe můžou být tví předkové hrdí?" if race == "dwarf" and "ancestors" not in erle.asked:
             hide mcPic
