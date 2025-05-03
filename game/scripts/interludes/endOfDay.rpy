@@ -40,6 +40,7 @@ label endOfDay:
     elif time.days == 2:
         $ rauvin.status.append("out of office")
         $ hayfa.status.append("out of office")
+    mc.imageParameter = ""
 
     if "promised to share" in dailyStatus:
         $ hayfa.trust -= 1

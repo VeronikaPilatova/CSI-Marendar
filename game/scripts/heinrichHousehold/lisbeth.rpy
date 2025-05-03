@@ -153,7 +153,7 @@ label lisbethOptions:
             $ lisbeth.say("Co je tohle za otázky? Přísahali jsme si společnou cestu životem, dokud nepřejdeme přes poslední práh. A po té cestě šťastně jdeme už přes patnáct let.")
             $ mc.say("Omlouvám se, nechtěl[a] jsem vás urazit.")
             $ lisbeth.say("Potřebujete ještě něco?")
-        "Můžete se u svého muže přimluvit za Aachima a učedníky?" if "confession" in boysAsked and "defend boys" not in lisbeth.asked:
+        "Můžete se u svého muže přimluvit za Aachima a učedníky?" if "confession" in boysAsked and "lost bottles solved boys" in victim.asked and "defend boys" not in lisbeth.asked:
             hide mcPic
             $ lisbeth.asked.append("defend boys")
             if "boys punished for drinking" in status:
@@ -214,13 +214,14 @@ label lisbethOptions:
         "Je něco mezi vámi a mistrem Kasparem?" if "Kaspar and Lisbeth" in clues and "Kaspar and Lisbeth" not in lisbeth.asked:
             hide mcPic
             $ lisbeth.asked.append("Kaspar and Lisbeth")
-            "Lisbeth se rozšíří oči překvapením a možná strachem, pak se ale ovládne."
             $ lisbeth.say("Co by mezi námi mělo být?")
+            $ libeth.say("Doufám, že nás nikdo nepomlouval.", "surprised")
             if "night meeting" not in lisbeth.asked:
                 show mcPic at menuImage
                 menu:
                     "Doufal[a] jsem, že to mi řeknete vy.":
                         hide mcPic
+                        $ lisbeth.say("Ono toho moc není, co by se dalo říci.")
                     "Jedna sousedka vás včera v noci viděla vítat cizího muže.":
                         hide mcPic
                         $ lisbeth.say("To ale nebylo… jak to mohlo vypadat.", "surprised")
@@ -252,6 +253,56 @@ label lisbethOptions:
                     hide mcPic
                     $ lisbeth.say("Jak to souvisí? Ale kdyby to bylo nutné, tak prosím dejte hned od začátku najevo, co to je a hlavně co to není.")
                     $ lisbeth.say("Heinrich má občas sklony k ukvapeným závěrům.")
+        "Byl mistr Kaspar včera v dílně vašeho manžela?" if "Kaspar and Lisbeth" in lisbeth.asked and "Kaspar in workshop" not in lisbeth.asked:
+            hide mcPic
+            $ lisbeth.asked.append("Kaspar in workshop")
+            "Lisbeth na poměrně dlouhou dobu zaváhá a pak sklopí pohled."
+            $ lisbeth.say("Byl. Velmi se zajímal o manželův výrobek chtěl ho vidět ještě před slavnostmi.", "sad")
+            $ lisbeth.say("Já vím, že Heinrich nemá rád, když do dílny někdo chodí bez jeho svolení, a dlouho jsem váhala, ale nakonec jsem svolila.", "sad")
+            $ lisbeth.say("Tohle prosím Heinrichovi neříkejte. Myslím, že bych se mu měla přiznat sama.")
+            label kasparInWorkshopLisbethMenu:
+            show mcPic at menuImage
+            menu:
+                "Neudělala jste přece nic špatného." if "nothing wrong" not in lisbeth.asked:
+                    hide mcPic
+                    $ lisbeth.asked.append("nothing wrong")
+                    $ lisbeth.say("Jak to? Dílna je to místo, kde Heinrich rozvíjí a předává svoje mistrovství a kde je tím mužem, kterým vždy chtěl.")
+                    $ lisbeth.say("Všechny nástroje, střihy a podobně, to není jen způsob obživy, je to připomínka toho, kým je a co dokázal.")
+                    $ lisbeth.say("Jistě, že nechce, aby mu tam chodili lidé bez pozvání, stejně jako si nemůže někdo jen tak přijít třeba k jeho stolu nebo usnout v jeho posteli.")
+                    jump kasparInWorkshopLisbethMenu
+                "Nenapadlo vás, že by mistr Kaspar mohl mít skryté úmysly?" if "Kaspar's intentions" not in lisbeth.asked:
+                    hide mcPic
+                    $ lisbeth.asked.append("Kaspar's intentions")
+                    $ lisbeth.say("Jaké? Napodobit Heinrichovu práci? To by přece bylo na slavnostech hned vidět.")
+                    if "kaspar's slander" not in lisbeth.asked:
+                        $ lisbeth.say("Kaspar Heinricha obdivuje, určitě by neudělal nic, co by ho poškodilo.")
+                        $ lisbeth.say("Jen chtěl to dílo vidět zblízka. Ale i tak...", "sad")
+                    jump kasparInWorkshopLisbethMenu
+                "Nemůžu nic slíbit, možná mu to říct budu muset.":
+                    hide mcPic
+                "Ještě se to váš manžel nemusí dozvědět vůbec." if "Heinrich doesn't have to know" not in lisbeth.asked:
+                    hide mcPic
+                    $ lisbeth.asked.append("Heinrich doesn't have to know")
+                    $ lisbeth.trust -= 1
+                    $ mc.say("Víte přece, jak prchlivý občas bývá.")
+                    $ lisbeth.say("Svého manžela znám velmi dobře. Ale zároveň před ním nechci a nemohu mít žádná tajemství.")
+                    jump kasparInWorkshopLisbethMenu
+                "Nebudu do toho nijak zasahovat.":
+                    hide mcPic
+                    $ lisbeth.trust += 1
+                    $ lisbeth.say("Děkuji. Nebyl v tom žádný zlý úmysl, ale správné to nebylo a já potřebuji ulehčit svému svědomí.")
+        "Jak se Kasparovi ty střevíce líbily?" if "Kaspar in workshop" in lisbeth.asked and "what did Kaspar say" not in lisbeth.asked:
+            hide mcPic
+            $ lisbeth.asked.append("what did Kaspar say")
+            $ lisbeth.say("To neříkal. Vlastně pak už neřekl vůbec nic, vyšel z dílny a hned na to se omluvil, že má doma nedokončenou práci. Ale nic odtamtud neodnášel, to bych si všimla.")
+            show mcPic at menuImage
+            menu:
+                "A zrovna tyhle střevíce byste nepřehlédla určitě.":
+                    hide mcPic
+                    "Lisbeth trochu ulehčeně přikývne."
+                "Je možné, že by se ty střevíce pokusil zničit přímo tady v dílně, aby je před vámi mohl snáz schovat?":
+                    hide mcPic
+                    $ lisbeth.say("Ale to by přece Kaspar neudělal! Je to jemný člověk, ten by neublížil ani mouše.", "surprised")
         "Tušíte, jak by město vzalo, kdyby dva mistři předložili na Einionových slavnostech společný výrobek?" if "join forces victim pending" in status and "join forces" not in lisbeth.asked:
             hide mcPic
             $ lisbeth.asked.append("join forces")
@@ -361,7 +412,7 @@ label lisbethOptionsRemainingCheck:
         $ lisbethOptionsRemaining += 1
     if "join forces victim pending" in status and "join forces" not in lisbeth.asked:
         $ lisbethOptionsRemaining += 1
-    if "confession" in boysAsked and "defend boys" not in lisbeth.asked:
+    if "confession" in boysAsked and "lost bottles solved boys" in victim.asked and "defend boys" not in lisbeth.asked:
         $ lisbethOptionsRemaining += 1
     if "fireshow" in status and "fireshow" not in lisbeth.asked:
         $ lisbethOptionsRemaining += 1
@@ -374,5 +425,9 @@ label lisbethOptionsRemainingCheck:
     if "Kaspar and Lisbeth" in lisbeth.asked and "Heinrich knows" not in lisbeth.asked:
         $ lisbethOptionsRemaining += 1
     if lisbeth.imageParameter == "beaten" and "beaten" not in lisbeth.asked:
+        $ lisbethOptionsRemaining += 1
+    if "Kaspar and Lisbeth" in lisbeth.asked and "Kaspar in workshop" not in lisbeth.asked:
+        $ lisbethOptionsRemaining += 1
+    if "Kaspar in workshop" in lisbeth.asked and "what did Kaspar say" not in lisbeth.asked:
         $ lisbethOptionsRemaining += 1
     return

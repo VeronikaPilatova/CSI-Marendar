@@ -546,6 +546,66 @@ label victimOptions:
                     hide mcPic
                     $ victim.say("Jsem rád, že máš aspoň trochu rozum.")
 
+        "Zatýkám vás za napadení mistra Kaspara!" (badge="handcuffs") if "assaulted" in kaspar.asked and "arrest" not in victim.asked:
+            hide mcPic
+            $ victim.asked.append("arrest")
+            $ victim.say("Cože?", "furious")
+            $ mc.say("Jste zatčen. Napadl jste váženého měšťana a způsobil mu četná poranění.")
+            $ victim.say("Jaká poranění? Vždyť odešel po svých. To bylo jen pár boulí.", "angry")
+            $ mc.say("To už zváží soud.")
+            $ victim.say("Tak víš co? Jdi se bodnout. Já s tebou kvůli podobné hlouposti nikam chodit nebudu.", "angry")
+            $ victim.say("Jdi si se svými nadřízenými pořádně vyjasnit, čemu se má hlídka věnovat. Nebo na to radši zapomeň a dělej svoji skutečnou práci.", "angry")
+            $ victim.say("A hlavně nech věnovat se práci mě. Dveře jsou tam.")
+            show mcPic at menuImage
+            menu:
+                "Jestli se mnou nepůjdete, budu vás k tomu muset donutit!":
+                    hide mcPic
+                    if skill == "combat":
+                        "Sebevědomě k k mistru Heinrichovi přistoupíš a pokusíš se ho srazit k zemi dřív, než se vzpamatuje, on se však tvému chvatu rychlým pohybem ubrání. Okamžitě navážeš dalším úchopem a zaklesnete se do sebe."
+                        "Zápas je vyrovnanější, než jsi doufal[a]. Oba utržíte několik nepříjemných ran a napínáte svaly ve snaze vydobýt si výhodu."
+                        "Potom ševcovský mistr přenese váhu, zakopne přitom o truhlu a s velkým rámusem se zřítíte k zemi, kde váš boj okamžitě naváže."
+                        $ victim.imageParameter = "beaten"
+                        $ mc.imageParameter = "beaten"
+                        $ lisbeth.say("Co se to tu děje?! Okamžitě toho oba nechte!", "surprised")
+                        "S mírným překvapením se od sebe oddělíte."
+                        $ lisbeth.say("Rvát se v našem domě? Co to je za způsoby?!", "surprised")
+                        $ victim.say("Tady nová naděje hlídky k se mě pokusila zatknout. Ale prát se umí, to musím uznat.")
+                        $ lisbeth.say("Tak ať se pere někde jinde!", "surprised")
+                        $ lisbeth.say("Počkej, zatknout? Za co, u všech bohů?", "surprised")
+                        $ victim.say("Za rvačku s Kasparem.", "angry")
+                        $ lisbeth.say("Co to je za nesmysl? A kvůli tomu se s tebou rve? V domě?", "surprised")
+                        $ mc.say("Odporoval zatčení.")
+                        $ lisbeth.say("Tak aby bylo jasno, v mém domě se nikdo rvát nebude. Jestli si něco nutně potřebujete vyříkat, jděte s tím ven.", "angry")
+                        $ mc.say("Takže teď odtud, [callingMc], odejděte, než na vás zavolám na pomoc sousedy. Cestu ke dveřím znáte.")
+                        "Paní Lisbeth vypadá nekompromisně a navíc do místnosti začali nakukovat i učedníci. Usoudíš tedy, že zde hrubou silou už nic nezmůžeš, a za pár okamžiků se ocitneš na ulici před domem."
+                    else:
+                        "Odhodlaně k mistru Heinrichovi přistoupíš a vztáhneš ruce, abys ho mohl[a] srazit k zemi. On však sotva zavrávorá, přenese váhu a najednou se ti zatmí před očima, jak v tvém obličeji přistane jeho pěst."
+                        "Netrvá dlouho a zjistíš, že na tobě Heinrich klečí na zemi a znemožňuje ti se účinně bránit. Utržíš ještě několik nepříjemných úderů a pak tě ševcovský mistr nechá být."
+                        $ victim.say("Příště zatýkej jen lidi, co opravdu porušili zákon. A radši si na to vezmi pár kamarádů.", "angry")
+                        $ lisbeth.say("Co se děje?", "surprised")
+                        $ victim.say("Zkusil[a] mě zatknout. Za obyčejnou rvačku.", "angry")
+                        $ lisbeth.say("Myslíš za tu s Kasparem? Za tu se zatýká?", "surprised")
+                        $ victim.say("Právě že ne.", "angry")
+                        $ lisbeth.say("... způsobit rvačku v našem domě? A kvůli tomuhle? Co je to za způsoby?", "surprised")
+                        $ victim.say("To nevím, ale dlouho už v našem domě nebude.", "angry")
+                        $ mc.imageParameter = "beaten"
+                        "S těmito slovy se mistr Heinrich zvedne, hrubě tě vytáhne na nohy a nasměruje tě ke dveřím z domu."
+                        scene bg heinrich outside
+                        "Netrvá dlouho a ty se ocitneš na ulici, bez muže, kterého jsi chtěl[a] zatknout, a s několika čerstvými ranami."
+                "Vrátím se s posilami a pak se mnou jít budete muset!":
+                    hide mcPic
+                    $ victim.say("Doufám, že tak hluboko hlídka neklesla.", "angry")
+                    $ victim.say("A teď zmiz, než mi dojde trpělivost.", "angry")
+                    scene bg heinrich outside
+                    "Mistr Heinrich naznačí pohledem ke dveřím a ty se brzy ocitneš na ulici před jeho domem."
+                "Dobře, ještě to s ostatními proberu.":
+                    hide mcPic
+                    $ victim.say("To je to jediné rozumné rozhodnutí.", "angry")
+                    $ victim.say("A teď zmiz, než mi dojde trpělivost.", "angry")
+                    scene bg heinrich outside
+                    "Mistr Heinrich naznačí pohledem ke dveřím a ty se brzy ocitneš na ulici před jeho domem."
+            $ leaveOption = "none"
+            return
         "Děkuji, to je všechno.":
             hide mcPic
             $ victim.say("Tak hlavně pohni, slavnosti jsou už za chvíli a já tam pořád nemám co představit.")

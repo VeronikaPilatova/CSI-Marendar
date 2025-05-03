@@ -108,7 +108,7 @@ label kasparBeatenIntro:
                     hide mcPic
                     $ kaspar.say("Ten důvod je přesně v tom, že Heinrich nic nechápe. Jak se teď jasně ukázalo.", "angry")
             jump kasparBeatenOptions
-        "Co vaše návštěva jeho dílny?" if "confession" in kaspar.asked and "beaten - workshop visit" not in kaspar.asked:
+        "Co vaše návštěva jeho dílny?" if ("confession" in kaspar.asked or "Kaspar in workshop" in lisbeth.asked) and "beaten - workshop visit" not in kaspar.asked:
             hide mcPic
             $ kaspar.asked.append("beaten - workshop visit")
             $ kaspar.say("O tom přece nemůže nic tušit. Jak by to asi poznal? Na nic jsem ani nesáhnul, natož abych něco rozbil nebo odnesl.", "angry")
