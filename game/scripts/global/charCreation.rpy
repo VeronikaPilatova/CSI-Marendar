@@ -24,11 +24,11 @@ label race:
 
 label gender:
     if gender == "":
-        "A co tvoje pohlaví?"
+        "A jaký používáš rod?"
     else:
-        "Jaké je tvoje pohlaví?"
+        "Jaký používáš rod?"
     menu:
-        "Muž":
+        "Mužský":
             $ gender = "M"
             $ a = ""
             $ e = ""
@@ -39,7 +39,7 @@ label gender:
             $ sel = "šel"
             $ sam = "sám"
             $ pronounPossessive = "jeho"
-        "Žena":
+        "Ženský":
             $ gender = "F"
             $ a = "a"
             $ e = "e"
@@ -52,25 +52,41 @@ label gender:
             $ pronounPossessive = "její"
 
 $ pic = 1
+$ picGender = gender
+$ lastPicGender = gender
 label looks:
-show expression ("mc/char [race][gender][pic].png") at menuImage
+show expression ("mc/char [race][picGender][pic].png") at menuImage
 menu:
     "Tohle jsem já!":
-        hide expression ("mc/char [race][gender][pic].png")
-        image mcPic = ("mc/char [race][gender][pic].png")
-        image mcPicBeaten = ("mc/char [race][gender][pic] beaten.png")
+        hide expression ("mc/char [race][picGender][pic].png")
+        image mcPic = ("mc/char [race][picGender][pic].png")
+        image mcPicBeaten = ("mc/char [race][picGender][pic] beaten.png")
     "Další obrázek":
-        hide expression ("mc/char [race][gender][pic].png")
+        hide expression ("mc/char [race][picGender][pic].png")
         if pic < 5:
             $ pic += 1
+        # elif pic < 7:
+        #     $ pic += 1
+        #     if picGender != "U":
+        #         $ lastPicGender = picGender
+        #         $ picGender = "U"
         else:
             $ pic = 1
+            $ picGender = lastPicGender
+        jump looks
+    "Mužské obrázky" if picGender == "F" or (picGender == "U" and lastPicGender == "F"):
+        $ lastPicGender = picGender
+        $ picGender = "M"
+        jump looks
+    "Ženské obrázky" if picGender == "M" or (picGender == "U" and lastPicGender == "M"):
+        $ lastPicGender = picGender
+        $ picGender = "F"
         jump looks
     "Změnit rasu":
-        hide expression ("mc/char [race][gender][pic].png")
+        hide expression ("mc/char [race][picGender][pic].png")
         jump race
     "Změnit pohlaví":
-        hide expression ("mc/char [race][gender][pic].png")
+        hide expression ("mc/char [race][picGender][pic].png")
         jump gender
 
 label naming:
