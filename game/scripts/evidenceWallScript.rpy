@@ -308,17 +308,20 @@ label notFinished:
 
 label displayNotes:
     call prisonerCheck
-    show expression ("evidencewall/note [chosenChar].png") at menuImage
+    if chosenChar == "seeMe" and "out of office" in rauvin.status:
+        show expression ("evidencewall/note seeme solian.png") at menuImage
+    else:
+        show expression ("evidencewall/note [chosenChar].png") at menuImage
     menu:
         "[noteInformation]"
         "Navštívit" if _return == False:
-            hide expression ("evidencewall/note [chosenChar].png")
+            scene bg evidencewall
             jump expression chosenLocation
         "Navštívit v cele" if _return == True:
-            hide expression ("evidencewall/note [chosenChar].png")
+            scene bg evidencewall
             call cellsController
             jump guardhouseAgain
         "Zpět":
-            hide expression ("evidencewall/note [chosenChar].png")
+            scene bg evidencewall
             jump evidenceWall
     return
