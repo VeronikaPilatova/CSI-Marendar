@@ -295,7 +295,7 @@ label rumelinOptions:
             $ rumelin.say("Jistě, dávno před požárem.")
             $ rumelin.say("Být místní ale zdaleka neznamená jen původ, ale především vztahy, společné zážitky a zkušenosti. A jistě jste si všiml[a], kolik se toho v Marendaru změnilo od doby, kdy jste tu byl[a] naposled.")
             if rumelin.trust < 0:
-                $ rumelin.say("Například hádám, že tehdy jste se ještě nepotřeboval[a] [sam.capitalize()] starat o živobytí. Navrhuji vám uvědomit si, že ta doba už je pryč, a věnovat se vaší skutečné práci.")
+                $ rumelin.say("Například hádám, že tehdy jste se ještě nepotřeboval[a] [sam] starat o živobytí. Navrhuji vám uvědomit si, že ta doba už je pryč, a věnovat se vaší skutečné práci.")
 
         "To je všechno, na co jsem se chtěl[a] zeptat. Děkuji vám za spolupráci.":
             hide mcPic

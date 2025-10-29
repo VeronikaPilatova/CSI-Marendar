@@ -1634,7 +1634,7 @@ label mcAdmitsBurglary:
             "Její manžel se zastaví s pěstí zdviženou k úderu, ale neotočí se k ní ani nepovoluje sevření, kterým ti znemožňuje cokoli podniknout."
             $ victim.say("Zákon pohostinství tady porušil[a] on[a]. Zneužil[a] moji důvěru a vloupal[a] se mi do dílny.", "furious")
             $ lisbeth.say("Opravdu? Nemůže to být jen nějaká mýlka?", "surprised")
-            $ victim.say("[sam].capitalize() se právě přiznal[a].", "furious")
+            $ victim.say("[sam.capitalize()] se právě přiznal[a].", "furious")
             "Paní Lisbeth se nadechne, ale poté ti jen věnuje smutný a zklamaný pohled a odejde z místnosti."
         elif ada.trust > 3:
             "I přes rámus rvačky uslyšíš rychlé kroky."
@@ -1706,7 +1706,7 @@ label mcAdmitsBurglary:
     $ victim.say("Vloupal[a] se do mojí dílny, ukradl[a] tam dopisy, které moje dcera dostala od toho elfského kašpara, a pak mi to ještě drze přizná do očí!", "furious")
     $ victim.say("Jestli ta špína okamžitě neskončí aspoň na pranýři, postarám se, aby se všichni dozvěděli, co si to naše nová hlídka dovoluje. A schválně, jak se jim to bude líbit.", "furious")
     $ solian.say("To nebude nutné. Můžu vás ujistit, že hlídka se do ničích domů nevloupává, a pokud to nějaký hlídkař kdy udělal, čeká ho náležitý trest.", "angry")
-    $ runa.say("[callingMc].capitalize(), co k tomu můžeš říct ty?")
+    $ runa.say("[callingMc.capitalize()], co k tomu můžeš říct ty?")
     show mcPic at menuImage
     menu:
         "Je to lež, v dílně jsem nikdy nebyl[a] jinak než pod dozorem!":
@@ -1723,7 +1723,7 @@ label mcAdmitsBurglary:
         "Hayfa by na mém místě jednala stejně.":
             hide mcPic
             $ solian.say("To je možné, ale teď mluvíme o tvém případu a odváděním pozornosti na jiné členy hlídky si nijak nepomůžeš.", "angry")
-    $ solian.say("[mcName].capitalize() teď umístíme do jedné z našich cel a zasadíme se, aby co nejdříve proběhl soud a náležitě [pronoun4] potrestal.")
+    $ solian.say("[mcName.capitalize()] teď umístíme do jedné z našich cel a zasadíme se, aby co nejdříve proběhl soud a náležitě [pronoun4] potrestal.")
     $ solian.say("Mistře Heinrichu, uděláme vše pro to, aby vyšetřování krádeže vašich bot tímto zatčením nijak neutrpělo. Osobně se o to zasadím.")
     "Solian k tobě dojde, uchopí tě za paži a začne tě směrovat směrem ke schodům do sklepa. Neochotně ho následuješ, v místnosti plné lidí by odpor neměl naději na úspěch."
     scene bg cell

@@ -228,7 +228,7 @@ label reportingBack:
             hide mcPic
             jump leaveReporting
 
-    if "provisional watchman" in status and "report given" not in dailyStatus:
+    if "report given" not in dailyStatus:
         $ dailyStatus.append("report given")
     if "promised to share" in dailyStatus:
         $ hayfa.trust += 1

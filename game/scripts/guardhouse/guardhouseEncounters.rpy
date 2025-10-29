@@ -246,11 +246,11 @@ label firstStandUp:
             $ solian.trust += 1
             $ hayfa.say("Cože? Jak tohle můžeš říct?", "angry")
             $ mc.say("Nejen můžu, ale musím, z víc důvodů.")
-            $ rauvin.say("Tady vás zastavím, to nemusíme probírat teď. [callingMc].capitalize(), jestli k tomu máš co říct, je důležité to přednést soudu.")
-            $ runa.say("[mcName].capitalize() ale není z města, [pronounPossessive] slovo nebude mít takovou váhu.")
+            $ rauvin.say("Tady vás zastavím, to nemusíme probírat teď. [callingMc.capitalize()], jestli k tomu máš co říct, je důležité to přednést soudu.")
+            $ runa.say("[mcName.capitalize()] ale není z města, [pronounPossessive] slovo nebude mít takovou váhu.")
             $ rauvin.say("Každý svědek se počítá a je pak na městské radě, aby to při přelíčení všechno posoudila.")
             $ runa.say("Já jen připomínám, že bohatí svědci z města se počítají víc.")
-            $ rauvin.say("Pravda, to asi bohužel pořád tak je. [callingMc].capitalize(), jestli znáš okolnosti, které mluví ve prospěch té dívky, postarej se, aby se to k soudu dostalo, pokud možno ústy někoho vlivného.")
+            $ rauvin.say("Pravda, to asi bohužel pořád tak je. [callingMc.capitalize()], jestli znáš okolnosti, které mluví ve prospěch té dívky, postarej se, aby se to k soudu dostalo, pokud možno ústy někoho vlivného.")
             $ hayfa.say("Zbytečná práce.", "angry")
             $ rauvin.say("V nejhorším budeme vědět, že jsme nic nezanedbali. Možná pomůžeme někomu, kdo si trest nezaslouží, nebo se naopak ujistíme, že je trest na místě.")
             $ rauvin.say("A [mcName] se na tom zase něco naučí. Jen prosím nezapomínej ani na ty boty.")
@@ -323,7 +323,7 @@ label secondStandup:
     $ runa.say("To je on. To je asi moje dnešní práce.")
     $ melien.say("Já na dnešek úkol nemám.")
     $ solian.say("Tak se jdi zeptat, jestli Rauvin včera chlastal, nebo co se to stalo, a dál uvidíme, co mezitím najdu v těch jeho lejstrech.", "angry")
-    $ solian.say("[callingMc].capitalize(), ty pořád hledáš ty boty?")
+    $ solian.say("[callingMc.capitalize()], ty pořád hledáš ty boty?")
     show mcPic at menuImage
     menu:
         "Už to skoro mám.":
@@ -356,10 +356,10 @@ label thirdStandup:
     $ melien.say("No dobře… jen budu muset najít zbroj...", "sad")
     $ runa.say("Já ti s tím pomůžu.", "happy")
     $ melien.say("Děkuju!", "happy")
-    $ solian.say("[callingMc].capitalize(), ty už konečně někoho zatkni za ty boty a sepiš podklady pro soud. Potom si taky vezmi zbroj a vystřídej Meliena. Meliene, ty potom přejdi na to Hayfino tajné sledování.")
+    $ solian.say("[callingMc.capitalize()], ty už konečně někoho zatkni za ty boty a sepiš podklady pro soud. Potom si taky vezmi zbroj a vystřídej Meliena. Meliene, ty potom přejdi na to Hayfino tajné sledování.")
     $ runa.say("Já myslím, že jsme [pronoun3] ještě žádnou zbroj nestihli dát.")
     $ solian.say("Jak to? To má být ten pořádek, který Rauvin chce ve všem mít?", "angry")
-    $ melien.say("[mcName].capitalize() od první chvíle pracuje na případu.")
+    $ melien.say("[mcName].capitalize()] od první chvíle pracuje na případu.")
     $ solian.say("Panenko skákavá. Tak Runo, až budeš hledat zbroj pro Meliena, připrav ještě jednu a [mcName] si ji tady pak vyzvedne.")
     $ solian.say("potom zajdi do cechu tesařů. Jejich tovaryši se včera poprali se skupinou kupců a je potřeba to urovnat. Cech je důležitý a jsme tu pro něj, ale zároveň nemůžeme působit jako město, kde nejsou obchodníci v bezpečí.")
     $ runa.say("Bez obav. Po hledání Melienovy zbroje tohle bude pohodička.", "happy")
@@ -406,7 +406,7 @@ label rauvinHealthReport:
 label nervousSolian:
     "Strážnicí prostupuje výrazný pocit nejistoty. Ačkoli se hlídkaři snaží plnit své každodenní povinnosti, často na sebe navzájem vrhají tázavé pohledy a pak je hned odvrací. Znepokojení je znát i z tichých rozhovorů, které občas zaslechneš."
     "Jakmile tě spatří Solian, pokyne ti, abys ho následoval do jedné z menších místností."
-    scene bg interviewRoom
+    scene bg interviewroom
     "Nesedne si, jen zavře a rovnou se začne vyptávat."
     $ solian.say("Jak postupuje tvůj případ? Slavnosti jsou skoro tady, potřebujeme někoho zatknout nejpozději zítra v poledne. Máme někoho?")
 
@@ -567,6 +567,7 @@ label racismEncounter:
     $ rauvin.say("Nyní už bych vás nerad zdržoval. Věřím, že se potřebujete věnovat svým obchodům.")
     "Obchodník se krátce rozhlédne a velmi rychle se ze strážnice vytratí. Hlídkaři v místnosti mlčky sledují pohledem nejdřív jeho a poté zavřené dveře, jež za ním zapadnou. Trvá několik dlouhých okamžiků, než první odvážlivec prolomí mlčení a ruch v místnosti se postupně obnoví."
     $ status.append("racism encounter")
+    $ sceneWitnessed = True
     $ time.addMinutes(15)
     return
 
@@ -634,6 +635,7 @@ label kilianEncounter:
         "{i}(Neříct nic){/i}":
             hide mcPic
     $ status.append("Killian encounter")
+    $ sceneWitnessed = True
     $ time.addMinutes(15)
     return
 
@@ -666,5 +668,6 @@ label hayfasPastEncounter:
     $ globalClues.append("hayfa's past")
     $ globalClues.append("Hayfa's arrival to Marendar")
     $ status.append("Hayfa's past encounter")
+    $ sceneWitnessed = True
     $ time.addMinutes(15)
     return

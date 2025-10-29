@@ -540,7 +540,7 @@ label heinrichLearnsAboutGerdInWorkshop:
                 $ victim.say("Co?", "angry")
                 $ son.say("Nic, myslel jsem, že mě něco napadlo, ale byla to hloupost.")
                 $ victim.say("Kdybys radši přemýšlel u šití.", "angry")
-                $ victim.say("[callingMc].capitalize(), máš ještě nějaké otázky, nebo můžeme jít zase pracovat?")
+                $ victim.say("[callingMc.capitalize()], máš ještě nějaké otázky, nebo můžeme jít zase pracovat?")
             else:
                 $ victim.trust -= 1
                 $ son.say("Ale tady v domě jste už pěknou dobu a takhle důležitou věci si schováváte? Vždyť se tátovi mohla objevit nějaká neodkladná záležitost, kdy by se to potom dozvěděl?", "surprised")

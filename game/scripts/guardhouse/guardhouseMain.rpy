@@ -72,17 +72,14 @@ label guardhouseIntro:
     scene bg guardhouse
     # scenes to witness
     $ sceneWitnessed = False
-    if timeOfDay != "standup":
+    if timeOfDay == "standup":
         $ sceneWitnessed = True
     elif time.days == 3 and "Rauvin's health report" not in status:
         call rauvinHealthReport
-        $ sceneWitnessed = True
     elif time.days == 2 and "Hayfa's past encounter" not in status:
         call hayfasPastEncounter
-        $ sceneWitnessed = True
     elif "Rovien house visited" in status and "racism encounter" not in status and "out of office" not in rauvin.status:
         call racismEncounter
-        $ sceneWitnessed = True
 
     # player approached/intro
     if time.days == 3 and time.hours > 16 and "case progress discussed" not in solian.asked:

@@ -23,13 +23,23 @@ screen evidenceWallScreen():
                     action Return(note.code)
 
         if seeMeNote:
-            imagebutton:
-                xpos 600
-                ypos 300
-                tooltip "Vzkaz od Rauvina"
-                hover "button seeme"
-                idle "button seeme"
-                action Return("seeMe")
+            if "out of office" not in rauvin.status:
+                imagebutton:
+                    xpos 600
+                    ypos 300
+                    tooltip "Vzkaz od Rauvina"
+                    hover "button seeme"
+                    idle "button seeme"
+                    action Return("seeMe")
+            else:
+                imagebutton:
+                    xpos 600
+                    ypos 300
+                    tooltip "Vzkaz od Soliana"
+                    hover "button seeme solian"
+                    idle "button seeme solian"
+                    action Return("seeMe")
+            
 
         $ tooltip = GetTooltip()
         if tooltip:
