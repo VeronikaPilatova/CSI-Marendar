@@ -63,7 +63,7 @@ label victimIntro:
                 $ victim.say("Řekl jsem ti, co se ztratilo. Pátrání je tvoje práce, a jestli myslíš, že ji budu dělat za tebe...", "angry")
                 $ mc.say("Tak jsem to nemyslel[a]! Rozhodně dekuji, že mi to říkáte.")
         $ mc.say("Můžu vám ještě položit pár otázek?")
-        $ victim.say("“Bez toho to asi vyšetřit nemůžeš, tak do toho.")
+        $ victim.say("Bez toho to asi vyšetřit nemůžeš, tak do toho.")
     else:
         if "burned evidence seen" in victim.asked:
             $ victim.say("Už víš, kdo se opovážil hodit moje dílo do mého vlastního krbu?")

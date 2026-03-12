@@ -1,8 +1,8 @@
 label libraryPreparation:
-    default literatureTopics = ["wellWrittenTrash", "farawayTravels", "fables", "saucyTales", "seriousHistory", "jakobVonDemSchloss", "elvenDragonLegend"]
-    default lawTopics = ["lawIntro"]
+    default literatureTopics = ["wellWrittenTrash", "farawayTravels", "fables", "saucyTales", "seriousHistory", "jakobVonDemSchloss", "elvenDragonLegend", "animalLore"]
+    default lawTopics = ["lawIntro", "watch", "marketLaws"]
     default historyTopics = ["historyIntro", "history1", "history2", "history3", "history4", "history5", "history6", "history7"]
-    default pastTrialsTopics = ["pastTrialsIntro", "cultistsTrial"]
+    default pastTrialsTopics = ["pastTrialsIntro", "pastTrialsAboutWatch", "cultistsTrial", "onionIncident"]
     return
 
 label libraryController:
@@ -21,29 +21,39 @@ label libraryController:
 
 
 label libraryIntro:
+    scene expression ("bg/bg library outside[time.locationTagExt()].png")
     if "library visited" not in status:
         if origin == "born here":
             "Marendarskou knihovnu si pamatuješ z dětství. Bývala to elegantní budova s vysokými policemi a studovnou, kde se dalo ztratit na dlouhé hodiny - nebo aspoň na tak dlouho, než tě někdo vyhnal zase ven."
             "Pamatuješ si na všeprostupující vůni papíru a kožených desek, pocit tepla a bezpečí, a především na laskavého knihovníka, který v tobě podporoval sny o lepším životě."
             "Tehdy jsi byl[a] přesvědčen[y], že se tam dá najít snad každá kniha na světě. A přestože stará knihovna nepřežila požár, který před dvěma lety město změnil téměř k nepoznání, určitě tu musela zbýt aspoň část jejího kouzla."
-            scene bg library
+            scene expression ("bg/bg library inside[time.locationTagInt()].png")
             "Dnes knihovna dočasně sídlí v jednom z bohatších městských domů pod vedením Luisy de Vito a i přes provizorní umístění je očividně vedená s láskou. Knih ve vysokých policích je možná méně, než jsi doufal[a], ale neujde ti šíře záběru. Od krásné literatury přes filozofii po vědecké spisy... máš chuť strávit tu zase celý den."
         else:
             "Marendar míval krásnou knihovnu s mnoha svazky, ale ta bohužel padla za oběť ničivému požáru města před dvěma lety. Na její obnovu v plné slávě se stále hledají prostředky a mnohem menší sbírka dnes dočasně sídlí v jednom z bohatších městských domů pod vedením Luisy de Vito."
-            scene bg library
+            scene expression ("bg/bg library inside[time.locationTagInt()].png")
             "I přes provizorní umístění je knihovna očividně vedená s láskou. Knih ve vysokých policích je možná méně, než jsi doufal[a], ale neujde ti šíře záběru. Od krásné literatury přes filozofii po vědecké spisy... máš chuť strávit tu celý den."
         $ status.append("library visited")
     else:
-        scene bg library
-        "Znovu tě přivítá příjemná vůně knih, a jak procházíš mezi regály, mladý elf, který tu vypomáhá, ti kývne na pozdrav."
+        scene expression ("bg/bg library inside[time.locationTagInt()].png")
+        "Znovu tě přivítá příjemná vůně knih, a jak procházíš mezi regály, mladý elf, který tu vypomáhá, ti kývne na pozdrav."   
+    if time.timeOfDayInt() == "night" and "library light seen" not in status:
+        if time.timeOfDay() == "dusk":
+            "Ačkoli venku už je šero, místnost je zalitá příjemným bílým světlem."
+        else:
+            "Ačkoli venku už je tma, místnost je zalitá příjemným bílým světlem."
+        "Zvědavě se rozhlédneš po jeho zdroji a na jednom ze stolů najdeš malou sošku zpodobňující maják čelící hrozivým vlnám. Světlo zcela určitě vychází z ní, nejspíš přímo z vrcholku jeho věže. Nevidíš ale žádný plamen, ze sošky nestoupá ani drobný pramínek dýmu a světlo je stálé a neměnné, jako kdyby vycházelo z drahé svíce - na čtení mnohem příjemnější než nestálé mihotání loučí, s nímž ses mnohdy musel[a] spokojit."
+        $ status.append("library light seen")
     return
 
 label libraryOptions:
     menu:
         "{i}(“Půjčit” si vhodnou báseň pro Zairise){/i}" if "promised poetry" in status and not any("poem" in str for str in status):
             $ chosenTopic = "stealPoetry"
-        "{i}(Zkonzultovat styl básní pro Adu){/i}" if "letters for Ada seen" in status and "poetry style" not in assistant.asked:
+        "{i}(Zkonzultovat styl básní pro Adu){/i}" if "letters for Ada seen" in status and "poetry style" not in librarian.asked:
             $ chosenTopic = "libraryConsultLettersForAda"
+        "{i}(Zeptat se na sečtělé elfy){/i}" if "lover well read" in ada.asked and "well-read elves" not in librarian.asked:
+            $ chosenTopic = "libraryConsultWellReadElves"
         "{i}(Odpočinout si při čtení krásné literatury){/i}" if literatureTopics != []:
             $ chosenTopic = "readingLiterature"
         "{i}(Nastudovat si právo a místní zákony){/i}" if lawTopics != []:
@@ -57,7 +67,7 @@ label libraryOptions:
     return
 
 label libraryRepeat:
-    scene bg library
+    scene expression ("bg/bg library inside[time.locationTagInt()].png")
 
     if literatureTopics == [] and lawTopics == [] and pastTrialsTopics == [] and historyTopics == []:
         if not achievement.has(achievement_name['bookworm'].name):
@@ -68,10 +78,28 @@ label libraryRepeat:
         "Vše přečteno"
         return
     if timeOfDay != time.timeOfDayInt():
-        "Rozsvícení magického světla"
+        scene expression ("bg/bg library inside[time.locationTagInt()].png")
+        if "library light seen" not in status:
+            "Zatímco čteš, venku klesá slunce k obzoru a místnost se pomalu šeří. V okamžiku, kdy už se smiřuješ s tím, že budeš muset odejít, se však místnost zalije příjemným bílým světlem. Zvědavě se rozhlédneš po jeho zdroji a na jednom ze stolů najdeš malou sošku zpodobňující maják čelící hrozivým vlnám."
+            "Světlo zcela určitě vychází z ní, nejspíš přímo z vrcholku jeho věže. Nevidíš ale žádný plamen, ze sošky nestoupá ani drobný pramínek dýmu a světlo je stálé a neměnné, jako kdyby vycházelo z drahé svíce - na čtení mnohem příjemnější než nestálé mihotání loučí, s nímž ses mnohdy musel[a] spokojit."
         $ timeOfDay = time.timeOfDayInt()
     elif time.hours > 21:
-        "Je čas jít spát"
+        "Když konečně knihu odložíš a protáhneš se, knihovnický pomocník zachytí tvůj pohled a přejde k tobě."
+        $ librarian.say("Omlouvám se, ale musím vás požádat, abyste ode[sel]. Připozdilo se a já tu musím uklidit a zamknout.")
+        show mcPic at menuImage
+        menu:
+            "Moc se omlouvám, nevšiml[a] jsem si, jak je pozdě.":
+                pass
+            "Když to musí být…":
+                pass 
+            "Nemůžete počkat ještě chvíli?":
+                pass 
+        hide mcPic
+        $ librarian.say("Zítra vás tu samozřejmě opět rád uvidím.")
+        "Pomocník uloží poslední knihu zpět do police a vyprovodí tě ke dveřím."
+        scene expression ("bg/bg library outside[time.locationTagExt()].png")
+        $ librarian.say("Pěkný večer a zase se vraťte!")
+        "Čerstvý vzduch je po sezení nad knihou příjemný a je díky němu snazší si rozmyslet další postup."
         return
 
     call libraryOptions
@@ -83,10 +111,14 @@ label libraryRepeat:
 
 ###
 
+label librarianOptions:
+    $ mc.say("Dnes ne, děkuji.")
+    return
+
 label stealPoetry:
     scene bg books
     "Najdeš regál s poezií a po chvíli procházení vezmeš do ruky útlou knihu básní. Se jménem autora ses ještě nesetkal[a], ale většina básní uvnitř mluví o citech nebo pracuje s přírodními motivy. Opíšeš si náhodnou z nich a doufáš, že na Zairise udělá dostatečně dobrý dojem."
-    scene bg library
+    scene expression ("bg/bg library inside[time.locationTagInt()].png")
     show expression ("sh stolen poem [race].png") at truecenter
     pause
     hide expression ("sh stolen poem [race].png") at truecenter
@@ -95,8 +127,90 @@ label stealPoetry:
     return
 
 label libraryConsultLettersForAda:
-    $ assistant.asked.append("poetry style")
-    $ status.append("letters for Ada checked in library")
+    $ librarian.asked.append("poetry style")
+    "Luisa de Vito tu dnes není, snadno ale najdeš mladého elfa, který jí v knihovně vypomáhá."
+    $ librarian.say("Co pro vás můžu udělat? Hledáte nějaký svazek?")
+    show mcPic at menuImage
+    menu:
+        "Máte přehled i v tom, kdo ve městě píše?":
+            hide mcPic at menuImage
+            $ librarian.say("Myslíte knihy k vytištění? Skoro nikdo. Přeci jen, nechat natisknout knihu není levná záležitost.")
+            $ librarian.say("Zhruba před rokem se tady v Marendaru tiskla sága o jednom trpasličím runovém kováři, ale ani ta nebyla původně napsaná přímo tady ve městě. My sami jsme sepsali jen několik smolných knih a výtisků nových zákonů, aspoň co si pamatuji.")
+            $ librarian.say("Tedy, myslím, že Valeran z hlídky - té části, která hlídá brány, asi se s ním nebudete moc potkávat - sepisuje něco o historii, ale jestli z toho někdy bude kniha, těžko říct.")
+            $ librarian.say("Ostatní knihy, které tu máme, jsme většinou dovezli z jiných měst.")
+            show mcPic at menuImage
+            menu:
+                "Děkuji, to byl vyčerpávající přehled.":
+                    hide mcPic
+                    $ librarian.say("Rádo se stalo. Potřebujete ještě něco?")
+                    jump librarianOptions
+                "Je možné, že ten, koho hledám, píše básně jen pro sebe a pro přátele.":
+                    hide mcPic
+                    $ librarian.say("To se potom bohužel nemám, jak dozvědět. Za mnou se svými básněmi nikdo nechodí.")
+                    $ mc.say("Nemáte alespoň odhad, kdo by něco takového mohl psát?")
+                    $ librarian.say("Upřímně, to může být skoro kdokoli. I někdo, do koho by to jeden neřekl, může občas složit třeba nějakou milostnou báseň, neslušnou říkanku nebo výsměšnou rýmovačku. A když už je vymyslí, jistě že si je zapíše, byla by škoda je zapomenout.")
+        "Spíš se chci poradit, mám tady báseň a hledám jejího autora." if "poem for Ada copied" in status or "all love letters kept" in status or "one love letter kept" in status:
+            hide mcPic
+            $ librarian.say("Můžu se pokusit. Samozřejmě neznám zpaměti všechny knihy, které tu máme, ale přečetl jsem toho dost.")
+            "Elf si od tebe vezme papír s básní a po chvilce zavrtí hlavou."
+            $ librarian.say("Bohužel. Tuhle báseň neznám. Jsem si skoro jistý, že není z žádné knihy, kterou tady máme.")
+            $ librarian.say("Odkud ji máte? Třeba by mi to napovědělo.")
+            show mcPic at menuImage
+            menu:
+                "Dostala ji dcera mistra Heinricha od svého tajného ctitele.":
+                    hide mcPic
+                    $ librarian.say("A vy s mojí pomocí chcete onoho ctitele vypátrat? To musím odmítnout.")
+                    $ librarian.say("Nemám takový přehled o tvorbě všech ve městě, abych si byl odpovědí zcela jistý, a nechtěl bych někoho neprávem uvést do potíží.")
+                    $ librarian.say("Mohlo by to uvrhnout špatné světlo na knihovnu a to by paní Luisa nesnesla.")
+                    show mcPic at menuImage
+                    menu:
+                        "To chápu, nebudu naléhat.":
+                            hide mcPic
+                            $ librarian.say("V pořádku. Mohu vám pomoci nějak jinak?")
+                            jump librarianOptions
+                        "Ten ctitel je pokrytec, který si potíže zaslouží.":
+                            hide mcPic
+                            $ mc.say("Nechal za sebe potrestat někoho nevinného.")
+                            $ librarian.say("I pokud to tak je, tak to, pokud vím, není zločin. Pořád nerozumím, proč se o to hlídka zajímá.")
+                            $ librarian.say("Mohu vám pomoci nějak jinak?")
+                            jump librarianOptions
+                        "Naopak, je to způsob, jak někomu hodně pomoct.":
+                            hide mcPic
+                            $ mc.say("Heinrich za autora považuje svého bývalého učedníka, kterého kvůli tomu vyhnal. Já se snažím očistit jeho jméno.")
+                            $ librarian.say("Ach tak. Souhlasím, že být připraven o budoucnost jen kvůli klamnému dojmu si nikdo nezaslouží.", "angry")
+                            "Elf si znovu přečte báseň a na chvíli se zamyslí."
+                            $ librarian.say("Nejsem si dokonale jistý, ale podobné sonety myslím píše Zairis. Aspoň těch pár, co mi ukazoval, tomu vlastně dost odpovídaly.")
+                            $ mc.say("Děkuji, moc jste mi pomohl.")
+                            $ status.append("letters for Ada checked in library")
+                "Někdo mi ji nechal za oknem.":
+                    hide mcPic
+                    $ librarian.say("A nebude potom vhodnější dát za to okno odpověď? Myslím, že by ani nemusela být veršovaná.", "surprised")
+                    $ mc.say("Jak mám ale vědět, co za odpověď psát, když neznám autora?")
+                    $ mc.say("Nechci hned takhle na začátek udělat chybu…")
+                    $ librarian.say("...", "surprised")
+                    $ librarian.say("No, ostatně mi do toho nic není a tohle je aspoň zajímavá otázka.", "happy")
+                    "Elf si znovu přečte báseň a na chvíli se zamyslí."
+                    $ librarian.say("Nejsem si dokonale jistý, ale podobné sonety myslím píše Zairis. Aspoň těch pár, co mi ukazoval, tomu vlastně dost odpovídaly.")
+                    $ mc.say("Děkuji, moc jste mi pomohl.")
+                    $ status.append("letters for Ada checked in library")
+                    if gender =! "F" and race =! "elf":
+                        $ librarian.say("Ale jestli by zrovna vám dával na okno báseň… jste si jist[y], že to bylo pro vás?", "surprised")
+                        $ librarian.say("Ale to mi nepřísluší soudit.")
+                "To bohužel nemůžu říct. Je to součástí případu, který v městské hlídce vyšetřujeme.":
+                    hide mcPic
+                    $ librarian.say("Skutečně? A proč se prosím hlídka zajímá o milostný život obyvatel města?", "surprised")
+                    $ mc.say("Potřeboval[a] bych s autorem té básně mluvit, to je celé.")
+                    $ librarian.say("Ale z jakého důvodu, to už říct nemůžete.")
+                    $ librarian.say("Pak já zase nemůžu říct nic, čím bych si byl dokonale jistý. Nemám takový přehled o tvorbě všech ve městě a nechtěl bych někoho neprávem uvést do potíží.", "angry")
+                    $ librarian.say("Mohlo by to uvrhnout špatné světlo na knihovnu a to by paní Luisa nesnesla.")
+                    $ librarian.say("Čím si ale jistý jsem, je, že psát milostnou poezii není zločin, bez ohledu na její kvalitu.")
+                    $ librarian.say("Ne, že by zrovna tato báseň nebyla pěkná.")
+                    $ librarian.say("Mohu vám pomoci nějak jinak?")
+                    jump librarianOptions
+    return
+
+label libraryConsultWellReadElves:
+    $ librarian.asked.append("well-read elves")
     "TBD"
     return
 
@@ -121,13 +235,16 @@ label readingLaw:
         $ readingTopic = "lawIntro"
     else:
         $ readingTopic = renpy.random.choice(lawTopics)
-        $ library.checked.append(readingTopic)
-        $ lawTopics.remove(readingTopic)
+    $ library.checked.append(readingTopic)
+    $ lawTopics.remove(readingTopic)
     scene bg books
     call expression readingTopic
     $ time.addMinutes(40)
     if lawTopics != [] and time.hours <= 21:
         menu:
+            "Najít si k pravomocem hlídky ještě soudní zápisy" if readingTopic == "watch" and "pastTrialsAboutWatch" not in library.checked:
+                $ readingTopic = "pastTrialsAboutWatch"
+                jump readingPastTrials
             "Pokračovat":
                 jump readingLaw
             "Přestat se čtením":
@@ -135,7 +252,8 @@ label readingLaw:
     return
 
 label readingPastTrials:
-    $ readingTopic = pastTrialsTopics[0]
+    if readingTopic not in pastTrialsTopics:
+        $ readingTopic = pastTrialsTopics[0]
     $ library.checked.append(readingTopic)
     $ pastTrialsTopics.remove(readingTopic)
     scene bg books
@@ -207,12 +325,30 @@ label elvenDragonLegend:
     "Král přistoupil blíž, přes varování a prosby svých knížat, a uviděl, že z drakova břicha trčí zlomené kopí a způsobuje mu strašlivou bolest. Drak se na krále upřeně zadíval, ale nezaútočil. To mladému elfovi dodalo odvahu překonat i zbývající vzdálenost a dotknout se kopí."
     "Ve chvíli, kdy král kopí vytáhl z rány, se drak uklidnil, pokývl na znamení díků a pak se stočil na skále a usnul. Králi zůstalo v ruce zlomené kopí a kolem něj zotavující se země a modrá obloha nad hlavou."
     return
+label animalLore:
+    "Očekáváš učebnici pro začínající sokolníky a psovody, kniha ale podrobně rozebírá nejen lov a chov domácích tvorů, ale zejména chování zvířat ve volné přírodě – a nezřídka jim připisuje lidské vlastnosti."
+    "Autor například popisuje, že vraní rodiny se starají o své staré a nemocné a truchlí nad mrtvými, že divocí koně pořádají bojové hry, aby posílili pouto ve stádě, a že lišky v zimě tančí na sněhu, aby vábily měsíc. Některé pasáže působí jako vědecké pojednání, jiné jako sbírka loveckých anekdot, a v jednom zvlášť podivném odstavci autor tvrdí, že některé kočky umí číst lidské myšlenky."
+    if race == "elf":
+        "Kniha je poutavá a lehce se čte a obsahuje některé zajímavé postřehy, část domněnek ti však připadá značně odvážná. Bylo by užitečné, kdyby autor zahrnul i některé zkušenosti hraničářů, zřejmě se však jednalo o jednoho z lidských učenců, kteří se o elfí tradice nezajímají."
+    else:
+        "Ačkoliv mnohé příběhy berou víc z fantazie než z pozorování, kniha je poutavá a lehce se čte. Nakonec ji odložíš s pobaveným úsměvem a s novou chutí podívat se na svět kolem sebe trochu jinýma očima."
+    return
 
 ### law
 label lawIntro:
     "Stejně jako jinde, i v Marendaru se soudci řídí především zvykem a jako vodítko často používají rozsudky svých předchůdců. Nic jako soupis městských zákonů neexistuje, najdeš ale přepisy několika různých nařízení."
     "Ve městě je přísně zakázáno nošení otevřeného ohně na ulici včetně loučí a pochodní a jakékoli neopatrné zacházení s ohněm. Pod zákazem jsou podepsaní Gerfried a Etrian, podle všeho ale v tomto případě potvrzují nařízení vydané ještě Velinem."
     "Ze stejné doby a se stejným podpisem je i podrobně rozepsaný zákaz jakkoli rozdílného zacházení na základě rasy, bez ohledu na původ kteréhokoli z aktérů."
+    return
+label watch:
+    "O pravomocech hlídky najdeš několik dokumentů z různých období a každý z nich dává naprosto odlišný obraz."
+    "Za Velinovy vlády hlídka nepodléhala žádnému dohledu a případné přečiny strážných si řešila sama. Mohla jen na základě podezření vstupovat do obydlí měšťanů nebo zabavovat majetek a bylo jen málo způsobů, jak se jejím zásahům bránit - zvlášť pokud si chtěl stěžovat někdo, kdo nebyl elf."
+    "Když se moci chopili Gerfried a Etrian, důsledně odstranili veškeré upřednostňování elfů a zavedli, že jakékoli rozhodnutí hlídky musí potvrdit městský soud. K soudu se naopak může obrátit někdo, kdo věří, že mu hlídka ublížila; pokud mu soud dá za pravdu, potrestá nejen provinilého člena hlídky, ale i hlídku jako celek například peněžitou pokutou."
+    "S příchodem Listiny práv a povinností se tento princip ještě zvýraznil: hlídka má mnoho možností a pravomocí, ale zároveň se z jejich použití musí přísně zodpovídat."
+label marketLaws:
+    "Mnoho zákonů a nařízení se týká místních jarmarků. Všimneš si přitom, že určité přečiny spáchané během trhu jsou trestané přísněji, například rvačky nebo drobná zlodějina. Velmi přísně se též město staví k jakémukoli druhu šizení zboží. Naopak k rušení klidu nadměrným halasem se soudy zdají přistupovat spíše shovívavě."
+    "Některá nařízení dokonce zacházejí do takových podrobností, jako že není povoleno svévolně přesouvat stánky jiných trhovců. Město se též snaží bojovat proti falešným kostkám a během každého z několika posledních jarmarků kvůli nim někdo skončil v pranýři."
+    "Trochu neobvyklé je pak pravidlo, že kdokoli, kdo v Marendaru dlouhodobě nebydlí, v něm má přísně zakázáno vařit nebo vykonávat jakákoli řemesla nebo jiné činnosti využívající oheň."
     return
 
 ### past trials
@@ -226,6 +362,19 @@ label cultistsTrial:
     "Hayfa a Sabri byli nejprve odsouzeni k vyhnanství, nicméně Hayfa prosila, aby mohla zůstat a odčinit svou vinu prací pro město, a Sabri vyjádřil přání zůstat s ní."
     "Městská rada se nechala obměkčit, trest tedy byl změněn: oba mají svou vinu odčinit prací pro město a do té doby ho naopak opustit nesmí. Sabri bude trest vykonávat po dobu dvou let. Hayfě, protože projevila upřímnou lítost, byl trest snížen na jeden rok."
     "Rychle spočítáš, že toto období uplynulo jen před několika týdny. Dohledem a zadáváním práce byl pověřen městský úředník Janis."
+    return
+label pastTrialsAboutWatch:
+    "Napadlo tě dohledat si ještě soudní spisy z poslední doby, které by mohly něco napovědět o pravomocech hlídky."
+    "Najdeš jediný případ, kdy hlídkař někoho vážně zranil, a to bylo ve rvačce, ve které na něj opilý potulný tovaryš vytasil nůž. Soud považoval tento druh obrany za přiměřený a naopak tovaryše vyhnal z města, ačkoli ještě nosil obvazy a sotva chodil."
+    "V jiných případech, kdy hlídka musí zakročit proti různým výtržníkům nebo drobným zlodějům, rvačky končí nanejvýš podlitinami a na tom soud také nikdy neshledal nic špatného. V mnoha případech také výtržníka přemohli obyvatelé města a hlídka dorazila až poté."
+    "Zatčení nebývá zcela obvyklé. Pokud je k němu dobrý důvod, soud ho posvětí, nicméně hlídka tyto důvody musí vysvětlit v samostatném procesu a o tomto zdůvodnění se vyhotoví důkladný zápis."
+    "Hlídka také může v případě menších provinění uložit na místě peněžitý trest. Takovou pokutu je ale nezbytně nutné zapsat; pokud člen hlídky nedokáže potvrzení o pokutě vydat, není provinilec povinen pokutu zaplatit."
+    "Nenajdeš žádný záznam, podle kterého by někdo z hlídky od Velinova pádu vstoupil do měšťanského domu z jiného důvodu, než aby zatkl zločince. V jednom případě byla z podobného slídění nařčená Hayfa, soud ale obvinění neuznal pro nedostatek důkazů."
+    return
+label onionIncident:
+    "Před několika měsíci došlo k úsměvnému incidentu mezi městským úředníkem Janisem a trhovkyní Martou. Janis si během kontroly zeleninového trhu všiml, že Marta prodává cibule za nižší cenu, než jakou místní obchodnický cech stanovil."
+    "Upozornil ji tedy a došlo nejdříve ke slovní potyčce, ve které ho Marta nazvala navoněným škrábalem, bezzubým škrabopisem a skrčkem. Když Janis trval na tom, že Marta musí ceny upravit, hodila po něm trhovkyně cibuli a poté utekla."
+    "Marta během několika dní stanula před soudem. Za nedodržení stanovené ceny byla potrestána pokutou vůči městu a obchodnímu cechu ve výši ceny jednoho koše cibulí a dostala zákaz prodeje na tři dny. Jako omluvu Janisovi za nactiutrhání a napadení jí pak bylo uloženo se veřejně omluvit a přinést mu čtyři následující neděle vždy pět výstavních cibulí."
     return
 
 ### history
@@ -265,7 +414,9 @@ label libraryOptionsRemaining:
     $ optionsRemaining = 0
     if "promised poetry" in status and not any("poem" in str for str in status):
         $ optionsRemaining += 1
-    if "letters for Ada seen" in status and "poetry style" not in assistant.asked:
+    if "letters for Ada seen" in status and "poetry style" not in librarian.asked:
+        $ optionsRemaining += 1
+    if "lover well read" in ada.asked and "well-read elves" not in librarian.asked:
         $ optionsRemaining += 1
     if literatureTopics != []:
         $ optionsRemaining += 1

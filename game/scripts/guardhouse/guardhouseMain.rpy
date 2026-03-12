@@ -94,11 +94,12 @@ label guardhouseIntro:
         call AmlMerchantListDelivered
     elif "zeran witnesses" in status:
         call zeranWitnessesChecked
-    elif time.hours > 16 and "report given" not in dailyStatus and "out of office" not in rauvin.status and optionsRemaining != 0:
+    elif ((time.hours > 16 and "report given" not in dailyStatus) or "report still needed" in dailyStatus) and "out of office" not in rauvin.status and optionsRemaining != 0:
         call reportWantedIntro
     elif sceneWitnessed == False:
         $ intro = renpy.random.choice(guardhouseIntros)
         "[intro]"
+    $ timeOfDay = time.timeOfDayInt()
     return
 
 label backToEvidenceWall:
@@ -106,26 +107,29 @@ label backToEvidenceWall:
         $ status.remove("add investigating less deals")
         $ status.append("investigating less deals added")
         $ newEvent = Event(copy.deepcopy(time), "STATUS", 0, "investigating less deals", 3, "info")
-        $ newEvent.when.addHours(2)
+        $ newEvent.when.addHours(3)
         $ eventsList.append(newEvent)
     if "add investigating less deals solian" in status:
         $ status.remove("add investigating less deals solian")
         $ status.append("investigating less deals solian added")
         $ newEvent = Event(copy.deepcopy(time), "STATUS", 0, "investigating less deals solian", 3, "info")
-        $ newEvent.when.addHours(2)
+        $ newEvent.when.addHours(3)
         $ eventsList.append(newEvent)
     if "add zeran witnesses" in status:
         $ status.remove("add zeran witnesses")
         $ status.append("zeran witnesses added")
         $ newEvent = Event(copy.deepcopy(time), "STATUS", 0, "zeran witnesses", 3, "info")
-        $ newEvent.when.addHours(2)
+        $ newEvent.when.addHours(3)
         $ eventsList.append(newEvent)
 
     jump evidenceWall
 
 
 label reportWantedIntro:
-    "Rauvin na tebe kývne."
+    if timeOfDay != "standup":
+        "Rauvin k tobě popojde pár kroků."
+    else:
+        "Rauvin na tebe kývne."
     $ rauvin.say("Chtěl jsem se zeptat, jak pokračuješ s případem. Máš nový vývoj nebo slibnou stopu?")
     show mcPic at menuImage
     menu:

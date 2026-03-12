@@ -1,23 +1,29 @@
 # player receives requested info
 label suspectListDelivered:
     if "out of office" not in rauvin.status:
-        "Jakmile si tě Rauvin všimne, mávne na tebe listem papíru."
-        $ rauvin.say("Hostinská Salma ti posílá seznam hostů ze včerejška, prý sis ho vyžádal.[a]")
+        if timeOfDay != "standup":
+            "Rauvin na tebe mávne listem papíru."
+        else:
+            "Jakmile si tě Rauvin všimne, mávne na tebe listem papíru."
+        $ rauvin.say("Hostinská Salma ti posílá seznam hostů ze včerejška, prý sis ho vyžádal[a].")
         $ mc.say("To je pravda. Myslel[a] jsem, že by nám pomohlo vědět, kdo všechno mohl slyšet o dokončených střevících.")
         "Rauvin se mírně zamračí."
         $ rauvin.say("Ta úvaha dává smysl, ale nejsem si jistý, jestli na procházení celého seznamu máme čas. Einionovy slavnosti jsou už za čtyři dny a jen obejít všechny tyhle lidi by mohlo zabrat celý den, možná víc.")
         $ rauvin.say("Zkus se zaměřit na jiné stopy a pokud by žádná z nich nikam nevedla, k seznamu hostů se můžeš vrátit později.")
     else:
-        "Dojde k tobě Solian a podá ti list papíru."
+        if timeOfDay != "standup":
+            "Solian sebere se stolu list papíru a podá ti ho."
+        else:
+            "Dojde k tobě Solian a podá ti list papíru."
         $ solian.say("Tady ti Salma posílá seznam hostů ze včerejška, prý jsi chtěl[a] vědět, kdo mohl slyšet o Heinrichově dokončeném díle. Znamená to, že nemáš žádnou konkrétní stopu?")
         show mcPic at menuImage
         menu:
             "Konkrétní stopy mám, ale chtěl[a] jsem být důkladn[y].":
                 hide mcPic
-                $ solian.say("Tak se zaměř spíš na ně. Einionovy slavnosti jsou za čtyři dny a už jenom oběhnout celý tenhle seznam může zabrat víc času, než vůbec máš.", "angry")
+                $ solian.say("Tak se zaměř spíš na ně. Einionovy slavnosti jsou [festivalStart] a už jenom oběhnout celý tenhle seznam může zabrat víc času, než vůbec máš.", "angry")
             "Zatím méně, než by se mi líbilo.":
                 hide mcPic
-                $ solian.say("Tak zkus co nejrychleji nějaké najít. Einionovy slavnosti jsou za čtyři dny a už jenom oběhnout celý tenhle seznam může zabrat víc času, než vůbec máš.", "angry")
+                $ solian.say("Tak zkus co nejrychleji nějaké najít. Einionovy slavnosti jsou [festivalStart] a už jenom oběhnout celý tenhle seznam může zabrat víc času, než vůbec máš.", "angry")
         $ solian.say("A v nejhorším případě na tom seznamu začni u nějakých potulných tovaryšů a jiné pakáže, někdo takový tam určitě bude.")
     $ status.remove("waiting for suspect list")
     $ status.append("suspect list delivered")
@@ -26,7 +32,10 @@ label suspectListDelivered:
 
 label AmlMerchantListDelivered:
     if "out of office" not in rauvin.status:
-        "Přijde k tobě Rauvin s listem papíru v ruce."
+        if timeOfDay != "standup":
+            "Rauvin sebere se stolu list papíru a popojde k tobě."
+        else:
+            "Přijde k tobě Rauvin s listem papíru v ruce."
         if "less deals checked" in status:
             $ rauvin.say("Mistr Njal ti tady posílá seznam jmen. Týká se to myslím těch podezřelých obchodů, které jsi prověřoval[a].")
         else:
@@ -58,7 +67,10 @@ label AmlMerchantListDelivered:
                     $ rauvin.say("V téhle věci určitě nedělej nic ukvapeného.")
         $ rauvin.say("Hlavně buď v pátrání diskrétní a informuj mě o pokroku. Nekalé obchody většinou vedou k bohatým a vlivným lidem.")
     else:
-        "Přijde k tobě Solian s papírem v ruce."
+        if timeOfDay != "standup":
+            "Solian sebere ze stolu nějaký papír."
+        else:
+            "Dojde k tobě Solian a podá ti list papíru."
         if "less deals checked" in status:
             $ solian.say("Chápu správně, že jsi otravoval[a] mistra Njala tím podezřením na změny v obchodech?", "angry")
             if "less deals" in solian.asked:
@@ -106,14 +118,20 @@ label AmlMerchantListDelivered:
 
 label AmlCheckResult:
     if "out of office" not in rauvin.status:
-        "Dojde k tobě Rauvin."
+        if timeOfDay != "standup":
+            "Rauvin k tobě popojde pár kroků."
+        else:
+            "Dojde k tobě Rauvin."
         $ rauvin.say("Vypadá to, že se změnou v obchodování ševcovských mistrů jsi měl[a] pravdu. Nechal jsem to prověřit a v ostatních hospodách to vypadá přesně stejně.")
         $ rauvin.say("Mistra Njala několik obchodníků odmítlo i jinde a mistra Rumelina nikdo neviděl nakupovat luxusní materiál, přestože ho podle všeho má a používá.")
         $ mc.say("Pokusím se zjistit, kdo za tím stojí.")
         "Rauvin krátce kývne."
         $ rauvin.say("Postupuj opatrně, a pokud něco zjistíš, určitě mi to nahlaš.")
     else:
-        "Přijde k tobě Solian se zamračeným výrazem."
+        if timeOfDay != "standup":
+            "Solian se zamračí."
+        else:
+            "Přijde k tobě Solian se zamračeným výrazem."
         $ solian.say("Jak jsi řešil[a] ty změny v obchodování...", "angry")
         $ mc.say("Přišlo mi to podezřelé, a tak jsem chtěl[a] vědět, jestli se to změnilo opravdu i v jiných hospodách než u Salmy.")
         $ solian.say("Nechali jsme to prověřit a mistra Njala prý opravdu několik obchodníků odmítlo i jinde. Ale...")
@@ -139,11 +157,17 @@ label AmlCheckResult:
 
 label zeranWitnessesChecked:
     if "out of office" not in rauvin.status:
-        "Dojde za tebou Rauvin."
+        if timeOfDay != "standup":
+            "Rauvin k tobě popojde pár kroků."
+        else:
+            "Dojde za tebou Rauvin."
         $ rauvin.say("Nechal jsem prověřit Zeranovu práci v noc krádeže a nevidím v jeho výpovědi žádné nesrovnalosti.")
         $ rauvin.say("Janis ho na tu noc skutečně najal na čištění žump a do rána byla práce odvedená. Francek skutečně pracoval nedaleko a matně si vzpomíná, že Zerana v noci potkal, i když spolu nemluvili.")
     else:
-        "Dojde za tebou Solian."
+        if timeOfDay != "standup":
+            "Solian se krátce podívá do nějakého papíru a pak ho zase odloží."
+        else:
+            "Dojde za tebou Solian."
         $ solian.say("Jak jsi chtěl[a] prověřit Zeranovy údajné svědky, tak nejsou schopní říct nic konkrétního.")
         $ solian.say("Janis ho na tu noc opravdu najal na čištění žump a do rána byla práce odvedená, nic jiného neví. Francek skutečně pracoval poblíž a prý Zerana možná v noci potkal, ale nemluvili spolu.")
         $ mc.say("Takže jeho výpověď se potvrdila?")
@@ -166,7 +190,11 @@ label zeranWitnessesChecked:
 label guarhouseHeinrichComplained:
     if "out of office" not in rauvin.status:
         $ status.append("heinrich complained")
-        "Rauvin na tebe ještě z dálky mávne a ukáže směrem k té místnosti, ve které jsi dřív mluvil[a] s mistrem Heinrichem. Tváří se ještě vážněji než obvykle a už to samo o sobě tě dokáže znervóznit."
+        if timeOfDay != "standup":
+            "Rauvin pokyne směrem k místnosti, ve které jsi dřív mluvil[a] s mistrem Heinrichem."
+        else:
+            "Rauvin na tebe ještě z dálky mávne a pokyne směrem k místnosti, ve které jsi dřív mluvil[a] s mistrem Heinrichem."
+        "Tváří se ještě vážněji než obvykle a už to samo o sobě tě dokáže znervóznit."
         scene bg interviewroom
         $ rauvin.say("Měl[a] bys vědět, že tady byl mistr Heinrich a stěžoval si na tebe.", "angry")
         $ heinrichComplaint = "Prý se k němu nechováš s dostatečným respektem"
@@ -186,7 +214,7 @@ label guarhouseHeinrichComplained:
         elif hayfa.trust > 4:
             $ rauvin.say("Hayfa je přesvědčená, že pro nás budeš cenná posila, ale tím spíš bych ti radil mistra Heinricha neprovokovat. Je to vážený muž a městská hlídka potřebuje dobrou pověst.")
         elif rauvin.trust < -4:
-            $ rauvin.say("A abych byl upřímný, já sám s ním zatím musím spíš souhlasit. Čekal jsem od tebe výrazně lepší práci. Máš ještě čas s tím něco udělat, ale městská hlídka si potřebuje pověst zlepšit a ne ještě zbytečně provokovat vlivné mistry.")
+            $ rauvin.say("A abych byl upřímný, já sám s ním zatím musím spíš souhlasit. Čekal jsem od tebe výrazně lepší práci. Máš ještě čas s tím něco udělat, ale městská hlídka si potřebuje pověst zlepšit, ne ještě zbytečně provokovat vlivné mistry.")
         else:
             $ rauvin.say("Radil bych ti mistra Heinricha neprovokovat. Je to vážený muž a městská hlídka potřebuje dobrou pověst.")
     else:
@@ -214,6 +242,15 @@ label guarhouseHeinrichComplained:
 ### Morning stand up
 label firstStandUp:
     scene bg guardhouse
+    if gender == "M":
+        "Na strážnici dorazíš jako jeden z posledních. Rauvina spatříš, jak sedí u svého stolu a píše si poznámky, Hayfa o něčem tiše mluví s Melienem. Solian dojídá zbytek placky a spolu s Runou o něčem žertují se dvěma dalšími strážnými, které neznáš."
+    else:
+        "Na strážnici dorazíš jako jedna z posledních. Rauvina spatříš, jak sedí u svého stolu a píše si poznámky, Hayfa o něčem tiše mluví s Melienem. Solian dojídá zbytek placky a spolu s Runou o něčem žertují se dvěma dalšími strážnými, které neznáš."
+    "Jakmile si tě Rauvin všimne, vstane od stolu a požádá o klid. Ostatní ztichnou a otočí se k němu."
+    $ rauvin.say("Jsme všichni, tak můžeme začít. [callingMc.capitalize()], ráno takhle vždycky probíráme, co se ten den musí stihnout.")
+    $ rauvin.say("Pro strážné od bran to většinou není moc zajímavé, mají pevný rozpis, který se většinou mění, jen když někdo onemocní. Valerane, teď jste ale všichni připravení ke službě, že ano?")
+    $ valeran.say("Ano, všichni jako rybičky, brány jsou obsazené.")
+    $ rauvin.say("Výborně, děkuji.")
     $ rauvin.say("Myslím, že naši novou posilu už jste všichni viděli, ale pro pořádek - tohle je [mcName], vítej v hlídce. Chceš nám o sobě něco říct?")
     show mcPic at menuImage
     menu:
@@ -278,7 +315,7 @@ label firstStandUp:
     $ rauvin.say("Jak dlouho jsi říkala?")
     $ hayfa.say("Dva nebo tři dny. Víc ne.")
     $ rauvin.say("To nějak zvládneme. Tak už snad můžeme k těm úkolům.")
-    $ rauvin.say("Už to znáte. Slavnosti jsou za dva dny, přijíždějí na ně davy a my musíme zajistit, aby z toho nevzešly žádné potyčky.")
+    $ rauvin.say("Už to znáte. Slavnosti jsou za dva dny, jejich součástí bude velký trh, přijíždějí sem davy a my musíme zajistit, aby z toho nevzešly žádné potyčky.")
     $ rauvin.say("Lidé od bran by všechny měli nasměrovat, ale určitě se najde někdo, kdo si něco nezapamatuje.")
     $ rauvin.say("Hayfo, kromě zajišťování svědků pro soud s tou tanečnicí bych potřeboval, abys večer obešla hospody a zjistila, jestli se někdo nepokouší o falešnou hru. Čím dřív to zatneme, tím méně stížností se sejde. Stihneš to?")
     $ hayfa.say("Samozřejmě.")
@@ -305,11 +342,21 @@ label firstStandUp:
     $ time.addMinutes(15)
     return
 
+label firstStandupEnd:
+    "Rauvin se krátce rozhlédne po místnosti a pak znovu nasadí svůj běžný výraz."
+    $ rauvin.say("Úkoly všichni známe, tak se do toho můžeme pustit.")
+    call seeMeNoteCheck
+    if seeMeNote:
+        $ rauvin.say("[callingMc.capitalize()], ty tu ještě chvilku zůstaň.")
+    return
+
 label secondStandup:
     scene bg guardhouse
     "Na strážnici dorazíš s mírným zpožděním a čekáš, že ti to Rauvin určitě vyčte. U jeho stolu ale nikdo nesedí a shromáždění hlídkaři vypadají poměrně ustaraně."
     $ solian.say("No to je dost, že jsi tady. Už jsem se bál, že celé slavnosti budeme hlídat ve třech.", "angry")
-    $ runa.say("Já jenom doufám, že se mu nic nestalo. Ten ještě nikdy nezaspal a pracoval, i když tehdy chytil tu chřipku.", "sad")
+    $ valeran.say("A nás nepočítáš?")
+    $ solian.say("Vy budete u bran jako obvykle a odtamtud se nemůžete hnout. To nám nepomůže se všemi těmi ostatními věcmi.", "angry")
+    $ runa.say("Já jenom doufám, že se Rauvinovi nic nestalo. Ten ještě nikdy nezaspal a pracoval, i když tehdy chytil tu chřipku.", "sad")
     $ melien.say("Vzal si vůbec někdy volno?", "surprised")
     $ runa.say("Co já vím, tak ne.")
     $ solian.say("V tom se s Hayfou našli.")
@@ -510,6 +557,29 @@ label nervousSolian:
             else:
                 $ mc.say("To nevím. Njal to neříkal a s Rumelinem jsem o tom nemluvil[a].")
             $ solian.say("V tom případě za ním zajdu, aby z toho soudu nebyl překvapený. Mohlo by ho to ukázat ve špatném světle.")
+        "Můžeme zatknout Heinrichovy učedníky." if "shoes' fate" in clues:
+            hide mcPic
+            $ solian.say("Opravdu by kradli přímo v domě svého mistra?", "surprised")
+            $ mc.say("Ve skutečnosti to nebyla krádež. Opili se, boty omylem zničili a pak se zkusili zbavit důkazů.")
+            $ solian.say("Chápu. Je to hodně i na tuhle neukázněnou chudinskou pakáž, ale asi se to může stát.")
+            $ solian.say("Pro mistra Heinricha to bude nepříjemné, přijde o učedníky a bude vypadat, že si neumí ve vlastním domě zjednat pořádek. Nicméně všichni víme, jak nevděční někdy učedníci mohou být. Myslím, že třeba ve volbě cechmistra mu to neublíží.")
+            $ mc.say("A neměl by si tedy svoje učedníky srovnat sám?")
+            $ solian.say("Zatčení bude v tomto případě lepší. Město tak uvidí, že za to, že nemá mistrovský výrobek, opravdu nemůže.")
+            $ solian.say("Klidně je hned seber. Jeho syna z toho samozřejmě vynech.")
+            $ mc.say("Ten u toho ale byl také.")
+            $ solian.say("Tak ať si to s otcem vyřídí mezi sebou. Zatčením syna významného mistra bychom nikomu nepomohli.")
+        "Můžeme zatknout Aachima." if "confession" in son.asked:
+            hide mcPic
+            $ solian.say("Syna mistra Heinricha? To má být nějaký hloupý žert?", "angry")
+            $ mc.say("Ve skutečnosti se mi přiznal.")
+            $ solian.say("... je mladý, podobné hloupé žerty se nedají vyloučit…", "angry")
+            $ solian.say("Prý se pokoušel otcovy boty napodobit, přitom je nějak poškodil, a protože byl opilý, nenapadlo ho nic lepšího než je hodit nejdřív do krbu a potom do řeky.")
+            $ solian.say("To by musel být hodně opilý. A na tom si opravdu trvá?", "angry")
+            $ mc.say("Vypadá to tak")
+            $ solian.say("Proč si to v tom případě s otcem nevyřeší mezi sebou?", "angry")
+            $ mc.say("Mistr Heinrich to neví a Aachim je opatrný s tím mu to říkat. Jeho otec je přeci jen poměrně prchlivý člověk.")
+            $ solian.say("Tomu rozumím, ale jestli je to rodinná záležitost, mělo by to takovou zůstat. Nebudu zatýkat dědice mistrovské dílny, aby se pak špinavé prádlo celé rodiny pralo veřejně před soudem.", "angry")
+            $ solian.say("Řekni to mistru Heinrichovi, nebo přesvědč Aachima, aby mu to řekl sám, ale hlavně nikoho nezatýkej. On mistr to obvinění stáhne, o tom jsem přesvědčený.")
         "Můžeme zatknout Zerana." if zeranNote.isActive == True and zeran.status != "cleared":
             hide mcPic
             $ solian.say("To je kdo?")
@@ -656,7 +726,7 @@ label hayfasPastEncounter:
     $ rauvin.say("Zřejmě dost na to, aby pro hlídku byla neocenitelná.")
     $ rauvin.say("Podívejte, rozhodnutí soudu ani jeden z nás nemůže zvrátit. Hayfina služba městu teď je příkladná. A snad vás může ubezpečit, že vzhledem k její minulosti je vyloučené, aby v hlídce získala výrazně vyšší postavení, než má teď.")
     $ rauvin.say("Nicméně aby mohla městu co nejlépe sloužit, potřebuji pomoc i od vás.")
-    $ rauvin.say("Jestli se začne podezřele, potřebuji to hned vědět. A dokud dělá přesně to, co se od hlídkařů očekává, potřebuji naopak, abyste to od ní přijímala stejně jako od libovolného jiného hlídkaře.")
+    $ rauvin.say("Jestli se začne chovat podezřele, potřebuji to hned vědět. A dokud dělá přesně to, co se od hlídkařů očekává, potřebuji naopak, abyste to od ní přijímala stejně jako od libovolného jiného hlídkaře.")
     $ angryWoman.say("... já jen doufám, že neděláte chybu, které budeme všichni litovat.", "sad")
     $ rauvin.say("“Já věřím tomu, že kdyby měla opravdu nekalé úmysly, odešla by do města, kde ji nikdo nezná, a nezůstala by tady, kde už byla souzená a kde všichni znají její tvář.")
     $ rauvin.say("Je tu ještě něco, s čím vám může hlídka pomoci?")

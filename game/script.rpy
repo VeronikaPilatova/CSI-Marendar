@@ -103,6 +103,7 @@ label preparation:
     default runa = Person("Runa", "runa")
     default solian = Person("Solian", "solian")
     default melien = Person("Melien", "melien")
+    default valeran = Person("Valeran", "anon")
     # characters - case 1
     default ada = Person("Ada", "ada")
     default eckhard = Person("Eckhard", "eckhard", "hungover")
@@ -128,7 +129,7 @@ label preparation:
     default zeran = Person("Zeran", "zeran")
     # characters - other
     default angryWoman = Person("Žena", "angry woman")
-    default assistant = Person("Pomocník v knihovně", "assistant")
+    default librarian = Person("Pomocník v knihovně", "librarian")
     default racist = Person("Obchodník", "angry merchant")
     default katrin = Person("Tanečnice", "katrin")
     default kilian = Person("Hráč na lyru", "kilian")

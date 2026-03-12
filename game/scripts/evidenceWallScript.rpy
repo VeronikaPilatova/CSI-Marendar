@@ -23,7 +23,7 @@ label seeMeNoteCheck:
         $ seeMeNote = True
     elif "awaiting AML merchant list" in status:
         $ seeMeNote = True
-    elif time.hours > 16 and "report given" not in dailyStatus and optionsRemaining != 0:
+    elif (time.hours > 16 and "report given" not in dailyStatus) or "report still needed" in dailyStatus:
         $ seeMeNote = True
     else:
         $ seeMeNote = False

@@ -230,6 +230,8 @@ label reportingBack:
 
     if "report given" not in dailyStatus:
         $ dailyStatus.append("report given")
+        if "report still needed" in dailyStatus:
+            $ dailyStatus.remove("report still needed")
     if "promised to share" in dailyStatus:
         $ hayfa.trust += 1
         $ dailyStatus.remove("promised to share")

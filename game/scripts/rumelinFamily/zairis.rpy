@@ -371,7 +371,7 @@ label zairisExpensivePaperProof:
 
 label zairisOptionsRemainingCheck:
     $ zairisOptionsRemaining = 0
-    if if "letters for Ada seen" in status and "poetry" not in zairis.asked:
+    if "letters for Ada seen" in status and "poetry" not in zairis.asked:
         $ zairisOptionsRemaining += 1
     if "less deals details" in njal.asked and "business knowledge" not in zairis.asked:
         $ zairisOptionsRemaining += 1

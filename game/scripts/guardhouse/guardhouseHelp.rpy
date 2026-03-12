@@ -14,9 +14,12 @@ label guardhouseHelpMenu:
             hide mcPic
             call helpWithZeranWitnesses
             $ helpAsked += 1
-        "Vyzná se tu někdo v poezii?" if "letters for Ada seen" in status and "asked for literature help" not in status and "poetry style" not in assistant.asked:
+        "Vyzná se tu někdo v poezii?" if "letters for Ada seen" in status and "asked for literature help" not in status and "poetry style" not in librarian.asked:
             hide mcPic
             call helpWithLiteratureStyle
+            $ helpAsked += 1
+        "Potřebuju si ujasnit, koho mám právo zatknout. Nebo naopak propustit z vězení." if "asked about rights" not in status:
+            call helpWithWatchRights
             $ helpAsked += 1
         "Mistr Heinrich docela ošklivě zmlátil mistra Kaspara. Neměli bychom to nějak řešit?" if kaspar.imageParameter == "beaten" and "asked about Kaspar's beating" not in status:
             hide mcPic
@@ -63,7 +66,7 @@ label helpWithAml:
             menu:
                 "Mistr Njal navíc pracoval na stejném typu bot jako mistr Heinrich." if "police business" in njal.asked:
                     hide mcPic
-                "Je to už druhý mistr, kterému někdo brání se na slavnostech prezentovat.":
+                "Je to už druhý mistr, kterému někdo brání se na slavnostech představit.":
                     hide mcPic
                     $ mc.say("Mohla by to být snaha poškodit celý cech.")
                 "Svoje obchody navíc skrývá nebo přesouvá i cechmistr Rumelin.":
@@ -158,6 +161,29 @@ label helpWithLiteratureStyle:
         $ solian.say("To už se s lidmi z města bavíš o poezii? To se asi dá počítat jako pokrok!", "happy")
         $ solian.say("Něco by měl znát Rauvin, ale ten na hovory o umění nebude mít moc čas. Jeho sestra ale obnovuje knihovnu, zkus zajít tam. Buď ti pomůže ona, nebo někdo, kdo si tam zrovna bude číst.")
     $ libraryNote.isActive = True
+    return
+
+label helpWithWatchRights:
+    $ status.append("asked about rights")
+    if "out of office" not in rauvin.status:
+        $ rauvin.trust += 1
+        $ rauvin.say("Dobrá otázka, obtížnější odpověď.")
+        $ rauvin.say("Jako hlídka můžeme zatknout kohokoli, o kom je dobrý důvod si myslet, že se nějak provinil proti zákonům. Dokonce včetně cizinců, šlechticů a podobně. Ne všichni by pak byli souzeni tady ve městě, ale samotné zatčení provést můžeme.")
+        $ rauvin.say("Zároveň ale musíme být schopní každé zatčení dobře obhájit, a čím bude překvapivější, třeba protože se bude týkat někoho, koho všichni mají za ctnostného, tím víc otázek na nás bude směřovat. Měli bychom tedy se zatýkáním být hodně opatrní.")
+        $ rauvin.say("Protože jsi tady nov[y], znamená to pro tebe, že bys nikoho neměl[a] zatýkat, pokud ti to předem nepovolím. Kdybych nebyl k mání, zastoupí mě Hayfa nebo Solian.")
+        $ rauvin.say("Výjimka je, kdybys někoho chytil[a] přímo při činu nebo kdyby bylo pravděpodobné, že se podezřelý pokusí utéct z města, spáchat další zločiny nebo zničit důkazy. Nicméně té výjimky nevyužívej, pokud si nejsi opravdu jist[y], že je zatčení opravdu na místě.")
+        $ rauvin.say("Co se týče propouštění, je to podobné. Jestli jsme předtím měli dobrý důvod pro zatčení, měli bychom umět dobře zdůvodnit, proč už teď ve vinu dotyčného nevěříme. A nepropouštěj nikoho bez domluvy se mnou.")
+        $ rauvin.say("Rozhodně potom nepropouštěj nikoho, koho zatkl někdo jiný. Vkládat se do cizích případů bez vyzvání je obecně nevhodné, obzvláště takto výrazným způsobem.")
+        $ rauvin.say("U cizího případu navíc hrozí, že neznáš všechny podrobnosti a neposoudíš vhodnost propuštění správně.")
+        $ rauvin.say("Tedy když to shrnu, nedělej nic, co si nedokážeš obhájit, a pokud to jen trochu lze, vše nejdřív prober se mnou.")
+    else:
+        $ solian.trust += 1
+        $ solian.say("Ta správná otázka není, koho máš právo zatknout, ale koho je dobrý nápad zatknout.")
+        $ solian.say("Počítej s tím, že jakmile někoho zatkneš, budeš to muset vysvětlovat. Jestli se ukáže, že k tomu nebyly rozumné důvody, uděláš tím špatné jméno jak sobě, tak hlídce jako celku.")
+        $ solian.say("A město si to bude pamatovat. Ten zatčený, jeho rodina a přátelé, jeho cech, jestli v nějakém je… Čím významnější osobu zatkneš, tím víc jdeš s kůží na trh.")
+        $ solian.say("Takže hlavně nedělej žádná zbrklá rozhodnutí.")
+        $ solian.say("A totéž se týká i propouštění z vazby. Nesmíme působit, že lidi zatýkáme a propouštíme, jak se nám zrovna zlíbí. To by měšťanům připomnělo časy, jejichž návrat si nikdo nepřeje.")
+        $ solian.say("Tedy jestli jsi součást vyšetřování a víš zcela jistě, že dotyčného není potřeba dál držet v cele, do toho. Jinak, jak už jsem říkal, hlavně žádná zbrklá rozhodnutí.")
     return
 
 label helpKasparBeating:
@@ -264,7 +290,7 @@ label guardhouseHelpOptionsAvailable:
         $ helpOptionsAvailable += 1
     if "alibi witnesses" in zeran.asked and not any("zeran witnesses" in str for str in status):
         $ helpOptionsAvailable += 1
-    if "letters for Ada seen" in status and "asked for literature help" not in status and "poetry style" not in assistant.asked:
+    if "letters for Ada seen" in status and "asked for literature help" not in status and "poetry style" not in librarian.asked:
         $ helpOptionsAvailable += 1
     if kaspar.imageParameter == "beaten" and "asked about Kaspar's beating" not in status:
         $ helpOptionsAvailable += 1

@@ -46,6 +46,9 @@ label endOfDay:
         $ hayfa.trust -= 1
     $ dailyStatus.clear()
 
+    if "report given" not in dailyStatus:
+        $ dailyStatus.append("report still needed")
+
     $ time.addDays(1)
     $ time.hours = 7
     $ time.minutes = 0
@@ -68,13 +71,19 @@ label endOfDay:
         $ festivalStart = "dnes"
 
     # start of day
+    $ random = renpy.random.randint(1, 6)
     show bg hayloft dawn
     with Fade(0.5, 1.0, 0.5)
     "Probudí tě nemilosrdné ranní slunce. Chce se ti obrátit na druhý bok, zahrabat do sena a spát dál, ale brzy se máš hlásit na strážnici."
+    "Neochotně vstaneš, umyješ se a vyrazíš znovu do ulic."
+    scene expression ("bg/bg street0[random][time.locationTagExt()].png")
+    "Teplá placka z nejbližší hospody tě zbaví hladu a chladný ranní vzduch zažene poslední zbytky únavy."
+    "Venku už je živo: hospodyně kupují čerstvou zeleninu nebo nabírají vodu ze studen, řemeslníci začínají pracovat, děti pro dospělé vyřizují drobné pochůzky a povykují přitom."
 
     if time.days == 2:
         call firstStandUp
         call kilianEncounter
+        call firstStandupEnd
     elif time.days == 3:
         call secondStandup
     elif time.days == 4:

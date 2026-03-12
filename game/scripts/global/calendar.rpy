@@ -52,3 +52,19 @@ init python:
                 return "day"
             else:
                 return "night"
+
+        def locationTagExt(self):
+            if self.hours == 7:
+                return " dawn"
+            elif self.hours < 18:
+                return ""
+            elif self.hours == 18:
+                return " dusk"
+            else:
+                return " night"
+
+        def locationTagInt(self):
+            if self.hours > 6 and self.hours < 18:
+                return ""
+            else:
+                return " night"

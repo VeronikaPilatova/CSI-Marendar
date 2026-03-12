@@ -1,7 +1,9 @@
 init python:
 
     achievement_name = {
+        "case1": Achievement(name=_("První případ"), message=_("Podařilo se ti zjistit, co se stalo botám mistra Heinricha."), image="images/achievements/trophy case1.png", priority=None),
         "flowers": Achievement(name=_("Květiny a jablečný závin"), message=_("Mistr Heinrich a jeho žena si k sobě znovu našli cestu."), image="images/achievements/trophy flowers.png", priority=None),
+        "zeranCleared": Achievement(name=_("Bezprácí napraveno"), message=_("Podařilo se očistit Zeranovo jméno."), image="images/achievements/trophy fallback.png", priority=None),
         "jointMasterpiece": Achievement(name=_("Společné dílo"), message=_("Spolupráce mistrů Heinricha a Njala překvapila celé město."), image="images/achievements/trophy jointMasterpiece.png", priority=None),
         "dinner": Achievement(name=_("Nacpaný k prasknutí"), message=_("Co je lepší než dobrá večeře? Tři dobré večeře v jeden den."), image="images/achievements/trophy dinner.png", priority=None),
         "poet": Achievement(name=_("Básník"), message=_("Jsi strážný mnoha talentů."), image="images/achievements/trophy quill.png", priority=None),
@@ -13,6 +15,7 @@ init python:
         "kasparGuildmaster": Achievement(name=_("Kaspar cechmistrem"), message=_("Když se dva perou, třetí je zvolen."), image="images/achievements/trophy guildmaster kaspar.png", priority=None),
         "firefighter": Achievement(name=_("Ochránce Marendaru"), message=_("Jeden požár stačil."), image="images/achievements/trophy bucket.png", priority=None),
         "katrin": Achievement(name=_("Ohnivá obhajoba"), message=_("Podařilo se ti najít zastání pro Katrin."), image="images/achievements/trophy katrin.png", priority=None),
+        "lostBottles": Achievement(name=_("Ztracené lahve"), message=_("Krádež alkoholu objasněna."), image="images/achievements/trophy bottles.png", priority=None),
 
         "fired": Achievement(name=_("Vyhozen z hlídky"), message=_("Ne každý příběh končí šťastně."), image="images/achievements/trophy trownOut.png", priority="hidden"),
         "blackmailFailed": Achievement(name=_("Neúspěšný vyděrač"), message=_("Zločin se ne vždy vyplácí."), image="images/achievements/trophy stocks.png", priority="hidden"),
