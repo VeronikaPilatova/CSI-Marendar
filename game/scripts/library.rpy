@@ -19,7 +19,6 @@ label libraryController:
     $ chosenTopic = ""
     return
 
-
 label libraryIntro:
     scene expression ("bg/bg library outside[time.locationTagExt()].png")
     if "library visited" not in status:
@@ -46,26 +45,6 @@ label libraryIntro:
         $ status.append("library light seen")
     return
 
-label libraryOptions:
-    menu:
-        "{i}(“Půjčit” si vhodnou báseň pro Zairise){/i}" if "promised poetry" in status and not any("poem" in str for str in status):
-            $ chosenTopic = "stealPoetry"
-        "{i}(Zkonzultovat styl básní pro Adu){/i}" if "letters for Ada seen" in status and "poetry style" not in librarian.asked:
-            $ chosenTopic = "libraryConsultLettersForAda"
-        "{i}(Zeptat se na sečtělé elfy){/i}" if "lover well read" in ada.asked and "well-read elves" not in librarian.asked:
-            $ chosenTopic = "libraryConsultWellReadElves"
-        "{i}(Odpočinout si při čtení krásné literatury){/i}" if literatureTopics != []:
-            $ chosenTopic = "readingLiterature"
-        "{i}(Nastudovat si právo a místní zákony){/i}" if lawTopics != []:
-            $ chosenTopic = "readingLaw"
-        "{i}(Projít zápisy soudních procesů){/i}" if pastTrialsTopics != []:
-            $ chosenTopic = "readingPastTrials"
-        "{i}(Nastudovat si městskou historii){/i}" if historyTopics != []:
-            $ chosenTopic = "readingHistory"
-        "{i}(Vrátit se na strážnici){/i}":
-            $ chosenTopic = "leave"
-    return
-
 label libraryRepeat:
     scene expression ("bg/bg library inside[time.locationTagInt()].png")
 
@@ -84,22 +63,7 @@ label libraryRepeat:
             "Světlo zcela určitě vychází z ní, nejspíš přímo z vrcholku jeho věže. Nevidíš ale žádný plamen, ze sošky nestoupá ani drobný pramínek dýmu a světlo je stálé a neměnné, jako kdyby vycházelo z drahé svíce - na čtení mnohem příjemnější než nestálé mihotání loučí, s nímž ses mnohdy musel[a] spokojit."
         $ timeOfDay = time.timeOfDayInt()
     elif time.hours > 21:
-        "Když konečně knihu odložíš a protáhneš se, knihovnický pomocník zachytí tvůj pohled a přejde k tobě."
-        $ librarian.say("Omlouvám se, ale musím vás požádat, abyste ode[sel]. Připozdilo se a já tu musím uklidit a zamknout.")
-        show mcPic at menuImage
-        menu:
-            "Moc se omlouvám, nevšiml[a] jsem si, jak je pozdě.":
-                pass
-            "Když to musí být…":
-                pass 
-            "Nemůžete počkat ještě chvíli?":
-                pass 
-        hide mcPic
-        $ librarian.say("Zítra vás tu samozřejmě opět rád uvidím.")
-        "Pomocník uloží poslední knihu zpět do police a vyprovodí tě ke dveřím."
-        scene expression ("bg/bg library outside[time.locationTagExt()].png")
-        $ librarian.say("Pěkný večer a zase se vraťte!")
-        "Čerstvý vzduch je po sezení nad knihou příjemný a je díky němu snazší si rozmyslet další postup."
+        call libraryClosingTime
         return
 
     call libraryOptions
@@ -109,11 +73,140 @@ label libraryRepeat:
         call expression chosenTopic
         jump libraryRepeat
 
+label libraryClosingTime:
+    "Když konečně knihu odložíš a protáhneš se, knihovnický pomocník zachytí tvůj pohled a přejde k tobě."
+    $ librarian.say("Omlouvám se, ale musím vás požádat, abyste ode[sel]. Připozdilo se a já tu musím uklidit a zamknout.")
+    show mcPic at menuImage
+    menu:
+        "Moc se omlouvám, nevšiml[a] jsem si, jak je pozdě.":
+            pass
+        "Když to musí být…":
+            pass 
+        "Nemůžete počkat ještě chvíli?":
+            pass 
+    hide mcPic
+    $ librarian.say("Zítra vás tu samozřejmě opět rád uvidím.")
+    "Pomocník uloží poslední knihu zpět do police a vyprovodí tě ke dveřím."
+    scene expression ("bg/bg library outside[time.locationTagExt()].png")
+    $ librarian.say("Pěkný večer a zase se vraťte!")
+    "Čerstvý vzduch je po sezení nad knihou příjemný a je díky němu snazší si rozmyslet další postup."
+    return
+
+label libraryOptions:
+    call lawConsultationOptionsRemainingCheck
+    menu:
+        "{i}(“Půjčit” si vhodnou báseň pro Zairise){/i}" if "promised poetry" in status and not any("poem" in str for str in status):
+            $ chosenTopic = "stealPoetry"
+        "{i}(Zkonzultovat styl básní pro Adu){/i}" if "letters for Ada seen" in status and "poetry style" not in librarian.asked and "letters for Ada checked in library" not in status:
+            $ chosenTopic = "libraryConsultLettersForAda"
+        "{i}(Zeptat se na sečtělé elfy){/i}" if "lover well read" in ada.asked and "well-read elves" not in librarian.asked:
+            $ chosenTopic = "libraryConsultWellReadElves"
+        "{i}(Požádat o právní konzultaci){/i}" if "law consultation offered" in status and lawConsultationOptionsRemaining > 0:
+            $ chosenTopic = "libraryConsultLaw"
+        "{i}(Promluvit si s elfím knihovníkem){/i}" if librarian.alreadyMet:
+            $ chosenTopic = "librarianOptions"
+        "{i}(Odpočinout si při čtení krásné literatury){/i}" if literatureTopics != []:
+            $ chosenTopic = "readingLiterature"
+        "{i}(Nastudovat si právo a místní zákony){/i}" if lawTopics != []:
+            $ chosenTopic = "readingLaw"
+        "{i}(Projít zápisy soudních procesů){/i}" if pastTrialsTopics != []:
+            $ chosenTopic = "readingPastTrials"
+        "{i}(Nastudovat si městskou historii){/i}" if historyTopics != []:
+            $ chosenTopic = "readingHistory"
+        "{i}(Vrátit se na strážnici){/i}":
+            $ chosenTopic = "leave"
+    return
+
 ###
 
 label librarianOptions:
-    $ mc.say("Dnes ne, děkuji.")
-    return
+    show mcPic at menuImage
+    menu:
+        "Máte přehled i v tom, kdo ve městě píše?" if chosenTopic == "anythingElse" and "letters for Ada seen" in status and "poetry style" not in librarian.asked and "letters for Ada checked in library" not in status:
+            $ librarian.asked.append("poetry style")
+            call libraryConsultLettersForAda1Response
+        "Spíš se chci poradit, mám tady báseň a hledám jejího autora." if chosenTopic == "anythingElse" and ("poem for Ada copied" in status or "all love letters kept" in status or "one love letter kept" in status) and "poetry style" not in librarian.asked and "letters for Ada checked in library" not in status:
+            $ librarian.asked.append("poetry style")
+            call libraryConsultLettersForAda2Response
+        "Jak dobře znáte návštěvníky knihovny?" if chosenTopic == "anythingElse" and "lover well read" in ada.asked and "well-read elves" not in librarian.asked:
+            call libraryConsultWellReadElvesResponse
+        
+        # law consult
+        "Jaké má vlastně hlídka pravomoce? Koho můžu zatknout nebo naopak pustit z cely?" if (chosenTopic == "libraryConsultLaw" or (chosenTopic == "anythingElse" and "law consultation offered" in status)) and "watch powers" not in librarian.asked:
+            hide mcPic
+            $ librarian.asked.append("watch powers")
+            $ librarian.say("V první řadě by se hlídka neměla pouštět do vlastních podniků. Pokud přijde stížnost od někoho z města, je potřeba se jí samozřejmě věnovat, ale co si měšťané dokážou vyřešit sami mezi sebou, do toho hlídka nemá vstupovat.")
+            $ librarian.say("I pokud máte o nějakém zločinu nezvratné důkazy, je lepší se nejdříve dohodnout s obětí, jestli o zapojení hlídky stojí. Někdy lidé nechtějí, aby se věc veřejně propírala.")
+            $ librarian.say("Většina obětí, svědků i pachatelů žije v tomto městě a nikam neuteče, často tedy ničemu neublíží pár dní počkat a nejdříve si zjistit všechno potřebné.")
+            $ librarian.say("Co se týče zatýkání, hlídka má právo zatknout kohokoli a ani myslím není stanovená nejvyšší možná délka zadržení. Nicméně každé zatčení budete muset zdůvodnit městské radě a ta může v případě potřeby vězně zase propustit. Nedostatečně podložené zatčení by pak podlomilo důvěru města v hlídku.")
+            $ librarian.say("S propouštěním je to podobné. Hlídka může kdykoli propustit kteréhokoli svého vězně, ale mělo by být jasné, co se od chvíle zatčení změnilo, jinak měšťané v její činnost ztratí důvěru.")
+            $ librarian.say("Stejně tak pravděpodobně vyvolá otázky, pokud k propuštění dojde těsně před soudním přelíčením. Ale nevybavuji si zákon, který by to přímo zakazoval.")
+        "Chtěl[a] bych si udělat představu o trestech, které by mohly padnout u soudu." if (chosenTopic == "libraryConsultLaw" or (chosenTopic == "anythingElse" and "law consultation offered" in status)) and "punishments" not in librarian.asked:
+            hide mcPic
+            $ librarian.asked.append("punishments")
+            $ librarian.say("To samozřejmě záleží na tom, kdo by byl souzen a co spáchal.")
+        "Co kdyby boty mistra Heinricha ukradl nebo zničil jiný mistr?" if (chosenTopic == "libraryConsultLaw" or (chosenTopic == "anythingElse" and "law consultation offered" in status)) and "punishments" in librarian.asked and "punishment for theft - master craftsman" not in librarian.asked:
+            hide mcPic
+            $ librarian.asked.append("punishment for theft - master craftsman")
+            $ librarian.say("To by nejspíš hodně pošpinilo jeho pověst a to by byl ten nejhorší trest. Kdo by si pak u něj nechal šít?")
+            $ librarian.say("Myslím, že by se soud snažil, aby z toho pachatel vyšel se ctí, aby nezpůsobil dlouhodobou zlou krev. Mohl by mu třeba uložit zaplatit mistru Heinrichovi odškodné a dát hodnotný dar Einionově chrámu.")
+            $ librarian.say("A hlavně by mu domluvili, aby se nic podobného neopakovalo, a kdyby přitom přišli na nějakou hlubší příčinu, snažili by se ji nějak odstranit. Třeba udobřit mistry, pokud se nenávidí. Město na svých mistrech stojí a rozbroje mezi nimi nikomu nepomohou.")
+            $ librarian.say("Samozřejmě by se nejspíš ozývaly hlasy, že teď přece máme to nové právo, které měří všem stejně, a že by trest měl být tvrdší. Co si o tom myslíte, nechám na vás, moc soudů takto po novu zatím neproběhlo. Já sám pochybuji, že se něco výrazně změní.")
+        "Co kdyby boty mistra Heinricha ukradl nebo zničil někdo chudý?" if (chosenTopic == "libraryConsultLaw" or (chosenTopic == "anythingElse" and "law consultation offered" in status)) and "punishments" in librarian.asked and "punishment for theft - poor person" not in librarian.asked:
+            hide mcPic
+            $ librarian.asked.append("punishment for theft - poor person")
+            $ librarian.say("To bych si nepřál být na jeho místě a vy také ne.")
+            $ librarian.say("Ono se teď samozřejmě všude říká, jak máme to nové právo, které měří všem stejně. Kdo chce, ať tomu věří. Já si myslím, že by mistr Heinrich zdůrazňoval, jak cenný a neobyčejný ten výrobek byl a jak odporné je krást dar pro Einiona, aby se patřičně pomstil.")
+            $ librarian.say("Tomu všemu by soud nejspíš uvěřil. Mistr Heinrich má pověst velmi schopného řemeslníka.")
+            $ librarian.say("Očekával bych nějakou dlouhou službu, aby si zloděj ten přečin odpracoval, nebo naopak vyhnání z města. Podle toho, jestli by tu po něm zůstala rodina a podobně.")
+            $ librarian.say("A k tomu nejspíš pranýř a rány holí. Prostě trest, který může očekávat chuďas, který rozhněval někoho důležitého.")
+        "Co kdyby boty mistra Heinricha ukradl nebo zničil někdo z jeho učedníků?" if (chosenTopic == "libraryConsultLaw" or (chosenTopic == "anythingElse" and "law consultation offered" in status)) and "punishments" in librarian.asked and "shoes' fate" in clues and "punishment for theft - apprentice" not in librarian.asked:
+            hide mcPic
+            $ librarian.asked.append("punishment for theft - apprentice")
+            $ librarian.say("Tak hloupí přece být nemohou?", "surprised")
+            $ librarian.say("V první řadě bych čekal, že mistr Heinrich toho učedníka okamžitě vyžene z domu a z učení. Vzhledem k tomu, že za učení se platí předem a peníze by asi nevrátil, mohlo by být pro učedníka obtížné se vyučit někde jinde.")
+            $ librarian.say("Zvlášť s pověstí někoho, kdo kradl v domě svého mistra.")
+            $ librarian.say("Nezapomínejte také na to, že dokud je někdo v učení, podléhá mistrovi a ten ho může trestat jako vlastní rodinu. Heinrich by tedy ani nemusel chodit za hlídkou. Ve skutečnosti by tím naopak mohl být za slabocha, co si neumí ve vlastním domě zjednat pořádek.")
+            $ librarian.say("Ale co vím o mistru Heinrichovi, ten se rozdávat rány nebojí.")
+        "Co může hrozit za krádež ševcovského střihu?" if (chosenTopic == "libraryConsultLaw" or (chosenTopic == "anythingElse" and "law consultation offered" in status)) and "punishments" in librarian.asked and "stolen idea" in clues and "punishment for theft of shoe pattern" not in librarian.asked:
+            hide mcPicx 
+            $ librarian.asked.append("punishment for theft of shoe pattern")
+            $ librarian.say("Vždy je nutné vrátit kradenou věc nebo zaplatit odpovídající obnos a většinou ještě nějaké penále navíc jako odškodné. K tomu soud většinou udělí dodatečnou pokutu ve prospěch města nebo nějaký čas v pranýři, aby byl trest horší než zisk z případné úspěšné krádeže.")
+            $ librarian.say("Pokud byl čin obzvlášť závažný, je možné trestat cejchem, nebo dokonce utnutím ruky, ale nepamatuji si, kdy se něco podobného stalo. K podobným trestům i Velin přistupoval zřídka.")
+            $ librarian.say("Vy jste ale zmiňoval[a] krádež střihu na boty? Co já vím, ty nemají skoro žádnou cenu, ševci je znají a neševcům nejsou k ničemu dobré. Myslím, že to by zůstalo bez trestu, stejně jako by vás nikdo nepotrestal, kdybyste někomu vypil vodu ze džbánu kousek od plné studny.")
+        "Jaký trest by byl třeba za vloupání?" if (chosenTopic == "libraryConsultLaw" or (chosenTopic == "anythingElse" and "law consultation offered" in status)) and "punishments" in librarian.asked and "duplicate key" in status and "punishment for burglary" not in librarian.asked:
+            hide mcPic
+            $ librarian.asked.append("punishment for burglary")
+            $ librarian.say("To záleží, jestli během vloupání došlo i k napadení někoho z obyvatel, kolik toho bylo ukradeno a jestli byl čin plánovaný, nebo jen výsledkem náhlého popudu.")
+            $ librarian.say("V nejlehčím případě, kdy někdo uvidí otevřené dveře a sebere někomu ze stolu drahý svícen a pak si to viditelně vyčítá, by nejspíš stačila domluva, možná spojená s peněžitým trestem.")
+            $ librarian.say("Naopak připravený zlovolný čin spojený s napadením může být potrestán až popravou nebo alespoň tělesným trestem a vyhnáním.")
+            $ librarian.say("Také je potřeba vzít v úvahu, že vyhnání je těžkým trestem pro usedlíky, ale nic neznamená pro cizince. Ti by místo toho byli potrestaní jinak. Buď naopak zákazem odejít, dokud nezaplatí vysokou pokutu, nebo na těle či na hrdle.")
+        "Co kdyby se někomu úplně obyčejnému přišlo na vydírání?" if (chosenTopic == "libraryConsultLaw" or (chosenTopic == "anythingElse" and "law consultation offered" in status)) and "punishments" in librarian.asked and "AML" in lotte.asked and "punishment for blackmail" not in librarian.asked:
+            hide mcPic
+            $ librarian.asked.append("punishment for blackmail")
+            $ librarian.say("Na to nejsou tresty pevně ustanovené. K vydírání nedochází často, nebo aspoň ne k takovému, které se potom dostane k soudu.")
+            $ librarian.say("Myslím, že by hodně záleželo na tom, k čemu to vydírání mělo směřovat.")
+            $ librarian.say("Jestli byl viditelně ohrožen něčí život nebo zdraví, dokážu si představit i těžký tělesný trest nebo popravu, pokud by se samozřejmě soudu nepodařilo nějak dosáhnout usmíření všech zúčastněných. Pak by pachatel nejspíš jen zaplatil nějakou pokutu.")
+            $ librarian.say("V méně vážných případech by nejspíš zůstalo u pranýřování. Ostuda a ztráta tváře by byla největším trestem sama o sobě.")
+        "Co hrozí té tanečnici s ohněm?" if (chosenTopic == "libraryConsultLaw" or (chosenTopic == "anythingElse" and "law consultation offered" in status)) and "punishments" in librarian.asked and time.days > 1 and "punishment for Katrin" not in librarian.asked:
+            hide mcPic
+            $ librarian.asked.append("punishment for Katrin")
+            $ librarian.say("Zrovna té hrozí skoro všechno, co jen dokáže někdo vymyslet.")
+            $ librarian.say("Důležité bude, jestli soud její čin bude považovat za neopatrnost, nebo za úmyslné žhářství. Už neopatrné zacházení s ohněm se podle marendarských zákonů považuje za ohrožení celého města, které se může velmi snadno trestat oběšením.")
+            $ librarian.say("Tam je ještě naděje na zmírnění rozsudku. Soud by mohl přihlédnout k tomu, že je mladá a že jako cizinka neznala dobře naše zákony. Nicméně když jde o oheň, neočekával bych větší zmínění trestu než na ten nejtěžší, který ještě neznamená popravu.")
+            $ librarian.say("A jestli její čin soud vyhodnotí jako žhářství… myslím, že bude chtít vynést rozsudek, který bude mít výrazně odstrašující povahu.")
+            $ librarian.say("Samozřejmě pokud soud naopak sezná, že její jednání město nijak neohrožovalo, potom ta dívka vyvázne bez úhony. Na to bych ale nesázel, pokud se nenajde někdo, kdo bude mluvit v její prospěch.")
+
+        # talk with
+
+        "Děkuji, moc jste mi pomohl, víc vás nebudu zdržovat.":
+            hide mcPic
+            $ librarian.say("To je v pořádku, od toho tu jsem.")
+            return
+    
+    jump librarianOptions
+
+###
 
 label stealPoetry:
     scene bg books
@@ -133,7 +226,8 @@ label libraryConsultLettersForAda:
     show mcPic at menuImage
     menu:
         "Máte přehled i v tom, kdo ve městě píše?":
-            hide mcPic at menuImage
+            label libraryConsultLettersForAda1Response:
+            hide mcPic
             $ librarian.say("Myslíte knihy k vytištění? Skoro nikdo. Přeci jen, nechat natisknout knihu není levná záležitost.")
             $ librarian.say("Zhruba před rokem se tady v Marendaru tiskla sága o jednom trpasličím runovém kováři, ale ani ta nebyla původně napsaná přímo tady ve městě. My sami jsme sepsali jen několik smolných knih a výtisků nových zákonů, aspoň co si pamatuji.")
             $ librarian.say("Tedy, myslím, že Valeran z hlídky - té části, která hlídá brány, asi se s ním nebudete moc potkávat - sepisuje něco o historii, ale jestli z toho někdy bude kniha, těžko říct.")
@@ -143,6 +237,7 @@ label libraryConsultLettersForAda:
                 "Děkuji, to byl vyčerpávající přehled.":
                     hide mcPic
                     $ librarian.say("Rádo se stalo. Potřebujete ještě něco?")
+                    $ chosenTopic = "anythingElse"
                     jump librarianOptions
                 "Je možné, že ten, koho hledám, píše básně jen pro sebe a pro přátele.":
                     hide mcPic
@@ -150,7 +245,9 @@ label libraryConsultLettersForAda:
                     $ mc.say("Nemáte alespoň odhad, kdo by něco takového mohl psát?")
                     $ librarian.say("Upřímně, to může být skoro kdokoli. I někdo, do koho by to jeden neřekl, může občas složit třeba nějakou milostnou báseň, neslušnou říkanku nebo výsměšnou rýmovačku. A když už je vymyslí, jistě že si je zapíše, byla by škoda je zapomenout.")
         "Spíš se chci poradit, mám tady báseň a hledám jejího autora." if "poem for Ada copied" in status or "all love letters kept" in status or "one love letter kept" in status:
+            label libraryConsultLettersForAda2Response:
             hide mcPic
+            $ librarian.asked.append("poem for Ada shown")
             $ librarian.say("Můžu se pokusit. Samozřejmě neznám zpaměti všechny knihy, které tu máme, ale přečetl jsem toho dost.")
             "Elf si od tebe vezme papír s básní a po chvilce zavrtí hlavou."
             $ librarian.say("Bohužel. Tuhle báseň neznám. Jsem si skoro jistý, že není z žádné knihy, kterou tady máme.")
@@ -167,12 +264,14 @@ label libraryConsultLettersForAda:
                         "To chápu, nebudu naléhat.":
                             hide mcPic
                             $ librarian.say("V pořádku. Mohu vám pomoci nějak jinak?")
+                            $ chosenTopic = "anythingElse"
                             jump librarianOptions
                         "Ten ctitel je pokrytec, který si potíže zaslouží.":
                             hide mcPic
                             $ mc.say("Nechal za sebe potrestat někoho nevinného.")
                             $ librarian.say("I pokud to tak je, tak to, pokud vím, není zločin. Pořád nerozumím, proč se o to hlídka zajímá.")
                             $ librarian.say("Mohu vám pomoci nějak jinak?")
+                            $ chosenTopic = "anythingElse"
                             jump librarianOptions
                         "Naopak, je to způsob, jak někomu hodně pomoct.":
                             hide mcPic
@@ -193,9 +292,11 @@ label libraryConsultLettersForAda:
                     $ librarian.say("Nejsem si dokonale jistý, ale podobné sonety myslím píše Zairis. Aspoň těch pár, co mi ukazoval, tomu vlastně dost odpovídaly.")
                     $ mc.say("Děkuji, moc jste mi pomohl.")
                     $ status.append("letters for Ada checked in library")
-                    if gender =! "F" and race =! "elf":
+                    if gender =! "F" or race =! "elf":
                         $ librarian.say("Ale jestli by zrovna vám dával na okno báseň… jste si jist[y], že to bylo pro vás?", "surprised")
                         $ librarian.say("Ale to mi nepřísluší soudit.")
+                    "Knihovník se krátce zamyslí." 
+                    $ librarian.say("Počkejte… ne, to nebude on. Sice zřejmě zamilovaný je a cíl svého citu tají, ale už to trvá nějakou dobu a prý se snad několikrát setkali. Jestli chápu správně, to na vás nesedí.")
                 "To bohužel nemůžu říct. Je to součástí případu, který v městské hlídce vyšetřujeme.":
                     hide mcPic
                     $ librarian.say("Skutečně? A proč se prosím hlídka zajímá o milostný život obyvatel města?", "surprised")
@@ -206,12 +307,128 @@ label libraryConsultLettersForAda:
                     $ librarian.say("Čím si ale jistý jsem, je, že psát milostnou poezii není zločin, bez ohledu na její kvalitu.")
                     $ librarian.say("Ne, že by zrovna tato báseň nebyla pěkná.")
                     $ librarian.say("Mohu vám pomoci nějak jinak?")
+                    $ chosenTopic = "anythingElse"
                     jump librarianOptions
     return
 
 label libraryConsultWellReadElves:
+    "Luisa de Vito tu dnes není, snadno ale najdeš mladého elfa, který jí v knihovně vypomáhá."
+    $ librarian.say("Co pro vás můžu udělat? Hledáte něco konkrétního?")
+    $ mc.say("Spíš bych potřeboval[a] radu. Jak dobře znáte návštěvníky knihovny?")
+    label libraryConsultWellReadElvesResponse:
     $ librarian.asked.append("well-read elves")
-    "TBD"
+    $ librarian.say("Určitě neznám všechny, ale pravidelné čtenáře celkem dobře. Mnoho z nich i pomáhalo s obnovou knihovny.")
+    $ librarian.say("Proč se ptáte?")
+    show mcPic at menuImage
+    menu:
+        "Mohlo by to souviset s mým případem.":
+            hide mcPic
+            $ librarian.say("No dobrá, co tedy potřebujete vědět?")
+            $ mc.say("Potřebuji určit totožnost jednoho elfa. Vím, že je mladý a velmi rád chodí číst do knihovny. Nejčastěji zřejmě poezii a spisy o historii.")
+            $ librarian.say("Úplně nejčastěji tady bývá Kaderyn. Je chudák vážně nemocný a čtení je jedna z mála věcí, na kterou má sílu.")
+            $ mc.say("Ten můj elf byl jednou u Amadisova hrobu, to by Kaderyn zvládl?")
+            $ librarian.say("Rozhodně ne. V tom případě váš muž bude Zairis. Syn obchodníka Roviena. Občas s otcem cestuje, takže ten se k hrobu velmi snadno mohl dostat. A přečetl tu už také skoro všechno.")
+            $ mc.say("Jste si jistý, že by tomu popisu nemohl odpovídat ještě někdo další?")
+            $ librarian.say("Pokud má jít opravdu o velkého čtenáře, pak ano. Chodí sem samozřejmě větší množství čtenářů, ale ostatní se zajímají o jiné žánry, nejsou to elfí mladíci nebo nejsou zdaleka tak zapálení.")
+            $ clues.append("zairis")
+        "Rád[a] bych se seznámil[a] s někým s podobnými zájmy.":
+            hide mcPic
+            $ librarian.say("Potom asi záleží, jaký druh literatury vás zajímá. Někdo sem chodí studovat zákony, někdo kroniky, někdo se zajímá o náboženské spisy…")
+            show mcPic at menuImage
+            menu:
+                "Zajímají mě hlavně zákony.":
+                    hide mcPic
+                    $ librarian.say("Myslím, že o těch si úplně nejlépe pohovoříte s panem de Vito. Nebo můžete někdy večer zajít k výčepu, jak se teď leccos mění, bývá to tam obvyklé téma hovoru.")
+                    $ librarian.say("Tady v knihovně po nich taková poptávka nebývá.")
+                    $ librarian.say("Nebo jsem tady ještě já, pokud nevyžadujete někoho, kdo má postavení nebo uznání.")
+                    $ librarian.say("Já jsem touhle dobou mohl být právník, kdyby…", "angry")
+                    if "law consultation offered" not in status:
+                        call librarianLawConsultationOffered2
+                "Chtěl bych studovat historii.":
+                    hide mcPic
+                    $ librarian.say("Potom zajděte za Valeranem, který pracuje v hlídce jako jeden ze strážných u brány. O historii toho ví hodně a co vím, rád o ní bude mluvit s kýmkoli.")
+                "Chci se víc ponořit do otázek víry a bohů.":
+                    hide mcPic
+                    $ librarian.say("Ve skutečnosti tu máme hlavně různé mravoučné příběhy a bajky, učené teologie jen pomálu.")
+                    $ librarian.say("Jestli to je to, co vás zajímá, zkuste ševcovou Lisbeth. Není jediná, kdo podobné příběhy čte, ale je přátelská a věřím, že s vámi ráda bude mluvit. Na další čtenáře vás pak třeba odkáže ona nebo se mě zeptáte znovu.")
+                "Chci vědět co nejvíc o cizích krajích.":
+                    hide mcPic
+                    $ librarian.say("To tady hltá kdekdo. Takovou Adu od ševců už sem její rodiče ani nechtějí pouštět, protože se bojí, že jí nějaký cestopis ještě víc zamotá hlavu.")
+                    $ librarian.say("Za mě lepší číst cestopisy než nečíst vůbec jako pan otec, ale kdo jsem, abych se do toho vměšoval.", "angry")
+                    $ librarian.say("Další nadšenec je Zairis, ten už všechny cestopisy přečetl nejméně třikrát.")
+                    $ librarian.say("Ale ten tedy čte skoro cokoli. Dokonce i ty olwenitské mravoučné příběhy všechny přečetl, ačkoli lidské bohy neuctívá a pokaždé si pak stěžoval, že když byl olwenitským rytířem Amadis, určitě měl na čtení něco mnohem kvalitnějšího.")
+                    $ clues.append("zairis")
+                "Nejvíc mě baví něco hrdinského a dobrodružného.":
+                    hide mcPic
+                    $ librarian.say("To bývá velmi oblíbené. Největší odborník na ně je nejspíš Zairis. Zvlášť jestli vás zajímá Amadis, moc rád o něm s vámi bude básnit, ale raději si na to vyhraďte dost času.")
+                    $ clues.append("zairis")
+                "Zajímám se o poezii.":
+                    hide mcPic
+                    $ librarian.say("Největší nadšenec do poezie je jednoznačně Zairis. Četl už všechno, co tu máme, a neustále se ptá, kdy seženeme něco dalšího.")
+                    $ librarian.say("Dokonce i sám píše, a co mohu soudit, dost slušně, ačkoli se s tím veřejně moc nechlubí. Určitě bude rád, jestli s ním budete ochotn[y] o poezii diskutovat.")
+                    $ clues.append("zairis")
+                    if ("poem for Ada copied" in status or "all love letters kept" in status or "one love letter kept" in status) and "poem for Ada shown" not in librarian.asked:
+                        show mcPic at menuImage
+                        menu:
+                            "Myslíte, že by tahle báseň mohla být jeho?":
+                                hide mcPic
+                                $ librarian.say("Nevím. Rozhodně ji neznám. Kde jste k ní při[sel]?")
+                                $ mc.say("To je dlouhá historie, obávám se.")
+                                $ librarian.say("Chápu, známe umělce…")
+                                "Knihovník chvíli báseň zamyšleně studuje."
+                                $ librarian.say("Vlastně ano, myslím, že by to mohlo být od něj. Nemůžu to samozřejmě vědět s jistotou, ale jeho styl mi připomíná nejvíc.")
+                                $ librarian.say("Rozhodně to není z žádného svazku, co bychom měli tady v knihovně.")
+                                $ librarian.say("Takže jestli vám někdo tvrdil, že to je nesmírně cenný rukopis od někoho slavného… nejspíš tomu tak nebude.")
+                                $ status.append("letters for Ada checked in library")
+                            "Děkuji, moc jste mi pomohl.":
+                                hide mcPic
+                                $ librarian.say("Rádo se stalo. Potřebujete ještě něco?")
+                                $ chosenTopic = "anythingElse"
+                                jump librarianOptions
+    $ mc.say("Děkuji, moc jste mi pomohl.")
+    $ librarian.say("Rádo se stalo. Potřebujete ještě něco?")
+    $ chosenTopic = "anythingElse"
+    jump librarianOptions
+
+label libraryConsultLaw:
+    jump librarianOptions
+
+label librarianLawConsultationOffered:
+    "Když zvedneš hlavu, všimneš si mladého knihovníka, který tě se zaujetím pozoruje."
+    $ librarian.say("Zajímáte se o právo?")
+    show mcPic at menuImage
+    menu:
+        "Nedávno jsem nastoupil[a] do městské hlídky, tak se snažím zorientovat v zákonech.":
+            hide mcPic
+            $ librarian.say("Samozřejmě, hlídka by měla vědět, kde je její místo. A co má za úkol.")
+        "Ano, fascinuje mě, jak se vyvíjí.":
+            hide mcPic
+            $ librarian.say("Tak velké změny to zase nejsou.", "angry")
+    label librarianLawConsultationOffered2:
+    $ librarian.say("Já jsem touhle dobou mohl být právník, kdyby…", "angry")
+    "Knihovník pokrčí rameny, ale lhostejně to nepůsobí ani trochu."
+    show mcPic at menuImage
+    menu:
+        "Ale nejsi?":
+            hide mcPic
+            $ librarian.say("Byl bych, kdyby byl svět spravedlivý. Ale znalosti a schopnosti bez známostí očividně neznamenají nic.", "angry")
+        "Můžu nějak pomoct?":
+            hide mcPic
+            $ librarian.say("Vy asi těžko, pokud nemáte známé na dost vysokých místech.", "sad")
+            $ librarian.say("I když… se soudcem určitě do styku přijdete…")
+        "{i}(neříct nic){/i}":
+            hide mcPic
+    "Mladý elf se na tebe zkoumavě podívá."
+    $ librarian.say("Možná bychom si mohli pomoct vzájemně. Pokud by se vám někdy v oblasti zákonů hodila konzultace, rád vám budu k dispozici. A vy se pak můžete o mé pomoci zmínit vašim nadřízeným nebo rovnou u soudu.")
+    show mcPic at menuImage
+    menu:
+        "Děkuji, určitě na to budu myslet.":
+            hide mcPic¨
+            "Knihovník se na tebe usměje a pak se vrátí ke své práci."
+        "To by nemělo být nutné.":
+            hide mcPic
+            $ librarian.say("Uvidíte. V každém případě víte, kde mne najít.")
+    $ status.append("law consultation offered")
     return
 
 ### reading
@@ -233,6 +450,8 @@ label readingLiterature:
 label readingLaw:
     if "lawIntro" in lawTopics:
         $ readingTopic = "lawIntro"
+        if "law consultation offered" not in status:
+            call librarianLawConsultationOffered
     else:
         $ readingTopic = renpy.random.choice(lawTopics)
     $ library.checked.append(readingTopic)
@@ -426,3 +645,25 @@ label libraryOptionsRemaining:
         $ optionsRemaining += 1
     if historyTopics != []:
         $ optionsRemaining += 1
+
+label lawConsultationOptionsRemainingCheck:
+    $ lawConsultationOptionsRemaining = 0
+    if "watch powers" not in librarian.asked:
+        $ lawConsultationOptionsRemaining += 1
+    if "punishments" not in librarian.asked:
+        $ lawConsultationOptionsRemaining += 1
+    if "punishments" in librarian.asked and "punishment for theft - master craftsman" not in librarian.asked:
+        $ lawConsultationOptionsRemaining += 1
+    if "punishments" in librarian.asked and "punishment for theft - poor person" not in librarian.asked:
+        $ lawConsultationOptionsRemaining += 1
+    if "punishments" in librarian.asked and "shoes' fate" in clues and "punishment for theft - apprentice" not in librarian.asked:
+        $ lawConsultationOptionsRemaining += 1
+    if "punishments" in librarian.asked and "stolen idea" in clues and "punishment for theft of shoe pattern" not in librarian.asked:
+        $ lawConsultationOptionsRemaining += 1
+    if "punishments" in librarian.asked and "duplicate key" in status and "punishment for burglary" not in librarian.asked:
+        $ lawConsultationOptionsRemaining += 1
+    if "punishments" in librarian.asked and "AML" in lotte.asked and "punishment for blackmail" not in librarian.asked:
+        $ lawConsultationOptionsRemaining += 1
+    if "punishments" in librarian.asked and time.days > 1 and "punishment for Katrin" not in librarian.asked:
+        $ lawConsultationOptionsRemaining += 1
+    return
