@@ -272,7 +272,8 @@ label workshopVisitGerd:
         $ mc.say("To asi budeš muset vysvětlit.")
         $ gerd.say("Heinrich se nějak dostal ke střihu, který vymyslel mistr Njal. Nějak mu ho ukradl, netuším jak, přišel jsem na to až tady, když jsem u svého nového mistra viděl ty stejné vylepšení.")
         $ gerd.say("Zeptal jsem se ho na ně a on mi řekl o té krádeži. Tak když jsem měl příležitost, přišlo mi jenom fér vrátit ten střih právoplatnému majiteli.")
-    $ clues.append("stolen idea")
+    if "stolen idea" not in clues:
+        $ clues.append("stolen idea")
     return
 
 label gerdOptionsRemainingCheck:

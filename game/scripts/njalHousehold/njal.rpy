@@ -424,7 +424,8 @@ label workshopVisitNjal:
         $ njal.say("Bohužel jsem v tu chvíli neviděl jinou možnost, jak bezpečně získat zpátky svůj majetek ještě před Einionovými slavnostmi.")
         $ mc.say("Myslíte váš střih na boty?")
         $ njal.say("Ano. Strávil jsem na něm hodně času a spotřeboval množství materiálu, než jsem vše dovedl k dokonalosti. Pak se ten střih ztratil z mé dílny a před dvěma týdny jsem se od Gerda dozvěděl, že Heinrich přesně na těchto botách pracuje.")
-    $ clues.append("stolen idea")
+    if "stolen idea" not in clues:
+        $ clues.append("stolen idea")
     return
 
 label njalLessDealsSolved:
