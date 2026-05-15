@@ -12,9 +12,9 @@ label pubController:
 
     # visit itself
     if "pub visited" not in status:
-        scene bg pub outside
+        scene expression ("bg/bg pub outside[time.locationTagExt()].png")
         call pubFirst
-    scene bg pub inside
+    scene expression ("bg/bg pub inside[time.locationTagInt()].png")
     call pubIntro
     if optionsRemaining > 0:
         call salmaOptions

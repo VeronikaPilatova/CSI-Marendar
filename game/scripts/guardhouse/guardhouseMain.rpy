@@ -159,7 +159,7 @@ label reportWantedIntro:
                         $ rauvin.say("To jsme dva. K čemu je mi hlídkař, který se mnou ani nemluví?", "angry")
                         $ rauvin.say("A není to první případ, se chováš způsobem, který je s působením v hlídce neslučitelný. Přinejmenším v hlídce, která opravdu hájí všechny v tomto městě.", "angry")
                         $ rauvin.say("Vrať mi pověřovací listinu a já ti popřeji hodně štěstí při hledání nějakého zaměstnání, kde si budeš moci víc dělat, co tě zrovna napadne.")
-                        scene bg door01
+                        scene bg guardhouse door
                         "Zanedlouho se ocitneš znovu před strážnicí. Stojíš na ulici a přemýšlíš, kam ještě jít."
                         jump thrownOut
                     else:

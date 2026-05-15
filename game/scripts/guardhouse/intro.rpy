@@ -4,7 +4,7 @@ stop music fadeout 1.0
 scene bg exterior01
 "Ke strážnici marendarské hlídky přicházíš se zvláštní směsicí odhodlání a nejistoty. Co když tě nepřijmou? Nebo přijmou jen z nouze, kvůli nedostatku lidí?"
 "Co je teď pro hlídku vůbec důležité, po dvou převratech během jednoho roku, před kterými skrz ni její elfí velitel vládl městu pevnou rukou? Dá se opravdu věřit tomu, že nové vedení ji přetváří do podoby, na kterou město může být hrdé?"
-show bg door01
+show bg guardhouse door
 "Přede dveřmi na moment zaváháš, pak se ale narovnáš a zaklepeš."
 
 "Otevře ti mladá žena v jednoduchém nebarveném oblečení. Z jejího vzhledu nelze vyčíst, zda je členkou hlídky, nebo obyčejnou chudší měšťankou - pouze odhaduješ, že když někdo s tesákem u pasu otevírá dveře strážnice, nejspíš do hlídky patří."

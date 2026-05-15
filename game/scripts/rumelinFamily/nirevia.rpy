@@ -19,7 +19,7 @@ label nireviaController:
     $ origAsked = nirevia.asked.copy()
 
     # visit itself
-    scene bg rumelin outside
+    scene expression ("bg/bg rumelin outside[time.locationTagExt()].png")
     if "rumelin exposed" in status or "rumelin threatened" in status:
         call rumelinHouseClosedDoor
     elif "rumelin home visited" not in status:
@@ -37,7 +37,7 @@ label nireviaController:
     return
 
 label nireviaFirst:
-    scene bg rumelin outside
+    scene expression ("bg/bg rumelin outside[time.locationTagExt()].png")
     "Najdeš krásný dům v elfí čtvrti a zaklepeš na dveře. Otevře ti starší elfka a tázavě se na tebe podívá."
     $ mc.say("Dobrý den. Jsem %(mcName)s z městské hlídky a vyšetřuji krádež v dílně jednoho z ševcovských mistrů.")
     if time.hours < 18:
@@ -47,7 +47,7 @@ label nireviaFirst:
     $ mc.say("Mohl[a] bych položit několik otázek vám?")
     "Paní Nirevia se na moment zamračí, ale pak kývne a pokyne ti, abys [sel] dál."
 
-    scene bg rumelin inside
+    scene expression ("bg/bg rumelin inside[time.locationTagInt()].png")
     $ nirevia.say("Co se ztratilo a komu?")
     $ mc.say("Mistru Heinrichovi někdo v noci ukradl jeho čerstvě dokončený mistrovský výrobek.")
     $ nirevia.say("Na Einionovy slavnosti? To by pro mistra Heinricha mohl být vážný problém.")
@@ -56,16 +56,16 @@ label nireviaFirst:
     return
 
 label nireviaAgain:
-    scene bg rumelin outside
+    scene expression ("bg/bg rumelin outside[time.locationTagExt()].png")
     "Znovu zaklepeš na dveře domu, kde žije cechmistr Rumelin se svou manželkou."
     $ nirevia.say("Dobrý den. Jak pokračuje vaše pátrání? Podařilo se vám najít Heinrichův výrobek a zloděje?")
     $ mc.say("Stále po něm pátrám. Mohl[a] bych vám ještě položit několik otázek?")
     $ nirevia.say("Pokud to pomůže, pokusím se odpovědět.")
-    scene bg rumelin inside
+    scene expression ("bg/bg rumelin inside[time.locationTagInt()].png")
     return
 
 label rumelinHouseClosedDoor:
-    scene bg rumelin outside
+    scene expression ("bg/bg rumelin outside[time.locationTagExt()].png")
     "Po chvíli klepání ti otevře mladá elfka."
     $ laris.say("Můžu vám nějak pomoci? Mistr Rumelin ani paní Nirevia bohužel nejsou doma.")
     label rumelinHouseClosedDoorMenu:

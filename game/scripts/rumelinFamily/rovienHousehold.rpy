@@ -26,7 +26,7 @@ label rovienHouseController:
         $ currentLocation = "Rovien house"
 
     # visit itself
-    scene bg rovien outside
+    scene expression ("bg/bg rovien outside[time.locationTagExt()].png")
     if "rumelin exposed" in status or "rumelin threatened" in status:
         call rovienHouseClosedDoor
     if "Rovien house visited" not in status:
@@ -181,18 +181,18 @@ label rovienHouseClosedDoor:
         "Mladý elf pokrčí rameny."
         $ zairis.say("...ale jestli je to ve veřejném zájmu, tak se ptejte. Jen to neříkejte otci.")
         "Zairis vyjde ze dveří a odvede tě kus za dům, pravděpodobně mimo dohled většiny oken."
-        scene bg rovien wall
+        scene expression ("bg/bg rovien wall[time.locationTagExt()].png")
         $ zairis.say("S čím můžu hlídce pomoct?")
         call zairisController
     return
 
 label rovienHouseInside:
-    scene bg rovien inside
+    scene expression ("bg/bg rovien inside[time.locationTagInt()].png")
     "Rovienův dům je zařízený velmi elegantně. Na stěnách visí obrazy a mapy a místnosti, do které tě mladý elf zavede, vévodí zdobený krb."
     return
 
 label leavingRovienHouse:
-    scene bg rovien outside
+    scene expression ("bg/bg rovien outside[time.locationTagExt()].png")
     if "promised poetry" in status and not any("poem" in str for str in status):
         $ libraryNote.isActive = True
         menu:
@@ -208,7 +208,7 @@ label leavingRovienHouse:
     return
 
 label writingComparisonZairis:
-    scene bg street02
+    scene expression ("bg/bg street02[time.locationTagExt()].png")
     if "Zairis writing sample" in status and "letters for Ada seen" in status:
         if ("all love letters kept" in status or "one love letter kept" in status):
             if "book title" in zairis.asked or "writing sample" in zairis.asked:
@@ -236,7 +236,7 @@ label writingComparisonZairis:
     return
 
 label writePoetry:
-    scene bg writing table
+    scene expression ("bg/bg writing table[time.locationTagInt()].png")
     show sh blank papers
     "Na psaní poezie jsi nikdy neměl[a] moc času a zvlášť v posledních letech ses nedostal[a] k ničemu lepšímu, než jednoduchým rýmovačkám o nudné nebo příliš těžké práci. Ale možná tím spíš to teď stojí za to zkusit pro úspěch tvého vyšetřování."
     "Na strážnici najdeš klidný kout, vytáhneš pár papírů a inkoust a zamyslíš se, jak začít."

@@ -54,7 +54,7 @@ label zeranVagrancyArrestReaction:
     $ mc.say("Do toho, jestli ve městě zůstanu, přece nemáš, co mluvit.")
     $ hayfa.say("Mám povinnost město chránit před všemi, co mu chtějí ublížit. A o tobě už vím, co jsi zač.")
     "Odevzdáš glejt a hlídkařka ti ustoupí z cesty. Potom tě sleduje pohledem po celou tu nepříjemně dlouhou dobu, dokud nepřejdeš přes strážnici k hlavnímu vchodu a nezazní za tebou bouchnutí pantů."
-    scene bg door01
+    scene bg guardhouse door
     "Stojíš na ulici a přemýšlíš, kam ještě můžeš jít."
     jump thrownOut
     return
@@ -156,7 +156,7 @@ label rumelinArrestedRauvinDecidesMcFate:
         $ rauvin.say("Vrať mi tedy glejt a pak si můžeš jít hledat nějaké vhodnější zaměstnání.")
         "Nadechneš se k odpovědi, Rauvinův pohled je ale nesmlouvavý a ty pochopíš, že jeho rozhodnutí je nezvratné."
         "Nepříliš ochotně odevzdáš glejt a s ním se vzdáš i naděje, že ti hlídka přinese obživu a budoucnost."
-        scene bg door01
+        scene bg guardhouse door
         "Na ulici před strážnicí potom přemýšlíš, kam jinam v tomto městě nebo někde jinde můžeš patřit."
         jump thrownOut
     return

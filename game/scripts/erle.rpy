@@ -44,7 +44,7 @@ label erleController:
 
 label erleFirst:
     play music audio.erle fadeout 0.5 if_changed
-    scene bg bridge
+    scene expression ("bg/bg bridge[time.locationTagExt()].png")
     "Starý most najdeš snadno a u něj na břehu řeky skutečně sedí osamělá trpaslice."
     if time.hours < 18:
         "Na Erle je sice vidět život na ulici, nevypadá ale ani zdaleka tak zuboženě nebo zoufale, jak bys od žebráka čekal[a]. Jak sedí na kusu staré deky, tvář s přivřenýma očima nastavenou příjemnému podzimnímu slunci, působí vlastně téměř spokojeně."
@@ -78,13 +78,13 @@ label erleFirst:
 label erleAgain:
     if "investigating less deals erle ongoing" in status:
         $ random = renpy.random.randint(3, 4)
-        scene expression ("bg/bg street0[random].png")
+        scene expression ("bg/bg street0[random][time.locationTagExt()].png")
         "Erle u řeky nenajdeš, ale krátce poté ji zahlédneš v jedné z bočních uliček města."
         $ erle.say("Obcházím pro tebe ty hospody. Ještě kus mi chybí.")
         $ erle.say("Možná by sis do té doby měl[a] trochu odpočinout, vždyť celý den někde běháš.", "happy")
     else:
         play music audio.erle fadeout 0.5 if_changed
-        scene bg bridge
+        scene expression ("bg/bg bridge[time.locationTagExt()].png")
         "Erle znovu najdeš na jejím obvyklém místě u řeky."
         if time.hours < 18:
             $ erle.say("Jdeš si užívat slunce a klid?", "happy")
@@ -353,7 +353,7 @@ label leavingErle:
     menu:
         "{i}(Zkontrolovat místo nálezu){/i}":
             "Vydáš se po proudu řeky, rozhlížíš se po břehu a doufáš, že tu boty pořád ještě budou."
-            scene bg riverbank
+            scene expression ("bg/bg riverbank[time.locationTagExt()].png")
             "Slunce stále příjemně svítí, ale tady u vody je o něco chladněji než uprostřed města a proud unáší spadané listy. Doufáš, že se ti podaří u hlídky uchytit a nebudeš muset trávit zimu někde na profukujícím seníku."
             "Nakonec Heinrichovy boty v blátě málem přehlédneš a musíš se několik kroků vrátit. Promočený, špinavý a deformovaný kus fialové kůže mistrovské dílo příliš nepřipomíná a až na bližší pohled začneš rozpoznávat kovové ozdoby a elegantní tvarování."
             "Pokusíš se je v řece co nejvíc očistit, ale nemusíš být švec, aby ti bylo jasné, že je už nelze zachránit."

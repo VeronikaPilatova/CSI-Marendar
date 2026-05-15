@@ -46,12 +46,12 @@ label rumelinController:
 label rumelinFirst:
     # before 6pm - Rumelin at work
     if time.hours < 18:
-        scene bg guildmaster outside
+        scene expression ("bg/bg guildmaster outside[time.locationTagExt()].png")
         "Mistr Rumelin je jako představený cechu zaměstnaný člověk, ale když vysvětlíš, o co se jedná, podaří se ti domluvit s ním schůzku. Cech ševců a obuvníků sídlí v krásné budově na náměstí, spolu s cechy brašnářů, sedlářů a kožedělců."
-        scene bg guildmaster inside
+        scene expression ("bg/bg guildmaster inside[time.locationTagInt()].png")
     # after 6pm - Rumelin at home
     else:
-        scene bg rumelin outside
+        scene expression ("bg/bg rumelin outside[time.locationTagExt()].png")
         "V tuto hodinu už mistr Rumelin v budově cechu není, ale zkusíš ho navštívit doma."
         "Najdeš krásný dům v elfí čtvrti a zaklepeš na dveře. Otevře ti starší elfka a tázavě se na tebe podívá."
         $ mc.say("Dobrý den. Jsem %(mcName)s z městské hlídky a vyšetřuji krádež v dílně jednoho z ševcovských mistrů.")
@@ -62,7 +62,7 @@ label rumelinFirst:
         $ nirevia.say("Na Einionovy slavnosti? To by pro mistra Heinricha mohl být vážný problém.")
         $ mc.say("Právě proto bych uvítal[a] vaši pomoc při vyšetřování.")
         "Elfka se na moment zamračí, ale pak kývne a pokyne ti, abys [sel] dál."
-        scene bg rumelin inside
+        scene expression ("bg/bg rumelin inside[time.locationTagInt()].png")
         $ nirevia.say("Dojdu pro manžela.")
         "Paní Nirevia ti pokyne, aby ses zatím posadil[a]. Cechmistr Rumelin dorazí za okamžik s těžko čitelným výrazem."
         $ mc.say("Omlouvám se, že vás ruším takhle pozdě...")
@@ -73,10 +73,10 @@ label rumelinFirst:
 
 label rumelinAgain:
     if time.hours < 18:
-        scene bg guildmaster inside
+        scene expression ("bg/bg guildmaster inside[time.locationTagInt()].png")
         "Cechmistr Rumelin se s tebou setká znovu, ale nijak se nesnaží skrývat množství své práce."
     else:
-        scene bg rumelin inside
+        scene expression ("bg/bg rumelin inside[time.locationTagInt()].png")
         "Cechmistr Rumelin se s tebou setká znovu, ale nijak se nesnaží skrývat, že měl v tuto hodinu výrazně jiné plány."
     $ rumelin.say("Můžu ještě nějak pomoci rychlému uzavření vašeho případu?")
     return
@@ -84,7 +84,7 @@ label rumelinAgain:
 label rumelinClosedDoor:
     # closed door at work - able to use favour when owed
     if time.hours < 18:
-        scene bg inside
+        scene expression ("bg/bg guildmaster inside[time.locationTagInt()].png")
         "Cechmistr Rumelin při pohledu na tebe nijak nezmění výraz, ale za jeho chladnou zdvořilostí můžeš jasně číst nepřátelství."
         if "rumelin exposed" in status:
             $ rumelin.say("Nečekal jsem, že se tu ještě ukážete.")

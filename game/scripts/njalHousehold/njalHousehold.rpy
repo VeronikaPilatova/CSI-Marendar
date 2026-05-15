@@ -29,7 +29,7 @@ label njalHouseController:
         jump njalController
     else:
         play music audio.njal fadeout 0.5 if_changed
-        scene bg njal outside
+        scene expression ("bg/bg njal outside[time.locationTagExt()].png")
         if "njal house visited" not in status:
             call njalHouseFirst
         else:
@@ -116,7 +116,7 @@ label njalHouseAgain:
             jump njalController
 
 label njalHouseInside:
-    scene bg njal inside
+    scene expression ("bg/bg njal inside[time.locationTagInt()].png")
     if "njal house visited" not in status:
         "Dům má i uvnitř neomítnuté stěny a i přes zapálené svíčky je dost tmavý, přesto ale působí útulně. V jednom rohu stojí ševcovská trojnožka a stolek s rozdělanou prací."
         $ status.append("njal house visited")

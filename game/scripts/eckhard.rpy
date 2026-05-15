@@ -39,7 +39,7 @@ label eckhardController:
     return
 
 label eckhardIntro:
-    scene bg eckhard
+    scene expression ("bg/bg eckhard[time.locationTagExt()].png")
     "Na první zaklepání na dveře nikdo nereaguje."
     "Až když zabušíš ještě jednou a hlasitěji, otevře ti rozcuchaný muž s kruhy pod očima."
     $ eckhard.say("Ne tak nahlas! Kdo to… co chceš?")
@@ -129,7 +129,7 @@ label eckhardCellsIntro:
             hide mcPic
             $ eckhard.say("No výborně. Já jsem věděl, že je hlídka rozumná.", "happy")
             "Odemkneš celu a odvedeš Eckharda ven ze strážnice."
-            scene bg door01
+            scene expression ("bg/bg guardhouse door[time.locationTagExt()].png")
             $ eckhard.say("Tak se uvidíme na slavnostech?", "happy")
             $ mc.say("Pokud vás nebudeme potřebovat dřív. Neopouštějte prosím Marendar.")
             $ eckhard.say("To se nemusíte bát. Proč bych to dělal?", "surprised")
@@ -188,7 +188,7 @@ label eckhardOptions:
             $ eckhard.say("To bysme museli být fakt hodně namol.")
             $ eckhard.say("Ale abych byl fér… my jsme asi hodně namol byli. Takže možná?")
             if "carrying key" not in status and "key delivered" not in status and time.days == 1 and time.hours < 17:
-                call forgottenKeyScene from _call_forgottenKeyScene
+                call forgottenKeyScene
         "Všiml jste si včera u dílny mistra Heinricha něčeho podezřelého?" if "anything suspicious" not in eckhard.asked:
             hide mcPic
             $ eckhard.asked.append("anything suspicious")
@@ -366,9 +366,9 @@ label stolenIdeaConfession:
 ###
 
 label locksmith:
-    scene bg locksmith outside
+    scene expression ("bg/bg locksmith outside[time.locationTagExt()].png")
     "Po chvíli hledání se ti podaří najít malý krámek se znakem dvou klíčů nade dveřmi a vejdeš dovnitř."
-    scene bg locksmith inside
+    scene expression ("bg/bg locksmith inside[time.locationTagInt()].png")
     "Hobit za pultem se na tebe zářivě usměje."
     $ locksmith.say("Co pro vás můžu udělat?")
     show mcPic at menuImage
@@ -379,7 +379,7 @@ label locksmith:
         "Vlastně nic, jenom se tu rozhlížím.":
             hide mcPic
             $ locksmith.say("Kdyby vám něco padlo do oka, stačí říct.")
-    scene bg locksmith outside
+    scene expression ("bg/bg locksmith outside[time.locationTagExt()].png")
     jump leavingFriend
 
 label duplicatingKey:
