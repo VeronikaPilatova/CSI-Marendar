@@ -174,6 +174,9 @@ label workshopNightAlarm:
             $ mc.imageParameter = "beaten"
             if not achievement.has(achievement_name['fistfight'].name):
                 $ Achievement.add(achievement_name['fistfight'])
+            if "MC" not in persistent.heinrichBeatUp:
+                $ persistent.heinrichBeatUp.append("MC")
+                call heinrichBeatUpEveryoneCheck
             "Až poté mistr Heinrich zvedne Aachimovu lampu a pořádně se na tebe podívá."
             $ victim.say("Ty! Říkal[a] jsi, že jsi z hlídky!", "furious")
             $ mc.say("Já...")

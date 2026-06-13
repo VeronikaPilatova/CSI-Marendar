@@ -592,6 +592,9 @@ label victimOptions:
                         "S těmito slovy se mistr Heinrich zvedne, hrubě tě vytáhne na nohy a nasměruje tě ke dveřím z domu."
                         scene bg heinrich outside
                         "Netrvá dlouho a ty se ocitneš na ulici, bez muže, kterého jsi chtěl[a] zatknout, a s několika čerstvými ranami."
+                    if "MC" not in persistent.heinrichBeatUp:
+                        $ persistent.heinrichBeatUp.append("MC")
+                        call heinrichBeatUpEveryoneCheck
                 "Vrátím se s posilami a pak se mnou jít budete muset!":
                     hide mcPic
                     $ victim.say("Doufám, že tak hluboko hlídka neklesla.", "angry")
@@ -1679,6 +1682,9 @@ label mcAdmitsBurglary:
             "Heinrich si tě chvíli měří a potom přidá ještě několik tvrdých ran. Aachim mezitím odejde z místnosti."
         else:
             "Všimneš si, že rámus rvačky přiláká další členy domácnosti, ale nikdo z nich nezasahuje. Po chvíli se tvé modřiny začnou slévat dohromady a mistr Heinrich konečně přestane."
+        if "MC" not in persistent.heinrichBeatUp:
+            $ persistent.heinrichBeatUp.append("MC")
+            call heinrichBeatUpEveryoneCheck
         $ victim.say("Tak a teď se půjdeme zeptat, co si o tom celém myslí tví nadřízení.", "angry")
         "Mistr Heinrich přivolá Aachima a společně tě pevně sevřou, zvednou na nohy a vyvedou ven z domu." 
     scene bg heinrich outside

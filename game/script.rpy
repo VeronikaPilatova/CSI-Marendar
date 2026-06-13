@@ -233,6 +233,7 @@ label preparation:
     # variables - achievement helpers
     default persistent.zeranArrestReasons = []
     default persistent.arrestedPeople = []
+    default persistent.heinrichBeatUp = []
     # variables - time constants
     default keySlightlyLateAfter = Calendar(20, 17)
     default keyVeryLateAfter = Calendar(30, 18)

@@ -23,6 +23,7 @@ init python:
         "fistfight": Achievement(name=_("Rváč"), message=_("Někdy pouhá slova nestačí a musí přijít ke slovu pěsti."), image="images/achievements/trophy fistfight.png", priority="hidden"),
         "heinrichTools": Achievement(name=_("Heinrichovi navzdory"), message=_("Na jeho nástroje prý nesmí nikdo jiný sahat. No to určitě."), image="images/achievements/trophy tools.png", priority="hidden"),
         "bookworm": Achievement(name=_("Knihomol"), message=_("Velikost marendarské knihovny se nemůže měřit s tvým čtenářským nadšením."), image="images/achievements/trophy books.png", priority="hidden"),
+        "provokingHeinrich": Achievement(name=_("Olej do ohně"), message=_("Mistr Heinrich má pěsti."), image="images/achievements/trophy oil.png", priority="hidden"),
     }
 
     ## Here we are simply registering the achievements.
@@ -48,4 +49,11 @@ label arrestedEveryoneAchievementCheck:
     if len(persistent.arrestedPeople) == 10:
         if not achievement.has(achievement_name['arrestedEveryone'].name):
             $ Achievement.add(achievement_name['arrestedEveryone'])
+    return
+
+label heinrichBeatUpEveryoneCheck:
+    # Kaspar, Lisbeth, Rudi, Ferdi, Aachim, Zairis, MC
+    if len(persistent.heinrichBeatUp) == 7:
+        if not achievement.has(achievement_name['provokingHeinrich'].name):
+            $ Achievement.add(achievement_name['provokingHeinrich'])
     return

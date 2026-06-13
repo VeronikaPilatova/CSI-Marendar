@@ -61,6 +61,13 @@ label victimHouseholdController:
     if "kaspar and lisbeth ratted out" in status and kaspar.imageParameter != "beaten":
         $ kaspar.imageParameter = "beaten"
         $ lisbeth.imageParameter = "beaten"
+        call heinrichBeatUpEveryoneCheck
+        if "Kaspar" not in persistent.heinrichBeatUp:
+                $ persistent.heinrichBeatUp.append("Kaspar")
+                call heinrichBeatUpEveryoneCheck
+        if "Lisbeth" not in persistent.heinrichBeatUp:
+                $ persistent.heinrichBeatUp.append("Lisbeth")
+                call heinrichBeatUpEveryoneCheck
     return
 
 label victimHouseIntro:
